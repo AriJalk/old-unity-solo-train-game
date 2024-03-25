@@ -25,6 +25,7 @@ namespace SoloTrainGame.Core
         void Start()
         {
             BuildTestMap();
+            
         }
 
         void Update()
@@ -45,6 +46,7 @@ namespace SoloTrainGame.Core
             prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
             tileObjects = new List<HexTileObject>();
             lastTileGap = tileGap;
+
         }
 
 
@@ -61,7 +63,10 @@ namespace SoloTrainGame.Core
                 if (material != null)
                 {
                     tile.MeshRenderer.material = material;
-                }  
+                }
+                MeshRenderer mesh = tile.transform.Find("Settlement").Find("Socket").Find("Cube").GetComponent<MeshRenderer>();
+                // TODO: Randomize from stack
+                mesh.material = ServiceLocator.MaterialManager.GetColorMaterial((Enums.GameColor)Random.Range(0,4));
             }
         }
 
