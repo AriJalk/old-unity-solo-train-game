@@ -16,12 +16,12 @@ namespace HexSystem
 
         }
 
-
+        private static HexPosition _zero = new HexPosition(0, 0, 0);
         public static HexPosition ZERO
         {
             get
             {
-                return new HexPosition(0, 0, 0);
+                return _zero;
             }
         }
 

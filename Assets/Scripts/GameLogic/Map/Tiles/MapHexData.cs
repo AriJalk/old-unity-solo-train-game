@@ -4,21 +4,10 @@ namespace SoloTrainGame.GameLogic
 {
     public class MapHexData
     {
-        private HexPosition _hex;
+        public HexPosition Hex { get; private set; }
 
-        public HexPosition Hex
-        {
-            get { return _hex; }
-            private set { _hex = value; }
-        }
 
-        private TerrainTypeSO _hexType;
-
-        public TerrainTypeSO HexType
-        {
-            get { return _hexType; }
-            set { _hexType = value; }
-        }
+        public TerrainTypeSO HexType { get; private set; }
 
         readonly private bool _isTrackContaintsRiver;
         public bool IsTrackContaintsRiver
@@ -45,8 +34,8 @@ namespace SoloTrainGame.GameLogic
 
         public MapHexData(HexPosition hex, TerrainTypeSO hexType, bool isRiver, bool canCityBeBuilt)
         {
-            _hex = hex;
-            _hexType = hexType;
+            Hex = hex;
+            HexType = hexType;
             _isTrackContaintsRiver = isRiver;
             CanCityBeBuilt = canCityBeBuilt;
         }

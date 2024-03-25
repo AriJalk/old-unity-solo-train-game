@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30805e7f4e342fa4b90726ff630c578d, type: 3}
-  m_Name: Red
+  m_Name: Lumber
   m_EditorClassIdentifier: 
-  Color: 0
-  SellValue: 2
+  GoodsType: 0
+  GoodsColor: 0
+  SellValue: 1

@@ -1,19 +1,25 @@
 ﻿public static class Enums
 {
+    public enum GameColor
+    {
+        Brown,
+        Gray,
+        Red,
+        Blue,
+    }
+
     public enum TerrainType
     {
-        Desert,
-        Forest,
-        Mountain,
-        River,
+        Fields,
+        Urban,
+        Mountains,
     }
 
     public enum GoodsType
     {
-        Red,
-        Blue,
-        Green,
-        Black,
+        Lumber,
+        Steel,
+        Minerals,
     }
 
     public enum BuildingType

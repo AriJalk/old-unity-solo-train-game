@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30805e7f4e342fa4b90726ff630c578d, type: 3}
-  m_Name: Black
+  m_Name: Steel
   m_EditorClassIdentifier: 
-  Color: 3
-  SellValue: 5
+  GoodsType: 1
+  GoodsColor: 1
+  SellValue: 2

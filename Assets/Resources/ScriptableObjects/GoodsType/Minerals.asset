@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d0f281c9bca83c4587977aad79fbb7d, type: 3}
-  m_Name: Desert
+  m_Script: {fileID: 11500000, guid: 30805e7f4e342fa4b90726ff630c578d, type: 3}
+  m_Name: Minerals
   m_EditorClassIdentifier: 
-  Name: Desert
-  TerrainCost: 1
+  GoodsType: 2
+  GoodsColor: 2
+  SellValue: 3

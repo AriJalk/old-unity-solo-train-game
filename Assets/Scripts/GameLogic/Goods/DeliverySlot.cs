@@ -4,9 +4,9 @@
     {
         public bool IsDelivered { get; private set; }
 
-        public Enums.GoodsType GoodsColor { get; private set; }
+        public Enums.GameColor GoodsColor { get; private set; }
 
-        public DeliverySlot(Enums.GoodsType color)
+        public DeliverySlot(Enums.GameColor color)
         {
             GoodsColor = color;
         }

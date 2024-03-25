@@ -4,9 +4,9 @@
     {
         public bool IsProduced { get; private set; }
 
-        public Enums.GoodsType GoodsType { get; private set; }
+        public Enums.GameColor GoodsType { get; private set; }
 
-        public ProductionSlot(Enums.GoodsType color)
+        public ProductionSlot(Enums.GameColor color)
         {
             GoodsType = color;
         }

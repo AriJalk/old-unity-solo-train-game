@@ -20,12 +20,12 @@ namespace SoloTrainGame.Core
         {
             ServiceLocator.SetPrefabManagerManager(prefabStorage);
             ServiceLocator.SetScriptableObjectManager();
+            ServiceLocator.SetMaterialManager();
             gridController.Initialize();
         }
 
         void Start()
         {
-            gridController.CreateTile(HexPosition.ZERO);
 
         }
 

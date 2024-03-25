@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d0f281c9bca83c4587977aad79fbb7d, type: 3}
-  m_Name: Forest
+  m_Name: Fields
   m_EditorClassIdentifier: 
-  Type: 1
-  TerrainCost: 2
+  TerrainType: 0
+  TerrainColor: 0
+  TerrainCost: 1

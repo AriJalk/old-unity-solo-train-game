@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d0f281c9bca83c4587977aad79fbb7d, type: 3}
-  m_Name: Mountain
+  m_Name: Mountains
   m_EditorClassIdentifier: 
-  Type: 2
+  TerrainType: 2
+  TerrainColor: 2
   TerrainCost: 3

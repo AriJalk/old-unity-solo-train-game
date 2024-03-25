@@ -1,10 +1,11 @@
-﻿using Engine.ResourceManagement;
+﻿using Engine;
+using Engine.ResourceManagement;
 using HexSystem;
 using SoloTrainGame.GameLogic;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Engine
+namespace SoloTrainGame.Core
 {
     public class HexGridController : MonoBehaviour
     {
@@ -16,13 +17,14 @@ namespace Engine
         float tileGap = 0.1f;
 
         private PrefabManager prefabManager;
+
         private List<HexTileObject> tileObjects;
         private float lastTileGap;
 
 
         void Start()
         {
-            
+            BuildTestMap();
         }
 
         void Update()
@@ -51,27 +53,46 @@ namespace Engine
             tile.transform.position = HexPosition.HexToWorld(tile.HexData.Hex, TILE_SIZE, tileGap, HexOrientation.FlatLayout);
         }
 
-        public void CreateTile(HexPosition hex)
+        private void SetTileMaterial(HexTileObject tile)
+        {
+            if (tile != null)
+            {
+                Material material = ServiceLocator.MaterialManager.GetColorMaterial(tile.HexData.HexType.TerrainColor);
+                if (material != null)
+                {
+                    tile.MeshRenderer.material = material;
+                }  
+            }
+        }
+
+        public void CreateTile(HexPosition hex, Enums.TerrainType type)
         {
             HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
-            tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[Enums.TerrainType.Desert], false, false);
+            tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type], false, false);
             tile.transform.SetParent(transform);
             tileObjects.Add(tile);
             UpdateTilePosition(tile);
+            SetTileMaterial(tile);
         }
+
 
 
         public void BuildTestMap()
         {
             // Build test map
             HexPosition hex = HexPosition.ZERO;
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 10; i++)
             {
-                CreateTile(hex);
+                CreateTile(hex, Enums.TerrainType.Fields);
                 HexPosition northHex = HexPosition.GetHexNeighbor(hex, HexPosition.HexDirection.NORTH);
-                for (int j = 0; j < 50; j++)
+                for (int j = 0; j < 5; j++)
                 {
-                    CreateTile(northHex);
+                    CreateTile(northHex, Enums.TerrainType.Urban);
+                    northHex = HexPosition.GetHexNeighbor(northHex, HexPosition.HexDirection.NORTH);
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    CreateTile(northHex, Enums.TerrainType.Mountains);
                     northHex = HexPosition.GetHexNeighbor(northHex, HexPosition.HexDirection.NORTH);
                 }
 

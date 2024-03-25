@@ -16,16 +16,36 @@ namespace Engine
                 }
                 return _prefabManager;
             }
-            
+
             private set
             {
                 _prefabManager = value;
             }
         }
 
-        private static ScriptableObjectManager _scriptableObjectManager;
+        static private MaterialManager _materialManager;
 
-        public static ScriptableObjectManager ScriptableObjectManager
+        static public MaterialManager MaterialManager
+        {
+            get
+            {
+                if (_materialManager == null)
+                {
+                    Debug.LogError("MaterialManager not initialized");
+                }
+                return _materialManager;
+            }
+
+            private set
+            {
+                _materialManager = value;
+            }
+        }
+
+
+        static private ScriptableObjectManager _scriptableObjectManager;
+
+        static public ScriptableObjectManager ScriptableObjectManager
         {
             get { return _scriptableObjectManager; }
             private set { _scriptableObjectManager = value; }
@@ -33,14 +53,20 @@ namespace Engine
 
 
 
-        public static void SetScriptableObjectManager()
+        static public void SetScriptableObjectManager()
         {
             _scriptableObjectManager = new ScriptableObjectManager();
         }
 
-        public static void SetPrefabManagerManager(Transform transform)
+        static public void SetPrefabManagerManager(Transform transform)
         {
             _prefabManager = new PrefabManager(transform);
+        }
+
+        static public void SetMaterialManager()
+        {
+            _materialManager = new MaterialManager();
+            _materialManager.LoadColorMaterials();
         }
     }
 }
