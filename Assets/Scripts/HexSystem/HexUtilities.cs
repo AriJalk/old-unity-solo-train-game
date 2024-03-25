@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace HexSystem
 {
-    public partial class Hex
+    public partial class HexPosition
     {
         public enum HexDirection
         {
@@ -18,11 +17,11 @@ namespace HexSystem
         }
 
 
-        public static Hex ZERO
+        public static HexPosition ZERO
         {
             get
             {
-                return new Hex(0, 0, 0);
+                return new HexPosition(0, 0, 0);
             }
         }
 
@@ -42,21 +41,21 @@ namespace HexSystem
             return coordinates.x + coordinates.y + coordinates.z == 0;
         }
 
-        public static Hex BuildHex(int q, int r, int s)
+        public static HexPosition BuildHex(int q, int r, int s)
         {
             Vector3Int coordinates = new Vector3Int(q, r, s);
             if (IsPositionLegal(coordinates))
             {
-                return new Hex(q, r, s);
+                return new HexPosition(q, r, s);
             }
             return null;
         }
 
-        public static Hex GetHexNeighbor(Hex hex, HexDirection direction)
+        public static HexPosition GetHexNeighbor(HexPosition hex, HexDirection direction)
         {
             if (hex != null)
             {
-                return new Hex(hex.Position + DirectionVectorDictionary[direction]);
+                return new HexPosition(hex.Position + DirectionVectorDictionary[direction]);
             }
             return null;
         }
@@ -66,7 +65,7 @@ namespace HexSystem
             return hexSize * gapProportion;
         }
 
-        public static Vector3 HexToWorld(Hex hex, float hexSize, float gapProportion, HexOrientation orientation)
+        public static Vector3 HexToWorld(HexPosition hex, float hexSize, float gapProportion, HexOrientation orientation)
         {
             float gap = CalculateGap(hexSize, gapProportion);
 

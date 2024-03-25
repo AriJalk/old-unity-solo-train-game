@@ -1,9 +1,10 @@
 using HexSystem;
+using SoloTrainGame.GameLogic;
 using UnityEngine;
 
 public class HexTileObject : MonoBehaviour
 {
-    public Hex HexData { get; set; }
+    public MapHexData HexData { get; set; }
 
 
     // Start is called before the first frame update

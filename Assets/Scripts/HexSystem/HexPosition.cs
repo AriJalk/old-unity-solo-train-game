@@ -3,9 +3,9 @@ using UnityEngine;
 namespace HexSystem
 {
     /// <summary>
-    /// Hex data
+    /// HexPosition data
     /// </summary>
-    public partial class Hex
+    public partial class HexPosition
     {
         private Vector3Int _position;
         public Vector3Int Position
@@ -21,18 +21,18 @@ namespace HexSystem
         }
 
         // CONSTRUCTORS
-        private Hex(int q, int r, int s)
+        private HexPosition(int q, int r, int s)
         {
             Position = new Vector3Int(q, r, s);
         }
 
-        private Hex(Vector3Int position)
+        private HexPosition(Vector3Int position)
         {
             if (IsPositionLegal(position))
                 Position = position;
         }
 
-        private Hex(Hex other)
+        private HexPosition(HexPosition other)
         {
             Position = other.Position;
         }
@@ -46,7 +46,7 @@ namespace HexSystem
 
         public override bool Equals(object obj)
         {
-            Hex hex_obj = obj as Hex;
+            HexPosition hex_obj = obj as HexPosition;
             if (obj == null || hex_obj == null)
             {
                 return false;
