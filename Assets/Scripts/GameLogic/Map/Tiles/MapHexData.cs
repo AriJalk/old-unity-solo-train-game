@@ -7,20 +7,10 @@ namespace SoloTrainGame.GameLogic
         public HexPosition Hex { get; private set; }
 
 
-        public TerrainTypeSO HexType { get; private set; }
+        public TerrainTypeSO TileType { get; private set; }
 
-        readonly private bool _isTrackContaintsRiver;
-        public bool IsTrackContaintsRiver
-        {
-            get
-            {
-                return _isTrackContaintsRiver;
-            }
-        }
 
-        public bool CanCityBeBuilt { get; private set; }
-
-        public Tracks Tracks {  get; private set; }
+        public Tracks Tracks { get; private set; }
 
         private SettlementBase _settlement;
 
@@ -32,29 +22,67 @@ namespace SoloTrainGame.GameLogic
 
 
 
-        public MapHexData(HexPosition hex, TerrainTypeSO hexType, bool isRiver, bool canCityBeBuilt)
+        public MapHexData(HexPosition hex, TerrainTypeSO hexType)
         {
             Hex = hex;
-            HexType = hexType;
-            _isTrackContaintsRiver = isRiver;
-            CanCityBeBuilt = canCityBeBuilt;
+            TileType = hexType;
         }
 
         public bool BuildRailsOnHex()
         {
-            if(Tracks == null)
+            if (Tracks == null)
             {
                 Tracks = new Tracks();
                 return true;
             }
-            return false;        
+            return false;
         }
 
         public bool UpgradeRailsOnHex()
         {
-            if(Tracks != null && Tracks.IsUpgraded == false)
+            if (Tracks != null && Tracks.IsUpgraded == false)
             {
                 return Tracks.UpgradeTrack();
+            }
+            return false;
+        }
+
+        public bool BuildCityStrict()
+        {
+            if (Settlement != null && TileType.CanBuildCity == true)
+            {
+                // TODO: Random delivery from stack
+                Settlement = new City(new ProductionSlot(TileType.TerrainColor), new DeliverySlot(TileType.TerrainColor));
+                if (Settlement != null)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool BuildCityOverride()
+        {
+            // TODO: Random delivery from stack
+            Settlement = new City(new ProductionSlot(TileType.TerrainColor), new DeliverySlot(TileType.TerrainColor));
+            if (Settlement != null)
+                return true;
+            return false;
+        }
+
+        public bool BuildTown()
+        {
+            Settlement = new Town(new ProductionSlot(TileType.TerrainColor));
+            if (Settlement != null)
+                return true;
+            return false;
+        }
+
+        public bool UpgradeTownToCity()
+        {
+            if (Settlement is Town town)
+            {
+                City city = new City(town.ProductionSlot, new DeliverySlot(TileType.TerrainColor));
+                if (city != null) 
+                    return true;
             }
             return false;
         }

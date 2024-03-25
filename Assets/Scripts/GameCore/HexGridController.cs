@@ -57,7 +57,7 @@ namespace SoloTrainGame.Core
         {
             if (tile != null)
             {
-                Material material = ServiceLocator.MaterialManager.GetColorMaterial(tile.HexData.HexType.TerrainColor);
+                Material material = ServiceLocator.MaterialManager.GetColorMaterial(tile.HexData.TileType.TerrainColor);
                 if (material != null)
                 {
                     tile.MeshRenderer.material = material;
@@ -68,7 +68,7 @@ namespace SoloTrainGame.Core
         public void CreateTile(HexPosition hex, Enums.TerrainType type)
         {
             HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
-            tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type], false, false);
+            tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type]);
             tile.transform.SetParent(transform);
             tileObjects.Add(tile);
             UpdateTilePosition(tile);
