@@ -64,9 +64,9 @@ namespace SoloTrainGame.Core
                 {
                     tile.MeshRenderer.material = material;
                 }
-                MeshRenderer mesh = tile.transform.Find("Settlement").Find("Socket").Find("Cube").GetComponent<MeshRenderer>();
+                MeshRenderer mesh = tile.transform.Find("Town").Find("ProductionSlot").Find("Holder").GetComponent<MeshRenderer>();
                 // TODO: Randomize from stack
-                mesh.material = ServiceLocator.MaterialManager.GetColorMaterial((Enums.GameColor)Random.Range(0,4));
+                mesh.material = ServiceLocator.MaterialManager.GetWoodColorMaterial((Enums.GameColor)Random.Range(0,4));
             }
         }
 
