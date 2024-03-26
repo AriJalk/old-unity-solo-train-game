@@ -1,3 +1,4 @@
+using SoloTrainGame.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class RotatedCamera : MonoBehaviour
     void Start()
     {
         _transform = transform;
-        Center = new Vector3(5,0,-5);
+        Center = HexGridController.Center;
         degrees = 0;
         Vector2 circlePosition = CalculateCirclePoint();
         _transform.position = new Vector3(circlePosition.x + Center.x, _transform.position.y, circlePosition.y + Center.z);

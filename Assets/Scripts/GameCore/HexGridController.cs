@@ -12,6 +12,8 @@ namespace SoloTrainGame.Core
         [SerializeField]
         const float TILE_SIZE = 0.5f;
 
+        public static Vector3 Center = Vector3.zero;
+
         [SerializeField]
         [Range(0f, 2f)]
         float tileGap = 0.1f;
@@ -21,6 +23,7 @@ namespace SoloTrainGame.Core
         private List<HexTileObject> tileObjects;
         private float lastTileGap;
 
+        Vector3 avaragePosition = Vector3.zero;
 
         void Start()
         {
@@ -78,6 +81,7 @@ namespace SoloTrainGame.Core
             tileObjects.Add(tile);
             UpdateTilePosition(tile);
             SetTileMaterial(tile);
+            avaragePosition += tile.transform.position;
         }
 
 
@@ -106,6 +110,9 @@ namespace SoloTrainGame.Core
                 else
                     hex = HexPosition.GetHexNeighbor(hex, HexPosition.HexDirection.SOUTH_EAST);
             }
+            avaragePosition /= tileObjects.Count;
+            Center = avaragePosition;
+
         }
     }
 }
