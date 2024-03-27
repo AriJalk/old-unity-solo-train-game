@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace HexSystem
 {
-    public partial class HexPosition
+    public partial class Hex
     {
         public enum HexDirection
         {
@@ -16,8 +16,8 @@ namespace HexSystem
 
         }
 
-        private static HexPosition _zero = new HexPosition(0, 0, 0);
-        public static HexPosition ZERO
+        private static Hex _zero = new Hex(0, 0, 0);
+        public static Hex ZERO
         {
             get
             {
@@ -41,21 +41,21 @@ namespace HexSystem
             return coordinates.x + coordinates.y + coordinates.z == 0;
         }
 
-        public static HexPosition BuildHex(int q, int r, int s)
+        public static Hex BuildHex(int q, int r, int s)
         {
             Vector3Int coordinates = new Vector3Int(q, r, s);
             if (IsPositionLegal(coordinates))
             {
-                return new HexPosition(q, r, s);
+                return new Hex(q, r, s);
             }
             return null;
         }
 
-        public static HexPosition GetHexNeighbor(HexPosition hex, HexDirection direction)
+        public static Hex GetHexNeighbor(Hex hex, HexDirection direction)
         {
             if (hex != null)
             {
-                return new HexPosition(hex.Position + DirectionVectorDictionary[direction]);
+                return new Hex(hex.Position + DirectionVectorDictionary[direction]);
             }
             return null;
         }
@@ -65,7 +65,7 @@ namespace HexSystem
             return hexSize * gapProportion;
         }
 
-        public static Vector3 HexToWorld(HexPosition hex, float hexSize, float gapProportion, HexOrientation orientation)
+        public static Vector3 HexToWorld(Hex hex, float hexSize, float gapProportion, HexOrientation orientation)
         {
             float gap = CalculateGap(hexSize, gapProportion);
 

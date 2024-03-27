@@ -1346,7 +1346,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f569d7f5a39cb4dbf72b733460b589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _cameraMoveSpeed: 8
+  _cameraSpeedMultiplier: 2
+  _cameraOverBounds: 2
+  _zoomSpeed: 300
 --- !u!1001 &1112804943
 PrefabInstance:
   m_ObjectHideFlags: 0

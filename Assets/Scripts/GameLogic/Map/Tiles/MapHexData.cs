@@ -4,7 +4,7 @@ namespace SoloTrainGame.GameLogic
 {
     public class MapHexData
     {
-        public HexPosition Hex { get; private set; }
+        public Hex Hex { get; private set; }
 
 
         public TerrainTypeSO TileType { get; private set; }
@@ -22,7 +22,7 @@ namespace SoloTrainGame.GameLogic
 
 
 
-        public MapHexData(HexPosition hex, TerrainTypeSO hexType)
+        public MapHexData(Hex hex, TerrainTypeSO hexType)
         {
             Hex = hex;
             TileType = hexType;

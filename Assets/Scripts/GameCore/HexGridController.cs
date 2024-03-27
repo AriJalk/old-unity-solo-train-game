@@ -2,6 +2,7 @@
 using Engine.ResourceManagement;
 using HexSystem;
 using SoloTrainGame.GameLogic;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,21 +15,32 @@ namespace SoloTrainGame.Core
 
         public static Vector3 Center = Vector3.zero;
 
+
+        // Spacing between tiles
         [SerializeField]
         [Range(0f, 2f)]
         float tileGap = 0.1f;
 
         private PrefabManager prefabManager;
 
+        // Holds all tiles in the map
         private List<HexTileObject> tileObjects;
+
+        // Last recorded tile gap
         private float lastTileGap;
 
         Vector3 avaragePosition = Vector3.zero;
 
+        // Bounds
+        public static float MinX { get; private set; }
+        public static float MaxX { get; private set; }
+        public static float MinZ {  get; private set; }
+        public static float MaxZ {  get; private set; }
+
         void Start()
         {
             BuildTestMap();
-            
+
         }
 
         void Update()
@@ -55,7 +67,7 @@ namespace SoloTrainGame.Core
 
         private void UpdateTilePosition(HexTileObject tile)
         {
-            tile.transform.position = HexPosition.HexToWorld(tile.HexData.Hex, TILE_SIZE, tileGap, HexOrientation.FlatLayout);
+            tile.CachedTransform.position = Hex.HexToWorld(tile.HexData.Hex, TILE_SIZE, tileGap, HexOrientation.FlatLayout);
         }
 
         private void SetTileMaterial(HexTileObject tile)
@@ -67,48 +79,63 @@ namespace SoloTrainGame.Core
                 {
                     tile.MeshRenderer.material = material;
                 }
-                MeshRenderer mesh = tile.transform.Find("Town").Find("ProductionSlot").Find("Holder").GetComponent<MeshRenderer>();
+                MeshRenderer mesh = tile.CachedTransform.Find("Town").Find("ProductionSlot").Find("Holder").GetComponent<MeshRenderer>();
                 // TODO: Randomize from stack
-                mesh.material = ServiceLocator.MaterialManager.GetWoodColorMaterial((Enums.GameColor)Random.Range(0,4));
+                mesh.material = ServiceLocator.MaterialManager.GetWoodColorMaterial((Enums.GameColor)UnityEngine.Random.Range(0, 4));
             }
         }
 
-        public void CreateTile(HexPosition hex, Enums.TerrainType type)
+        public void CreateTile(Hex hex, Enums.TerrainType type)
         {
             HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
             tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type]);
-            tile.transform.SetParent(transform);
+            tile.CachedTransform.SetParent(transform);
             tileObjects.Add(tile);
             UpdateTilePosition(tile);
             SetTileMaterial(tile);
-            avaragePosition += tile.transform.position;
+            UpdateBoundsFromHex(tile);
+
+
         }
 
+
+        private void UpdateBoundsFromHex(HexTileObject hexTile)
+        {
+            if (hexTile.CachedTransform.position.x < MinX)
+                MinX = hexTile.CachedTransform.position.x;
+            if (hexTile.CachedTransform.position.x > MaxX)
+                MaxX = hexTile.CachedTransform.position.x;
+            if (hexTile.CachedTransform.position.z < MinZ)
+                MinZ = hexTile.CachedTransform.position.z;
+            if (hexTile.CachedTransform.position.z > MaxZ)
+                MaxZ = hexTile.CachedTransform.position.z;
+            avaragePosition += hexTile.CachedTransform.position;
+        }
 
 
         public void BuildTestMap()
         {
             // Build test map
-            HexPosition hex = HexPosition.ZERO;
+            Hex hex = Hex.ZERO;
             for (int i = 0; i < 10; i++)
             {
                 CreateTile(hex, Enums.TerrainType.Fields);
-                HexPosition northHex = HexPosition.GetHexNeighbor(hex, HexPosition.HexDirection.NORTH);
+                Hex northHex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
                 for (int j = 0; j < 5; j++)
                 {
                     CreateTile(northHex, Enums.TerrainType.Urban);
-                    northHex = HexPosition.GetHexNeighbor(northHex, HexPosition.HexDirection.NORTH);
+                    northHex = Hex.GetHexNeighbor(northHex, Hex.HexDirection.NORTH);
                 }
                 for (int j = 0; j < 5; j++)
                 {
                     CreateTile(northHex, Enums.TerrainType.Mountains);
-                    northHex = HexPosition.GetHexNeighbor(northHex, HexPosition.HexDirection.NORTH);
+                    northHex = Hex.GetHexNeighbor(northHex, Hex.HexDirection.NORTH);
                 }
 
                 if (i % 2 == 0)
-                    hex = HexPosition.GetHexNeighbor(hex, HexPosition.HexDirection.NORTH_EAST);
+                    hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH_EAST);
                 else
-                    hex = HexPosition.GetHexNeighbor(hex, HexPosition.HexDirection.SOUTH_EAST);
+                    hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.SOUTH_EAST);
             }
             avaragePosition /= tileObjects.Count;
             Center = avaragePosition;
