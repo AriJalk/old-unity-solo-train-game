@@ -103,19 +103,52 @@ public class RotatedCamera : MonoBehaviour
     void RotateCameraWithMouse()
     {
         float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        // Horizontal rotation around Y axis
         _degrees -= mouseX * 10;
         if (_degrees < -360)
             _degrees += 360;
+
+        // Vertical rotation around X axis
+        float verticalRotationSpeed = 5f; // Adjust this value as needed
+        float verticalRotationDelta = mouseY * verticalRotationSpeed;
+
+        Vector3 currentRotation = _transform.localEulerAngles;
+        float newRotationX = currentRotation.x - verticalRotationDelta;
+        if (newRotationX > 180f)
+            newRotationX -= 360f;
+
+        float clampedRotationX = Mathf.Clamp(newRotationX, 10f, 80f);
+
+        _transform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
+
+        // Update camera position
         UpdateCameraPosition(true);
     }
 
+
+
+
+
+
     void UpdateCameraPosition(bool lookAt)
     {
-        Vector2 circlePosition = CalculateCirclePoint();
-        _transform.position = new Vector3(circlePosition.x + _center.x, _transform.position.y, circlePosition.y + _center.z);
-        if (lookAt == true)
+        float radiansX = Mathf.Deg2Rad * _transform.localEulerAngles.x;
+        float radiansY = Mathf.Deg2Rad * _degrees;
+
+        // Calculate the spherical coordinates
+        float x = Mathf.Cos(radiansX) * Mathf.Cos(radiansY) * RADIUS;
+        float y = Mathf.Sin(radiansX) * RADIUS;
+        float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * RADIUS;
+
+        Vector3 newPosition = new Vector3(x, y, z) + _center;
+        _transform.position = newPosition;
+
+        if (lookAt)
             _transform.LookAt(_center);
     }
+
 
     Vector2 CalculateCirclePoint()
     {
