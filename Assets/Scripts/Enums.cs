@@ -13,6 +13,7 @@
         Fields,
         Urban,
         Mountains,
+        River,
     }
 
     public enum GoodsType
@@ -20,10 +21,12 @@
         Lumber,
         Steel,
         Minerals,
+        None,
     }
 
     public enum BuildingType
     {
+        None,
         Track,
         Town,
         City,

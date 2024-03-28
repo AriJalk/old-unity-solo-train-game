@@ -1,15 +1,24 @@
-﻿namespace SoloTrainGame.GameLogic
+﻿using Engine;
+
+namespace SoloTrainGame.GameLogic
 {
     public class ProductionSlot
     {
         public bool IsProduced { get; private set; }
 
-        public Enums.GameColor GoodsType { get; private set; }
+        public GoodsTypeSO GoodsType { get; private set; }
 
-        public ProductionSlot(Enums.GameColor color)
+        public ProductionSlot(Enums.GoodsType goods)
         {
-            GoodsType = color;
+            GoodsType = ServiceLocator.ScriptableObjectManager.GoodsTypes[goods];
         }
+
+        public ProductionSlot(GoodsTypeSO goods)
+        {
+            GoodsType = goods;
+        }
+
+
 
         public bool ProduceGood()
         {

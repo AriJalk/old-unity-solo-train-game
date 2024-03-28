@@ -88,7 +88,7 @@ namespace SoloTrainGame.Core
         public void CreateTile(Hex hex, Enums.TerrainType type)
         {
             HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
-            tile.HexData = new MapHexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type]);
+            tile.HexData = new HexData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type]);
             tile.CachedTransform.SetParent(transform);
             tileObjects.Add(tile);
             UpdateTilePosition(tile);

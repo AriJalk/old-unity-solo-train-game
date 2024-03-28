@@ -4,6 +4,10 @@ using UnityEngine;
 public class RotatedCamera : MonoBehaviour
 {
     const float RADIUS = 2f;
+    const float MIN_RADIUS = 1f;
+    const float MAX_RADIUS = 8f;
+
+    private float currentRadius = RADIUS;
 
     [SerializeField]
     [Range(1f, 20f)]
@@ -15,15 +19,14 @@ public class RotatedCamera : MonoBehaviour
     [Range(0f, 5f)]
     private float _overBounds = 1f;
     [SerializeField]
-    [Range(50f, 500f)]
+    [Range(1f, 500f)]
     private float _scrollSpeedBase = 50f;
-    [SerializeField]
-    [Range(1f, 50f)]
-    private float _scrollSpeedMultiplier = 10f;
 
     Transform _transform;
     Camera _camera;
     Vector3 _center;
+
+    // Degress for camera rotation
     float _degrees;
 
     int tileLayer;
@@ -95,9 +98,9 @@ public class RotatedCamera : MonoBehaviour
     void ZoomCamera(float scroll)
     {
         Camera cameraComponent = GetComponent<Camera>();
-        float newFOV = cameraComponent.fieldOfView - scroll * Time.deltaTime * _scrollSpeedBase * _scrollSpeedMultiplier;
-        float clampedFOV = Mathf.Clamp(newFOV, 25f, 100f); // Adjust these values as needed
-        cameraComponent.fieldOfView = clampedFOV;
+        currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
+        currentRadius = Mathf.Clamp(currentRadius, MIN_RADIUS, MAX_RADIUS);
+        UpdateCameraPosition(true);
     }
 
     void RotateCameraWithMouse()
@@ -119,7 +122,7 @@ public class RotatedCamera : MonoBehaviour
         if (newRotationX > 180f)
             newRotationX -= 360f;
 
-        float clampedRotationX = Mathf.Clamp(newRotationX, 10f, 80f);
+        float clampedRotationX = Mathf.Clamp(newRotationX, 5f, 80f);
 
         _transform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
 
@@ -138,9 +141,9 @@ public class RotatedCamera : MonoBehaviour
         float radiansY = Mathf.Deg2Rad * _degrees;
 
         // Calculate the spherical coordinates
-        float x = Mathf.Cos(radiansX) * Mathf.Cos(radiansY) * RADIUS;
-        float y = Mathf.Sin(radiansX) * RADIUS;
-        float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * RADIUS;
+        float x = Mathf.Cos(radiansX) * Mathf.Cos(radiansY) * currentRadius;
+        float y = Mathf.Sin(radiansX) * currentRadius;
+        float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * currentRadius;
 
         Vector3 newPosition = new Vector3(x, y, z) + _center;
         _transform.position = newPosition;

@@ -8,7 +8,8 @@ namespace SoloTrainGame.GameLogic
     {
         public Enums.TerrainType TerrainType;
         public Enums.GameColor TerrainColor;
+        public GoodsTypeSO ProducedGoods;
+        public Enums.BuildingType CanBuildUpTo;
         public int TerrainCost;
-        public bool CanBuildCity;
     }
 }

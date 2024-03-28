@@ -3,7 +3,7 @@ using UnityEngine;
 namespace HexSystem
 {
     /// <summary>
-    /// Hex data
+    /// HexTile data
     /// </summary>
     public partial class Hex
     {

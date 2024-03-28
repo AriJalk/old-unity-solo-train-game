@@ -1,20 +1,17 @@
 ﻿namespace SoloTrainGame.GameLogic
 {
-    public abstract class SettlementBase
+    public abstract class SettlementBase : IBuilding
     {
-        public Enums.BuildingType SettlementType { get; private set; }
-        public ProductionSlot ProductionSlot { get; protected set; }
+        public BuildingTypeSO BuildingType { get; }
+        public ProductionSlot ProductionSlot { get; }
+        public HexData HexTile { get; }
 
-        public SettlementBase(Enums.BuildingType settlementType, ProductionSlot productionSlot)
+        public SettlementBase(HexData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot)
         {
-            SettlementType = settlementType;
+            BuildingType = buildingType;
             ProductionSlot = productionSlot;
+            HexTile = targetHex;
         }
 
-        public static City UpgradeTownToCity(Town town, DeliverySlot deliverySlot)
-        {
-            City city = new City(town.ProductionSlot, deliverySlot);
-            return city;
-        }
     }
 }

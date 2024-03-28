@@ -6,7 +6,7 @@ using UnityEngine;
 public class HexTileObject : MonoBehaviour
 {
     public Transform CachedTransform { get; private set; }
-    public MapHexData HexData { get; set; }
+    public HexData HexData { get; set; }
 
     public List<HexTileObject> Neighbors { get; private set; }
 
@@ -29,7 +29,7 @@ public class HexTileObject : MonoBehaviour
 
     }
 
-    public void Initialize(MapHexData hexData)
+    public void Initialize(HexData hexData)
     {
         HexData = hexData;
         Neighbors = new List<HexTileObject>();
