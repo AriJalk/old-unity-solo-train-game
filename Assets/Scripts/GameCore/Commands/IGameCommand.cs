@@ -1,6 +1,6 @@
-﻿namespace SoloTrainGame.GameLogic
+﻿namespace SoloTrainGame.Core
 {
-    public interface IGameAction
+    public interface IGameCommand
     {
         bool CanExecute {  get; }
         void Execute();

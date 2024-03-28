@@ -1,21 +1,26 @@
-﻿using Engine;
+﻿
+using SoloTrainGame.Core;
 
 namespace SoloTrainGame.GameLogic
 {
-    public class BuildAction : IGameAction
+    public class BuildCommand : IGameCommand
     {
+        private BuildState _state;
         private BuildingTypeSO _buildingType;
         private HexData _hexTile;
         private IBuilding _building;
+        private int _paidCost;
 
         public bool CanExecute { get; private set; }
+        public bool IsExecuted { get; private set; }
 
-        public BuildAction(BuildingTypeSO buildingType, float availableMoney, HexData hexTile)
+        public BuildCommand(HexData hexTile, BuildingTypeSO buildingType, BuildState buildState)
         {
+            _state = buildState;
             _hexTile = hexTile;
             _buildingType = buildingType;
-            float cost = hexTile.TileType.TerrainCost + buildingType.Cost;
-            if (availableMoney >= cost)
+            _paidCost = hexTile.TileType.TerrainCost + buildingType.Cost;
+            if (buildState.AvailableMoney >= _paidCost)
             {
                 switch (buildingType.BuildingTypeEnum)
                 {
@@ -39,12 +44,21 @@ namespace SoloTrainGame.GameLogic
 
         public void Execute()
         {
-            _hexTile.BuildOnHex(_building);
+            if (CanExecute == true)
+            {
+                _hexTile.BuildOnHex(_building);
+                _state.RemoveMoney(_paidCost);
+                IsExecuted = true;
+            }
         }
 
         public void Undo()
         {
-            throw new System.NotImplementedException();
+            if (IsExecuted == true)
+            {
+                _hexTile.RemoveBuildingFromHex(_building);
+                _state.AddMoney(_paidCost);
+            }
         }
     }
 }
