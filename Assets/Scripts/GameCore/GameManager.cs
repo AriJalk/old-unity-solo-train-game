@@ -12,6 +12,9 @@ namespace SoloTrainGame.Core
         [SerializeField]
         private Transform prefabStorage;
 
+        [SerializeField]
+        private InputManager inputManager;
+
 
 
 
