@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIHand : MonoBehaviour
 {
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,15 +17,5 @@ public class UIHand : MonoBehaviour
     void Update()
     {
 
-    }
-
-    private void OnMouseEnter()
-    {
-        GraphicUserInterface.IsMouseOver = true;
-    }
-
-    private void OnMouseExit()
-    {
-        GraphicUserInterface.IsMouseOver = false;
     }
 }

@@ -1,10 +1,12 @@
 
+using Engine;
 using SoloTrainGame.Core;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RotatedCamera : MonoBehaviour
 {
-    const float RADIUS = 2f;
+    const float RADIUS = 3f;
     const float MIN_RADIUS = 1f;
     const float MAX_RADIUS = 8f;
 
@@ -38,6 +40,11 @@ public class RotatedCamera : MonoBehaviour
     private int backgroundLayer;
     private int layerMask;
 
+    private InputManager _inputManager;
+    private UnityEvent<int, Vector2> _mouseButtonClickedDownEvent;
+    private UnityEvent<int, Vector2> _mouseButtonHeldEvent;
+    private UnityEvent<Vector2> _axisMovedEvent;
+
     void Start()
     {
         _transform = transform;
@@ -47,41 +54,69 @@ public class RotatedCamera : MonoBehaviour
         tileLayer = 1 << LayerMask.NameToLayer("Tiles");
         backgroundLayer = 1 << LayerMask.NameToLayer("Background");
         layerMask = tileLayer | backgroundLayer;
+        _inputManager = ServiceLocator.InputManager;
+
+        _mouseButtonClickedDownEvent = _inputManager.MouseButtonClickedDownEvent;
+        _mouseButtonHeldEvent = _inputManager.MouseButtonHeldEvent;
+        _axisMovedEvent = _inputManager.AxisMovedEvent;
+        AddInputListeners();
+
         UpdateCameraPosition(true);
 
     }
 
     void Update()
     {
-        // Mouse click
-        if (Input.GetMouseButtonDown(0))
-        {
-            HexTileObject tile = RaycastHitToHexTile(CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition), layerMask));
-            if (tile != null)
-                Debug.Log(tile.HexData.Hex.Position);
 
-        }
-
-        if (Input.GetMouseButton(1)) // Right mouse button is held down
-        {
-            RotateCameraWithMouse();
-        }
-
-
-        // Camera movement
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        if (horizontalInput != 0 || verticalInput != 0)
-            MoveCamera(horizontalInput, verticalInput);
 
         float scroll = Input.mouseScrollDelta.y;
         if (scroll != 0)
             ZoomCamera(scroll);
     }
 
-    void MoveCamera(float horizontalInput, float verticalInput)
+    private void OnDestroy()
     {
+        RemoveInputListeners();
+    }
+
+    void AddInputListeners()
+    {
+        _mouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
+        _axisMovedEvent?.AddListener(MoveCamera);
+        _mouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
+    }
+
+    void RemoveInputListeners()
+    {
+        _mouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
+        _axisMovedEvent?.RemoveListener(MoveCamera);
+        _mouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
+    }
+
+    void ProccessHeldEvent(int index, Vector2 movement)
+    {
+        if (index == 1)
+        {
+            RotateCameraWithMouse(movement);
+        }
+    }
+
+    void ProccessMouseClick(int index, Vector2 position)
+    {
+        if (index == 0)
+        {
+            HexTileObject tile = RaycastHitToHexTile(CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition), layerMask));
+            if (tile != null)
+                Debug.Log(tile.HexData.Hex.Position);
+        }
+    }
+
+
+    void MoveCamera(Vector2 movement)
+    {
+        float horizontalInput = movement.x;
+        float verticalInput = movement.y;
+
         float newSpeed = _speed;
         if (Input.GetKey(KeyCode.LeftShift))
             newSpeed *= _speedMultiplier;
@@ -117,18 +152,16 @@ public class RotatedCamera : MonoBehaviour
     }
 
 
-    void RotateCameraWithMouse()
+    void RotateCameraWithMouse(Vector2 movement)
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
 
         // Horizontal rotation around Y axis
-        _degrees -= mouseX * 10;
+        _degrees -= movement.x * 10;
         if (_degrees < -360)
             _degrees += 360;
 
         // Vertical rotation around X axis
-        float verticalRotationDelta = mouseY * verticalRotationSpeed;
+        float verticalRotationDelta = movement.y * verticalRotationSpeed;
 
         Vector3 currentRotation = _transform.localEulerAngles;
         float newRotationX = currentRotation.x - verticalRotationDelta;

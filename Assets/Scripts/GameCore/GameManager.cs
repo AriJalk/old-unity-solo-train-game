@@ -12,9 +12,7 @@ namespace SoloTrainGame.Core
         [SerializeField]
         private Transform prefabStorage;
 
-        [SerializeField]
-        private InputManager inputManager;
-
+        private InputManager _inputManager;
 
 
 
@@ -25,6 +23,7 @@ namespace SoloTrainGame.Core
             ServiceLocator.SetScriptableObjectManager();
             ServiceLocator.SetMaterialManager();
             gridController.Initialize();
+            _inputManager = ServiceLocator.InputManager;
         }
 
         void Start()
@@ -35,7 +34,7 @@ namespace SoloTrainGame.Core
         // Update is called once per frame
         void Update()
         {
-           
+           _inputManager.UpdateInput();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Engine.ResourceManagement;
+using SoloTrainGame.Core;
 using UnityEngine;
 
 namespace Engine
@@ -51,7 +52,13 @@ namespace Engine
             private set { _scriptableObjectManager = value; }
         }
 
+        static public InputManager InputManager { get; private set; }
 
+
+        static ServiceLocator()
+        {
+            InputManager = new InputManager();
+        }
 
         static public void SetScriptableObjectManager()
         {
