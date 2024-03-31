@@ -20,7 +20,7 @@ namespace SoloTrainGame.GameLogic
 
         public bool DeliverGood()
         {
-            if (IsDelivered == false)
+            if (!IsDelivered)
             {
                 IsDelivered = true;
                 return true;
@@ -30,7 +30,7 @@ namespace SoloTrainGame.GameLogic
 
         public bool RemoveGood()
         {
-            if (IsDelivered == true)
+            if (IsDelivered)
             {
                 IsDelivered = false;
                 return true;

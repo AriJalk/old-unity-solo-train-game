@@ -1,6 +1,6 @@
 ﻿namespace SoloTrainGame.Core
 {
-    public interface IGameState
+    public interface IActionState
     {
         void OnEnterGameState();
         void OnExitGameState();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexSystem
@@ -58,6 +59,16 @@ namespace HexSystem
                 return new Hex(hex.Position + DirectionVectorDictionary[direction]);
             }
             return null;
+        }
+
+        public static List<Hex> GetAllNeighbors(Hex hex)
+        {
+            List<Hex> list = new List<Hex>();
+            foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
+            {
+                list.Add(GetHexNeighbor(hex, direction));
+            }
+            return list;
         }
 
         private static float CalculateGap(float hexSize, float gapProportion)

@@ -22,7 +22,7 @@ namespace SoloTrainGame.Core
 
         public void UpdateInput()
         {
-            if (GraphicUserInterface.IsMouseOver == false)
+            if (!GraphicUserInterface.IsMouseOver)
             {
                 ProccessMouseButtons();
                 ProccessAxis();

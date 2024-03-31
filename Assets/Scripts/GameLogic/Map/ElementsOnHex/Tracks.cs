@@ -6,15 +6,15 @@
 
         public BuildingTypeSO BuildingType { get; }
 
-        public HexData HexTile { get; }
+        public HexGameData HexTile { get; }
 
-        private Tracks(HexData targetHex, BuildingTypeSO buildingType)
+        private Tracks(HexGameData targetHex, BuildingTypeSO buildingType)
         {
             BuildingType = buildingType;
             HexTile = targetHex;
         }
 
-        static public Tracks BuildTrack(HexData hexTile, BuildingTypeSO buildingType)
+        static public Tracks BuildTrack(HexGameData hexTile, BuildingTypeSO buildingType)
         {
             if (hexTile != null && hexTile.Tracks == null && Enums.BuildingType.Track <= hexTile.TileType.CanBuildUpTo)
                 return new Tracks(hexTile, buildingType);
@@ -23,7 +23,7 @@
 
         public bool UpgradeTrack()
         {
-            if (IsUpgraded == false)
+            if (!IsUpgraded)
             {
                 IsUpgraded = true;
             }

@@ -4,9 +4,9 @@ namespace SoloTrainGame.GameLogic
 {
     public class Town : SettlementBase
     {
-        private Town(HexData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot) : base(targetHex, buildingType, productionSlot) { }
+        private Town(HexGameData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot) : base(targetHex, buildingType, productionSlot) { }
 
-        static public Town BuildTown(HexData hexTile, BuildingTypeSO buildingType)
+        static public Town BuildTown(HexGameData hexTile, BuildingTypeSO buildingType)
         {
             if (hexTile != null && hexTile.Settlement == null && hexTile.Tracks != null && hexTile.TileType.CanBuildUpTo >= Enums.BuildingType.Town)
             {

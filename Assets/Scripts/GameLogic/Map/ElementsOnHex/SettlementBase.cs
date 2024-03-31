@@ -4,9 +4,9 @@
     {
         public BuildingTypeSO BuildingType { get; }
         public ProductionSlot ProductionSlot { get; }
-        public HexData HexTile { get; }
+        public HexGameData HexTile { get; }
 
-        public SettlementBase(HexData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot)
+        public SettlementBase(HexGameData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot)
         {
             BuildingType = buildingType;
             ProductionSlot = productionSlot;

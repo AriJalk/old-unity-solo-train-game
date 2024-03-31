@@ -4,15 +4,15 @@ namespace SoloTrainGame.Core
 {
     public class StateManager
     {
-        private Queue<IGameState> _stateQueue;
-        private IGameState _currentState;
+        private Queue<IActionState> _stateQueue;
+        private IActionState _currentState;
 
         public StateManager() 
         {
-            _stateQueue = new Queue<IGameState>();
+            _stateQueue = new Queue<IActionState>();
         }
 
-        public void AddState(IGameState state)
+        public void AddState(IActionState state)
         {
             _stateQueue.Enqueue(state);
         }

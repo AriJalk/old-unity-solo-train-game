@@ -6,7 +6,7 @@ using UnityEngine;
 public class HexTileObject : MonoBehaviour
 {
     public Transform CachedTransform { get; private set; }
-    public HexData HexData { get; set; }
+    public HexGameData HexGameData { get; set; }
 
     public List<HexTileObject> Neighbors { get; private set; }
 
@@ -15,6 +15,7 @@ public class HexTileObject : MonoBehaviour
     private void Awake()
     {
         CachedTransform = transform;
+        Neighbors = new List<HexTileObject>();
     }
 
     // Start is called before the first frame update
@@ -29,9 +30,9 @@ public class HexTileObject : MonoBehaviour
 
     }
 
-    public void Initialize(HexData hexData)
+    public void Initialize(HexGameData hexData)
     {
-        HexData = hexData;
+        HexGameData = hexData;
         Neighbors = new List<HexTileObject>();
     }
 }

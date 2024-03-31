@@ -2,7 +2,7 @@ using HexSystem;
 
 namespace SoloTrainGame.GameLogic
 {
-    public class HexData
+    public class HexGameData
     {
         public Hex Hex { get; private set; }
 
@@ -22,7 +22,7 @@ namespace SoloTrainGame.GameLogic
 
 
 
-        public HexData(Hex hex, TerrainTypeSO hexType)
+        public HexGameData(Hex hex, TerrainTypeSO hexType)
         {
             Hex = hex;
             TileType = hexType;
@@ -72,7 +72,7 @@ namespace SoloTrainGame.GameLogic
 
         public bool UpgradeRailsOnHex()
         {
-            if (Tracks != null && Tracks.IsUpgraded == false)
+            if (Tracks != null && !Tracks.IsUpgraded)
             {
                 return Tracks.UpgradeTrack();
             }

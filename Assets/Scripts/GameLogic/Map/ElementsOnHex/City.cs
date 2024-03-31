@@ -4,14 +4,14 @@
     {
         public DeliverySlot DeliverySlot { get; }
 
-        private City(HexData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot, DeliverySlot deliverySlot) : 
+        private City(HexGameData targetHex, BuildingTypeSO buildingType, ProductionSlot productionSlot, DeliverySlot deliverySlot) : 
             base(targetHex, buildingType, productionSlot)
         {
             DeliverySlot = deliverySlot;
         }
 
 
-        static public City BuildCity(HexData hexTile, BuildingTypeSO buildingType, GoodsTypeSO deliveryGoods)
+        static public City BuildCity(HexGameData hexTile, BuildingTypeSO buildingType, GoodsTypeSO deliveryGoods)
         {
             if (hexTile != null && hexTile.Settlement == null && hexTile.Tracks != null && hexTile.TileType.CanBuildUpTo >= Enums.BuildingType.City)
             {
@@ -22,7 +22,7 @@
             return null;
         }
 
-        public static City UpgradeTownToCity(HexData hexTile, BuildingTypeSO buildingType, DeliverySlot deliverySlot)
+        public static City UpgradeTownToCity(HexGameData hexTile, BuildingTypeSO buildingType, DeliverySlot deliverySlot)
         {
             if (hexTile.Settlement.BuildingType.BuildingTypeEnum == Enums.BuildingType.Town)
             {

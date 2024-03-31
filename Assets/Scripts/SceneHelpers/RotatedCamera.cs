@@ -107,7 +107,7 @@ public class RotatedCamera : MonoBehaviour
         {
             HexTileObject tile = RaycastHitToHexTile(CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition), layerMask));
             if (tile != null)
-                Debug.Log(tile.HexData.Hex.Position);
+                Debug.Log(tile.HexGameData.Hex.Position);
         }
     }
 

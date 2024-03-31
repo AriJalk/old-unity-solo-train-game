@@ -1,8 +1,6 @@
-﻿using SoloTrainGame.Core;
-
-namespace SoloTrainGame.GameLogic
+﻿namespace SoloTrainGame.Core
 {
-    public class BuildState : IGameState
+    public class BuildState : IActionState
     {
         public int AvailableMoney { get; private set; }
         public BuildState(int availableMoney)

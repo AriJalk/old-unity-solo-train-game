@@ -22,7 +22,7 @@ namespace SoloTrainGame.GameLogic
 
         public bool ProduceGood()
         {
-            if (IsProduced == false)
+            if (!IsProduced)
             {
                 IsProduced = true;
                 return true;
@@ -32,7 +32,7 @@ namespace SoloTrainGame.GameLogic
 
         public bool RemoveGood()
         {
-            if (IsProduced == true)
+            if (IsProduced)
             {
                 IsProduced = false;
                 return true;

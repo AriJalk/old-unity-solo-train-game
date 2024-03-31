@@ -1,5 +1,4 @@
-﻿
-using SoloTrainGame.Core;
+﻿using SoloTrainGame.Core;
 
 namespace SoloTrainGame.GameLogic
 {
@@ -7,14 +6,14 @@ namespace SoloTrainGame.GameLogic
     {
         private BuildState _state;
         private BuildingTypeSO _buildingType;
-        private HexData _hexTile;
+        private HexGameData _hexTile;
         private IBuilding _building;
         private int _paidCost;
 
         public bool CanExecute { get; private set; }
         public bool IsExecuted { get; private set; }
 
-        public BuildCommand(HexData hexTile, BuildingTypeSO buildingType, BuildState buildState)
+        public BuildCommand(HexGameData hexTile, BuildingTypeSO buildingType, BuildState buildState)
         {
             _state = buildState;
             _hexTile = hexTile;
@@ -44,7 +43,7 @@ namespace SoloTrainGame.GameLogic
 
         public void Execute()
         {
-            if (CanExecute == true)
+            if (CanExecute)
             {
                 _hexTile.BuildOnHex(_building);
                 _state.RemoveMoney(_paidCost);
@@ -54,7 +53,7 @@ namespace SoloTrainGame.GameLogic
 
         public void Undo()
         {
-            if (IsExecuted == true)
+            if (IsExecuted)
             {
                 _hexTile.RemoveBuildingFromHex(_building);
                 _state.AddMoney(_paidCost);

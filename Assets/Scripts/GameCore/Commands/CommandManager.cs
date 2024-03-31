@@ -13,7 +13,7 @@ namespace SoloTrainGame.Core
 
         public bool AddAndExecuteCommand(IGameCommand command)
         {
-            if (command.CanExecute == true)
+            if (command.CanExecute)
             {
                 _commandStack.Push(command);
                 return true;

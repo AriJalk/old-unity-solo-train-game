@@ -3,6 +3,6 @@
     public interface IBuilding 
     { 
         BuildingTypeSO BuildingType { get; }
-        HexData HexTile {  get; }
+        HexGameData HexTile {  get; }
     }
 }

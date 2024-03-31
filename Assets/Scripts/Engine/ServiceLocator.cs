@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Engine
 {
+    /// <summary>
+    /// Contains all resources that needs global access
+    /// </summary>
     public static class ServiceLocator
     {
         private static PrefabManager _prefabManager;
