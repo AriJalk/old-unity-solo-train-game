@@ -1,16 +1,21 @@
 using HexSystem;
 using SoloTrainGame.GameLogic;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HexTileObject : MonoBehaviour
 {
+    public MeshRenderer MeshRenderer;
+    public TextMeshPro CostText;
+
     public Transform CachedTransform { get; private set; }
     public HexGameData HexGameData { get; set; }
 
     public List<HexTileObject> Neighbors { get; private set; }
 
-    public MeshRenderer MeshRenderer;
+
+
 
     private void Awake()
     {

@@ -30,6 +30,7 @@ public class UIHand : MonoBehaviour
             CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
             cardObject?.SetCard(cardData);
             cardObject?.transform.SetParent(content.transform);
+            cardObject?.Card.CardData.cardBehavior.StartBehavior(cardSO);
         }
     }
 }

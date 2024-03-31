@@ -91,9 +91,11 @@ namespace SoloTrainGame.Core
         private void CreateTile(Hex hex, Enums.TerrainType type)
         {
             HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
-            tile.HexGameData = new HexGameData(hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[type]);
+            TerrainTypeSO terrainType = ServiceLocator.ScriptableObjectManager.TerrainTypes[type];
+            tile.HexGameData = new HexGameData(hex, terrainType);
             tile.CachedTransform.SetParent(transform);
             hexTileDictionary.Add(hex, tile);
+            tile.CostText.text = terrainType.TerrainCost.ToString() + "$";
             ConnectNeighbors(tile);
             UpdateTilePosition(tile);
             SetTileMaterial(tile);
