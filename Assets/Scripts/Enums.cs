@@ -31,4 +31,11 @@
         Town,
         City,
     }
+
+    public enum CardType
+    {
+        Build,
+        Transport,
+        Special,
+    }
 }

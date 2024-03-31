@@ -9,15 +9,18 @@ public class ScriptableObjectManager
     public Dictionary<Enums.BuildingType, BuildingTypeSO> BuildingTypes { get; private set; }
     public Dictionary<Enums.GoodsType, GoodsTypeSO> GoodsTypes { get; private set; }
     public Dictionary<Enums.TerrainType, TerrainTypeSO> TerrainTypes { get; private set; }
+    public List<CardSO> CardTypes { get; private set; }
 
     public ScriptableObjectManager()
     {
         BuildingTypes = new Dictionary<Enums.BuildingType, BuildingTypeSO>();
         GoodsTypes = new Dictionary<Enums.GoodsType, GoodsTypeSO>();
         TerrainTypes = new Dictionary<Enums.TerrainType, TerrainTypeSO>();
+        CardTypes = new List<CardSO>();
         LoadBuildingTypes();
         LoadGoodsTypes();
         LoadTerrainTypes();
+        LoadCardTypes();
 
     }
 
@@ -72,6 +75,16 @@ public class ScriptableObjectManager
             {
                 Debug.LogError("Cant load: " + type);
             }
+        }
+    }
+
+    public void LoadCardTypes()
+    {
+        string path = "ScriptableObjects/CardType/";
+        CardSO[] cards = Resources.LoadAll<CardSO>(path);
+        foreach (CardSO card in cards)
+        {
+            CardTypes.Add(card);
         }
     }
 

@@ -1,10 +1,10 @@
 ﻿namespace SoloTrainGame.GameLogic
 {
-    public class Card
+    public class CardInstance
     {
         public CardSO CardData { get; private set; }
 
-        public Card(CardSO cardData)
+        public CardInstance(CardSO cardData)
         {
             CardData = cardData;
         }

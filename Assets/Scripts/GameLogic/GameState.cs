@@ -7,32 +7,32 @@ namespace SoloTrainGame.GameLogic
     {
         private readonly HexGridController _gridController;
 
-        public readonly List<Card> CardHand;
-        public readonly Stack<Card> DiscardPile;
-        public readonly Stack<Card> BrownDeck;
-        public readonly Stack<Card> GreyDeck;
-        public readonly Stack<Card> RedDeck;
-        public readonly List<Card> CardDisplay;
-        public readonly List<Card> RemovedCards;
+        public readonly List<CardInstance> CardHand;
+        public readonly Stack<CardInstance> DiscardPile;
+        public readonly Stack<CardInstance> BrownDeck;
+        public readonly Stack<CardInstance> GreyDeck;
+        public readonly Stack<CardInstance> RedDeck;
+        public readonly List<CardInstance> CardDisplay;
+        public readonly List<CardInstance> RemovedCards;
 
         public GameState(HexGridController gridController)
         {
             _gridController = gridController;
 
-            CardHand = new List<Card>();
-            DiscardPile = new Stack<Card>();
-            BrownDeck = new Stack<Card>();
-            GreyDeck = new Stack<Card>();
-            RedDeck = new Stack<Card>();
-            CardDisplay = new List<Card>();
-            RemovedCards = new List<Card>();
+            CardHand = new List<CardInstance>();
+            DiscardPile = new Stack<CardInstance>();
+            BrownDeck = new Stack<CardInstance>();
+            GreyDeck = new Stack<CardInstance>();
+            RedDeck = new Stack<CardInstance>();
+            CardDisplay = new List<CardInstance>();
+            RemovedCards = new List<CardInstance>();
         }
 
         public void RefreshDisplay()
         {
             while (CardDisplay.Count > 0)
             {
-                Card card = CardDisplay[0];
+                CardInstance card = CardDisplay[0];
                 RemovedCards.Add(card);
             }
             if (BrownDeck.Count > 0)
