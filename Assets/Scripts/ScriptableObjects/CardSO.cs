@@ -12,6 +12,16 @@ namespace SoloTrainGame.GameLogic
         public int GeneratedMoney;
         public int GeneratedTransport;
         public CardBehaviorSO CardBehavior;
+
+        public override string ToString()
+        {
+            string str = "Name: " + Name;
+            str += ", Description: " + Description;
+            str += ", Card Type: " + CardType;
+            str += ", Money: " + GeneratedMoney;
+            str += ", Transport: " + GeneratedTransport;
+            return str;
+        }
     }
 
 }

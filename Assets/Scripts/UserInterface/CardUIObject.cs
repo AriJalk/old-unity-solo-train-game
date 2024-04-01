@@ -15,6 +15,7 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
     public TextMeshProUGUI DescriptionText;
     public Image Border;
 
+
     public CardInstance CardInstance { get; private set; }
 
     public void Awake()

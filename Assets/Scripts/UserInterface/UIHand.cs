@@ -1,22 +1,30 @@
+
+
 using Engine;
-using Engine.ResourceManagement;
 using SoloTrainGame.GameLogic;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
 
 public class UIHand : MonoBehaviour
 {
+    public UnityEvent<CardUIObject> CardClickedEvent;
+
     [SerializeField]
-    private HorizontalLayoutGroup content;
+    private HorizontalLayoutGroup _content;
 
     private List<CardUIObject> _cardsHand;
-    private Transform _parentTransform;
+
+    private void Awake()
+    {
+        CardClickedEvent = new UnityEvent<CardUIObject>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        _parentTransform = transform.parent;
         ServiceLocator.PrefabManager.LoadAndRegisterPrefab<CardUIObject>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardPrefab", 50);
         ServiceLocator.PrefabManager.LoadAndRegisterPrefab<UICardView>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardViewPrefab", 1);
         _cardsHand = new List<CardUIObject>();
@@ -40,11 +48,7 @@ public class UIHand : MonoBehaviour
 
     private void CardClicked(CardUIObject card)
     {
-        Debug.Log(card.CardInstance.CardData.CardType);
-        UICardView view = ServiceLocator.PrefabManager.RetrievePoolObject<UICardView>();
-        RectUtilities.SetParentAndResetPosition(view.TransformCache, _parentTransform);
-        view.SetCard(card.CardInstance);
-        
+        CardClickedEvent.Invoke(card);
     }
 
     private void BuildTestHand()
@@ -55,7 +59,7 @@ public class UIHand : MonoBehaviour
             CardInstance cardData = new CardInstance(cardSO);
             CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
             cardObject.SetCard(cardData);
-            cardObject.transform.SetParent(content.transform);
+            cardObject.transform.SetParent(_content.transform);
             cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
             cardObject.CardClicked.AddListener(CardClicked);
             _cardsHand.Add(cardObject);

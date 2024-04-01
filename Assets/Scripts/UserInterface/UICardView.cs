@@ -17,7 +17,6 @@ public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField]
     private Button _backButton;
 
-    private CardInstance _card;
     private CardUIObject _cardUI;
 
     public Transform TransformCache { get; private set; }
@@ -27,12 +26,38 @@ public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         TransformCache = transform;
     }
 
+    private void ResetView()
+    {
+        if (_cardUI != null)
+        {
+            ServiceLocator.PrefabManager.ReturnPoolObject(_cardUI);
+            _backButton.onClick.RemoveListener(CloseView);
+            _playActionButton.onClick.RemoveListener(PlayAction);
+        }
+    }
+
+    private void CloseView()
+    {
+        ResetView();
+        gameObject.SetActive(false);
+    }
+
+    private void PlayAction()
+    {
+        if (_cardUI != null && (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)))
+        {
+            Debug.Log(_cardUI.CardInstance.CardData);
+        }
+    }
+
     public void SetCard(CardInstance card)
     {
-        _card = card;
+        ResetView();
         _cardUI = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
         _cardUI.SetCard(card);
         RectUtilities.SetParentAndResetPosition(_cardUI.transform, _cardSlotTransform);
+        _backButton.onClick.AddListener(CloseView);
+        _playActionButton.onClick.AddListener(PlayAction);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
