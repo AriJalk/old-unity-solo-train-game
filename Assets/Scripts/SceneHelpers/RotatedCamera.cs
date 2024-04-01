@@ -1,6 +1,7 @@
 
 using Engine;
 using SoloTrainGame.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,7 @@ public class RotatedCamera : MonoBehaviour
 {
     const float RADIUS = 3f;
     const float MIN_RADIUS = 1f;
-    const float MAX_RADIUS = 8f;
+    const float MAX_RADIUS = 12f;
 
 
     [SerializeField]
@@ -21,11 +22,14 @@ public class RotatedCamera : MonoBehaviour
     [Range(0f, 5f)]
     private float _overBounds = 1f;
     [SerializeField]
+    [Range(0.5f, 20f)]
+    private float verticalRotationSpeed = 5f;
+    [SerializeField]
     [Range(1f, 500f)]
     private float _scrollSpeedBase = 50f;
     [SerializeField]
-    [Range(0.5f, 20f)]
-    private float verticalRotationSpeed = 5f;
+    [Range(0f, 20f)]
+    private float _scrollInertion = 2f;
 
     Transform _transform;
     Camera _camera;
@@ -34,6 +38,8 @@ public class RotatedCamera : MonoBehaviour
     // Degress for camera rotation
     private float _degrees;
     private float currentRadius = RADIUS;
+    // For momentum scroll
+    float _scroll;
 
     // For raycasting
     private int tileLayer;
@@ -41,9 +47,6 @@ public class RotatedCamera : MonoBehaviour
     private int layerMask;
 
     private InputManager _inputManager;
-    private UnityEvent<int, Vector2> _mouseButtonClickedDownEvent;
-    private UnityEvent<int, Vector2> _mouseButtonHeldEvent;
-    private UnityEvent<Vector2> _axisMovedEvent;
 
     void Start()
     {
@@ -55,10 +58,7 @@ public class RotatedCamera : MonoBehaviour
         backgroundLayer = 1 << LayerMask.NameToLayer("Background");
         layerMask = tileLayer | backgroundLayer;
         _inputManager = ServiceLocator.InputManager;
-
-        _mouseButtonClickedDownEvent = _inputManager.MouseButtonClickedDownEvent;
-        _mouseButtonHeldEvent = _inputManager.MouseButtonHeldEvent;
-        _axisMovedEvent = _inputManager.AxisMovedEvent;
+        _scroll = 0;
         AddInputListeners();
 
         UpdateCameraPosition(true);
@@ -67,11 +67,20 @@ public class RotatedCamera : MonoBehaviour
 
     void Update()
     {
+        // Zoom momentum
+        if (_scroll > 0)
+        {
+            _scroll -= Time.deltaTime * _scrollSpeedBase;
 
-
-        float scroll = Input.mouseScrollDelta.y;
-        if (scroll != 0)
-            ZoomCamera(scroll);
+            _scroll = Mathf.Clamp(_scroll, 0, 100);
+            ZoomCamera(_scroll);
+        }
+        else if (_scroll < 0)
+        {
+            _scroll += Time.deltaTime * _scrollSpeedBase;
+            _scroll = Mathf.Clamp(_scroll, -100, 0);
+            ZoomCamera(_scroll);
+        }
     }
 
     private void OnDestroy()
@@ -81,16 +90,19 @@ public class RotatedCamera : MonoBehaviour
 
     void AddInputListeners()
     {
-        _mouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
-        _axisMovedEvent?.AddListener(MoveCamera);
-        _mouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
+        _inputManager.MouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
+        _inputManager.AxisMovedEvent?.AddListener(MoveCamera);
+        _inputManager.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
+        _inputManager.MouseScrolledEvent?.AddListener(MouseScrolled);
+
     }
 
     void RemoveInputListeners()
     {
-        _mouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
-        _axisMovedEvent?.RemoveListener(MoveCamera);
-        _mouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
+        _inputManager.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
+        _inputManager.AxisMovedEvent?.RemoveListener(MoveCamera);
+        _inputManager.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
+        _inputManager.MouseScrolledEvent?.RemoveListener(MouseScrolled);
     }
 
     void ProccessHeldEvent(int index, Vector2 movement)
@@ -149,6 +161,11 @@ public class RotatedCamera : MonoBehaviour
         currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
         currentRadius = Mathf.Clamp(currentRadius, MIN_RADIUS, MAX_RADIUS);
         UpdateCameraPosition(true);
+    }
+
+    void MouseScrolled(float scroll)
+    {
+        _scroll = scroll * _scrollInertion;
     }
 
 

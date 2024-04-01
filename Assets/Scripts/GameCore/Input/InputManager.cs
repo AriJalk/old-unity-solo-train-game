@@ -9,6 +9,7 @@ namespace SoloTrainGame.Core
         public UnityEvent<int, Vector2> MouseButtonHeldEvent;
         public UnityEvent<Vector2> MouseMovedEvent;
         public UnityEvent<Vector2> AxisMovedEvent;
+        public UnityEvent<float> MouseScrolledEvent;
 
         public bool IsButtonHeld { get; private set; }
 
@@ -18,6 +19,7 @@ namespace SoloTrainGame.Core
             MouseButtonHeldEvent = new UnityEvent<int, Vector2>();
             MouseMovedEvent = new UnityEvent<Vector2>();
             AxisMovedEvent = new UnityEvent<Vector2>();
+            MouseScrolledEvent = new UnityEvent<float>();
         }
 
         public void UpdateInput()
@@ -27,6 +29,7 @@ namespace SoloTrainGame.Core
                 ProccessMouseButtons();
             }
             ProccessAxis();
+            ProccessScroll();
         }
 
         private void ProccessMouseButtons()
@@ -62,6 +65,13 @@ namespace SoloTrainGame.Core
 
             if (horizontalInput != 0 || verticalInput != 0)
                 AxisMovedEvent?.Invoke(new Vector2(horizontalInput, verticalInput));
+        }
+
+        private void ProccessScroll()
+        {
+            float scroll = Input.mouseScrollDelta.y;
+            if (scroll != 0)
+                MouseScrolledEvent.Invoke(scroll);
         }
     }
 }

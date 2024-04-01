@@ -1288,6 +1288,7 @@ MonoBehaviour:
   _overBounds: 1
   _scrollSpeedBase: 10
   verticalRotationSpeed: 5
+  _scrollInertion: 2.5
 --- !u!1 &1360733302
 GameObject:
   m_ObjectHideFlags: 0
