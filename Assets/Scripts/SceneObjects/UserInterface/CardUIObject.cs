@@ -1,15 +1,17 @@
 using SoloTrainGame.GameLogic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUIObject : MonoBehaviour
+public class CardUIObject : MonoBehaviour, IPointerCombined
 {
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI TransportText;
+    public TextMeshProUGUI DescriptionText;
     public Image Border;
-    public CardInstance Card {  get; private set; }
+    public CardInstance Card { get; private set; }
 
 
     public void SetCard(CardInstance card)
@@ -19,6 +21,7 @@ public class CardUIObject : MonoBehaviour
         NameText.text = Card.CardData.Name;
         MoneyText.text = Card.CardData.GeneratedMoney.ToString() + "$";
         TransportText.text = Card.CardData.GeneratedTransport.ToString() + "T";
+        DescriptionText.text = Card.CardData.Description;
         switch (card.CardData.CardType)
         {
             case Enums.CardType.Build:
@@ -32,5 +35,32 @@ public class CardUIObject : MonoBehaviour
                 break;
         }
 
+    }
+
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("DOWN CARD");
+    }
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("ENTER CARD");
+        GraphicUserInterface.IsMouseOver = true;
+    }
+
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Debug.Log("EXIT CARD");
+        GraphicUserInterface.IsMouseOver = false;
+
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("UP CARD");
+        Card.CardData.CardBehavior.StartBehavior(Card.CardData);
     }
 }

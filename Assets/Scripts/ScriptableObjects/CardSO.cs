@@ -11,7 +11,7 @@ namespace SoloTrainGame.GameLogic
         public Enums.CardType CardType;
         public int GeneratedMoney;
         public int GeneratedTransport;
-        public CardBehaviorSO cardBehavior;
+        public CardBehaviorSO CardBehavior;
     }
 
 }

@@ -224,7 +224,7 @@ public class RotatedCamera : MonoBehaviour
 
     HexTileObject RaycastHitToHexTile(RaycastHit hit)
     {
-        if (hit.collider != null && hit.collider.transform.parent.GetComponent<HexTileObject>() is HexTileObject tileObject)
+        if (hit.collider != null && hit.collider.transform.parent?.GetComponent<HexTileObject>() is HexTileObject tileObject)
         {
             return tileObject;
         }

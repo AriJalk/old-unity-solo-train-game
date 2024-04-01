@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:74cf7470f3e957a2a4b67eeb31e9cb6ca5ddd77493d1079da21a71bc38647180
-size 623
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34f12149f6c76a04ca956a690d109bb0, type: 3}
+  m_Name: 1 ConstructionCompany
+  m_EditorClassIdentifier: 
+  Name: Construction Company
+  Description: Perform Basic Build Action
+  CardType: 0
+  GeneratedMoney: 2
+  GeneratedTransport: 1
+  CardBehavior: {fileID: 11400000, guid: b80e02fb0edbf424e92aa8c68aaabe58, type: 2}

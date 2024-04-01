@@ -25,8 +25,8 @@ namespace SoloTrainGame.Core
             if (!GraphicUserInterface.IsMouseOver)
             {
                 ProccessMouseButtons();
-                ProccessAxis();
             }
+            ProccessAxis();
         }
 
         private void ProccessMouseButtons()
