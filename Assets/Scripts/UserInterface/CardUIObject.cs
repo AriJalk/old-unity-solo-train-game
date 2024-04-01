@@ -1,27 +1,35 @@
 using SoloTrainGame.GameLogic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CardUIObject : MonoBehaviour, IPointerCombined
 {
+    public UnityEvent<CardUIObject> CardClicked;
+
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI TransportText;
     public TextMeshProUGUI DescriptionText;
     public Image Border;
-    public CardInstance Card { get; private set; }
 
+    public CardInstance CardInstance { get; private set; }
+
+    public void Awake()
+    {
+        CardClicked = new UnityEvent<CardUIObject>();
+    }
 
     public void SetCard(CardInstance card)
     {
-        Card = card;
+        CardInstance = card;
 
-        NameText.text = Card.CardData.Name;
-        MoneyText.text = Card.CardData.GeneratedMoney.ToString() + "$";
-        TransportText.text = Card.CardData.GeneratedTransport.ToString() + "T";
-        DescriptionText.text = Card.CardData.Description;
+        NameText.text = CardInstance.CardData.Name;
+        MoneyText.text = CardInstance.CardData.GeneratedMoney.ToString() + "$";
+        TransportText.text = CardInstance.CardData.GeneratedTransport.ToString() + "T";
+        DescriptionText.text = CardInstance.CardData.Description;
         switch (card.CardData.CardType)
         {
             case Enums.CardType.Build:
@@ -37,30 +45,24 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
 
     }
 
-
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("DOWN CARD");
+        Debug.Log("UP CARD, CLICKED");
+        CardClicked.Invoke(this);
     }
-
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("ENTER CARD");
-        GraphicUserInterface.IsMouseOver = true;
+        Debug.Log("Enter Card");
     }
-
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("EXIT CARD");
-        GraphicUserInterface.IsMouseOver = false;
-
+        Debug.Log("Exit Card");
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("UP CARD");
-        Card.CardData.CardBehavior.StartBehavior(Card.CardData);
+        Debug.Log("Down Card");
     }
 }

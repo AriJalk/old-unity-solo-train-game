@@ -459,6 +459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc330538fc02104d9d320853c82d791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CardClicked:
+    m_PersistentCalls:
+      m_Calls: []
   NameText: {fileID: 1722695319551505570}
   MoneyText: {fileID: 8435170544700054476}
   TransportText: {fileID: 1622907861727837025}
@@ -477,10 +480,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 126
-  m_MinHeight: 176
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
+  m_MinWidth: 63
+  m_MinHeight: 88
+  m_PreferredWidth: 126
+  m_PreferredHeight: 176
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1

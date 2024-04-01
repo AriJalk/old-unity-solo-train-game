@@ -8,6 +8,8 @@ public class GraphicUserInterface : MonoBehaviour
 
     static public bool IsMouseOver;
 
+    static public bool IsUILocked;
+
     // Start is called before the first frame update
     void Start()
     {
