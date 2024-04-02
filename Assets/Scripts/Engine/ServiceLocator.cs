@@ -47,26 +47,21 @@ namespace Engine
         }
 
 
-        static private ScriptableObjectManager _scriptableObjectManager;
 
-        static public ScriptableObjectManager ScriptableObjectManager
-        {
-            get { return _scriptableObjectManager; }
-            private set { _scriptableObjectManager = value; }
-        }
+        static public ScriptableObjectManager ScriptableObjectManager { get; }
 
         static public InputManager InputManager { get; private set; }
 
+        static public TimerManager TimerManager { get; private set; }
 
         static ServiceLocator()
         {
             InputManager = new InputManager();
+            TimerManager = new TimerManager();
+            ScriptableObjectManager = new ScriptableObjectManager();
+            SetMaterialManager();
         }
 
-        static public void SetScriptableObjectManager()
-        {
-            _scriptableObjectManager = new ScriptableObjectManager();
-        }
 
         static public void SetPrefabManagerManager(Transform transform)
         {

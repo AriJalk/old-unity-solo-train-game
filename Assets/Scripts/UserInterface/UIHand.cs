@@ -5,15 +5,22 @@ using SoloTrainGame.GameLogic;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
-public class UIHand : MonoBehaviour
+public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public const float CARD_GAP = 1f;
     public UnityEvent<CardUIObject> CardClickedEvent;
 
     [SerializeField]
-    private HorizontalLayoutGroup _content;
+    [Range(1f, 4f)]
+    private float _cardSizeMultiplierX = 1f;
+    [SerializeField]
+    [Range(1f, 4f)]
+    private float _cardSizeMultiplierY = 1f;
+    [SerializeField]
+    private ResizableContent _cardsTransform;
 
     private List<CardUIObject> _cardsHand;
 
@@ -56,13 +63,86 @@ public class UIHand : MonoBehaviour
 
         foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
         {
-            CardInstance cardData = new CardInstance(cardSO);
-            CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
-            cardObject.SetCard(cardData);
-            cardObject.transform.SetParent(_content.transform);
-            cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
-            cardObject.CardClicked.AddListener(CardClicked);
-            _cardsHand.Add(cardObject);
+            PlaceCard(cardSO);
         }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        {
+            PlaceCard(cardSO);
+        }
+    }
+
+    private Vector2 CalculatePosition(int index, Vector2 size)
+    {
+        float modifier = size.x / 2f;
+        float xOffset = size.x * CARD_GAP * 0.5f;
+        float x = ((index % 2 == 0) ? 1 : -1) * (xOffset + index / 2 * size.x * CARD_GAP);
+        return new Vector2(x, 0);
+    }
+
+
+
+
+    private void PlaceCard(CardSO cardSO)
+    {
+        GameObject container = new GameObject();
+        RectTransform containerRectTransform = container.AddComponent<RectTransform>();
+        CardInstance cardData = new CardInstance(cardSO);
+        CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
+        cardObject.SetCard(cardData);
+        cardObject.transform.SetParent(container.transform);
+        _cardsTransform.AddToTransform(container.transform);
+        containerRectTransform.localScale = Vector2.one;
+        Vector2 size = new Vector2(CardUIObject.CARD_SIZE_X * _cardSizeMultiplierX, CardUIObject.CARD_SIZE_Y * _cardSizeMultiplierY);
+        containerRectTransform.sizeDelta = size;
+        container.transform.localPosition = CalculatePosition(_cardsHand.Count, containerRectTransform.sizeDelta);
+        cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
+        cardObject.CardClicked.AddListener(CardClicked);
+        _cardsHand.Add(cardObject);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //Debug.Log("HAND ENTER");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //Debug.Log("HAND EXIT");
     }
 }

@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class CardUIObject : MonoBehaviour, IPointerCombined
 {
+    public const int CARD_SIZE_X = 63;
+    public const int CARD_SIZE_Y = 88;
+
     public UnityEvent<CardUIObject> CardClicked;
 
     public TextMeshProUGUI NameText;
@@ -48,22 +51,22 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("UP CARD, CLICKED");
+        //Debug.Log("UP CARD, CLICKED");
         CardClicked.Invoke(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Enter Card");
+        //Debug.Log("Enter Card");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Exit Card");
+        //Debug.Log("Exit Card");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Down Card");
+        //Debug.Log("Down Card");
     }
 }

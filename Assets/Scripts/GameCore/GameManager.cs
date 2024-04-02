@@ -20,8 +20,6 @@ namespace SoloTrainGame.Core
         void Awake()
         {
             ServiceLocator.SetPrefabManagerManager(prefabStorage);
-            ServiceLocator.SetScriptableObjectManager();
-            ServiceLocator.SetMaterialManager();
             gridController.Initialize();
             _inputManager = ServiceLocator.InputManager;
         }
@@ -34,7 +32,8 @@ namespace SoloTrainGame.Core
         // Update is called once per frame
         void Update()
         {
-           _inputManager.UpdateInput();
+            _inputManager.UpdateInput();
+            ServiceLocator.TimerManager.Update();
         }
 
     }

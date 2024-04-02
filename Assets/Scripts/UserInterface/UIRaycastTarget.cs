@@ -21,12 +21,12 @@ public class UIRaycastTarget : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         GraphicUserInterface.IsMouseOver = true;
-        Debug.Log("Enter");
+        //Debug.Log("Enter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         GraphicUserInterface.IsMouseOver = false;
-        Debug.Log("Exit");
+        //Debug.Log("Exit");
     }
 }
