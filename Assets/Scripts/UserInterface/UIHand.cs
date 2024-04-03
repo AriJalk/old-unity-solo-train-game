@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public const float CARD_GAP = 1f;
     public const float CARD_ASPECT_RATIO = 0.7159091f;
+    public const float CARD_PADDING = 10f;
     public UnityEvent<CardUIObject> CardClickedEvent;
 
     [SerializeField]
@@ -22,6 +24,8 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private float _cardSizeMultiplierY = 1f;
     [SerializeField]
     private ResizableContent _cardsTransform;
+    [SerializeField]
+    private ScrollRect _scrollRect;
 
     private List<CardUIObject> _cardsHand;
 
@@ -42,7 +46,7 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void OnDestroy()
@@ -61,7 +65,7 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void BuildTestHand()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
             {
@@ -72,7 +76,6 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private Vector2 CalculatePosition(int index, Vector2 size)
     {
-        float modifier = size.x / 2f;
         float xOffset = size.x * CARD_GAP * 0.5f;
         float x = ((index % 2 == 0) ? 1 : -1) * (xOffset + index / 2 * size.x * CARD_GAP);
         return new Vector2(x, 0);
@@ -83,19 +86,30 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void PlaceCard(CardSO cardSO)
     {
+        // Create container for the card
         GameObject container = new GameObject();
         RectTransform containerRectTransform = container.AddComponent<RectTransform>();
         CardInstance cardData = new CardInstance(cardSO);
+        // Set prefab card to card instance
         CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
         cardObject.SetCard(cardData);
-        cardObject.transform.SetParent(container.transform);
-        _cardsTransform.AddToTransform(container.transform);
+
+        cardObject.RectTransform.SetParent(containerRectTransform);
+        containerRectTransform.SetParent(_cardsTransform.RectTransform);
         containerRectTransform.localScale = Vector2.one;
-        float height = _cardsTransform.RectTransform.rect.height -10f;
+
+        // Calculate size according to height and aspect ratio
+
+        float height = _cardsTransform.RectTransform.rect.height - CARD_PADDING;
         Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
         container.transform.localPosition = CalculatePosition(_cardsHand.Count, containerRectTransform.sizeDelta);
-        _cardsTransform.Resize(cardObject.transform);
+
+
+        // Resize the hand size so it can be dragged
+        _cardsTransform.Resize(cardObject.RectTransform, 2f * size.x);
+
+        // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
         cardObject.CardClicked.AddListener(CardClicked);
         _cardsHand.Add(cardObject);

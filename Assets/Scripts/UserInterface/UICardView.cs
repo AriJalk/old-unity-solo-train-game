@@ -26,11 +26,17 @@ public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         TransformCache = transform;
     }
 
+    private void OnDestroy()
+    {
+        ResetView();
+    }
+
     private void ResetView()
     {
         if (_cardUI != null)
         {
             ServiceLocator.PrefabManager.ReturnPoolObject(_cardUI);
+            _cardUI = null;
             _backButton.onClick.RemoveListener(CloseView);
             _playActionButton.onClick.RemoveListener(PlayAction);
         }

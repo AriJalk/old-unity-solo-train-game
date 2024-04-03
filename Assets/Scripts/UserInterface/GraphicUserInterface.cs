@@ -27,6 +27,11 @@ public class GraphicUserInterface : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        Hand.CardClickedEvent.RemoveListener(CardClicked);
+    }
+
     private void CardClicked(CardUIObject card)
     {
         if (card != null)

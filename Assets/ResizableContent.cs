@@ -14,7 +14,7 @@ public class ResizableContent : MonoBehaviour
         //Resize(newObject);
     }
 
-    public void Resize(Transform newObject)
+    public void Resize(RectTransform newObject, float modifier = 0)
     {
         float newX = newObject.position.x;
         if (newX < minX)
@@ -26,6 +26,6 @@ public class ResizableContent : MonoBehaviour
             maxX = newX;
         }
 
-        RectTransform.sizeDelta = new Vector2(maxX, RectTransform.sizeDelta.y);
+        RectTransform.sizeDelta = new Vector2(maxX - modifier, RectTransform.sizeDelta.y);
     }
 }

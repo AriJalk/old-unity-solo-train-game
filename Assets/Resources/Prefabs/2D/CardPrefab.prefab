@@ -436,7 +436,7 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -463,6 +463,7 @@ MonoBehaviour:
   CardClicked:
     m_PersistentCalls:
       m_Calls: []
+  RectTransform: {fileID: 9021297506745534782}
   NameText: {fileID: 1722695319551505570}
   MoneyText: {fileID: 8435170544700054476}
   TransportText: {fileID: 1622907861727837025}

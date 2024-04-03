@@ -115,7 +115,7 @@ public class RotatedCamera : MonoBehaviour
 
     void ProccessMouseClick(int index, Vector2 position)
     {
-        if (index == 0)
+        if (index == 0 && !GraphicUserInterface.IsMouseOver)
         {
             HexTileObject tile = RaycastHitToHexTile(CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition), layerMask));
             if (tile != null)
@@ -165,7 +165,10 @@ public class RotatedCamera : MonoBehaviour
 
     void MouseScrolled(float scroll)
     {
-        _scroll = scroll * _scrollInertion;
+        if (!GraphicUserInterface.IsMouseOver)
+        {
+            _scroll = scroll * _scrollInertion;
+        }
     }
 
 
@@ -192,9 +195,6 @@ public class RotatedCamera : MonoBehaviour
         // Update camera position
         UpdateCameraPosition(true);
     }
-
-
-
 
 
 

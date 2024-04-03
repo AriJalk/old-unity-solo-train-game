@@ -12,6 +12,7 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
 
     public UnityEvent<CardUIObject> CardClicked;
 
+    public RectTransform RectTransform;
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI TransportText;
@@ -19,7 +20,9 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
     public Image Border;
 
 
+    private bool _isButtonDown;
     public CardInstance CardInstance { get; private set; }
+    
 
     public void Awake()
     {
@@ -51,8 +54,12 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        //Debug.Log("UP CARD, CLICKED");
-        CardClicked.Invoke(this);
+        Debug.Log("UP CARD, CLICKED");
+        if (_isButtonDown && Input.GetMouseButtonUp(0))
+        {
+            CardClicked.Invoke(this);
+            _isButtonDown = false;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -62,11 +69,12 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        //Debug.Log("Exit Card");
+        _isButtonDown = false;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("Down Card");
+        _isButtonDown = true;
     }
 }
