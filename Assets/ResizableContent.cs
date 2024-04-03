@@ -11,18 +11,19 @@ public class ResizableContent : MonoBehaviour
     public void AddToTransform(Transform newObject)
     {
         newObject.SetParent(RectTransform);
-        Resize(newObject);
+        //Resize(newObject);
     }
 
     public void Resize(Transform newObject)
     {
-        if (newObject.position.x < minX)
+        float newX = newObject.position.x;
+        if (newX < minX)
         {
-            minX = newObject.position.x;
+            minX = newX;
         }
-        else if (newObject.position.x > maxX)
+        else if (newX > maxX)
         {
-            maxX = newObject.position.x;
+            maxX = newX;
         }
 
         RectTransform.sizeDelta = new Vector2(maxX, RectTransform.sizeDelta.y);

@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 9021297506745534782}
   - component: {fileID: 1347126458098938079}
   - component: {fileID: 7410131319254417569}
-  - component: {fileID: 2830128055709765166}
+  - component: {fileID: 534039487022538912}
   m_Layer: 5
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -436,7 +436,7 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -468,7 +468,7 @@ MonoBehaviour:
   TransportText: {fileID: 1622907861727837025}
   DescriptionText: {fileID: 6462719604345712674}
   Border: {fileID: 5809968389807599959}
---- !u!114 &2830128055709765166
+--- !u!114 &534039487022538912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

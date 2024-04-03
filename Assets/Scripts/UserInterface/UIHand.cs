@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public const float CARD_GAP = 1f;
+    public const float CARD_ASPECT_RATIO = 0.7159091f;
     public UnityEvent<CardUIObject> CardClickedEvent;
 
     [SerializeField]
@@ -60,50 +61,12 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void BuildTestHand()
     {
-
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+        for (int i = 0; i < 10; i++)
         {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
-        }
-        foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-        {
-            PlaceCard(cardSO);
+            foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+            {
+                PlaceCard(cardSO);
+            }
         }
     }
 
@@ -128,9 +91,11 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         cardObject.transform.SetParent(container.transform);
         _cardsTransform.AddToTransform(container.transform);
         containerRectTransform.localScale = Vector2.one;
-        Vector2 size = new Vector2(CardUIObject.CARD_SIZE_X * _cardSizeMultiplierX, CardUIObject.CARD_SIZE_Y * _cardSizeMultiplierY);
+        float height = _cardsTransform.RectTransform.rect.height -10f;
+        Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
         container.transform.localPosition = CalculatePosition(_cardsHand.Count, containerRectTransform.sizeDelta);
+        _cardsTransform.Resize(cardObject.transform);
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
         cardObject.CardClicked.AddListener(CardClicked);
         _cardsHand.Add(cardObject);
