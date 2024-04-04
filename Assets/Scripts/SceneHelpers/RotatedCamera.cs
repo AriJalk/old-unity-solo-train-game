@@ -8,11 +8,23 @@ using UnityEngine.Events;
 public class RotatedCamera : MonoBehaviour
 {
     const float RADIUS = 3f;
-    const float MIN_RADIUS = 0.75f;
-    const float MAX_RADIUS = 12f;
+
 
     [SerializeField]
     Transform _cameraTransform;
+    [SerializeField]
+    [Range (-89.9f, 89.9f)]
+    private float _minDegrees = 5f;
+    [SerializeField]
+    [Range(-89.9f, 89.9f)]
+    private float _maxDegrees = 80f;
+    [SerializeField]
+    [Range (0f, 5f)]
+    private float minRadius = 0.75f;
+    [SerializeField]
+    [Range(0.1f, 20f)]
+    private float maxRadius = 12f;
+
     [SerializeField]
     [Range(1f, 20f)]
     private float _speed = 8f;
@@ -89,7 +101,6 @@ public class RotatedCamera : MonoBehaviour
     {
         _minBounds = minBounds;
         _maxBounds = maxBounds;
-        
     }
 
     void AddInputListeners()
@@ -174,7 +185,7 @@ public class RotatedCamera : MonoBehaviour
     void ZoomCamera(float scroll)
     {
         currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
-        currentRadius = Mathf.Clamp(currentRadius, MIN_RADIUS, MAX_RADIUS);
+        currentRadius = Mathf.Clamp(currentRadius, minRadius, maxRadius);
         UpdateCameraPosition(true);
     }
 
@@ -193,17 +204,25 @@ public class RotatedCamera : MonoBehaviour
         // Horizontal rotation around Y axis
         _degrees -= movement.x * 10;
         if (_degrees < -360)
-            _degrees += 360;
+           _degrees += 360;
+        else if (_degrees > 360)
+        {
+            _degrees -= 360;
+        }
 
         // Vertical rotation around X axis
         float verticalRotationDelta = movement.y * verticalRotationSpeed;
 
         Vector3 currentRotation = _cameraTransform.localEulerAngles;
         float newRotationX = currentRotation.x - verticalRotationDelta;
+        // Essential for lower than 0 angles
         if (newRotationX > 180f)
+        {
             newRotationX -= 360f;
+        }
+        
 
-        float clampedRotationX = Mathf.Clamp(newRotationX, 5f, 80f);
+        float clampedRotationX = Mathf.Clamp(newRotationX, _minDegrees, _maxDegrees);
 
         _cameraTransform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
 
