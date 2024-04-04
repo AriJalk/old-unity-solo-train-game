@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace SoloTrainGame.Core
+namespace Engine
 {
     //TODO: 1 mouse button 
     public class InputManager

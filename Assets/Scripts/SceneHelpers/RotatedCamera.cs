@@ -8,10 +8,11 @@ using UnityEngine.Events;
 public class RotatedCamera : MonoBehaviour
 {
     const float RADIUS = 3f;
-    const float MIN_RADIUS = 1f;
+    const float MIN_RADIUS = 0.75f;
     const float MAX_RADIUS = 12f;
 
-
+    [SerializeField]
+    Transform _cameraTransform;
     [SerializeField]
     [Range(1f, 20f)]
     private float _speed = 8f;
@@ -33,7 +34,6 @@ public class RotatedCamera : MonoBehaviour
 
     Transform _transform;
     Camera _camera;
-    Vector3 _center;
 
     // Degress for camera rotation
     private float _degrees;
@@ -41,28 +41,25 @@ public class RotatedCamera : MonoBehaviour
     // For momentum scroll
     float _scroll;
 
-    // For raycasting
-    private int tileLayer;
-    private int backgroundLayer;
-    private int layerMask;
+    // Bounds
+    private Vector2 _minBounds;
+    private Vector2 _maxBounds;
 
     private InputManager _inputManager;
 
+    private void Awake()
+    {
+        _inputManager = ServiceLocator.InputManager;
+        _transform = transform;
+        _camera = _cameraTransform.GetComponent<Camera>();
+        _degrees = 0;
+        _scroll = 0;
+    }
     void Start()
     {
-        _transform = transform;
-        _center = HexGridController.Center;
-        _degrees = 0;
-        _camera = GetComponent<Camera>();
-        tileLayer = 1 << LayerMask.NameToLayer("Tiles");
-        backgroundLayer = 1 << LayerMask.NameToLayer("Background");
-        layerMask = tileLayer | backgroundLayer;
-        _inputManager = ServiceLocator.InputManager;
-        _scroll = 0;
         AddInputListeners();
-
+        _transform.position = new Vector3((_maxBounds.x + _minBounds.x) / 2f, 0, (_maxBounds.y + _minBounds.y) / 2f);
         UpdateCameraPosition(true);
-
     }
 
     void Update()
@@ -86,6 +83,13 @@ public class RotatedCamera : MonoBehaviour
     private void OnDestroy()
     {
         RemoveInputListeners();
+    }
+
+    public void Initialize(Vector2 minBounds, Vector2 maxBounds)
+    {
+        _minBounds = minBounds;
+        _maxBounds = maxBounds;
+        
     }
 
     void AddInputListeners()
@@ -117,9 +121,9 @@ public class RotatedCamera : MonoBehaviour
     {
         if (index == 0 && !GraphicUserInterface.IsMouseOver)
         {
-            HexTileObject tile = RaycastHitToHexTile(CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition), layerMask));
-            if (tile != null)
-                Debug.Log(tile.HexGameData.Hex.Position);
+            RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition));
+            if (hit.collider != null)
+                Debug.Log(hit.collider.transform.position);
         }
     }
 
@@ -132,24 +136,36 @@ public class RotatedCamera : MonoBehaviour
         float newSpeed = _speed;
         if (Input.GetKey(KeyCode.LeftShift))
             newSpeed *= _speedMultiplier;
-        // Calculate the movement direction relative to the camera's forward direction
-        Vector3 forward = Vector3.Scale(_transform.forward, new Vector3(1, 0, 1)).normalized;
-        Vector3 right = Vector3.Scale(_transform.right, new Vector3(1, 0, 1)).normalized;
-        Vector3 moveDirection = (horizontalInput * right + verticalInput * forward).normalized * Time.deltaTime * newSpeed;
-        float clampedX = Mathf.Clamp(_transform.position.x + moveDirection.x,
-            HexGridController.MinX - _overBounds, HexGridController.MaxX + _overBounds);
-        float clampedZ = Mathf.Clamp(_transform.position.z + moveDirection.z, HexGridController.MinZ - _overBounds,
-            HexGridController.MaxZ + _overBounds);
 
-        // Move the camera along the XZ plane
-        _transform.position = new Vector3(clampedX, _transform.position.y, clampedZ);
-        // Update center of camera
-        RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(GetCenterOfScreen()), layerMask);
-        if (hit.collider != null)
-        {
-            _center = hit.point;
-        }
+        // Calculate the movement direction relative to the camera's forward direction
+        Vector3 forward = Vector3.Scale(_cameraTransform.forward, new Vector3(1, 0, 1)).normalized;
+        Vector3 right = Vector3.Scale(_cameraTransform.right, new Vector3(1, 0, 1)).normalized;
+
+        // Construct the movement direction using the adjusted forward and right directions
+        Vector3 moveDirection = (horizontalInput * right + verticalInput * forward).normalized * Time.deltaTime * newSpeed;
+
+        // Calculate the new position
+        Vector3 newPosition = _transform.position + moveDirection;
+
+        // Clamp the new position to stay within the rectangular boundary
+        newPosition = ClampPosition(newPosition);
+
+        // Move the camera to the new position
+        _transform.position = newPosition;
     }
+
+
+
+
+    Vector3 ClampPosition(Vector3 position)
+    {
+        // Clamp the position to stay within the rectangular boundary
+        float clampedX = Mathf.Clamp(position.x, _minBounds.x - _overBounds, _maxBounds.x + _overBounds);
+        float clampedZ = Mathf.Clamp(position.z, _minBounds.y - _overBounds, _maxBounds.y + _overBounds);
+
+        return new Vector3(clampedX, position.y, clampedZ);
+    }
+
 
     /// <summary>
     /// Change zoom by changing the radius of the camera sphere around the center
@@ -157,7 +173,6 @@ public class RotatedCamera : MonoBehaviour
     /// <param name="scroll"></param>
     void ZoomCamera(float scroll)
     {
-        Camera cameraComponent = GetComponent<Camera>();
         currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
         currentRadius = Mathf.Clamp(currentRadius, MIN_RADIUS, MAX_RADIUS);
         UpdateCameraPosition(true);
@@ -183,14 +198,14 @@ public class RotatedCamera : MonoBehaviour
         // Vertical rotation around X axis
         float verticalRotationDelta = movement.y * verticalRotationSpeed;
 
-        Vector3 currentRotation = _transform.localEulerAngles;
+        Vector3 currentRotation = _cameraTransform.localEulerAngles;
         float newRotationX = currentRotation.x - verticalRotationDelta;
         if (newRotationX > 180f)
             newRotationX -= 360f;
 
         float clampedRotationX = Mathf.Clamp(newRotationX, 5f, 80f);
 
-        _transform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
+        _cameraTransform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
 
         // Update camera position
         UpdateCameraPosition(true);
@@ -200,7 +215,7 @@ public class RotatedCamera : MonoBehaviour
 
     void UpdateCameraPosition(bool lookAt)
     {
-        float radiansX = Mathf.Deg2Rad * _transform.localEulerAngles.x;
+        float radiansX = Mathf.Deg2Rad * _cameraTransform.localEulerAngles.x;
         float radiansY = Mathf.Deg2Rad * _degrees;
 
         // Calculate the spherical coordinates
@@ -208,11 +223,11 @@ public class RotatedCamera : MonoBehaviour
         float y = Mathf.Sin(radiansX) * currentRadius;
         float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * currentRadius;
 
-        Vector3 newPosition = new Vector3(x, y, z) + _center;
-        _transform.position = newPosition;
+        Vector3 newPosition = new Vector3(x, y, z) + _transform.position;
+        _cameraTransform.position = newPosition;
 
         if (lookAt)
-            _transform.LookAt(_center);
+            _cameraTransform.LookAt(_transform.position);
     }
 
 
@@ -231,20 +246,11 @@ public class RotatedCamera : MonoBehaviour
         return center;
     }
 
-    RaycastHit CameraRaycast(Ray ray, int mask)
+    RaycastHit CameraRaycast(Ray ray, int mask = -1)
     {
         RaycastHit hit;
         Debug.DrawRay(ray.origin, ray.direction);
         Physics.Raycast(ray, out hit, 15f, mask);
         return hit;
-    }
-
-    HexTileObject RaycastHitToHexTile(RaycastHit hit)
-    {
-        if (hit.collider != null && hit.collider.transform.parent?.GetComponent<HexTileObject>() is HexTileObject tileObject)
-        {
-            return tileObject;
-        }
-        return null;
     }
 }

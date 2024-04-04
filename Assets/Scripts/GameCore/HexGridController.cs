@@ -13,7 +13,7 @@ namespace SoloTrainGame.Core
         [SerializeField]
         const float TILE_SIZE = 0.5f;
 
-        public static Vector3 Center = Vector3.zero;
+        public Vector3 Center = Vector3.zero;
 
 
         // Spacing between tiles
@@ -34,15 +34,14 @@ namespace SoloTrainGame.Core
         Vector3 avaragePosition = Vector3.zero;
 
         // Bounds
-        public static float MinX { get; private set; }
-        public static float MaxX { get; private set; }
-        public static float MinZ {  get; private set; }
-        public static float MaxZ {  get; private set; }
+        public float MinX { get; private set; }
+        public float MaxX { get; private set; }
+        public float MinZ {  get; private set; }
+        public float MaxZ {  get; private set; }
+
 
         void Start()
         {
-            BuildTestMap();
-            StartingTile = hexTileDictionary[Hex.ZERO];
 
         }
 
@@ -64,6 +63,8 @@ namespace SoloTrainGame.Core
             prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
             hexTileDictionary = new Dictionary<Hex, HexTileObject>();
             lastTileGap = tileGap;
+            BuildTestMap();
+            StartingTile = hexTileDictionary[Hex.ZERO];
 
         }
 
@@ -180,4 +181,5 @@ namespace SoloTrainGame.Core
 
         }
     }
+
 }
