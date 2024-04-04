@@ -70,7 +70,7 @@ public class RotatedCamera : MonoBehaviour
     void Start()
     {
         AddInputListeners();
-        _transform.position = new Vector3((_maxBounds.x + _minBounds.x) / 2f, 0, (_maxBounds.y + _minBounds.y) / 2f);
+        _transform.position = new Vector3((_maxBounds.x + _minBounds.x) / 2f, _transform.position.y, (_maxBounds.y + _minBounds.y) / 2f);
         UpdateCameraPosition(true);
     }
 
