@@ -1,6 +1,8 @@
 using Engine;
 using UnityEngine;
 using HexSystem;
+using System.Collections.Generic;
+using SoloTrainGame.GameLogic;
 
 namespace SoloTrainGame.Core
 {
@@ -15,8 +17,13 @@ namespace SoloTrainGame.Core
         private RotatedCamera _rotatedCamera;
         [SerializeField]
         private Transform _centerObject;
+        [SerializeField]
+        private GraphicUserInterface _userInterface;
 
         private InputManager _inputManager;
+
+        private Stack<Turn> _turnStack;
+        static public GameState GameState;
 
 
 
@@ -40,11 +47,21 @@ namespace SoloTrainGame.Core
                 max = min;
             }
             _rotatedCamera.Initialize(min, max);
+            _turnStack = new Stack<Turn>();
+            GameState = new GameState(_gridController);
         }
 
         void Start()
         {
-
+            List<CardInstance> cards = new List<CardInstance>();
+            foreach (CardSO card in ServiceLocator.ScriptableObjectManager.CardTypes)
+            {
+                CardInstance cardInstance = new CardInstance(card);
+                GameState.CardHand.Add(cardInstance);
+                _userInterface.Hand.AddCardToHandFromInstance(cardInstance);
+                cards.Add(cardInstance);
+            }
+            _userInterface.CardGridViewer.OpenViewer(cards);
         }
 
         // Update is called once per frame

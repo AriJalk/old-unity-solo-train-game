@@ -7,6 +7,7 @@ public class GraphicUserInterface : MonoBehaviour
 {
     public UIHand Hand;
     public UICardView CardView;
+    public CardGridViewer CardGridViewer;
 
     static public bool IsMouseOver;
 

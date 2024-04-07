@@ -17,21 +17,16 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public UnityEvent<CardUIObject> CardClickedEvent;
 
     [SerializeField]
-    [Range(1f, 4f)]
-    private float _cardSizeMultiplierX = 1f;
-    [SerializeField]
-    [Range(1f, 4f)]
-    private float _cardSizeMultiplierY = 1f;
-    [SerializeField]
     private ResizableContent _cardsTransform;
     [SerializeField]
     private ScrollRect _scrollRect;
 
-    private List<CardUIObject> _cardsHand;
+    public List<CardUIObject> CardsHand {  get; private set; }
 
     private void Awake()
     {
         CardClickedEvent = new UnityEvent<CardUIObject>();
+        CardsHand = new List<CardUIObject>();
     }
 
     // Start is called before the first frame update
@@ -39,19 +34,18 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         ServiceLocator.PrefabManager.LoadAndRegisterPrefab<CardUIObject>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardPrefab", 50);
         ServiceLocator.PrefabManager.LoadAndRegisterPrefab<UICardView>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardViewPrefab", 1);
-        _cardsHand = new List<CardUIObject>();
-        BuildTestHand();
+        //BuildTestHand();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnDestroy()
     {
-        foreach (CardUIObject card in _cardsHand)
+        foreach (CardUIObject card in CardsHand)
         {
             card.CardClicked.RemoveListener(CardClicked);
         }
@@ -63,16 +57,6 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         CardClickedEvent.Invoke(card);
     }
 
-    private void BuildTestHand()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
-            {
-                PlaceCard(cardSO);
-            }
-        }
-    }
 
     private Vector2 CalculatePosition(int index, Vector2 size)
     {
@@ -82,9 +66,57 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
 
+    public void AddCardToHandFromInstance(CardInstance card)
+    {
+        // Create container for the card
+        GameObject container = new GameObject();
+        RectTransform containerRectTransform = container.AddComponent<RectTransform>();
+        // Set prefab card to card instance
+        CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
+        cardObject.SetCard(card);
+
+        cardObject.RectTransform.SetParent(containerRectTransform);
+        containerRectTransform.SetParent(_cardsTransform.RectTransform);
+        containerRectTransform.localScale = Vector2.one;
+
+        // Calculate size according to height and aspect ratio
+
+        float height = _cardsTransform.RectTransform.rect.height - CARD_PADDING;
+        Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
+        containerRectTransform.sizeDelta = size;
+        container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
 
 
-    private void PlaceCard(CardSO cardSO)
+        // Resize the hand size so it can be dragged
+        _cardsTransform.Resize(cardObject.RectTransform, 2f * size.x);
+
+        // Add listener to card click
+        cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
+        cardObject.CardClicked.AddListener(CardClicked);
+        CardsHand.Add(cardObject);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //Debug.Log("HAND ENTER");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //Debug.Log("HAND EXIT");
+    }
+    private void BuildTestHand()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+            {
+                TestPlaceCardFromSO(cardSO);
+            }
+        }
+    }
+
+    private void TestPlaceCardFromSO(CardSO cardSO)
     {
         // Create container for the card
         GameObject container = new GameObject();
@@ -103,7 +135,7 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         float height = _cardsTransform.RectTransform.rect.height - CARD_PADDING;
         Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
-        container.transform.localPosition = CalculatePosition(_cardsHand.Count, containerRectTransform.sizeDelta);
+        container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
 
 
         // Resize the hand size so it can be dragged
@@ -112,16 +144,6 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
         cardObject.CardClicked.AddListener(CardClicked);
-        _cardsHand.Add(cardObject);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //Debug.Log("HAND ENTER");
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //Debug.Log("HAND EXIT");
+        CardsHand.Add(cardObject);
     }
 }

@@ -2,16 +2,19 @@
 
 namespace SoloTrainGame.Core
 {
-    public class CommandManager
+    /// <summary>
+    /// Represents a sequence of commands
+    /// </summary>
+    public class Turn
     {
         private Stack<IGameCommand> _commandStack;
 
-        public CommandManager()
+        public Turn()
         {
             _commandStack = new Stack<IGameCommand>();
         }
 
-        public bool AddAndExecuteCommand(IGameCommand command)
+        public bool AddCommandAndExecute(IGameCommand command)
         {
             if (command.CanExecute)
             {
@@ -21,7 +24,15 @@ namespace SoloTrainGame.Core
             return false;
         }
 
-        public void Undo()
+        public void UndoAllCommands()
+        {
+            while(_commandStack.Count > 0)
+            {
+                UndoLastCommand();
+            }
+        }
+
+        public void UndoLastCommand()
         {
             IGameCommand command = _commandStack.Pop();
             command.Undo();

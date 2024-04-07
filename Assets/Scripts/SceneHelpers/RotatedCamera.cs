@@ -222,24 +222,27 @@ public class RotatedCamera : MonoBehaviour
 
     void RotateCameraWithMouse(Vector2 movement)
     {
-        // Horizontal rotation around Y axis
-        _horizontalRotation -= movement.x * _horizontalRotationSpeed;
-        if (_horizontalRotation < -360)
-           _horizontalRotation += 360;
-        else if (_horizontalRotation > 360)
+        if (!GraphicUserInterface.IsMouseOver)
         {
-            _horizontalRotation -= 360;
-        }
+            // Horizontal rotation around Y axis
+            _horizontalRotation -= movement.x * _horizontalRotationSpeed;
+            if (_horizontalRotation < -360)
+                _horizontalRotation += 360;
+            else if (_horizontalRotation > 360)
+            {
+                _horizontalRotation -= 360;
+            }
 
-        // Vertical rotation around X axis
-        _verticalRotation -= movement.y * _verticalRotationSpeed;
-        // Allows below 0 rotation
-        if (_verticalRotation > 180f)
-        {
-            _verticalRotation -= 360f;
-        } 
-        _verticalRotation = Mathf.Clamp(_verticalRotation, _minAngle, _maxAngle);
-        _isCameraRotated = true;
+            // Vertical rotation around X axis
+            _verticalRotation -= movement.y * _verticalRotationSpeed;
+            // Allows below 0 rotation
+            if (_verticalRotation > 180f)
+            {
+                _verticalRotation -= 360f;
+            }
+            _verticalRotation = Mathf.Clamp(_verticalRotation, _minAngle, _maxAngle);
+            _isCameraRotated = true;
+        }
     }
 
 
