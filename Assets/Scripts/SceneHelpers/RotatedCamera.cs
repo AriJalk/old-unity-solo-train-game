@@ -1,9 +1,5 @@
-
 using Engine;
-using SoloTrainGame.Core;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class RotatedCamera : MonoBehaviour
 {
@@ -14,10 +10,10 @@ public class RotatedCamera : MonoBehaviour
     Transform _cameraTransform;
     [SerializeField]
     [Range (-89.9f, 89.9f)]
-    private float _minDegrees = 5f;
+    private float _minAngle = 5f;
     [SerializeField]
     [Range(-89.9f, 89.9f)]
-    private float _maxDegrees = 80f;
+    private float _maxAngle = 80f;
     [SerializeField]
     [Range (0f, 5f)]
     private float minRadius = 0.75f;
@@ -36,7 +32,10 @@ public class RotatedCamera : MonoBehaviour
     private float _overBounds = 1f;
     [SerializeField]
     [Range(0.5f, 20f)]
-    private float verticalRotationSpeed = 5f;
+    private float _horizontalRotationSpeed = 5f;
+    [SerializeField]
+    [Range(0.5f, 20f)]
+    private float _verticalRotationSpeed = 5f;
     [SerializeField]
     [Range(1f, 500f)]
     private float _scrollSpeedBase = 50f;
@@ -44,14 +43,19 @@ public class RotatedCamera : MonoBehaviour
     [Range(0f, 20f)]
     private float _scrollInertion = 2f;
 
-    Transform _transform;
-    Camera _camera;
+    private Transform _transform;
+    private Camera _camera;
 
     // Degress for camera rotation
-    private float _degrees;
-    private float currentRadius = RADIUS;
+    private float _horizontalRotation;
+    private float _verticalRotation;
+    private bool _isCameraRotated;
+    private float _currentRadius = RADIUS;
+
     // For momentum scroll
-    float _scroll;
+    private float _scroll;
+    // For camera movement
+    private Vector3 _movement;
 
     // Bounds
     private Vector2 _minBounds;
@@ -64,18 +68,28 @@ public class RotatedCamera : MonoBehaviour
         _inputManager = ServiceLocator.InputManager;
         _transform = transform;
         _camera = _cameraTransform.GetComponent<Camera>();
-        _degrees = 0;
-        _scroll = 0;
+
     }
     void Start()
     {
         AddInputListeners();
-        _transform.position = new Vector3((_maxBounds.x + _minBounds.x) / 2f, _transform.position.y, (_maxBounds.y + _minBounds.y) / 2f);
+        // Place at center of board
+        _transform.position = new Vector3((
+            _maxBounds.x + _minBounds.x) * 0.5f, 
+            _transform.position.y, 
+            (_maxBounds.y + _minBounds.y) * 0.5f);
+        _verticalRotation = (_maxAngle + _minAngle) * 0.5f;
         UpdateCameraPosition(true);
     }
 
     void Update()
     {
+        
+    }
+
+    private void LateUpdate()
+    {
+        bool _isStateChanged = false;
         // Zoom momentum
         if (_scroll > 0)
         {
@@ -83,12 +97,30 @@ public class RotatedCamera : MonoBehaviour
 
             _scroll = Mathf.Clamp(_scroll, 0, 100);
             ZoomCamera(_scroll);
+            _isStateChanged = true;
         }
         else if (_scroll < 0)
         {
             _scroll += Time.deltaTime * _scrollSpeedBase;
             _scroll = Mathf.Clamp(_scroll, -100, 0);
             ZoomCamera(_scroll);
+            _isStateChanged = true;
+        }
+        if (_isCameraRotated)
+        {
+            _isStateChanged = true;
+        }
+        if (_movement != Vector3.zero)
+        {
+            Vector3 newPosition = ClampPosition(_transform.position + _movement);
+            _transform.position = newPosition;
+            _isStateChanged = true;
+        }
+        if (_isStateChanged)
+        {
+            UpdateCameraPosition(true);
+            _movement = Vector3.zero;
+            _isCameraRotated = false;
         }
     }
 
@@ -153,16 +185,7 @@ public class RotatedCamera : MonoBehaviour
         Vector3 right = Vector3.Scale(_cameraTransform.right, new Vector3(1, 0, 1)).normalized;
 
         // Construct the movement direction using the adjusted forward and right directions
-        Vector3 moveDirection = (horizontalInput * right + verticalInput * forward).normalized * Time.deltaTime * newSpeed;
-
-        // Calculate the new position
-        Vector3 newPosition = _transform.position + moveDirection;
-
-        // Clamp the new position to stay within the rectangular boundary
-        newPosition = ClampPosition(newPosition);
-
-        // Move the camera to the new position
-        _transform.position = newPosition;
+        _movement = (horizontalInput * right + verticalInput * forward).normalized * Time.deltaTime * newSpeed;
     }
 
 
@@ -184,9 +207,8 @@ public class RotatedCamera : MonoBehaviour
     /// <param name="scroll"></param>
     void ZoomCamera(float scroll)
     {
-        currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
-        currentRadius = Mathf.Clamp(currentRadius, minRadius, maxRadius);
-        UpdateCameraPosition(true);
+        _currentRadius -= scroll * _scrollSpeedBase * Time.deltaTime;
+        _currentRadius = Mathf.Clamp(_currentRadius, minRadius, maxRadius);
     }
 
     void MouseScrolled(float scroll)
@@ -200,47 +222,37 @@ public class RotatedCamera : MonoBehaviour
 
     void RotateCameraWithMouse(Vector2 movement)
     {
-
         // Horizontal rotation around Y axis
-        _degrees -= movement.x * 10;
-        if (_degrees < -360)
-           _degrees += 360;
-        else if (_degrees > 360)
+        _horizontalRotation -= movement.x * _horizontalRotationSpeed;
+        if (_horizontalRotation < -360)
+           _horizontalRotation += 360;
+        else if (_horizontalRotation > 360)
         {
-            _degrees -= 360;
+            _horizontalRotation -= 360;
         }
 
         // Vertical rotation around X axis
-        float verticalRotationDelta = movement.y * verticalRotationSpeed;
-
-        Vector3 currentRotation = _cameraTransform.localEulerAngles;
-        float newRotationX = currentRotation.x - verticalRotationDelta;
-        // Essential for lower than 0 angles
-        if (newRotationX > 180f)
+        _verticalRotation -= movement.y * _verticalRotationSpeed;
+        // Allows below 0 rotation
+        if (_verticalRotation > 180f)
         {
-            newRotationX -= 360f;
-        }
-        
-
-        float clampedRotationX = Mathf.Clamp(newRotationX, _minDegrees, _maxDegrees);
-
-        _cameraTransform.localEulerAngles = new Vector3(clampedRotationX, currentRotation.y, currentRotation.z);
-
-        // Update camera position
-        UpdateCameraPosition(true);
+            _verticalRotation -= 360f;
+        } 
+        _verticalRotation = Mathf.Clamp(_verticalRotation, _minAngle, _maxAngle);
+        _isCameraRotated = true;
     }
 
 
 
     void UpdateCameraPosition(bool lookAt)
     {
-        float radiansX = Mathf.Deg2Rad * _cameraTransform.localEulerAngles.x;
-        float radiansY = Mathf.Deg2Rad * _degrees;
+        float radiansX = Mathf.Deg2Rad * _verticalRotation;
+        float radiansY = Mathf.Deg2Rad * _horizontalRotation;
 
         // Calculate the spherical coordinates
-        float x = Mathf.Cos(radiansX) * Mathf.Cos(radiansY) * currentRadius;
-        float y = Mathf.Sin(radiansX) * currentRadius;
-        float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * currentRadius;
+        float x = Mathf.Cos(radiansX) * Mathf.Cos(radiansY) * _currentRadius;
+        float y = Mathf.Sin(radiansX) * _currentRadius;
+        float z = Mathf.Cos(radiansX) * Mathf.Sin(radiansY) * _currentRadius;
 
         Vector3 newPosition = new Vector3(x, y, z) + _transform.position;
         _cameraTransform.position = newPosition;
@@ -252,7 +264,7 @@ public class RotatedCamera : MonoBehaviour
 
     Vector2 CalculateCirclePoint()
     {
-        float radians = Mathf.Deg2Rad * _degrees;
+        float radians = Mathf.Deg2Rad * _horizontalRotation;
         float x = Mathf.Cos(radians) * RADIUS;
         float y = Mathf.Sin(radians) * RADIUS;
         return new Vector2(x, y);
