@@ -1,20 +1,33 @@
 using SoloTrainGame.GameLogic;
-using System.Collections;
+using SoloTrainGame.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GraphicUserInterface : MonoBehaviour
 {
     public UIHand Hand;
     public UICardView CardView;
     public CardGridViewer CardGridViewer;
+    public UIElementClickable BackgroundImage;
 
-    static public bool IsMouseOver;
 
-    static public bool IsUILocked;
+    private List<UIBlocker> _blockers;
+
+    public bool IsUILocked
+    {
+        get
+        {
+            return _blockers.Count > 0;
+        }
+    }
 
     private CardInstance _selectedCard;
 
+    private void Awake()
+    {
+        _blockers = new List<UIBlocker>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +38,7 @@ public class GraphicUserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnDestroy()
@@ -41,8 +54,30 @@ public class GraphicUserInterface : MonoBehaviour
             _selectedCard = card.CardInstance;
             CardView.SetCard(card.CardInstance);
             CardView.gameObject.SetActive(true);
+            BackgroundImage.ElementClickedEvent.AddListener(BackgroundClicked);
+        }
     }
+    private void BackgroundClicked(UIElementClickable element)
+    {
+        if (CardView.enabled)
+        {
+            CardView.CloseView();
+        }
     }
 
+    public void AddBlocker(UIBlocker blocker)
+    {
+        if (!_blockers.Contains(blocker))
+        {
+            _blockers.Add(blocker);
+        }
+    }
 
+    public void RemoveBlocker(UIBlocker blocker)
+    {
+        if (_blockers.Contains(blocker))
+        {
+            _blockers.Remove(blocker);
+        }
+    }
 }

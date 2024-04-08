@@ -62,6 +62,7 @@ namespace SoloTrainGame.Core
                 cards.Add(cardInstance);
             }
             _userInterface.CardGridViewer.OpenViewer(cards);
+            ServiceLocator.SetUserInterface(_userInterface);
         }
 
         // Update is called once per frame

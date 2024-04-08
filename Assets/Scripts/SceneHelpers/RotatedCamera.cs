@@ -162,7 +162,7 @@ public class RotatedCamera : MonoBehaviour
 
     void ProccessMouseClick(int index, Vector2 position)
     {
-        if (index == 0 && !GraphicUserInterface.IsMouseOver)
+        if (index == 0 && !ServiceLocator.UserInterfaceService.IsUILocked)
         {
             RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition));
             if (hit.collider != null)
@@ -213,7 +213,7 @@ public class RotatedCamera : MonoBehaviour
 
     void MouseScrolled(float scroll)
     {
-        if (!GraphicUserInterface.IsMouseOver)
+        if (!ServiceLocator.UserInterfaceService.IsUILocked)
         {
             _scroll = scroll * _scrollInertion;
         }
@@ -222,7 +222,7 @@ public class RotatedCamera : MonoBehaviour
 
     void RotateCameraWithMouse(Vector2 movement)
     {
-        if (!GraphicUserInterface.IsMouseOver)
+        if (!ServiceLocator.UserInterfaceService.IsUILocked)
         {
             // Horizontal rotation around Y axis
             _horizontalRotation -= movement.x * _horizontalRotationSpeed;

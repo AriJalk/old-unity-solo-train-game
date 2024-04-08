@@ -1,12 +1,13 @@
 using Engine;
 using Engine.ResourceManagement;
 using SoloTrainGame.GameLogic;
+using SoloTrainGame.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UICardView : UIBlocker
 {
     public UnityEvent<CardInstance> PlayActionEvent;
 
@@ -42,10 +43,12 @@ public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    private void CloseView()
+    public void CloseView()
     {
         ResetView();
         gameObject.SetActive(false);
+        ServiceLocator.UserInterfaceService?.RemoveBlocker(this);
+        CanBlock = false;
     }
 
     private void PlayAction()
@@ -64,15 +67,6 @@ public class UICardView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         RectUtilities.SetParentAndResetPosition(_cardUI.transform, _cardSlotTransform);
         _backButton.onClick.AddListener(CloseView);
         _playActionButton.onClick.AddListener(PlayAction);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        GraphicUserInterface.IsMouseOver = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        GraphicUserInterface.IsMouseOver = false;
+        CanBlock = true;
     }
 }

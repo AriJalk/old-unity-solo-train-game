@@ -1,16 +1,15 @@
 using SoloTrainGame.GameLogic;
+using SoloTrainGame.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUIObject : MonoBehaviour, IPointerCombined
+public class CardUIObject : UIElementClickable
 {
     public const int CARD_SIZE_X = 63;
     public const int CARD_SIZE_Y = 88;
-
-    public UnityEvent<CardUIObject> CardClicked;
 
     public RectTransform RectTransform;
     public TextMeshProUGUI NameText;
@@ -18,15 +17,12 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
     public TextMeshProUGUI TransportText;
     public TextMeshProUGUI DescriptionText;
     public Image Border;
-
-
-    private bool _isButtonDown;
     public CardInstance CardInstance { get; private set; }
     
 
     public void Awake()
     {
-        CardClicked = new UnityEvent<CardUIObject>();
+
     }
 
     public void SetCard(CardInstance card)
@@ -50,31 +46,5 @@ public class CardUIObject : MonoBehaviour, IPointerCombined
                 break;
         }
 
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        Debug.Log("UP CARD, CLICKED");
-        if (_isButtonDown && Input.GetMouseButtonUp(0))
-        {
-            CardClicked.Invoke(this);
-            _isButtonDown = false;
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //Debug.Log("Enter Card");
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _isButtonDown = false;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("Down Card");
-        _isButtonDown = true;
     }
 }

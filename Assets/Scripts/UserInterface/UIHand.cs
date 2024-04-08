@@ -2,14 +2,14 @@
 
 using Engine;
 using SoloTrainGame.GameLogic;
+using SoloTrainGame.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIHand : UIBlocker
 {
     public const float CARD_GAP = 1f;
     public const float CARD_ASPECT_RATIO = 0.7159091f;
@@ -21,7 +21,7 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField]
     private ScrollRect _scrollRect;
 
-    public List<CardUIObject> CardsHand {  get; private set; }
+    public List<CardUIObject> CardsHand { get; private set; }
 
     private void Awake()
     {
@@ -47,14 +47,18 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         foreach (CardUIObject card in CardsHand)
         {
-            card.CardClicked.RemoveListener(CardClicked);
+            card.ElementClickedEvent.RemoveListener(CardClicked);
         }
     }
 
 
-    private void CardClicked(CardUIObject card)
+    private void CardClicked(UIElementClickable element)
     {
-        CardClickedEvent.Invoke(card);
+        CardUIObject card = element.GetComponent<CardUIObject>();
+        if (card != null)
+        {
+            CardClickedEvent.Invoke(card);
+        }
     }
 
 
@@ -92,19 +96,10 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
-        cardObject.CardClicked.AddListener(CardClicked);
+        cardObject.ElementClickedEvent.AddListener(CardClicked);
         CardsHand.Add(cardObject);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //Debug.Log("HAND ENTER");
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //Debug.Log("HAND EXIT");
-    }
     private void BuildTestHand()
     {
         for (int i = 0; i < 5; i++)
@@ -143,7 +138,7 @@ public class UIHand : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
-        cardObject.CardClicked.AddListener(CardClicked);
+        cardObject.ElementClickedEvent.AddListener(CardClicked);
         CardsHand.Add(cardObject);
     }
 }
