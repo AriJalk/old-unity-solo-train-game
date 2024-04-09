@@ -26,11 +26,37 @@ namespace SoloTrainGame.Core
         static public GameState GameState;
 
 
-
         // Start is called before the first frame update
         void Awake()
         {
-            ServiceLocator.SetPrefabManagerManager(_prefabStorage); 
+            Initialize();
+        }
+
+        void Start()
+        {
+            List<CardInstance> cards = new List<CardInstance>();
+
+            foreach (CardSO card in ServiceLocator.ScriptableObjectManager.CardTypes)
+            {
+                CardInstance cardInstance = new CardInstance(card);
+                GameState.CardHand.Add(cardInstance);
+                _userInterface.Hand.AddCardToHandFromInstance(cardInstance);
+                cards.Add(cardInstance);
+            }
+            //_userInterface.CardGridViewer.OpenViewer(cards);
+            
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            _inputManager.UpdateInput();
+            ServiceLocator.TimerManager.Update();
+        }
+
+        private void Initialize()
+        {
+            ServiceLocator.SetPrefabManagerManager(_prefabStorage);
             _inputManager = ServiceLocator.InputManager;
             Vector2 min = transform.position;
             Vector2 max = transform.position;
@@ -39,7 +65,7 @@ namespace SoloTrainGame.Core
                 _gridController.Initialize();
                 min = new Vector2(_gridController.MinX, _gridController.MinZ);
                 max = new Vector2(_gridController.MaxX, _gridController.MaxZ);
-                
+
             }
             else if (_centerObject != null)
             {
@@ -49,27 +75,7 @@ namespace SoloTrainGame.Core
             _rotatedCamera.Initialize(min, max);
             _turnStack = new Stack<Turn>();
             GameState = new GameState(_gridController);
-        }
-
-        void Start()
-        {
-            List<CardInstance> cards = new List<CardInstance>();
-            foreach (CardSO card in ServiceLocator.ScriptableObjectManager.CardTypes)
-            {
-                CardInstance cardInstance = new CardInstance(card);
-                GameState.CardHand.Add(cardInstance);
-                _userInterface.Hand.AddCardToHandFromInstance(cardInstance);
-                cards.Add(cardInstance);
-            }
-            _userInterface.CardGridViewer.OpenViewer(cards);
             ServiceLocator.SetUserInterface(_userInterface);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            _inputManager.UpdateInput();
-            ServiceLocator.TimerManager.Update();
         }
 
         HexTileObject RaycastHitToHexTile(RaycastHit hit)

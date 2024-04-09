@@ -792,8 +792,8 @@ GameObject:
   m_Component:
   - component: {fileID: 368742276}
   - component: {fileID: 368742280}
-  - component: {fileID: 368742279}
   - component: {fileID: 368742277}
+  - component: {fileID: 368742279}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -876,6 +876,7 @@ MonoBehaviour:
   CardClickedEvent:
     m_PersistentCalls:
       m_Calls: []
+  RectTransform: {fileID: 368742276}
   _cardsTransform: {fileID: 748451436}
   _scrollRect: {fileID: 368742277}
 --- !u!1001 &534965947

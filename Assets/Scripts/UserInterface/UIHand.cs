@@ -15,6 +15,7 @@ public class UIHand : UIBlocker
     public const float CARD_ASPECT_RATIO = 0.7159091f;
     public const float CARD_PADDING = 10f;
     public UnityEvent<CardUIObject> CardClickedEvent;
+    public RectTransform RectTransform;
 
     [SerializeField]
     private ResizableContent _cardsTransform;
@@ -25,15 +26,13 @@ public class UIHand : UIBlocker
 
     private void Awake()
     {
-        CardClickedEvent = new UnityEvent<CardUIObject>();
-        CardsHand = new List<CardUIObject>();
+       
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        ServiceLocator.PrefabManager.LoadAndRegisterPrefab<CardUIObject>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardPrefab", 50);
-        ServiceLocator.PrefabManager.LoadAndRegisterPrefab<UICardView>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardViewPrefab", 1);
+        
         //BuildTestHand();
     }
 
@@ -49,6 +48,14 @@ public class UIHand : UIBlocker
         {
             card.ElementClickedEvent.RemoveListener(CardClicked);
         }
+    }
+
+    public void Initialize()
+    {
+        CardClickedEvent = new UnityEvent<CardUIObject>();
+        CardsHand = new List<CardUIObject>();
+        ServiceLocator.PrefabManager.LoadAndRegisterPrefab<CardUIObject>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardPrefab", 50);
+        ServiceLocator.PrefabManager.LoadAndRegisterPrefab<UICardView>(Engine.ResourceManagement.PrefabFolder.PREFAB_2D, "CardViewPrefab", 1);
     }
 
 
@@ -91,13 +98,14 @@ public class UIHand : UIBlocker
         container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
 
 
-        // Resize the hand size so it can be dragged
-        _cardsTransform.Resize(cardObject.RectTransform, 2f * size.x);
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
         cardObject.ElementClickedEvent.AddListener(CardClicked);
         CardsHand.Add(cardObject);
+
+        // Resize the hand size so it can be dragged
+        _cardsTransform.Resize(size.x, CardsHand.Count, CARD_GAP);
     }
 
     private void BuildTestHand()
@@ -134,7 +142,7 @@ public class UIHand : UIBlocker
 
 
         // Resize the hand size so it can be dragged
-        _cardsTransform.Resize(cardObject.RectTransform, 2f * size.x);
+        _cardsTransform.Resize2(cardObject.RectTransform, 2f * size.x);
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);

@@ -41,6 +41,15 @@ public class GraphicUserInterface : MonoBehaviour
 
     }
 
+    public void Initialize()
+    {
+        if (Screen.width < Screen.height)
+        {
+            RectUtilities.SetAnchorsAndResetSize(Hand.RectTransform, new Vector2(0.05f, 0f), new Vector2(0.95f, 0.3f));
+        }
+        Hand.Initialize();
+    }
+
     private void OnDestroy()
     {
         Hand.CardClickedEvent.RemoveListener(CardClicked);

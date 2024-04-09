@@ -1,4 +1,7 @@
-﻿namespace SoloTrainGame.UI
+﻿using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+
+namespace SoloTrainGame.UI
 {
     public class UserInterfaceService
     {
@@ -15,6 +18,7 @@
         public UserInterfaceService(GraphicUserInterface ui)
         {
             _ui = ui;
+            _ui.Initialize();
         }
 
         public void AddBlocker(UIBlocker blocker)

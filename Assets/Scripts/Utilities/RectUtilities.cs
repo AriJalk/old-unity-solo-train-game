@@ -13,6 +13,16 @@ public static class RectUtilities
         }
     }
 
+    public static void SetAnchorsAndResetSize(RectTransform rectTransform, Vector2 min, Vector2 max)
+    {
+        if (rectTransform != null)
+        {
+            rectTransform.anchorMin = min;
+            rectTransform.anchorMax = max;
+            ResetSize(rectTransform);
+        }
+    }
+
     public static void ResetSize(RectTransform rectTransform)
     {
         if (rectTransform != null )
