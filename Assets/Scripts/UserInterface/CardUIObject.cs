@@ -2,8 +2,6 @@ using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CardUIObject : UIElementClickable

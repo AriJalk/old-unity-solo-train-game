@@ -21,9 +21,12 @@ namespace SoloTrainGame.Core
         private GraphicUserInterface _userInterface;
 
         private InputManager _inputManager;
-
         private Stack<Turn> _turnStack;
-        static public GameState GameState;
+        private IActionState _actionState;
+        private StateManager _stateManager;
+
+        private LogicState GameState;
+
 
 
         // Start is called before the first frame update
@@ -43,6 +46,11 @@ namespace SoloTrainGame.Core
         {
             _inputManager.UpdateInput();
             ServiceLocator.TimerManager.Update();
+        }
+
+        private void OnDestroy()
+        {
+            _stateManager.ExitCurrentState();
         }
 
         private void Initialize()
@@ -65,8 +73,11 @@ namespace SoloTrainGame.Core
             }
             _rotatedCamera.Initialize(min, max);
             _turnStack = new Stack<Turn>();
-            GameState = new GameState(_gridController);
+            GameState = new LogicState(_gridController);
             ServiceLocator.SetUserInterface(_userInterface);
+            _stateManager = new StateManager();
+            _stateManager.AddState(new ChooseActionCardState());
+            _stateManager.EnterNextState();
         }
 
         HexTileObject RaycastHitToHexTile(RaycastHit hit)

@@ -137,19 +137,19 @@ public class RotatedCamera : MonoBehaviour
 
     void AddInputListeners()
     {
-        _inputManager.MouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
-        _inputManager.AxisMovedEvent?.AddListener(MoveCamera);
-        _inputManager.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
-        _inputManager.MouseScrolledEvent?.AddListener(MouseScrolled);
+        _inputManager.InputEvents.MouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
+        _inputManager.InputEvents.AxisMovedEvent?.AddListener(MoveCamera);
+        _inputManager.InputEvents.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
+        _inputManager.InputEvents.MouseScrolledEvent?.AddListener(MouseScrolled);
 
     }
 
     void RemoveInputListeners()
     {
-        _inputManager.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
-        _inputManager.AxisMovedEvent?.RemoveListener(MoveCamera);
-        _inputManager.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
-        _inputManager.MouseScrolledEvent?.RemoveListener(MouseScrolled);
+        _inputManager.InputEvents.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
+        _inputManager.InputEvents.AxisMovedEvent?.RemoveListener(MoveCamera);
+        _inputManager.InputEvents.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
+        _inputManager.InputEvents.MouseScrolledEvent?.RemoveListener(MouseScrolled);
     }
 
     void ProccessHeldEvent(int index, Vector2 movement)
@@ -162,7 +162,7 @@ public class RotatedCamera : MonoBehaviour
 
     void ProccessMouseClick(int index, Vector2 position)
     {
-        if (index == 0 && !ServiceLocator.UserInterfaceService.IsUILocked)
+        if (index == 0 && !ServiceLocator.GUIService.IsUILocked)
         {
             RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition));
             if (hit.collider != null)
@@ -213,7 +213,7 @@ public class RotatedCamera : MonoBehaviour
 
     void MouseScrolled(float scroll)
     {
-        if (!ServiceLocator.UserInterfaceService.IsUILocked)
+        if (!ServiceLocator.GUIService.IsUILocked)
         {
             _scroll = scroll * _scrollInertion;
         }
@@ -222,7 +222,7 @@ public class RotatedCamera : MonoBehaviour
 
     void RotateCameraWithMouse(Vector2 movement)
     {
-        if (!ServiceLocator.UserInterfaceService.IsUILocked)
+        if (!ServiceLocator.GUIService.IsUILocked)
         {
             // Horizontal rotation around Y axis
             _horizontalRotation -= movement.x * _horizontalRotationSpeed;

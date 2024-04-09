@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SoloTrainGame.GameLogic
 {
-    public class GameState
+    public class LogicState
     {
         private readonly HexGridController _gridController;
 
@@ -15,7 +15,7 @@ namespace SoloTrainGame.GameLogic
         public readonly List<CardInstance> CardDisplay;
         public readonly List<CardInstance> RemovedCards;
 
-        public GameState(HexGridController gridController)
+        public LogicState(HexGridController gridController)
         {
             _gridController = gridController;
 

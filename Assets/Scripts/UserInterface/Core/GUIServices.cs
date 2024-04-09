@@ -1,9 +1,6 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-
-namespace SoloTrainGame.UI
+﻿namespace SoloTrainGame.UI
 {
-    public class UserInterfaceService
+    public class GUIServices
     {
         private GraphicUserInterface _ui;
         
@@ -15,10 +12,18 @@ namespace SoloTrainGame.UI
             }
         }
 
-        public UserInterfaceService(GraphicUserInterface ui)
+        public GUIEvents GUIEvents { get; private set; }
+
+        public UICardView CardView { get; private set; }
+        public UIElementClickable BackgroundImage {  get; private set; }
+
+        public GUIServices(GraphicUserInterface ui)
         {
             _ui = ui;
             _ui.Initialize();
+            GUIEvents = _ui.GUIEvents;
+            CardView = _ui.CardView;
+            BackgroundImage = _ui.BackgroundImage;
         }
 
         public void AddBlocker(UIBlocker blocker)

@@ -11,13 +11,13 @@ namespace SoloTrainGame.UI
         {
             if (CanBlock)
             {
-                ServiceLocator.UserInterfaceService?.AddBlocker(this);
+                ServiceLocator.GUIService?.AddBlocker(this);
             }
         }
 
         public virtual void OnPointerExit(PointerEventData eventData)
         {
-            ServiceLocator.UserInterfaceService?.RemoveBlocker(this);
+            ServiceLocator.GUIService?.RemoveBlocker(this);
         }
     }
 }

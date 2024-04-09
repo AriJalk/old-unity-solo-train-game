@@ -56,7 +56,7 @@ public class CardGridViewer : UIBlocker
         }
         _enlargedCard.gameObject.SetActive(false);
         CanBlock = false;
-        ServiceLocator.UserInterfaceService?.RemoveBlocker(this);
+        ServiceLocator.GUIService?.RemoveBlocker(this);
     }
 
     public void OpenViewer(List<CardInstance> cards)

@@ -1,4 +1,9 @@
-﻿namespace SoloTrainGame.Core
+﻿using Engine;
+using SoloTrainGame.Core;
+using System;
+using UnityEngine;
+
+namespace SoloTrainGame.GameLogic
 {
     public class BuildState : IActionState
     {
@@ -6,6 +11,14 @@
         public BuildState(int availableMoney)
         {
             AvailableMoney = availableMoney;
+        }
+
+        private void CardClicked(CardUIObject card)
+        {
+            if (card != null)
+            {
+                Debug.Log(card.CardInstance.CardData);
+            }
         }
 
         public void AddMoney(int amount)
@@ -22,12 +35,12 @@
 
         public void OnEnterGameState()
         {
-            
+            ServiceLocator.GUIService.GUIEvents.CardClicked.AddListener(CardClicked);
         }
 
         public void OnExitGameState()
         {
-            
+            ServiceLocator.GUIService.GUIEvents.CardClicked.RemoveListener(CardClicked);
         }
     }
 }

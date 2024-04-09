@@ -25,12 +25,12 @@ public class ScrollComponent : MonoBehaviour
 
     private void Awake()
     {
-        ServiceLocator.InputManager.MouseButtonUpEvent.AddListener(MouseUp);
+        ServiceLocator.InputManager.InputEvents.MouseButtonUpEvent.AddListener(MouseUp);
     }
 
     private void OnDestroy()
     {
-        ServiceLocator.InputManager.MouseButtonUpEvent.RemoveListener(MouseUp);
+        ServiceLocator.InputManager.InputEvents.MouseButtonUpEvent.RemoveListener(MouseUp);
     }
 
     private void Scroll()

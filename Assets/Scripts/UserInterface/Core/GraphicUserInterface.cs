@@ -2,10 +2,10 @@ using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GraphicUserInterface : MonoBehaviour
 {
+
     public UIHand Hand;
     public UICardView CardView;
     public CardGridViewer CardGridViewer;
@@ -22,11 +22,13 @@ public class GraphicUserInterface : MonoBehaviour
         }
     }
 
+    public GUIEvents GUIEvents { get; private set; }
+
     private CardInstance _selectedCard;
 
     private void Awake()
     {
-        _blockers = new List<UIBlocker>();
+
     }
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,8 @@ public class GraphicUserInterface : MonoBehaviour
             RectUtilities.SetAnchorsAndResetSize(Hand.RectTransform, new Vector2(0.05f, 0f), new Vector2(0.95f, 0.3f));
         }
         Hand.Initialize();
+        _blockers = new List<UIBlocker>();
+        GUIEvents = new GUIEvents();
     }
 
     private void OnDestroy()
@@ -59,11 +63,7 @@ public class GraphicUserInterface : MonoBehaviour
     {
         if (card != null)
         {
-            // TODO: States here
-            _selectedCard = card.CardInstance;
-            CardView.SetCard(card.CardInstance);
-            CardView.gameObject.SetActive(true);
-            BackgroundImage.ElementClickedEvent.AddListener(BackgroundClicked);
+            GUIEvents.CardClicked?.Invoke(card);
         }
     }
     private void BackgroundClicked(UIElementClickable element)

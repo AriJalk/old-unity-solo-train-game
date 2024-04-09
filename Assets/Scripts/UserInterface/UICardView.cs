@@ -45,7 +45,7 @@ public class UICardView : UIBlocker
     {
         ResetView();
         gameObject.SetActive(false);
-        ServiceLocator.UserInterfaceService?.RemoveBlocker(this);
+        ServiceLocator.GUIService?.RemoveBlocker(this);
         CanBlock = false;
     }
 

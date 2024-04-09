@@ -54,7 +54,7 @@ namespace Engine
         static public InputManager InputManager { get; private set; }
 
         static public TimerManager TimerManager { get; private set; }
-        static public UserInterfaceService UserInterfaceService {  get; private set; }
+        static public GUIServices GUIService {  get; private set; }
         static ServiceLocator()
         {
             InputManager = new InputManager();
@@ -77,7 +77,7 @@ namespace Engine
 
         static public void SetUserInterface(GraphicUserInterface ui)
         {
-            UserInterfaceService = new UserInterfaceService(ui);
+            GUIService = new GUIServices(ui);
         }
     }
 }
