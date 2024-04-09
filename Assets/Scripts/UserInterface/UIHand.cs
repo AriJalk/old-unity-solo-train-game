@@ -1,5 +1,3 @@
-
-
 using Engine;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
@@ -18,7 +16,7 @@ public class UIHand : UIBlocker
     public RectTransform RectTransform;
 
     [SerializeField]
-    private ResizableContent _cardsTransform;
+    private RectTransform _cardsTransform;
     [SerializeField]
     private ScrollRect _scrollRect;
 
@@ -71,9 +69,8 @@ public class UIHand : UIBlocker
 
     private Vector2 CalculatePosition(int index, Vector2 size)
     {
-        float xOffset = size.x * CARD_GAP * 0.5f;
-        float x = ((index % 2 == 0) ? 1 : -1) * (xOffset + index / 2 * size.x * CARD_GAP);
-        return new Vector2(x, 0);
+        float x = index * (size.x + CARD_GAP);
+        return new Vector2 (x, 0);
     }
 
 
@@ -87,17 +84,14 @@ public class UIHand : UIBlocker
         cardObject.SetCard(card);
 
         cardObject.RectTransform.SetParent(containerRectTransform);
-        containerRectTransform.SetParent(_cardsTransform.RectTransform);
+        containerRectTransform.SetParent(_cardsTransform);
         containerRectTransform.localScale = Vector2.one;
 
         // Calculate size according to height and aspect ratio
 
-        float height = _cardsTransform.RectTransform.rect.height - CARD_PADDING;
+        float height = _cardsTransform.rect.height;
         Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
-        container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
-
-
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
@@ -105,7 +99,7 @@ public class UIHand : UIBlocker
         CardsHand.Add(cardObject);
 
         // Resize the hand size so it can be dragged
-        _cardsTransform.Resize(size.x, CardsHand.Count, CARD_GAP);
+        //_cardsTransform.Resize(size.x, CardsHand.Count, CARD_GAP);
     }
 
     private void BuildTestHand()
@@ -130,19 +124,15 @@ public class UIHand : UIBlocker
         cardObject.SetCard(cardData);
 
         cardObject.RectTransform.SetParent(containerRectTransform);
-        containerRectTransform.SetParent(_cardsTransform.RectTransform);
+        containerRectTransform.SetParent(_cardsTransform);
         containerRectTransform.localScale = Vector2.one;
 
         // Calculate size according to height and aspect ratio
 
-        float height = _cardsTransform.RectTransform.rect.height - CARD_PADDING;
+        float height = _cardsTransform.rect.height - CARD_PADDING;
         Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
         container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
-
-
-        // Resize the hand size so it can be dragged
-        _cardsTransform.Resize2(cardObject.RectTransform, 2f * size.x);
 
         // Add listener to card click
         cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);

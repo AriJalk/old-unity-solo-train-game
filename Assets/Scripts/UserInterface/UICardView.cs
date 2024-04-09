@@ -1,10 +1,8 @@
 using Engine;
-using Engine.ResourceManagement;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UICardView : UIBlocker

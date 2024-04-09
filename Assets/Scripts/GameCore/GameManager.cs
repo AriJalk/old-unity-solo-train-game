@@ -34,17 +34,8 @@ namespace SoloTrainGame.Core
 
         void Start()
         {
-            List<CardInstance> cards = new List<CardInstance>();
-
-            foreach (CardSO card in ServiceLocator.ScriptableObjectManager.CardTypes)
-            {
-                CardInstance cardInstance = new CardInstance(card);
-                GameState.CardHand.Add(cardInstance);
-                _userInterface.Hand.AddCardToHandFromInstance(cardInstance);
-                cards.Add(cardInstance);
-            }
+            TestHand();
             //_userInterface.CardGridViewer.OpenViewer(cards);
-            
         }
 
         // Update is called once per frame
@@ -87,6 +78,21 @@ namespace SoloTrainGame.Core
             return null;
         }
 
+        private void TestHand()
+        {
+            List<CardInstance> cards = new List<CardInstance>();
+            for (int i = 0; i < 1; i++)
+            {
+                foreach (CardSO card in ServiceLocator.ScriptableObjectManager.CardTypes)
+                {
+                    CardInstance cardInstance = new CardInstance(card);
+                    GameState.CardHand.Add(cardInstance);
+                    _userInterface.Hand.AddCardToHandFromInstance(cardInstance);
+                    cards.Add(cardInstance);
+
+                }
+            }
+        }
     }
 
 }

@@ -25,6 +25,7 @@ public class CardUIObject : UIElementClickable
 
     }
 
+
     public void SetCard(CardInstance card)
     {
         CardInstance = card;
