@@ -186,10 +186,16 @@ namespace SoloTrainGame.Core
             // Build test map
             Hex hex = Hex.ZERO;
             BuildTestRow(hex, Enums.TerrainType.Fields, 5);
-            Hex neighbor = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
-            BuildTestRow(neighbor, Enums.TerrainType.Mountains, 5);
-            neighbor = Hex.GetHexNeighbor(neighbor, Hex.HexDirection.NORTH);
-            BuildTestRow(neighbor, Enums.TerrainType.Urban, 5);
+            hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(hex, Enums.TerrainType.Fields, 5);
+            hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(hex, Enums.TerrainType.Mountains, 5);
+            hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(hex, Enums.TerrainType.Mountains, 5);
+            hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(hex, Enums.TerrainType.Urban, 5);
+            hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(hex, Enums.TerrainType.Urban, 5);
 
         }
 

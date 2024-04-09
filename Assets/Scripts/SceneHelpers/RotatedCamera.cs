@@ -79,6 +79,8 @@ public class RotatedCamera : MonoBehaviour
             _transform.position.y, 
             (_maxBounds.y + _minBounds.y) * 0.5f);
         _verticalRotation = (_maxAngle + _minAngle) * 0.5f;
+        // Facing north
+        _horizontalRotation = -90f;
         UpdateCameraPosition(true);
     }
 
