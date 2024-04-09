@@ -3,7 +3,7 @@
     public class GUIServices
     {
         private GraphicUserInterface _ui;
-        
+
         public bool IsUILocked
         {
             get
@@ -15,7 +15,7 @@
         public GUIEvents GUIEvents { get; private set; }
 
         public UICardView CardView { get; private set; }
-        public UIElementClickable BackgroundImage {  get; private set; }
+        public UIElementClickable BackgroundImage { get; private set; }
 
         public GUIServices(GraphicUserInterface ui)
         {
@@ -39,6 +39,14 @@
             if (blocker != null)
             {
                 _ui.RemoveBlocker(blocker);
+            }
+        }
+
+        public void SetStateMessage(string message)
+        {
+            if (_ui.StateMessageText != null)
+            {
+                _ui.StateMessageText.text = message;
             }
         }
     }

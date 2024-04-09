@@ -63,7 +63,7 @@ PrefabInstance:
     - target: {fileID: -1439730007547781893, guid: 5a21ca5c963f03645a8af3a4bbe10865, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 619314aceb015824da99252dab96acb1, type: 2}
+      objectReference: {fileID: 2100000, guid: 156a28fbdc7a18f499726fcd95957f17, type: 2}
     - target: {fileID: 919132149155446097, guid: 5a21ca5c963f03645a8af3a4bbe10865, type: 3}
       propertyPath: m_Name
       value: Train

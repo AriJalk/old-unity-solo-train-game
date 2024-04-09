@@ -10,21 +10,20 @@ namespace SoloTrainGame.Core
 {
     public class HexGridController : MonoBehaviour
     {
-        [SerializeField]
         const float TILE_SIZE = 0.5f;
 
-        public Vector3 Center = Vector3.zero;
-
-
-        // Spacing between tiles
         [SerializeField]
         [Range(0f, 2f)]
-        float tileGap = 0.1f;
+        float _tileGap = 0.1f;
+        [SerializeField]
+        private Transform _worldTransform;
 
-        private PrefabManager prefabManager;
+        public Vector3 Center = Vector3.zero;
+        private PrefabManager _prefabManager;
+
 
         // Holds all tiles in the map
-        private Dictionary<Hex, HexTileObject> hexTileDictionary;
+        private Dictionary<Hex, HexTileObject> _hexTileDictionary;
 
         // Last recorded tile gap
         private float lastTileGap;
@@ -36,8 +35,8 @@ namespace SoloTrainGame.Core
         // Bounds
         public float MinX { get; private set; }
         public float MaxX { get; private set; }
-        public float MinZ {  get; private set; }
-        public float MaxZ {  get; private set; }
+        public float MinZ { get; private set; }
+        public float MaxZ { get; private set; }
 
 
         void Start()
@@ -47,10 +46,10 @@ namespace SoloTrainGame.Core
 
         void Update()
         {
-            if (lastTileGap != tileGap)
+            if (lastTileGap != _tileGap)
             {
-                lastTileGap = tileGap;
-                foreach (HexTileObject tileObj in hexTileDictionary.Values)
+                lastTileGap = _tileGap;
+                foreach (HexTileObject tileObj in _hexTileDictionary.Values)
                 {
                     UpdateTilePosition(tileObj);
                 }
@@ -59,19 +58,19 @@ namespace SoloTrainGame.Core
 
         public void Initialize()
         {
-            prefabManager = ServiceLocator.PrefabManager;
-            prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
-            hexTileDictionary = new Dictionary<Hex, HexTileObject>();
-            lastTileGap = tileGap;
-            BuildTestMap();
-            StartingTile = hexTileDictionary[Hex.ZERO];
+            _prefabManager = ServiceLocator.PrefabManager;
+            _prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
+            _hexTileDictionary = new Dictionary<Hex, HexTileObject>();
+            lastTileGap = _tileGap;
+            BuildTestMapNew();
+            StartingTile = _hexTileDictionary[Hex.ZERO];
 
         }
 
 
         private void UpdateTilePosition(HexTileObject tile)
         {
-            tile.CachedTransform.position = Hex.HexToWorld(tile.HexGameData.Hex, TILE_SIZE, tileGap, HexOrientation.FlatLayout);
+            tile.CachedTransform.position = Hex.HexToWorld(tile.HexGameData.Hex, TILE_SIZE, _tileGap, HexOrientation.FlatLayout);
         }
 
         private void SetTileMaterial(HexTileObject tile)
@@ -91,16 +90,19 @@ namespace SoloTrainGame.Core
 
         private void CreateTile(Hex hex, Enums.TerrainType type)
         {
-            HexTileObject tile = prefabManager.RetrievePoolObject<HexTileObject>();
-            TerrainTypeSO terrainType = ServiceLocator.ScriptableObjectManager.TerrainTypes[type];
-            tile.HexGameData = new HexGameData(hex, terrainType);
-            tile.CachedTransform.SetParent(transform);
-            hexTileDictionary.Add(hex, tile);
-            tile.CostText.text = terrainType.TerrainCost.ToString() + "$";
-            ConnectNeighbors(tile);
-            UpdateTilePosition(tile);
-            SetTileMaterial(tile);
-            UpdateBoundsFromHex(tile);
+            if (!_hexTileDictionary.ContainsKey(hex))
+            {
+                HexTileObject tile = _prefabManager.RetrievePoolObject<HexTileObject>();
+                TerrainTypeSO terrainType = ServiceLocator.ScriptableObjectManager.TerrainTypes[type];
+                tile.HexGameData = new HexGameData(hex, terrainType);
+                tile.CachedTransform.SetParent(transform);
+                _hexTileDictionary.Add(hex, tile);
+                tile.CostText.text = terrainType.TerrainCost.ToString() + "$";
+                ConnectNeighbors(tile);
+                UpdateTilePosition(tile);
+                SetTileMaterial(tile);
+                UpdateBoundsFromHex(tile);
+            }
         }
 
 
@@ -146,8 +148,8 @@ namespace SoloTrainGame.Core
 
         public HexTileObject GetHexTile(Hex position)
         {
-            if (hexTileDictionary.ContainsKey(position))
-                return hexTileDictionary[position];
+            if (_hexTileDictionary.ContainsKey(position))
+                return _hexTileDictionary[position];
             return null;
         }
 
@@ -176,10 +178,33 @@ namespace SoloTrainGame.Core
                 else
                     hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.SOUTH_EAST);
             }
-            avaragePosition /= hexTileDictionary.Count;
+            avaragePosition /= _hexTileDictionary.Count;
             Center = avaragePosition;
+        }
+        public void BuildTestMapNew()
+        {
+            // Build test map
+            Hex hex = Hex.ZERO;
+            BuildTestRow(hex, Enums.TerrainType.Fields, 5);
+            Hex neighbor = Hex.GetHexNeighbor(hex, Hex.HexDirection.NORTH);
+            BuildTestRow(neighbor, Enums.TerrainType.Mountains, 5);
+            neighbor = Hex.GetHexNeighbor(neighbor, Hex.HexDirection.NORTH);
+            BuildTestRow(neighbor, Enums.TerrainType.Urban, 5);
 
         }
+
+        private void BuildTestRow(Hex origin, Enums.TerrainType type, int length)
+        {
+            CreateTile(origin, type);
+            for (int i = 0; i < length; i++)
+            {
+                origin = Hex.GetHexNeighbor(origin, Hex.HexDirection.NORTH_EAST);
+                CreateTile(origin, type);
+                origin = Hex.GetHexNeighbor(origin, Hex.HexDirection.SOUTH_EAST);
+                CreateTile(origin, type);
+            }
+        }
+
     }
 
 }

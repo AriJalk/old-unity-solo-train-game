@@ -1,8 +1,8 @@
 using Engine;
 using UnityEngine;
-using HexSystem;
 using System.Collections.Generic;
 using SoloTrainGame.GameLogic;
+using SoloTrainGame.UI;
 
 namespace SoloTrainGame.Core
 {
