@@ -30,6 +30,20 @@ public class UICardView : UIBlocker
         ResetView();
     }
 
+
+
+
+    public void SetCard(CardInstance card)
+    {
+        ResetView();
+        _cardUI = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
+        _cardUI.SetCard(card);
+        RectUtilities.SetParentAndResetPosition(_cardUI.transform, _cardSlotTransform);
+        _backButton.onClick.AddListener(CloseView);
+        _playActionButton.onClick.AddListener(PlayAction);
+        CanBlock = true;
+    }
+
     private void ResetView()
     {
         if (_cardUI != null)
@@ -40,6 +54,7 @@ public class UICardView : UIBlocker
             _playActionButton.onClick.RemoveListener(PlayAction);
         }
     }
+
 
     public void CloseView()
     {
@@ -58,14 +73,4 @@ public class UICardView : UIBlocker
         }
     }
 
-    public void SetCard(CardInstance card)
-    {
-        ResetView();
-        _cardUI = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
-        _cardUI.SetCard(card);
-        RectUtilities.SetParentAndResetPosition(_cardUI.transform, _cardSlotTransform);
-        _backButton.onClick.AddListener(CloseView);
-        _playActionButton.onClick.AddListener(PlayAction);
-        CanBlock = true;
-    }
 }

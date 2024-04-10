@@ -102,41 +102,21 @@ public class UIHand : UIBlocker
         //_cardsTransform.Resize(size.x, CardsHand.Count, CARD_GAP);
     }
 
-    private void BuildTestHand()
+    public void RemoveCardFromHand(CardInstance card)
     {
-        for (int i = 0; i < 5; i++)
+        for(int i = 0; i < CardsHand.Count; i++)
         {
-            foreach (CardSO cardSO in ServiceLocator.ScriptableObjectManager.CardTypes)
+            if (CardsHand[i].CardInstance == card)
             {
-                TestPlaceCardFromSO(cardSO);
+                CardUIObject cardUI = CardsHand[i];
+                Transform container = cardUI.RectTransform.parent; 
+                cardUI.ElementClickedEvent.RemoveListener(CardClicked);
+                ServiceLocator.PrefabManager.ReturnPoolObject(cardUI);
+                CardsHand.RemoveAt(i);
+                Destroy(container.gameObject);
+                return;
             }
         }
-    }
 
-    private void TestPlaceCardFromSO(CardSO cardSO)
-    {
-        // Create container for the card
-        GameObject container = new GameObject();
-        RectTransform containerRectTransform = container.AddComponent<RectTransform>();
-        CardInstance cardData = new CardInstance(cardSO);
-        // Set prefab card to card instance
-        CardUIObject cardObject = ServiceLocator.PrefabManager.RetrievePoolObject<CardUIObject>();
-        cardObject.SetCard(cardData);
-
-        cardObject.RectTransform.SetParent(containerRectTransform);
-        containerRectTransform.SetParent(_cardsTransform);
-        containerRectTransform.localScale = Vector2.one;
-
-        // Calculate size according to height and aspect ratio
-
-        float height = _cardsTransform.rect.height - CARD_PADDING;
-        Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
-        containerRectTransform.sizeDelta = size;
-        container.transform.localPosition = CalculatePosition(CardsHand.Count, containerRectTransform.sizeDelta);
-
-        // Add listener to card click
-        cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardSO);
-        cardObject.ElementClickedEvent.AddListener(CardClicked);
-        CardsHand.Add(cardObject);
     }
 }

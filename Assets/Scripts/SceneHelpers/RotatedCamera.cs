@@ -161,7 +161,7 @@ public class RotatedCamera : MonoBehaviour
         //_inputManager.InputEvents.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
         _inputManager.InputEvents.AxisMovedEvent?.RemoveListener(MoveCamera);
         _inputManager.InputEvents.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClickDown);
-        _inputManager.InputEvents.MouseButtonClickedUpEvent?.AddListener(ProccessMouseClickUp);
+        _inputManager.InputEvents.MouseButtonClickedUpEvent?.RemoveListener(ProccessMouseClickUp);
         _inputManager.InputEvents.MouseScrolledEvent?.RemoveListener(MouseScrolled);
         ServiceLocator.GUIService.GUIEvents.WorldDraggedEvent?.RemoveListener(RotateCameraWithMouse);
     }

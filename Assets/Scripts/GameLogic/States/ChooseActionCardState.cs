@@ -19,6 +19,7 @@ namespace SoloTrainGame.GameLogic
         {
             ServiceLocator.GUIService.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
             ServiceLocator.GUIService.SetStateMessage(string.Empty);
+            ServiceLocator.GUIService.CardView.PlayActionEvent?.RemoveListener(PlayAction);
         }
 
         public void CardClicked(CardUIObject card)
@@ -41,6 +42,7 @@ namespace SoloTrainGame.GameLogic
         private void PlayAction(CardInstance card)
         {
             card.CardData.CardBehavior.StartBehavior(card.CardData);
+            ServiceLocator.GUIService.UIHand.RemoveCardFromHand(card);
         }
 
 

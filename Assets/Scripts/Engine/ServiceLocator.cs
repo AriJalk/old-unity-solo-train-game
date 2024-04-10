@@ -58,12 +58,14 @@ namespace Engine
         static public GUIServices GUIService {  get; private set; }
         static public StateManager StateManager { get; private set; }
         static public LogicState LogicState { get; private set; }
+        static public GameEvents GameEvents { get; private set; }
         static ServiceLocator()
         {
             InputManager = new InputManager();
             TimerManager = new TimerManager();
             ScriptableObjectManager = new ScriptableObjectManager();
             StateManager = new StateManager();
+            GameEvents = new GameEvents();
             SetMaterialManager();
         }
 

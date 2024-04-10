@@ -34,6 +34,7 @@ namespace SoloTrainGame.UI
         {
             _gui.Hand.CardClickedEvent.RemoveListener(CardClicked);
             _gui.WorldDrag.OnDragEvent.RemoveListener(WorldDragged);
+            _gui.CardView.PlayActionEvent?.RemoveListener(PlayAction);
         }
 
         private void CardClicked(CardUIObject card)

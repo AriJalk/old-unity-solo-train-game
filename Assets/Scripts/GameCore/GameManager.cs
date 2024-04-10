@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using System;
+using UnityEngine.Events;
 
 namespace SoloTrainGame.Core
 {
@@ -97,7 +98,7 @@ namespace SoloTrainGame.Core
             {
                 if (tile == _selectedTile)
                 {
-                    Debug.Log(tile.HexGameData);
+                    ServiceLocator.GameEvents.TileSelectedEvent?.Invoke(tile);
                 }
             }
         }

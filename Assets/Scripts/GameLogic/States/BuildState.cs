@@ -23,6 +23,11 @@ namespace SoloTrainGame.GameLogic
             }
         }
 
+        private void TileSelected(HexTileObject tile)
+        {
+            Debug.Log(tile.HexGameData.Hex.Position);
+        }
+
         public void AddMoney(int amount)
         {
             if (amount > 0)
@@ -42,11 +47,13 @@ namespace SoloTrainGame.GameLogic
             ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
             ServiceLocator.GUIService.SetStateMessage("Select a tile to build on or discard cards to add their $");
             ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+            ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TileSelected);
         }
 
         public void OnExitGameState()
         {
             ServiceLocator.GUIService.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
+            ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
         }
     }
 }

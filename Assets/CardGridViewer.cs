@@ -48,16 +48,7 @@ public class CardGridViewer : UIBlocker
         }
     }
 
-    public void CloseViewer()
-    {
-        foreach (CardUIObject card in _cards)
-        {
-            card.ElementClickedEvent.RemoveListener(EnlargeCard);
-        }
-        _enlargedCard.gameObject.SetActive(false);
-        CanBlock = false;
-        ServiceLocator.GUIService?.RemoveBlocker(this);
-    }
+
 
     public void OpenViewer(List<CardInstance> cards)
     {
@@ -73,6 +64,17 @@ public class CardGridViewer : UIBlocker
             cardUI.ElementClickedEvent.AddListener(EnlargeCard);
         }
         CanBlock = true;
+    }
+
+    public void CloseViewer()
+    {
+        foreach (CardUIObject card in _cards)
+        {
+            card.ElementClickedEvent.RemoveListener(EnlargeCard);
+        }
+        _enlargedCard.gameObject.SetActive(false);
+        CanBlock = false;
+        ServiceLocator.GUIService?.RemoveBlocker(this);
     }
 
 
