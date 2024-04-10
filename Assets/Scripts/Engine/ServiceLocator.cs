@@ -1,5 +1,6 @@
 ﻿using Engine.ResourceManagement;
 using SoloTrainGame.Core;
+using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using UnityEngine;
 
@@ -56,6 +57,7 @@ namespace Engine
         static public TimerManager TimerManager { get; private set; }
         static public GUIServices GUIService {  get; private set; }
         static public StateManager StateManager { get; private set; }
+        static public LogicState LogicState { get; private set; }
         static ServiceLocator()
         {
             InputManager = new InputManager();
@@ -79,6 +81,11 @@ namespace Engine
         static public void SetUserInterface(GraphicUserInterface ui)
         {
             GUIService = new GUIServices(ui);
+        }
+
+        static public void SetLogicState(LogicState state)
+        {
+            LogicState = state;
         }
     }
 }

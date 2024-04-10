@@ -13,10 +13,13 @@
         }
 
         public GUIEvents GUIEvents { get; private set; }
-
         public UICardView CardView { get; private set; }
+        public CardSlot CardSlotRed { get; private set; }
+        public CardSlot CardSlotBrown { get; private set; }
+        public CardSlot CardSlotGray {  get; private set; }
         public UIElementClickable BackgroundImage { get; private set; }
-
+        public UIHand UIHand { get; private set; }
+     
         public GUIServices(GraphicUserInterface ui)
         {
             _ui = ui;
@@ -24,6 +27,10 @@
             GUIEvents = _ui.GUIEvents;
             CardView = _ui.CardView;
             BackgroundImage = _ui.BackgroundImage;
+            CardSlotRed = _ui.CardSlotRed;
+            CardSlotBrown = _ui.CardSlotBrown;
+            CardSlotGray = _ui.CardSlotGray;
+            UIHand = _ui.Hand;
         }
 
         public void AddBlocker(UIBlocker blocker)

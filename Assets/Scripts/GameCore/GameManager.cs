@@ -37,11 +37,11 @@ namespace SoloTrainGame.Core
 
         void Start()
         {
-            TestHand();
             //_userInterface.CardGridViewer.OpenViewer(cards);
             _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
-
+            ServiceLocator.StateManager.AddState(new NewGameState());
+            ServiceLocator.StateManager.EnterNextState();
         }
 
 
@@ -80,9 +80,8 @@ namespace SoloTrainGame.Core
             }
             _rotatedCamera.Initialize(min, max);
             GameState = new LogicState(_gridController);
+            ServiceLocator.SetLogicState(GameState);
             ServiceLocator.SetUserInterface(_userInterface);
-            ServiceLocator.StateManager.AddState(new ChooseActionCardState());
-            ServiceLocator.StateManager.EnterNextState();
         }
 
         private void RaycastColliderHitDown(RaycastHit hit)

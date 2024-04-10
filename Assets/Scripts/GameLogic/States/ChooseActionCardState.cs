@@ -1,14 +1,16 @@
 ﻿using Engine;
 using SoloTrainGame.Core;
 using SoloTrainGame.UI;
+using System.Collections.Generic;
 
 namespace SoloTrainGame.GameLogic
 {
     public class ChooseActionCardState : IActionState
     {
+        private List<CardUIObject> _cards;
         public void OnEnterGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
+            ServiceLocator.GUIService.GUIEvents.CardClickedEvent?.AddListener(CardClicked);
             ServiceLocator.GUIService.SetStateMessage("Choose a card for its action");
             ServiceLocator.GUIService.CardView.PlayActionEvent?.AddListener(PlayAction);
         }

@@ -16,6 +16,10 @@ namespace SoloTrainGame.UI
         public TextMeshProUGUI ExtraMessageText;
         public WorldDrag WorldDrag;
 
+        public CardSlot CardSlotRed;
+        public CardSlot CardSlotBrown;
+        public CardSlot CardSlotGray;
+
         private List<UIBlocker> _blockers;
 
         public GUIEvents GUIEvents { get; private set; }
