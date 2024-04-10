@@ -35,12 +35,12 @@ namespace SoloTrainGame.GameLogic
 
         public void OnEnterGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClicked.AddListener(CardClicked);
+            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
         }
 
         public void OnExitGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClicked.RemoveListener(CardClicked);
+            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
         }
     }
 }

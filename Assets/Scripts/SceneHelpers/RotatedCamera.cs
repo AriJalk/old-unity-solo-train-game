@@ -1,21 +1,25 @@
 using Engine;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RotatedCamera : MonoBehaviour
 {
     const float RADIUS = 3f;
 
+    public UnityEvent<RaycastHit> ColliderClickDownEvent;
+    public UnityEvent<RaycastHit> ColliderClickUpEvent;
+
 
     [SerializeField]
     Transform _cameraTransform;
     [SerializeField]
-    [Range (-89.9f, 89.9f)]
+    [Range(-89.9f, 89.9f)]
     private float _minAngle = 5f;
     [SerializeField]
     [Range(-89.9f, 89.9f)]
     private float _maxAngle = 80f;
     [SerializeField]
-    [Range (0f, 5f)]
+    [Range(0f, 5f)]
     private float minRadius = 0.75f;
     [SerializeField]
     [Range(0.1f, 20f)]
@@ -31,10 +35,10 @@ public class RotatedCamera : MonoBehaviour
     [Range(0f, 5f)]
     private float _overBounds = 1f;
     [SerializeField]
-    [Range(0.5f, 20f)]
+    [Range(0.5f, 100f)]
     private float _horizontalRotationSpeed = 5f;
     [SerializeField]
-    [Range(0.5f, 20f)]
+    [Range(0.5f, 100f)]
     private float _verticalRotationSpeed = 5f;
     [SerializeField]
     [Range(1f, 500f)]
@@ -42,6 +46,8 @@ public class RotatedCamera : MonoBehaviour
     [SerializeField]
     [Range(0f, 20f)]
     private float _scrollInertion = 2f;
+
+
 
     private Transform _transform;
     private Camera _camera;
@@ -68,15 +74,17 @@ public class RotatedCamera : MonoBehaviour
         _inputManager = ServiceLocator.InputManager;
         _transform = transform;
         _camera = _cameraTransform.GetComponent<Camera>();
-
+        ColliderClickDownEvent = new UnityEvent<RaycastHit>();
+        ColliderClickUpEvent = new UnityEvent<RaycastHit>();
     }
+
     void Start()
     {
         AddInputListeners();
         // Place at center of board
         _transform.position = new Vector3((
-            _maxBounds.x + _minBounds.x) * 0.5f, 
-            _transform.position.y, 
+            _maxBounds.x + _minBounds.x) * 0.5f,
+            _transform.position.y,
             (_maxBounds.y + _minBounds.y) * 0.5f);
         _verticalRotation = (_maxAngle + _minAngle) * 0.5f;
         // Facing north
@@ -86,7 +94,7 @@ public class RotatedCamera : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void LateUpdate()
@@ -139,19 +147,23 @@ public class RotatedCamera : MonoBehaviour
 
     void AddInputListeners()
     {
-        _inputManager.InputEvents.MouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
+        //_inputManager.InputEvents.MouseButtonHeldEvent?.AddListener(ProccessHeldEvent);
         _inputManager.InputEvents.AxisMovedEvent?.AddListener(MoveCamera);
-        _inputManager.InputEvents.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClick);
+        _inputManager.InputEvents.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClickDown);
+        _inputManager.InputEvents.MouseButtonClickedUpEvent?.AddListener(ProccessMouseClickUp);
         _inputManager.InputEvents.MouseScrolledEvent?.AddListener(MouseScrolled);
+        ServiceLocator.GUIService.GUIEvents.WorldDraggedEvent?.AddListener(RotateCameraWithMouse);
 
     }
 
     void RemoveInputListeners()
     {
-        _inputManager.InputEvents.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
+        //_inputManager.InputEvents.MouseButtonHeldEvent?.RemoveListener(ProccessHeldEvent);
         _inputManager.InputEvents.AxisMovedEvent?.RemoveListener(MoveCamera);
-        _inputManager.InputEvents.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClick);
+        _inputManager.InputEvents.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClickDown);
+        _inputManager.InputEvents.MouseButtonClickedUpEvent?.AddListener(ProccessMouseClickUp);
         _inputManager.InputEvents.MouseScrolledEvent?.RemoveListener(MouseScrolled);
+        ServiceLocator.GUIService.GUIEvents.WorldDraggedEvent?.RemoveListener(RotateCameraWithMouse);
     }
 
     void ProccessHeldEvent(int index, Vector2 movement)
@@ -162,14 +174,29 @@ public class RotatedCamera : MonoBehaviour
         }
     }
 
-    void ProccessMouseClick(int index, Vector2 position)
+    void ProccessMouseClickDown(int index, Vector2 position)
     {
         if (index == 0 && !ServiceLocator.GUIService.IsUILocked)
         {
             RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition));
             if (hit.collider != null)
-                Debug.Log(hit.collider.transform.position);
+                ColliderClickDownEvent?.Invoke(hit);
         }
+    }
+
+    void ProccessMouseClickUp(int index, Vector2 position)
+    {
+        if (index == 0 && !ServiceLocator.GUIService.IsUILocked)
+        {
+            RaycastHit hit = CameraRaycast(_camera.ScreenPointToRay(Input.mousePosition));
+            if (hit.collider != null)
+                ColliderClickUpEvent?.Invoke(hit);
+        }
+    }
+
+    private void ProccessMouseClick()
+    {
+
     }
 
 
@@ -223,28 +250,24 @@ public class RotatedCamera : MonoBehaviour
 
 
     void RotateCameraWithMouse(Vector2 movement)
-    {
-        if (!ServiceLocator.GUIService.IsUILocked)
+    {        // Horizontal rotation around Y axis
+        _horizontalRotation -= movement.x * _horizontalRotationSpeed * Time.deltaTime;
+        if (_horizontalRotation < -360)
+            _horizontalRotation += 360;
+        else if (_horizontalRotation > 360)
         {
-            // Horizontal rotation around Y axis
-            _horizontalRotation -= movement.x * _horizontalRotationSpeed;
-            if (_horizontalRotation < -360)
-                _horizontalRotation += 360;
-            else if (_horizontalRotation > 360)
-            {
-                _horizontalRotation -= 360;
-            }
-
-            // Vertical rotation around X axis
-            _verticalRotation -= movement.y * _verticalRotationSpeed;
-            // Allows below 0 rotation
-            if (_verticalRotation > 180f)
-            {
-                _verticalRotation -= 360f;
-            }
-            _verticalRotation = Mathf.Clamp(_verticalRotation, _minAngle, _maxAngle);
-            _isCameraRotated = true;
+            _horizontalRotation -= 360;
         }
+
+        // Vertical rotation around X axis
+        _verticalRotation -= movement.y * _verticalRotationSpeed * Time.deltaTime;
+        // Allows below 0 rotation
+        if (_verticalRotation > 180f)
+        {
+            _verticalRotation -= 360f;
+        }
+        _verticalRotation = Mathf.Clamp(_verticalRotation, _minAngle, _maxAngle);
+        _isCameraRotated = true;
     }
 
 

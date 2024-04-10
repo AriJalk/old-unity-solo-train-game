@@ -13,9 +13,12 @@ namespace SoloTrainGame.UI
         public CardGridViewer CardGridViewer;
         public UIElementClickable BackgroundImage;
         public TextMeshProUGUI StateMessageText;
-
+        public WorldDrag WorldDrag;
 
         private List<UIBlocker> _blockers;
+
+        public GUIEvents GUIEvents { get; private set; }
+
 
         public bool IsUILocked
         {
@@ -24,8 +27,6 @@ namespace SoloTrainGame.UI
                 return _blockers.Count > 0;
             }
         }
-
-        public GUIEvents GUIEvents { get; private set; }
 
         private CardInstance _selectedCard;
 
@@ -36,7 +37,7 @@ namespace SoloTrainGame.UI
         // Start is called before the first frame update
         void Start()
         {
-            Hand.CardClickedEvent.AddListener(CardClicked);
+            
             CardView.gameObject.SetActive(false);
         }
 
@@ -54,21 +55,16 @@ namespace SoloTrainGame.UI
             }
             Hand.Initialize();
             _blockers = new List<UIBlocker>();
-            GUIEvents = new GUIEvents();
+            WorldDrag.Initialize();
+            GUIEvents = new GUIEvents(this);
         }
 
         private void OnDestroy()
         {
-            Hand.CardClickedEvent.RemoveListener(CardClicked);
+
         }
 
-        private void CardClicked(CardUIObject card)
-        {
-            if (card != null)
-            {
-                GUIEvents.CardClicked?.Invoke(card);
-            }
-        }
+
         private void BackgroundClicked(UIElementClickable element)
         {
             if (CardView.enabled)

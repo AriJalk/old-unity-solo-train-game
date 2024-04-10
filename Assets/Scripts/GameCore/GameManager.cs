@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
+using System;
 
 namespace SoloTrainGame.Core
 {
@@ -27,6 +28,8 @@ namespace SoloTrainGame.Core
 
         private LogicState GameState;
 
+        private HexTileObject _selectedTile;
+
 
 
         // Start is called before the first frame update
@@ -39,7 +42,11 @@ namespace SoloTrainGame.Core
         {
             TestHand();
             //_userInterface.CardGridViewer.OpenViewer(cards);
+            _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
+            _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
         }
+
+
 
         // Update is called once per frame
         void Update()
@@ -51,6 +58,8 @@ namespace SoloTrainGame.Core
         private void OnDestroy()
         {
             _stateManager.ExitCurrentState();
+            _rotatedCamera.ColliderClickDownEvent?.RemoveListener(RaycastColliderHitDown);
+            _rotatedCamera.ColliderClickUpEvent?.RemoveListener(RaycastColliderHitUp);
         }
 
         private void Initialize()
@@ -80,14 +89,24 @@ namespace SoloTrainGame.Core
             _stateManager.EnterNextState();
         }
 
-        HexTileObject RaycastHitToHexTile(RaycastHit hit)
+        private void RaycastColliderHitDown(RaycastHit hit)
         {
-            if (hit.collider != null && hit.collider.transform.parent?.GetComponent<HexTileObject>() is HexTileObject tileObject)
+            if (hit.collider.transform.parent?.GetComponent<HexTileObject>() is HexTileObject tile)
             {
-                return tileObject;
+                _selectedTile = tile;
             }
-            return null;
         }
+        private void RaycastColliderHitUp(RaycastHit hit)
+        {
+            if (hit.collider.transform.parent?.GetComponent<HexTileObject>() is HexTileObject tile)
+            {
+                if (tile == _selectedTile)
+                {
+                    Debug.Log(tile.HexGameData);
+                }
+            }
+        }
+
 
         private void TestHand()
         {

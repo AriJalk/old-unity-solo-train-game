@@ -78,5 +78,12 @@ namespace SoloTrainGame.GameLogic
             }
             return false;
         }
+
+        public override string ToString()
+        {
+            string str = "Hex: " + Hex.Position + "\n";
+            str += "Type: " + TileType.TerrainType;
+            return str;
+        }
     }
 }

@@ -45,11 +45,11 @@ namespace Engine
             }
             if (Input.GetMouseButtonUp(0))
             {
-                InputEvents.MouseButtonUpEvent?.Invoke(0, movement);
+                InputEvents.MouseButtonClickedUpEvent?.Invoke(0, movement);
             }
             if (Input.GetMouseButtonUp(1))
             {
-                InputEvents.MouseButtonUpEvent?.Invoke(1, movement);
+                InputEvents.MouseButtonClickedUpEvent?.Invoke(1, movement);
             }
         }
 
