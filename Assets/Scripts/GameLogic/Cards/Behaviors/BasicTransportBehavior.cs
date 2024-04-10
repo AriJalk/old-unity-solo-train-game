@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Engine;
+using UnityEngine;
 
 namespace SoloTrainGame.GameLogic
 {
@@ -8,8 +9,13 @@ namespace SoloTrainGame.GameLogic
         private int _availableTransport;
         public override void StartBehavior(CardSO cardSO)
         {
-            _availableTransport = cardSO.GeneratedTransport;
-            Debug.Log("Name: " + cardSO.Name + ", Transport: " + _availableTransport);
+            TransportState state = new TransportState(cardSO.GeneratedTransport);
+            if (ServiceLocator.StateManager.CurrentState.GetType() == typeof(ChooseActionCardState))
+            {
+                ServiceLocator.StateManager.ExitCurrentState();
+                ServiceLocator.StateManager.AddState(state);
+                ServiceLocator.StateManager.EnterNextState();
+            }
         }
         public override void EndBehavior()
         {

@@ -1,15 +1,20 @@
-﻿using UnityEngine;
+﻿using Engine;
+using UnityEngine;
 
 namespace SoloTrainGame.GameLogic
 {
     [CreateAssetMenu(fileName = "BasicBuildBehavior", menuName = "ScriptableObjects/Behaviors/BasicBuildBehavior", order = 1)]
     public class BasicBuildBehavior : CardBehaviorSO
     {
-        private int _availableMoney;
         public override void StartBehavior(CardSO cardSO)
         {
-            _availableMoney = cardSO.GeneratedMoney;
-            Debug.Log("Name: " + cardSO.Name + ", Money: " + _availableMoney);
+            BuildState state = new BuildState(cardSO.GeneratedMoney);
+            if (ServiceLocator.StateManager.CurrentState.GetType() == typeof(ChooseActionCardState)) 
+            {
+                ServiceLocator.StateManager.ExitCurrentState();
+                ServiceLocator.StateManager.AddState(state);
+                ServiceLocator.StateManager.EnterNextState();
+            }
         }
         public override void EndBehavior()
         {

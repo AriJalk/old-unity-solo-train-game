@@ -18,3 +18,4 @@ MonoBehaviour:
   GeneratedMoney: 2
   GeneratedTransport: 1
   CardBehavior: {fileID: 11400000, guid: b80e02fb0edbf424e92aa8c68aaabe58, type: 2}
+  CanBeDiscarded: 1

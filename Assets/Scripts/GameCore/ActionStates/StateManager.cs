@@ -5,7 +5,8 @@ namespace SoloTrainGame.Core
     public class StateManager
     {
         private Queue<IActionState> _stateQueue;
-        private IActionState _currentState;
+        
+        public IActionState CurrentState { get; private set; }
 
         public StateManager() 
         {
@@ -17,21 +18,26 @@ namespace SoloTrainGame.Core
             _stateQueue.Enqueue(state);
         }
 
+        public void RemoveLastState()
+        {
+            _stateQueue.Dequeue();
+        }
+
         public void EnterNextState()
         {
-            if (_currentState == null && _stateQueue.Count > 0)
+            if (CurrentState == null && _stateQueue.Count > 0)
             {
-                _currentState = _stateQueue.Dequeue();
-                _currentState.OnEnterGameState();
+                CurrentState = _stateQueue.Dequeue();
+                CurrentState.OnEnterGameState();
             }
         }
 
         public void ExitCurrentState() 
         { 
-            if (_currentState != null)
+            if (CurrentState != null)
             {
-                _currentState.OnExitGameState();
-                _currentState = null;
+                CurrentState.OnExitGameState();
+                CurrentState = null;
             }
         }
     }

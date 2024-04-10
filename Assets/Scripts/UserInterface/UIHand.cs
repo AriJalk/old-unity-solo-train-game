@@ -94,7 +94,7 @@ public class UIHand : UIBlocker
         containerRectTransform.sizeDelta = size;
 
         // Add listener to card click
-        cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
+        //cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
         cardObject.ElementClickedEvent.AddListener(CardClicked);
         CardsHand.Add(cardObject);
 

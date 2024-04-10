@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace SoloTrainGame.GameLogic
 {
-    public class BuildState : IActionState
+    public class TransportState : IActionState
     {
-        public int AvailableMoney { get; private set; }
-        public BuildState(int availableMoney)
+        public int AvailableTransport { get; private set; }
+        public TransportState(int availableTransport)
         {
-            AvailableMoney = availableMoney;
+            AvailableTransport = availableTransport;
         }
 
         private void CardClicked(CardUIObject card)
@@ -18,7 +18,7 @@ namespace SoloTrainGame.GameLogic
             if (card != null && card.CardInstance.CardData.CanBeDiscarded)
             {
                 Debug.Log(card.CardInstance.CardData);
-                AddMoney(card.CardInstance.CardData.GeneratedMoney);
+                AddMoney(card.CardInstance.CardData.GeneratedTransport);
                 // Discard and move as command
             }
         }
@@ -26,22 +26,22 @@ namespace SoloTrainGame.GameLogic
         public void AddMoney(int amount)
         {
             if (amount > 0)
-                AvailableMoney += amount;
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+                AvailableTransport += amount;
+            ServiceLocator.GUIService.SetExtraMessage(AvailableTransport + "T");
         }
 
         public void RemoveMoney(int amount)
         {
             if (amount > 0)
-                AvailableMoney -= amount;
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+                AvailableTransport -= amount;
+            ServiceLocator.GUIService.SetExtraMessage(AvailableTransport + "T");
         }
 
         public void OnEnterGameState()
         {
             ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
-            ServiceLocator.GUIService.SetStateMessage("Select a tile to build on or discard cards to add their $");
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+            ServiceLocator.GUIService.SetStateMessage("Select a tile with deliverable cube");
+            ServiceLocator.GUIService.SetExtraMessage(AvailableTransport + "T");
         }
 
         public void OnExitGameState()

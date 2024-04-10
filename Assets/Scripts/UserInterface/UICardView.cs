@@ -53,7 +53,8 @@ public class UICardView : UIBlocker
     {
         if (_cardUI != null && (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)))
         {
-            Debug.Log(_cardUI.CardInstance.CardData);
+            PlayActionEvent?.Invoke(_cardUI.CardInstance);
+            CloseView();
         }
     }
 

@@ -55,14 +55,15 @@ namespace Engine
 
         static public TimerManager TimerManager { get; private set; }
         static public GUIServices GUIService {  get; private set; }
+        static public StateManager StateManager { get; private set; }
         static ServiceLocator()
         {
             InputManager = new InputManager();
             TimerManager = new TimerManager();
             ScriptableObjectManager = new ScriptableObjectManager();
+            StateManager = new StateManager();
             SetMaterialManager();
         }
-
 
         static public void SetPrefabManagerManager(Transform transform)
         {

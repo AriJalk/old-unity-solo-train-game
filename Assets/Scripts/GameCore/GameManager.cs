@@ -22,9 +22,6 @@ namespace SoloTrainGame.Core
         private GraphicUserInterface _userInterface;
 
         private InputManager _inputManager;
-        private Stack<Turn> _turnStack;
-        private IActionState _actionState;
-        private StateManager _stateManager;
 
         private LogicState GameState;
 
@@ -44,6 +41,7 @@ namespace SoloTrainGame.Core
             //_userInterface.CardGridViewer.OpenViewer(cards);
             _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
+
         }
 
 
@@ -57,7 +55,7 @@ namespace SoloTrainGame.Core
 
         private void OnDestroy()
         {
-            _stateManager.ExitCurrentState();
+            ServiceLocator.StateManager.ExitCurrentState();
             _rotatedCamera.ColliderClickDownEvent?.RemoveListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.RemoveListener(RaycastColliderHitUp);
         }
@@ -81,12 +79,10 @@ namespace SoloTrainGame.Core
                 max = min;
             }
             _rotatedCamera.Initialize(min, max);
-            _turnStack = new Stack<Turn>();
             GameState = new LogicState(_gridController);
             ServiceLocator.SetUserInterface(_userInterface);
-            _stateManager = new StateManager();
-            _stateManager.AddState(new ChooseActionCardState());
-            _stateManager.EnterNextState();
+            ServiceLocator.StateManager.AddState(new ChooseActionCardState());
+            ServiceLocator.StateManager.EnterNextState();
         }
 
         private void RaycastColliderHitDown(RaycastHit hit)
@@ -106,6 +102,7 @@ namespace SoloTrainGame.Core
                 }
             }
         }
+
 
 
         private void TestHand()

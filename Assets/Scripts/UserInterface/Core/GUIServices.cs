@@ -49,5 +49,13 @@
                 _ui.StateMessageText.text = message;
             }
         }
+
+        public void SetExtraMessage(string message)
+        {
+            if (_ui.ExtraMessageText != null)
+            {
+                _ui.ExtraMessageText.text = message;
+            }
+        }
     }
 }

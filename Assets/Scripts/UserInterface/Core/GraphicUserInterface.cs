@@ -13,6 +13,7 @@ namespace SoloTrainGame.UI
         public CardGridViewer CardGridViewer;
         public UIElementClickable BackgroundImage;
         public TextMeshProUGUI StateMessageText;
+        public TextMeshProUGUI ExtraMessageText;
         public WorldDrag WorldDrag;
 
         private List<UIBlocker> _blockers;

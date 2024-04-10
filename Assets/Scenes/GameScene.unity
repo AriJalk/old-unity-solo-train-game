@@ -1817,6 +1817,7 @@ MonoBehaviour:
   CardGridViewer: {fileID: 2095942279}
   BackgroundImage: {fileID: 302928755}
   StateMessageText: {fileID: 1085195197}
+  ExtraMessageText: {fileID: 332745310}
   WorldDrag: {fileID: 1305906152}
 --- !u!1 &841154729
 GameObject:

@@ -12,6 +12,7 @@ namespace SoloTrainGame.GameLogic
         public int GeneratedMoney;
         public int GeneratedTransport;
         public CardBehaviorSO CardBehavior;
+        public bool CanBeDiscarded;
 
         public override string ToString()
         {

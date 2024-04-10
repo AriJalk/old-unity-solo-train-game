@@ -10,6 +10,7 @@ namespace SoloTrainGame.GameLogic
         {
             ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
             ServiceLocator.GUIService.SetStateMessage("Choose a card for its action");
+            ServiceLocator.GUIService.CardView.PlayActionEvent?.AddListener(PlayAction);
         }
 
         public void OnExitGameState()
@@ -29,11 +30,17 @@ namespace SoloTrainGame.GameLogic
         private void BackgroundClicked(UIElementClickable element)
         {
             GUIServices service = ServiceLocator.GUIService;
-            if (service.CardView.enabled)
+            if (service.CardView.isActiveAndEnabled)
             {
                 service.CardView.CloseView();
             }
         }
+
+        private void PlayAction(CardInstance card)
+        {
+            card.CardData.CardBehavior.StartBehavior(card.CardData);
+        }
+
 
     }
 }
