@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9075832318721401063
 Transform:
   m_ObjectHideFlags: 0
@@ -83,7 +83,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48796be9118b93242aa4fa209663dfb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MeshRenderer: {fileID: 4468255292217069963}
+  _meshRenderer: {fileID: 4468255292217069963}
+  _trainObject1: {fileID: 4443571011816934663}
+  _trainObject2: {fileID: 2934633823238034895}
+  _townObject: {fileID: 2448805505543756049}
+  _cityObject: {fileID: 5684807200328045612}
   CostText: {fileID: 328299358656792247}
 --- !u!1 &2934633823238034895
 GameObject:
@@ -100,7 +104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2436547316172678774
 Transform:
   m_ObjectHideFlags: 0
@@ -132,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5985701276739230067
 Transform:
   m_ObjectHideFlags: 0
@@ -494,13 +498,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: City
       objectReference: {fileID: 0}
+    - target: {fileID: 992915188590991240, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8756300854000103721, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8756300854000103721, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8756300854000103721, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
       propertyPath: m_LocalPosition.z
@@ -539,6 +547,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
+--- !u!114 &5684807200328045612 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4203232511885705900, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
+  m_PrefabInstance: {fileID: 814975934234831224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eaf471cdaa33e04cb0e9c7a61f54018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8271917829686499409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8756300854000103721, guid: a5dca8506bd4abb4c8fe31c826d64771, type: 3}
@@ -773,7 +792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2091133602805835606, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2091133602805835606, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}
       propertyPath: m_LocalPosition.z
@@ -811,11 +830,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Town
       objectReference: {fileID: 0}
+    - target: {fileID: 7435269943540901287, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}
+--- !u!114 &2448805505543756049 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5952462124256898633, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}
+  m_PrefabInstance: {fileID: 8313789367960762200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b7892a4fa4af947ba2973b8bffaed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7954959544753819662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2091133602805835606, guid: d57fcbfe90586a642828dc73e19fcb53, type: 3}

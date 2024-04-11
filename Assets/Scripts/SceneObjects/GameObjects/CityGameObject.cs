@@ -6,17 +6,19 @@ using UnityEngine;
 
 public class CityGameObject : MonoBehaviour
 {
-    public MeshRenderer ProductionSlotMesh;
-    public MeshRenderer DeliverySlotMesh;
+    [SerializeField]
+    private GoodsSocketGameObject _productionSocket;
+    [SerializeField]
+    private GoodsSocketGameObject _deliverySocket;
 
-    public ProductionSlot ProductionSlot { get; private set; }
-    public DeliverySlot DeliverySlot { get; private set; }
+    private City _city;
 
-    private void SetProductionSlotMaterial()
+    public void Initialize(City city)
     {
-        if (ProductionSlot != null)
+        if(city != null)
         {
-            
+            _productionSocket.Initialize(city.ProductionSocket);
+            _deliverySocket.Initialize(city.DeliverySocket);
         }
     }
 }

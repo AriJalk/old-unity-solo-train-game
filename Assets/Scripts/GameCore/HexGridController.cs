@@ -67,12 +67,14 @@ namespace SoloTrainGame.Core
 
         }
 
-
+        // TODO: move to tile
         private void UpdateTilePosition(HexTileObject tile)
         {
             tile.CachedTransform.position = Hex.HexToWorld(tile.HexGameData.Hex, TILE_SIZE, _tileGap, HexOrientation.FlatLayout);
         }
 
+        /*
+        // TODO: move to tile
         private void SetTileMaterial(HexTileObject tile)
         {
             if (tile != null)
@@ -82,13 +84,14 @@ namespace SoloTrainGame.Core
                 {
                     tile.MeshRenderer.material = material;
                 }
-                MeshRenderer mesh = tile.CachedTransform.Find("Town").Find("ProductionSlot").Find("Holder").GetComponent<MeshRenderer>();
+                MeshRenderer mesh = tile.CachedTransform.Find("Town").Find("ProductionSocket").Find("Holder").GetComponent<MeshRenderer>();
                 // TODO: Randomize from stack
                 mesh.material = ServiceLocator.MaterialManager.GetWoodColorMaterial((Enums.GameColor)UnityEngine.Random.Range(0, 4));
             }
-        }
+        }*/
 
-        private void CreateTile(Hex hex, Enums.TerrainType type)
+        // TODO: no params, just data
+        private void CreateTile(Hex hex, Enums.TerrainType type, Tracks tracks = null, Town town = null, City city = null)
         {
             if (!_hexTileDictionary.ContainsKey(hex))
             {
@@ -97,10 +100,10 @@ namespace SoloTrainGame.Core
                 tile.HexGameData = new HexGameData(hex, terrainType);
                 tile.CachedTransform.SetParent(transform);
                 _hexTileDictionary.Add(hex, tile);
-                tile.CostText.text = terrainType.TerrainCost.ToString() + "$";
+                tile.CostText.text = string.Empty;
                 ConnectNeighbors(tile);
                 UpdateTilePosition(tile);
-                SetTileMaterial(tile);
+                tile.Initialize(tile.HexGameData);
                 UpdateBoundsFromHex(tile);
             }
         }

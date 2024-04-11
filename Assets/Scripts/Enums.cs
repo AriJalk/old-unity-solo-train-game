@@ -6,6 +6,7 @@
         Gray,
         Red,
         Blue,
+        Transperant,
     }
 
     public enum TerrainType
@@ -14,6 +15,7 @@
         Urban,
         Mountains,
         River,
+        Empty,
     }
 
     public enum GoodsType
@@ -26,10 +28,10 @@
 
     public enum BuildingType
     {
-        None,
-        Track,
-        Town,
-        City,
+        None = 0,
+        Track = 1,
+        Town = 2,
+        City = 3,
     }
 
     public enum CardType

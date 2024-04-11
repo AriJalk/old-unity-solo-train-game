@@ -1,4 +1,6 @@
 using HexSystem;
+using UnityEngine;
+
 
 namespace SoloTrainGame.GameLogic
 {
@@ -30,7 +32,8 @@ namespace SoloTrainGame.GameLogic
 
         public bool BuildOnHex(IBuilding building)
         {
-            if (building != null && building.HexTile.Equals(this))
+            Debug.Log(building.HexTile.Hex.Equals(this.Hex));
+            if (building != null && building.HexTile.Hex.Equals(this.Hex))
             {
                 switch (building.BuildingType.BuildingTypeEnum)
                 {

@@ -1,4 +1,7 @@
-﻿namespace SoloTrainGame.GameLogic
+﻿using Engine;
+using UnityEngine;
+
+namespace SoloTrainGame.GameLogic
 {
     public class Tracks : IBuilding
     {
@@ -14,10 +17,12 @@
             HexTile = targetHex;
         }
 
-        static public Tracks BuildTrack(HexGameData hexTile, BuildingTypeSO buildingType)
+        static public Tracks BuildTrack(HexGameData hexTile)
         {
+            if (Enums.BuildingType.Track <= Enums.BuildingType.Town)
+                Debug.Log("TRACKC");
             if (hexTile != null && hexTile.Tracks == null && Enums.BuildingType.Track <= hexTile.TileType.CanBuildUpTo)
-                return new Tracks(hexTile, buildingType);
+                return new Tracks(hexTile, ServiceLocator.ScriptableObjectManager.BuildingTypes[Enums.BuildingType.Track]);
             return null;
         }
 
@@ -26,6 +31,7 @@
             if (!IsUpgraded)
             {
                 IsUpgraded = true;
+                return true;
             }
             return false;
         }
