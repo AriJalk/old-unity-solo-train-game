@@ -277,10 +277,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5274591115098352639}
+  - component: {fileID: 8046861315276505984}
   - component: {fileID: 4882437033559911933}
   - component: {fileID: 5659693070211305313}
   - component: {fileID: 2852671407199701901}
-  - component: {fileID: 5419054195593560916}
   m_Layer: 5
   m_Name: CardViewPrefab
   m_TagString: Untagged
@@ -309,6 +309,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8046861315276505984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2947515473870541466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cb6dce900138c41930bf06ac6d5cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanBlock: 1
+  PlayActionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _cardSlotTransform: {fileID: 1283456686603600510}
+  _playActionButton: {fileID: 4043673537261305534}
+  _backButton: {fileID: 2816088716269908887}
 --- !u!222 &4882437033559911933
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -373,25 +392,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5419054195593560916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2947515473870541466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe679dd58c36c4044ac4d7f5589ea2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CanBlock: 0
-  PlayActionEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  _cardSlotTransform: {fileID: 1283456686603600510}
-  _playActionButton: {fileID: 4043673537261305534}
-  _backButton: {fileID: 2816088716269908887}
 --- !u!1 &3112296868475982109
 GameObject:
   m_ObjectHideFlags: 0

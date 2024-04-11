@@ -1,5 +1,6 @@
 ﻿using Engine;
 using SoloTrainGame.Core;
+using SoloTrainGame.UI;
 
 namespace SoloTrainGame.GameLogic
 {
@@ -11,7 +12,7 @@ namespace SoloTrainGame.GameLogic
             {
                 CardInstance cardInstance = new CardInstance(card);
                 ServiceLocator.LogicState.CardHand.Add(cardInstance);
-                ServiceLocator.GUIService.UIHand.AddCardToHandFromInstance(cardInstance);
+                ServiceLocator.GetGUI<GameGUIServices>().UIHand.AddCardToHandFromInstance(cardInstance);
             }
             ServiceLocator.StateManager.ExitCurrentState();
         }

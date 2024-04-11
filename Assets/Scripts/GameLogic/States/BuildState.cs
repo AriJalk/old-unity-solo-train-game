@@ -1,5 +1,6 @@
 ﻿using Engine;
 using SoloTrainGame.Core;
+using SoloTrainGame.UI;
 using System;
 using UnityEngine;
 
@@ -7,10 +8,13 @@ namespace SoloTrainGame.GameLogic
 {
     public class BuildState : IActionState
     {
+        private GameGUIServices _guiServices;
+
         public int AvailableMoney { get; private set; }
         public BuildState(int availableMoney)
         {
             AvailableMoney = availableMoney;
+            _guiServices = ServiceLocator.GetGUI<GameGUIServices>();
         }
 
         private void CardClicked(CardUIObject card)
@@ -32,27 +36,27 @@ namespace SoloTrainGame.GameLogic
         {
             if (amount > 0)
                 AvailableMoney += amount;
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+            _guiServices.SetExtraMessage(AvailableMoney + "$");
         }
 
         public void RemoveMoney(int amount)
         {
             if (amount > 0)
                 AvailableMoney -= amount;
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+            _guiServices.SetExtraMessage(AvailableMoney + "$");
         }
 
         public void OnEnterGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.AddListener(CardClicked);
-            ServiceLocator.GUIService.SetStateMessage("Select a tile to build on or discard cards to add their $");
-            ServiceLocator.GUIService.SetExtraMessage(AvailableMoney + "$");
+            _guiServices.GUIEvents.CardClickedEvent.AddListener(CardClicked);
+            _guiServices.SetStateMessage("Select a tile to build on or discard cards to add their $");
+            _guiServices.SetExtraMessage(AvailableMoney + "$");
             ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TileSelected);
         }
 
         public void OnExitGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
+            _guiServices.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
         }
     }

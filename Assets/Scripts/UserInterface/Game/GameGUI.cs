@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SoloTrainGame.UI
 {
-    public class GraphicUserInterface : MonoBehaviour
+    public class GameGUI : CoreGUI
     {
 
         public UIHand Hand;
@@ -20,18 +20,8 @@ namespace SoloTrainGame.UI
         public CardSlot CardSlotBrown;
         public CardSlot CardSlotGray;
 
-        private List<UIBlocker> _blockers;
+        public GameGUIEvents GUIEvents { get; private set; }
 
-        public GUIEvents GUIEvents { get; private set; }
-
-
-        public bool IsUILocked
-        {
-            get
-            {
-                return _blockers.Count > 0;
-            }
-        }
 
         private CardInstance _selectedCard;
 
@@ -52,16 +42,16 @@ namespace SoloTrainGame.UI
 
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
             if (Screen.width < Screen.height)
             {
                 RectUtilities.SetAnchorsAndResetSize(Hand.RectTransform, new Vector2(0.05f, 0f), new Vector2(0.95f, 0.3f));
             }
             Hand.Initialize();
-            _blockers = new List<UIBlocker>();
             WorldDrag.Initialize();
-            GUIEvents = new GUIEvents(this);
+            GUIEvents = new GameGUIEvents(this);
         }
 
         private void OnDestroy()
@@ -69,28 +59,11 @@ namespace SoloTrainGame.UI
 
         }
 
-
         private void BackgroundClicked(UIElementClickable element)
         {
             if (CardView.enabled)
             {
                 CardView.CloseView();
-            }
-        }
-
-        public void AddBlocker(UIBlocker blocker)
-        {
-            if (!_blockers.Contains(blocker))
-            {
-                _blockers.Add(blocker);
-            }
-        }
-
-        public void RemoveBlocker(UIBlocker blocker)
-        {
-            if (_blockers.Contains(blocker))
-            {
-                _blockers.Remove(blocker);
             }
         }
     }

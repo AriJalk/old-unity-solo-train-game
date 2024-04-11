@@ -55,7 +55,7 @@ namespace Engine
         static public InputManager InputManager { get; private set; }
 
         static public TimerManager TimerManager { get; private set; }
-        static public GUIServices GUIService {  get; private set; }
+        static public CoreGUIServices GUIService {  get; private set; }
         static public StateManager StateManager { get; private set; }
         static public LogicState LogicState { get; private set; }
         static public GameEvents GameEvents { get; private set; }
@@ -80,14 +80,26 @@ namespace Engine
             _materialManager.LoadColorMaterials();
         }
 
-        static public void SetUserInterface(GraphicUserInterface ui)
+        static public void SetUserInterface<T>(T ui) where T : CoreGUI
         {
-            GUIService = new GUIServices(ui);
+            if (ui is GameGUI gameUI)
+            {
+                GUIService = new GameGUIServices(gameUI);
+            }
         }
 
         static public void SetLogicState(LogicState state)
         {
             LogicState = state;
+        }
+
+        static public T GetGUI<T>() where T : CoreGUIServices
+        {
+            if (GUIService is T obj)
+            {
+                return obj;
+            }
+            return null;
         }
     }
 }

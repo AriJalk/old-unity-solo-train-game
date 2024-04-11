@@ -3,12 +3,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
-using System;
-using UnityEngine.Events;
 
 namespace SoloTrainGame.Core
 {
-    public class GameManager : MonoBehaviour
+    public class LevelEditorManager : MonoBehaviour
     {
         [SerializeField]
         private HexGridController _gridController;
@@ -20,7 +18,7 @@ namespace SoloTrainGame.Core
         [SerializeField]
         private Transform _centerObject;
         [SerializeField]
-        private GameGUI _userInterface;
+        private CoreGUI _userInterface;
 
         private InputManager _inputManager;
 

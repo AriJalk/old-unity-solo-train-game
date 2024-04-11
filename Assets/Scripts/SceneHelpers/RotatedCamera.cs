@@ -1,4 +1,5 @@
 using Engine;
+using SoloTrainGame.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -152,7 +153,7 @@ public class RotatedCamera : MonoBehaviour
         _inputManager.InputEvents.MouseButtonClickedDownEvent?.AddListener(ProccessMouseClickDown);
         _inputManager.InputEvents.MouseButtonClickedUpEvent?.AddListener(ProccessMouseClickUp);
         _inputManager.InputEvents.MouseScrolledEvent?.AddListener(MouseScrolled);
-        ServiceLocator.GUIService.GUIEvents.WorldDraggedEvent?.AddListener(RotateCameraWithMouse);
+        ServiceLocator.GetGUI<GameGUIServices>().GUIEvents.WorldDraggedEvent?.AddListener(RotateCameraWithMouse);
 
     }
 
@@ -163,7 +164,7 @@ public class RotatedCamera : MonoBehaviour
         _inputManager.InputEvents.MouseButtonClickedDownEvent?.RemoveListener(ProccessMouseClickDown);
         _inputManager.InputEvents.MouseButtonClickedUpEvent?.RemoveListener(ProccessMouseClickUp);
         _inputManager.InputEvents.MouseScrolledEvent?.RemoveListener(MouseScrolled);
-        ServiceLocator.GUIService.GUIEvents.WorldDraggedEvent?.RemoveListener(RotateCameraWithMouse);
+        ServiceLocator.GetGUI<GameGUIServices>().GUIEvents.WorldDraggedEvent?.RemoveListener(RotateCameraWithMouse);
     }
 
     void ProccessHeldEvent(int index, Vector2 movement)

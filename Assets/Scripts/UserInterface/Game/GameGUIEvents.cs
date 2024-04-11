@@ -8,18 +8,17 @@ namespace SoloTrainGame.UI
     /// <summary>
     /// Global listenable events
     /// </summary>
-    public class GUIEvents
+    public class GameGUIEvents : CoreGUIEvents
     {
         public UnityEvent<CardUIObject> CardClickedEvent;
         public UnityEvent<Vector2> WorldDraggedEvent;
         public UnityEvent<CardInstance> PlayActionEvent;
 
-        private GraphicUserInterface _gui;
+        private GameGUI _gui;
 
-        public GUIEvents(GraphicUserInterface gui)
+        public GameGUIEvents(GameGUI gui) : base(gui)
         {
             _gui = gui;
-
             CardClickedEvent = new UnityEvent<CardUIObject>();
 
             WorldDraggedEvent = new UnityEvent<Vector2>();
@@ -30,7 +29,7 @@ namespace SoloTrainGame.UI
             _gui.CardView.PlayActionEvent?.AddListener(PlayAction);
         }
 
-        ~GUIEvents()
+        ~GameGUIEvents()
         {
             _gui.Hand.CardClickedEvent.RemoveListener(CardClicked);
             _gui.WorldDrag.OnDragEvent.RemoveListener(WorldDragged);

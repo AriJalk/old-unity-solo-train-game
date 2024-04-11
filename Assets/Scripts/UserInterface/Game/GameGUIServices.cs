@@ -1,26 +1,17 @@
 ﻿namespace SoloTrainGame.UI
 {
-    public class GUIServices
+    public class GameGUIServices : CoreGUIServices
     {
-        private GraphicUserInterface _ui;
-
-        public bool IsUILocked
-        {
-            get
-            {
-                return _ui.IsUILocked;
-            }
-        }
-
-        public GUIEvents GUIEvents { get; private set; }
+        private GameGUI _ui;
+        public GameGUIEvents GUIEvents { get; private set; }
         public UICardView CardView { get; private set; }
         public CardSlot CardSlotRed { get; private set; }
         public CardSlot CardSlotBrown { get; private set; }
         public CardSlot CardSlotGray {  get; private set; }
         public UIElementClickable BackgroundImage { get; private set; }
         public UIHand UIHand { get; private set; }
-     
-        public GUIServices(GraphicUserInterface ui)
+
+        public GameGUIServices(GameGUI ui) : base(ui)
         {
             _ui = ui;
             _ui.Initialize();
@@ -31,22 +22,6 @@
             CardSlotBrown = _ui.CardSlotBrown;
             CardSlotGray = _ui.CardSlotGray;
             UIHand = _ui.Hand;
-        }
-
-        public void AddBlocker(UIBlocker blocker)
-        {
-            if (blocker != null)
-            {
-                _ui.AddBlocker(blocker);
-            }
-        }
-
-        public void RemoveBlocker(UIBlocker blocker)
-        {
-            if (blocker != null)
-            {
-                _ui.RemoveBlocker(blocker);
-            }
         }
 
         public void SetStateMessage(string message)

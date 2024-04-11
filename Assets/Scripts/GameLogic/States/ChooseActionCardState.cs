@@ -7,33 +7,46 @@ namespace SoloTrainGame.GameLogic
 {
     public class ChooseActionCardState : IActionState
     {
+
         private List<CardUIObject> _cards;
         public void OnEnterGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClickedEvent?.AddListener(CardClicked);
-            ServiceLocator.GUIService.SetStateMessage("Choose a card for its action");
-            ServiceLocator.GUIService.CardView.PlayActionEvent?.AddListener(PlayAction);
+            var guiServices = ServiceLocator.GetGUI<GameGUIServices>();
+            if (guiServices != null)
+            {
+                guiServices.GUIEvents.CardClickedEvent?.AddListener(CardClicked);
+                guiServices.SetStateMessage("Choose a card for its action");
+                guiServices.CardView.PlayActionEvent?.AddListener(PlayAction);
+            }
         }
 
         public void OnExitGameState()
         {
-            ServiceLocator.GUIService.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
-            ServiceLocator.GUIService.SetStateMessage(string.Empty);
-            ServiceLocator.GUIService.CardView.PlayActionEvent?.RemoveListener(PlayAction);
+            var guiServices = ServiceLocator.GetGUI<GameGUIServices>();
+            if (guiServices != null)
+            {
+                guiServices.GUIEvents.CardClickedEvent?.RemoveListener(CardClicked);
+                guiServices.SetStateMessage(string.Empty);
+                guiServices.CardView.PlayActionEvent?.RemoveListener(PlayAction);
+            }
         }
+
 
         public void CardClicked(CardUIObject card)
         {
-            GUIServices service = ServiceLocator.GUIService;
-            service.CardView.SetCard(card.CardInstance);
-            service.CardView.gameObject.SetActive(true);
-            service.BackgroundImage.ElementClickedEvent.AddListener(BackgroundClicked);
+            GameGUIServices service = ServiceLocator.GetGUI<GameGUIServices>();
+            if (service != null) 
+            {
+                service.CardView.SetCard(card.CardInstance);
+                service.CardView.gameObject.SetActive(true);
+                service.BackgroundImage.ElementClickedEvent.AddListener(BackgroundClicked);
+            }     
         }
 
         private void BackgroundClicked(UIElementClickable element)
         {
-            GUIServices service = ServiceLocator.GUIService;
-            if (service.CardView.isActiveAndEnabled)
+            GameGUIServices service = ServiceLocator.GetGUI<GameGUIServices>();
+            if (service != null && service.CardView.isActiveAndEnabled)
             {
                 service.CardView.CloseView();
             }
@@ -42,7 +55,7 @@ namespace SoloTrainGame.GameLogic
         private void PlayAction(CardInstance card)
         {
             card.CardData.CardBehavior.StartBehavior(card.CardData);
-            ServiceLocator.GUIService.UIHand.RemoveCardFromHand(card);
+            ServiceLocator.GetGUI<GameGUIServices>()?.UIHand.RemoveCardFromHand(card);
         }
 
 
