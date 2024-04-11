@@ -28,13 +28,22 @@ namespace HexSystem
 
         public static Dictionary<HexDirection, Vector3Int> DirectionVectorDictionary = new Dictionary<HexDirection, Vector3Int>()
         {
+            /*
             {HexDirection.NORTH, new Vector3Int(0, -1, +1) },
             {HexDirection.SOUTH, new Vector3Int(0, +1, -1) },
             {HexDirection.NORTH_WEST, new Vector3Int(-1, 0, +1) },
             {HexDirection.NORTH_EAST, new Vector3Int(+1, -1, 0) },
             {HexDirection.SOUTH_WEST, new Vector3Int(-1, +1, 0) },
-            {HexDirection.SOUTH_EAST, new Vector3Int(+1, 0, -1) },
+            {HexDirection.SOUTH_EAST, new Vector3Int(+1, 0, -1) },*/
+            // Mirrored
+            {HexDirection.NORTH, new Vector3Int (0, +1, -1)},
+            {HexDirection.SOUTH, new Vector3Int (0, -1, +1)},
+            {HexDirection.NORTH_WEST, new Vector3Int (+1, 0, -1)},
+            {HexDirection.NORTH_EAST, new Vector3Int (-1, +1, 0)},
+            {HexDirection.SOUTH_WEST, new Vector3Int (+1, -1, 0)},
+            {HexDirection.SOUTH_EAST, new Vector3Int (-1, 0, +1)},
         };
+
 
 
         private static bool IsPositionLegal(Vector3Int coordinates)

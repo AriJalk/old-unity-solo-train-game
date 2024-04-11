@@ -1670,13 +1670,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbc42a3687e91a45a3e516fdb36819d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorldDrag: {fileID: 1305906152}
   Hand: {fileID: 368742280}
   CardView: {fileID: 948668870}
   CardGridViewer: {fileID: 2095942279}
   BackgroundImage: {fileID: 302928755}
   StateMessageText: {fileID: 1085195197}
   ExtraMessageText: {fileID: 332745310}
-  WorldDrag: {fileID: 1305906152}
   CardSlotRed: {fileID: 669962147}
   CardSlotBrown: {fileID: 1683210020}
   CardSlotGray: {fileID: 663627014}
@@ -1780,7 +1780,7 @@ Transform:
   m_GameObject: {fileID: 911450017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2573,8 +2573,8 @@ Transform:
   m_GameObject: {fileID: 1528098786}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.031448603, y: 0.25992686, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
