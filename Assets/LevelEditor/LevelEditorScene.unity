@@ -320,17 +320,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295c2a8ce0f8e734c9d40424da3c85bf, type: 3}
---- !u!114 &82454402 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5419054195593560916, guid: 295c2a8ce0f8e734c9d40424da3c85bf, type: 3}
-  m_PrefabInstance: {fileID: 82454401}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe679dd58c36c4044ac4d7f5589ea2f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &82454403 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5274591115098352639, guid: 295c2a8ce0f8e734c9d40424da3c85bf, type: 3}
@@ -1071,13 +1060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e57cecc6764b8e4399d021e53b8cea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanBlock: 1
-  CardClickedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  RectTransform: {fileID: 368742276}
-  _cardsTransform: {fileID: 748451435}
-  _scrollRect: {fileID: 368742277}
 --- !u!1001 &534965947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1201,32 +1183,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 591994925}
-  - component: {fileID: 591994924}
+  - component: {fileID: 591994927}
   - component: {fileID: 591994926}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: EditorManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &591994924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 591994923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3ca153a093c234419c43083ed378ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gridController: {fileID: 591994926}
-  _prefabStorage: {fileID: 1768676905}
-  _rotatedCamera: {fileID: 918922388}
-  _centerObject: {fileID: 0}
-  _userInterface: {fileID: 776096466}
 --- !u!4 &591994925
 Transform:
   m_ObjectHideFlags: 0
@@ -1258,6 +1223,23 @@ MonoBehaviour:
   _tileGap: 0.1
   _worldTransform: {fileID: 1528098787}
   Center: {x: 0, y: 0, z: 0}
+--- !u!114 &591994927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591994923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fecd30c1c6cb749846a17d66debd3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridController: {fileID: 591994926}
+  _prefabStorage: {fileID: 1768676905}
+  _rotatedCamera: {fileID: 918922388}
+  _centerObject: {fileID: 0}
+  _userInterface: {fileID: 776096466}
 --- !u!1 &663627012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,19 +1664,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 776096461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ee804d6ea1c594ba42211b7f377106, type: 3}
+  m_Script: {fileID: 11500000, guid: 93c6218cf0aeb814ca001b216d9edabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hand: {fileID: 368742280}
-  CardView: {fileID: 82454402}
-  CardGridViewer: {fileID: 2095942279}
-  BackgroundImage: {fileID: 302928755}
-  StateMessageText: {fileID: 1085195197}
-  ExtraMessageText: {fileID: 332745310}
   WorldDrag: {fileID: 1305906152}
-  CardSlotRed: {fileID: 669962147}
-  CardSlotBrown: {fileID: 1683210020}
-  CardSlotGray: {fileID: 663627014}
 --- !u!1 &911450017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,7 +2564,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc330538fc02104d9d320853c82d791, type: 3}
+  m_Script: {fileID: 11500000, guid: e64230e987d788246b10516019fedcc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1548873278

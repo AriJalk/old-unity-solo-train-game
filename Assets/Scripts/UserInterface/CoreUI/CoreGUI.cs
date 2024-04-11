@@ -9,6 +9,10 @@ namespace SoloTrainGame.UI
     {
         private List<UIBlocker> _blockers;
 
+        public WorldDrag WorldDrag;
+
+        public CoreGUIEvents CoreGUIEvents {  get; private set; }
+
         public bool IsUILocked
         {
             get
@@ -20,6 +24,8 @@ namespace SoloTrainGame.UI
         public virtual void Initialize() 
         {
             _blockers = new List<UIBlocker>();
+            WorldDrag.Initialize();
+            CoreGUIEvents = new CoreGUIEvents(this);
         }
 
         private void OnDestroy()

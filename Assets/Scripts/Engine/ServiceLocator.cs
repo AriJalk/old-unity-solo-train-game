@@ -86,6 +86,10 @@ namespace Engine
             {
                 GUIService = new GameGUIServices(gameUI);
             }
+            else if (ui is LevelEditorGUI levelEditorUI)
+            {
+                GUIService = new LevelEditorGUIServices(levelEditorUI);
+            }
         }
 
         static public void SetLogicState(LogicState state)

@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
+using System;
+using UnityEngine.Events;
 
 namespace SoloTrainGame.Core
 {
@@ -18,11 +20,10 @@ namespace SoloTrainGame.Core
         [SerializeField]
         private Transform _centerObject;
         [SerializeField]
-        private CoreGUI _userInterface;
+        private LevelEditorGUI _userInterface;
 
         private InputManager _inputManager;
 
-        private LogicState GameState;
 
         private HexTileObject _selectedTile;
 
@@ -39,8 +40,6 @@ namespace SoloTrainGame.Core
             //_userInterface.CardGridViewer.OpenViewer(cards);
             _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
-            ServiceLocator.StateManager.AddState(new NewGameState());
-            ServiceLocator.StateManager.EnterNextState();
         }
 
 
@@ -78,8 +77,6 @@ namespace SoloTrainGame.Core
                 max = min;
             }
             _rotatedCamera.Initialize(min, max);
-            GameState = new LogicState(_gridController);
-            ServiceLocator.SetLogicState(GameState);
             ServiceLocator.SetUserInterface(_userInterface);
         }
 

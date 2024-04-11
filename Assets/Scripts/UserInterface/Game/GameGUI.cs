@@ -14,13 +14,13 @@ namespace SoloTrainGame.UI
         public UIElementClickable BackgroundImage;
         public TextMeshProUGUI StateMessageText;
         public TextMeshProUGUI ExtraMessageText;
-        public WorldDrag WorldDrag;
+
 
         public CardSlot CardSlotRed;
         public CardSlot CardSlotBrown;
         public CardSlot CardSlotGray;
 
-        public GameGUIEvents GUIEvents { get; private set; }
+        public GameGUIEvents GameGUIEvents { get; private set; }
 
 
         private CardInstance _selectedCard;
@@ -50,8 +50,7 @@ namespace SoloTrainGame.UI
                 RectUtilities.SetAnchorsAndResetSize(Hand.RectTransform, new Vector2(0.05f, 0f), new Vector2(0.95f, 0.3f));
             }
             Hand.Initialize();
-            WorldDrag.Initialize();
-            GUIEvents = new GameGUIEvents(this);
+            GameGUIEvents = new GameGUIEvents(this);
         }
 
         private void OnDestroy()

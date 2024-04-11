@@ -14,7 +14,7 @@ namespace SoloTrainGame.GameLogic
             var guiServices = ServiceLocator.GetGUI<GameGUIServices>();
             if (guiServices != null)
             {
-                guiServices.GUIEvents.CardClickedEvent?.AddListener(CardClicked);
+                guiServices.GameGUIEvents.CardClickedEvent?.AddListener(CardClicked);
                 guiServices.SetStateMessage("Choose a card for its action");
                 guiServices.CardView.PlayActionEvent?.AddListener(PlayAction);
             }
@@ -25,7 +25,7 @@ namespace SoloTrainGame.GameLogic
             var guiServices = ServiceLocator.GetGUI<GameGUIServices>();
             if (guiServices != null)
             {
-                guiServices.GUIEvents.CardClickedEvent?.RemoveListener(CardClicked);
+                guiServices.GameGUIEvents.CardClickedEvent?.RemoveListener(CardClicked);
                 guiServices.SetStateMessage(string.Empty);
                 guiServices.CardView.PlayActionEvent?.RemoveListener(PlayAction);
             }

@@ -4,6 +4,8 @@
     {
         private CoreGUI _ui;
 
+        public CoreGUIEvents CoreGUIEvents { get ; private set; }
+
         public bool IsUILocked
         {
             get
@@ -17,6 +19,7 @@
         {
             _ui = ui;
             _ui.Initialize();
+            CoreGUIEvents = _ui.CoreGUIEvents;
         }
 
         public void AddBlocker(UIBlocker blocker)

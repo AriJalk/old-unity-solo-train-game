@@ -3,7 +3,7 @@
     public class GameGUIServices : CoreGUIServices
     {
         private GameGUI _ui;
-        public GameGUIEvents GUIEvents { get; private set; }
+        public GameGUIEvents GameGUIEvents { get; private set; }
         public UICardView CardView { get; private set; }
         public CardSlot CardSlotRed { get; private set; }
         public CardSlot CardSlotBrown { get; private set; }
@@ -14,8 +14,7 @@
         public GameGUIServices(GameGUI ui) : base(ui)
         {
             _ui = ui;
-            _ui.Initialize();
-            GUIEvents = _ui.GUIEvents;
+            GameGUIEvents = _ui.GameGUIEvents;
             CardView = _ui.CardView;
             BackgroundImage = _ui.BackgroundImage;
             CardSlotRed = _ui.CardSlotRed;

@@ -42,14 +42,14 @@ namespace SoloTrainGame.GameLogic
 
         public void OnEnterGameState()
         {
-            _guiServices.GUIEvents.CardClickedEvent.AddListener(CardClicked);
+            _guiServices.GameGUIEvents.CardClickedEvent.AddListener(CardClicked);
             _guiServices.SetStateMessage("Select a tile with deliverable cube");
             _guiServices.SetExtraMessage(AvailableTransport + "T");
         }
 
         public void OnExitGameState()
         {
-            _guiServices.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
+            _guiServices.GameGUIEvents.CardClickedEvent.RemoveListener(CardClicked);
         }
     }
 }

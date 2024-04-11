@@ -48,7 +48,7 @@ namespace SoloTrainGame.GameLogic
 
         public void OnEnterGameState()
         {
-            _guiServices.GUIEvents.CardClickedEvent.AddListener(CardClicked);
+            _guiServices.GameGUIEvents.CardClickedEvent.AddListener(CardClicked);
             _guiServices.SetStateMessage("Select a tile to build on or discard cards to add their $");
             _guiServices.SetExtraMessage(AvailableMoney + "$");
             ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TileSelected);
@@ -56,7 +56,7 @@ namespace SoloTrainGame.GameLogic
 
         public void OnExitGameState()
         {
-            _guiServices.GUIEvents.CardClickedEvent.RemoveListener(CardClicked);
+            _guiServices.GameGUIEvents.CardClickedEvent.RemoveListener(CardClicked);
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
         }
     }

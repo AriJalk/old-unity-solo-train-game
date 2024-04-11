@@ -1,7 +1,5 @@
 ﻿using SoloTrainGame.GameLogic;
-using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR;
 
 namespace SoloTrainGame.UI
 {
@@ -11,7 +9,7 @@ namespace SoloTrainGame.UI
     public class GameGUIEvents : CoreGUIEvents
     {
         public UnityEvent<CardUIObject> CardClickedEvent;
-        public UnityEvent<Vector2> WorldDraggedEvent;
+        
         public UnityEvent<CardInstance> PlayActionEvent;
 
         private GameGUI _gui;
@@ -21,8 +19,7 @@ namespace SoloTrainGame.UI
             _gui = gui;
             CardClickedEvent = new UnityEvent<CardUIObject>();
 
-            WorldDraggedEvent = new UnityEvent<Vector2>();
-            _gui.WorldDrag.OnDragEvent.AddListener(WorldDragged);
+           
 
             _gui.Hand.CardClickedEvent.AddListener(CardClicked);
 
@@ -32,7 +29,7 @@ namespace SoloTrainGame.UI
         ~GameGUIEvents()
         {
             _gui.Hand.CardClickedEvent.RemoveListener(CardClicked);
-            _gui.WorldDrag.OnDragEvent.RemoveListener(WorldDragged);
+
             _gui.CardView.PlayActionEvent?.RemoveListener(PlayAction);
         }
 
@@ -44,10 +41,6 @@ namespace SoloTrainGame.UI
             }
         }
 
-        private void WorldDragged(Vector2 delta)
-        {
-            WorldDraggedEvent?.Invoke(delta);
-        }
 
         private void PlayAction(CardInstance card)
         {

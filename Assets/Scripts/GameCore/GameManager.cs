@@ -79,10 +79,11 @@ namespace SoloTrainGame.Core
                 min = new Vector2(_centerObject.position.x, _centerObject.position.z);
                 max = min;
             }
-            _rotatedCamera.Initialize(min, max);
+            
             GameState = new LogicState(_gridController);
             ServiceLocator.SetLogicState(GameState);
             ServiceLocator.SetUserInterface(_userInterface);
+            _rotatedCamera.Initialize(min, max);
         }
 
         private void RaycastColliderHitDown(RaycastHit hit)
