@@ -41,7 +41,7 @@ namespace SoloTrainGame.Core
             //_userInterface.CardGridViewer.OpenViewer(cards);
             _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
-            ServiceLocator.StateManager.AddState(new NewGameState());
+            ServiceLocator.StateManager.AddState(new TestNewGameState());
             ServiceLocator.StateManager.EnterNextState();
         }
 

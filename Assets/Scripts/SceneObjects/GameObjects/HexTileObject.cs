@@ -26,7 +26,7 @@ public class HexTileObject : MonoBehaviour
 
     public List<HexTileObject> Neighbors { get; private set; }
 
-
+    public bool CanBeClicked { get; set; }
 
     private void Awake()
     {
@@ -43,7 +43,11 @@ public class HexTileObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CanBeClicked)
+        {
+            Color color = _meshRenderer.material.color;
 
+        }
     }
 
     public void Initialize(HexGameData hexData)

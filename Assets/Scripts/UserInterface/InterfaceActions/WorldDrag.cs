@@ -1,9 +1,10 @@
+using Engine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 namespace SoloTrainGame.UI
 {
-    public class WorldDrag : MonoBehaviour, IDragHandler
+    public class WorldDrag : MonoBehaviour, IDragHandler, IDropHandler
     {
         public UnityEvent<Vector2> OnDragEvent;
 
@@ -36,8 +37,13 @@ namespace SoloTrainGame.UI
         public void OnDrag(PointerEventData eventData)
         {
             OnDragEvent?.Invoke(eventData.delta);
+            
         }
 
+        public void OnDrop(PointerEventData eventData)
+        {
+            
+        }
     }
 
 }

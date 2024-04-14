@@ -13,11 +13,24 @@ namespace SoloTrainGame.UI
 
         public CoreGUIEvents CoreGUIEvents {  get; private set; }
 
-        public bool IsUILocked
+        public bool IsUIBlocked
         {
             get
             {
                 return _blockers.Count > 0;
+            }
+        }
+
+        private bool _isUILocked;
+        public bool IsUILocked
+        {
+            get
+            {
+                return _isUILocked || IsUIBlocked;
+            }
+            set
+            {
+                _isUILocked = value;
             }
         }
 

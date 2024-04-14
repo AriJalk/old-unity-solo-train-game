@@ -6,15 +6,27 @@
 
         public CoreGUIEvents CoreGUIEvents { get ; private set; }
 
+        public bool IsUIBlocked
+        {
+            get
+            {
+                return _ui.IsUIBlocked;
+            }
+        }
+
         public bool IsUILocked
         {
             get
             {
                 return _ui.IsUILocked;
             }
+            set
+            {
+                _ui.IsUILocked = value;
+            }
         }
 
-     
+
         public CoreGUIServices(CoreGUI ui)
         {
             _ui = ui;

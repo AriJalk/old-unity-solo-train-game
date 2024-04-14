@@ -4,7 +4,7 @@ using SoloTrainGame.UI;
 
 namespace SoloTrainGame.GameLogic
 {
-    public class NewGameState : IActionState
+    public class TestNewGameState : IActionState
     {
         public void OnEnterGameState()
         {

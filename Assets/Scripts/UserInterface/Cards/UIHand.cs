@@ -17,8 +17,6 @@ public class UIHand : UIBlocker
 
     [SerializeField]
     private RectTransform _cardsTransform;
-    [SerializeField]
-    private ScrollRect _scrollRect;
 
     public List<CardUIObject> CardsHand { get; private set; }
 
@@ -73,6 +71,13 @@ public class UIHand : UIBlocker
         return new Vector2 (x, 0);
     }
 
+    private Vector2 CalculateEllipsePoint(float angle, float widthRadius, float heightRadius, float widthOffset = 0, float heightOffset = 0)
+    {
+        float radians = Mathf.Deg2Rad * angle;
+        float x = -widthRadius * Mathf.Cos(radians) + widthOffset;
+        float y = heightRadius * Mathf.Sin(radians) + heightOffset;
+        return new Vector2(x, y);
+    }
 
     public void AddCardToHandFromInstance(CardInstance card)
     {
@@ -92,6 +97,7 @@ public class UIHand : UIBlocker
         float height = _cardsTransform.rect.height;
         Vector2 size = new Vector2(height * CARD_ASPECT_RATIO, height);
         containerRectTransform.sizeDelta = size;
+        containerRectTransform.localPosition = CalculateEllipsePoint(CardsHand.Count * 20f, RectTransform.rect.width / 2f, RectTransform.rect.height / 2f);
 
         // Add listener to card click
         //cardObject.CardInstance.CardData.CardBehavior.StartBehavior(cardObject.CardInstance.CardData);
