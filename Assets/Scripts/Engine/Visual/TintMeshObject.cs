@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TintObject : MonoBehaviour
+public class TintMeshObject : MonoBehaviour
 {
     [SerializeField]
     [Range(0.1f, 2f)]
