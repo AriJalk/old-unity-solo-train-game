@@ -1,9 +1,12 @@
 ﻿using Engine;
+using HexSystem;
 using SoloTrainGame.Core;
 using SoloTrainGame.UI;
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SoloTrainGame.GameLogic
 {
@@ -30,12 +33,12 @@ namespace SoloTrainGame.GameLogic
 
         private void TileSelected(HexTileObject tile)
         {
-            if (tile.HexGameData.Tracks == null)
+            if (tile.CanBeClicked)
             {
                 TestAddRail(tile);
-                UpdateState();
             }
-
+            Debug.Log(tile.HexGameData.Hex.Position);
+            UpdateState();
         }
 
         public void AddMoney(int amount)
@@ -58,6 +61,7 @@ namespace SoloTrainGame.GameLogic
             _guiServices.SetStateMessage("Select a tile to build on or discard cards to add their $");
             _guiServices.SetExtraMessage(AvailableMoney + "$");
             ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TileSelected);
+            UpdateState();
         }
 
         public void OnExitGameState()
@@ -66,20 +70,29 @@ namespace SoloTrainGame.GameLogic
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
         }
 
+        // TODO: logic is messed up, upgraded tiles are still marked
         private void UpdateState()
         {
+            List<HexTileObject> visitedTiles = new List<HexTileObject>();
             foreach(HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
             {
-                if (tile.HexGameData.Tracks == null)
+                if (tile.HexGameData.Tracks == null || !tile.HexGameData.Tracks.IsUpgraded)
                 {
                     foreach(HexTileObject neighbor in tile.Neighbors)
                     {
-                        if (neighbor.HexGameData.Tracks != null)
+                        // TODO: not edge case like this with ZERO and more performant (use the list)
+                        if (neighbor.HexGameData.Tracks != null && tile.MeshRenderer.GetComponent<TintMeshObject>() == null || tile.HexGameData.Hex == Hex.ZERO)
                         {
                             tile.MeshRenderer.AddComponent<TintMeshObject>();
+                            tile.CanBeClicked = true;
                             break;
                         }
                     }
+                }
+                else if (tile.MeshRenderer.GetComponent<TintMeshObject>() is TintMeshObject tint)
+                {
+                    GameObject.Destroy(tint);
+                    tile.CanBeClicked = false;
                 }
             }
         }

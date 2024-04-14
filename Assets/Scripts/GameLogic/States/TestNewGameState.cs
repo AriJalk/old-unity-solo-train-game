@@ -14,6 +14,9 @@ namespace SoloTrainGame.GameLogic
                 ServiceLocator.LogicState.CardHand.Add(cardInstance);
                 ServiceLocator.GetGUI<GameGUIServices>().UIHand.AddCardToHandFromInstance(cardInstance);
             }
+            //TODO: not like this
+            ServiceLocator.HexGridController.GetHexTile(HexSystem.Hex.ZERO).BuildTracks();
+            ServiceLocator.HexGridController.GetHexTile(HexSystem.Hex.ZERO).CanBeClicked = true;
             ServiceLocator.StateManager.ExitCurrentState();
         }
 

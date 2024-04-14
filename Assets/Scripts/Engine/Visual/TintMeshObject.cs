@@ -6,15 +6,12 @@ using UnityEngine;
 
 public class TintMeshObject : MonoBehaviour
 {
-    [SerializeField]
-    [Range(0.1f, 2f)]
-    private float _tintSpeed = 0.5f;
-    [SerializeField]
-    [Range(0f, 1f)]
-    private float _minTint = 0.2f;
-    [SerializeField]
-    [Range(0f, 1f)]
-    private float _maxTint = 1f;
+    // TODO: use global tint
+    static float GlobalTint = 0.5f;
+    static float TintSpeed = 1f;
+    static float MinTint = 0.2f;
+    static float MaxTint = 1f;
+    static bool _isIncreasing;
 
     private MeshRenderer _meshRenderer;
     private Material _originalMaterial;
@@ -22,8 +19,31 @@ public class TintMeshObject : MonoBehaviour
     private Color _color;
 
 
-    private bool _isIncreasing;
+    
     private bool _isTinting;
+
+    static public void UpdateGlobalTint()
+    {
+        float delta = Time.deltaTime * TintSpeed; ;
+        if (_isIncreasing)
+        {
+            GlobalTint += delta;
+            GlobalTint = Mathf.Clamp(GlobalTint, MinTint, MaxTint);
+            if (GlobalTint == 1f)
+            {
+                _isIncreasing = false;
+            }
+        }
+        else
+        {
+            GlobalTint -= delta;
+            GlobalTint = Mathf.Clamp(GlobalTint, MinTint, MaxTint);
+            if (GlobalTint == MinTint)
+            {
+                _isIncreasing = true;
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -44,25 +64,7 @@ public class TintMeshObject : MonoBehaviour
     {
         if (_isTinting)
         {
-            float delta = Time.deltaTime * _tintSpeed; ;
-            if (_isIncreasing)
-            {
-                _color.a += delta;
-                _color.a = Mathf.Clamp(_color.a, _minTint, _maxTint);
-                if (_color.a == 1f)
-                {
-                    _isIncreasing = false;
-                }
-            }
-            else
-            {
-                _color.a -= delta;
-                _color.a = Mathf.Clamp(_color.a, _minTint, _maxTint);
-                if (_color.a == _minTint)
-                {
-                    _isIncreasing = true;
-                }
-            }
+            _color.a = GlobalTint;
             _currentMaterial.color = _color;
         }
     }

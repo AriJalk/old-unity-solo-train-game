@@ -38,12 +38,13 @@ namespace SoloTrainGame.Core
 
         void Start()
         {
+            ServiceLocator.SetHexGridController(_gridController);
             //_userInterface.CardGridViewer.OpenViewer(cards);
             _rotatedCamera.ColliderClickDownEvent?.AddListener(RaycastColliderHitDown);
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
             ServiceLocator.StateManager.AddState(new TestNewGameState());
             ServiceLocator.StateManager.EnterNextState();
-            ServiceLocator.SetHexGridController(_gridController);
+            
         }
 
 
@@ -53,6 +54,7 @@ namespace SoloTrainGame.Core
         {
             _inputManager.UpdateInput();
             ServiceLocator.TimerManager.Update();
+            TintMeshObject.UpdateGlobalTint();
         }
 
         private void OnDestroy()
