@@ -7,8 +7,7 @@ using UnityEngine;
 
 public class HexTileObject : MonoBehaviour
 {
-    [SerializeField]
-    private MeshRenderer _meshRenderer;
+    public MeshRenderer MeshRenderer;
     [SerializeField]
     private GameObject _trainObject1;
     [SerializeField]
@@ -31,7 +30,6 @@ public class HexTileObject : MonoBehaviour
     private void Awake()
     {
         CachedTransform = transform;
-        Neighbors = new List<HexTileObject>();
     }
 
     // Start is called before the first frame update
@@ -45,7 +43,7 @@ public class HexTileObject : MonoBehaviour
     {
         if (CanBeClicked)
         {
-            Color color = _meshRenderer.material.color;
+            Color color = MeshRenderer.material.color;
 
         }
     }
@@ -76,7 +74,7 @@ public class HexTileObject : MonoBehaviour
         Material material = ServiceLocator.MaterialManager.GetColorMaterial(hexData.TileType.TerrainColor);
         if (material != null)
         {
-            _meshRenderer.material = material;
+            MeshRenderer.material = material;
         }
     }
 

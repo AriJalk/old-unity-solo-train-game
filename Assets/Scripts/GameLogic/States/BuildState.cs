@@ -2,6 +2,7 @@
 using SoloTrainGame.Core;
 using SoloTrainGame.UI;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SoloTrainGame.GameLogic
@@ -29,7 +30,12 @@ namespace SoloTrainGame.GameLogic
 
         private void TileSelected(HexTileObject tile)
         {
-            Debug.Log(tile.HexGameData.Hex.Position);
+            if (tile.HexGameData.Tracks == null)
+            {
+                TestAddRail(tile);
+                UpdateState();
+            }
+
         }
 
         public void AddMoney(int amount)
@@ -58,6 +64,37 @@ namespace SoloTrainGame.GameLogic
         {
             _guiServices.GameGUIEvents.CardClickedEvent.RemoveListener(CardClicked);
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
+        }
+
+        private void UpdateState()
+        {
+            foreach(HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
+            {
+                if (tile.HexGameData.Tracks == null)
+                {
+                    foreach(HexTileObject neighbor in tile.Neighbors)
+                    {
+                        if (neighbor.HexGameData.Tracks != null)
+                        {
+                            tile.MeshRenderer.AddComponent<TintMeshObject>();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TestAddRail(HexTileObject tile)
+        {
+            if (tile.HexGameData.Tracks == null)
+            {
+                tile.BuildTracks();
+            }
+            else if (tile.HexGameData.Tracks != null && !tile.HexGameData.Tracks.IsUpgraded)
+            {
+                tile.UpgradeTracks();
+                Debug.Log("Upgrade");
+            }
         }
     }
 }

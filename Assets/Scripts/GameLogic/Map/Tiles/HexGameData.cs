@@ -88,5 +88,6 @@ namespace SoloTrainGame.GameLogic
             str += "Type: " + TileType.TerrainType;
             return str;
         }
+
     }
 }

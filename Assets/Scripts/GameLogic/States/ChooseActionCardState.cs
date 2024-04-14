@@ -18,7 +18,7 @@ namespace SoloTrainGame.GameLogic
                 guiServices.GameGUIEvents.CardClickedEvent?.AddListener(CardClicked);
                 guiServices.SetStateMessage("Choose a card for its action");
                 guiServices.CardView.PlayActionEvent?.AddListener(PlayAction);
-                ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TestAddRail);
+                //ServiceLocator.GameEvents.TileSelectedEvent?.AddListener(TestAddRail);
             }
         }
 
@@ -30,7 +30,7 @@ namespace SoloTrainGame.GameLogic
                 guiServices.GameGUIEvents.CardClickedEvent?.RemoveListener(CardClicked);
                 guiServices.SetStateMessage(string.Empty);
                 guiServices.CardView.PlayActionEvent?.RemoveListener(PlayAction);
-                ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TestAddRail);
+                //ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TestAddRail);
             }
         }
 
@@ -61,17 +61,6 @@ namespace SoloTrainGame.GameLogic
             ServiceLocator.GetGUI<GameGUIServices>()?.UIHand.RemoveCardFromHand(card);
         }
 
-        private void TestAddRail(HexTileObject tile)
-        {
-            if (tile.HexGameData.Tracks == null)
-            {
-                tile.BuildTracks();
-            }
-            else if (tile.HexGameData.Tracks != null && !tile.HexGameData.Tracks.IsUpgraded)
-            {
-                tile.UpgradeTracks();
-                Debug.Log("Upgrade");
-            }
-        }
+        
     }
 }

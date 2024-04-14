@@ -23,7 +23,7 @@ namespace SoloTrainGame.Core
 
 
         // Holds all tiles in the map
-        private Dictionary<Hex, HexTileObject> _hexTileDictionary;
+        public Dictionary<Hex, HexTileObject> HexTileDictionary;
 
         // Last recorded tile gap
         private float lastTileGap;
@@ -49,7 +49,7 @@ namespace SoloTrainGame.Core
             if (lastTileGap != _tileGap)
             {
                 lastTileGap = _tileGap;
-                foreach (HexTileObject tileObj in _hexTileDictionary.Values)
+                foreach (HexTileObject tileObj in HexTileDictionary.Values)
                 {
                     UpdateTilePosition(tileObj);
                 }
@@ -60,10 +60,10 @@ namespace SoloTrainGame.Core
         {
             _prefabManager = ServiceLocator.PrefabManager;
             _prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
-            _hexTileDictionary = new Dictionary<Hex, HexTileObject>();
+            HexTileDictionary = new Dictionary<Hex, HexTileObject>();
             lastTileGap = _tileGap;
             BuildTestMapNew();
-            StartingTile = _hexTileDictionary[Hex.ZERO];
+            StartingTile = HexTileDictionary[Hex.ZERO];
 
         }
 
@@ -93,17 +93,17 @@ namespace SoloTrainGame.Core
         // TODO: no params, just data
         private void CreateTile(Hex hex, Enums.TerrainType type, Tracks tracks = null, Town town = null, City city = null)
         {
-            if (!_hexTileDictionary.ContainsKey(hex))
+            if (!HexTileDictionary.ContainsKey(hex))
             {
                 HexTileObject tile = _prefabManager.RetrievePoolObject<HexTileObject>();
                 TerrainTypeSO terrainType = ServiceLocator.ScriptableObjectManager.TerrainTypes[type];
                 tile.HexGameData = new HexGameData(hex, terrainType);
                 tile.CachedTransform.SetParent(transform);
-                _hexTileDictionary.Add(hex, tile);
+                HexTileDictionary.Add(hex, tile);
                 tile.CostText.text = string.Empty;
-                ConnectNeighbors(tile);
-                UpdateTilePosition(tile);
                 tile.Initialize(tile.HexGameData);
+                ConnectNeighbors(tile);
+                UpdateTilePosition(tile);   
                 UpdateBoundsFromHex(tile);
             }
         }
@@ -151,8 +151,8 @@ namespace SoloTrainGame.Core
 
         public HexTileObject GetHexTile(Hex position)
         {
-            if (_hexTileDictionary.ContainsKey(position))
-                return _hexTileDictionary[position];
+            if (HexTileDictionary.ContainsKey(position))
+                return HexTileDictionary[position];
             return null;
         }
 
@@ -181,7 +181,7 @@ namespace SoloTrainGame.Core
                 else
                     hex = Hex.GetHexNeighbor(hex, Hex.HexDirection.SOUTH_EAST);
             }
-            avaragePosition /= _hexTileDictionary.Count;
+            avaragePosition /= HexTileDictionary.Count;
             Center = avaragePosition;
         }
         public void BuildTestMapNew()

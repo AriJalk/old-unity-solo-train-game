@@ -43,6 +43,7 @@ namespace SoloTrainGame.Core
             _rotatedCamera.ColliderClickUpEvent?.AddListener(RaycastColliderHitUp);
             ServiceLocator.StateManager.AddState(new TestNewGameState());
             ServiceLocator.StateManager.EnterNextState();
+            ServiceLocator.SetHexGridController(_gridController);
         }
 
 

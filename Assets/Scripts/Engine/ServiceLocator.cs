@@ -59,6 +59,7 @@ namespace Engine
         static public StateManager StateManager { get; private set; }
         static public LogicState LogicState { get; private set; }
         static public GameEvents GameEvents { get; private set; }
+        static public HexGridController HexGridController { get; private set; }
         static ServiceLocator()
         {
             InputManager = new InputManager();
@@ -95,6 +96,11 @@ namespace Engine
         static public void SetLogicState(LogicState state)
         {
             LogicState = state;
+        }
+
+        static public void SetHexGridController(HexGridController hexGridController)
+        {
+            HexGridController = hexGridController;
         }
 
         static public T GetGUI<T>() where T : CoreGUIServices

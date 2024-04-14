@@ -72,10 +72,12 @@ namespace HexSystem
 
         public static List<Hex> GetAllNeighbors(Hex hex)
         {
+            Debug.Log(hex.Position + " HEX NEIGHBORS: ");
             List<Hex> list = new List<Hex>();
             foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
             {
                 list.Add(GetHexNeighbor(hex, direction));
+                Debug.Log(GetHexNeighbor(hex, direction).Position);
             }
             return list;
         }

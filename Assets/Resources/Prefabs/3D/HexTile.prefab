@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48796be9118b93242aa4fa209663dfb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 4468255292217069963}
+  MeshRenderer: {fileID: 4468255292217069963}
   _trainObject1: {fileID: 4443571011816934663}
   _trainObject2: {fileID: 2934633823238034895}
   _townObject: {fileID: 2448805505543756049}
