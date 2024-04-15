@@ -46,6 +46,7 @@ namespace SoloTrainGame.GameLogic
             if (amount > 0)
                 AvailableMoney += amount;
             _guiServices.SetExtraMessage(AvailableMoney + "$");
+            UpdateState();
         }
 
         public void RemoveMoney(int amount)
@@ -53,6 +54,7 @@ namespace SoloTrainGame.GameLogic
             if (amount > 0)
                 AvailableMoney -= amount;
             _guiServices.SetExtraMessage(AvailableMoney + "$");
+            UpdateState();
         }
 
         public void OnEnterGameState()
@@ -70,23 +72,36 @@ namespace SoloTrainGame.GameLogic
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
         }
 
-        // TODO: logic is messed up, upgraded tiles are still marked
+        // TODO: logic is messed up, split 
         private void UpdateState()
         {
             List<HexTileObject> visitedTiles = new List<HexTileObject>();
             foreach(HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
             {
+                bool isConnectedToNetwork = false;
                 if (tile.HexGameData.Tracks == null || !tile.HexGameData.Tracks.IsUpgraded)
                 {
                     foreach(HexTileObject neighbor in tile.Neighbors)
                     {
                         // TODO: not edge case like this with ZERO and more performant (use the list)
+                        // also store in bool list 
                         if (neighbor.HexGameData.Tracks != null && tile.MeshRenderer.GetComponent<TintMeshObject>() == null || tile.HexGameData.Hex == Hex.ZERO)
                         {
-                            tile.MeshRenderer.AddComponent<TintMeshObject>();
-                            tile.CanBeClicked = true;
+                            isConnectedToNetwork = true;
                             break;
                         }
+                    }
+                    if (isConnectedToNetwork)
+                    {
+                        foreach(BuildingTypeSO buildingType in ServiceLocator.ScriptableObjectManager.BuildingTypes.Values)
+                        {
+                            if (CostHelper.CalculateBuildCost(buildingType, tile.HexGameData) <= AvailableMoney)
+                            {
+                                tile.MeshRenderer.AddComponent<TintMeshObject>();
+                                tile.CanBeClicked = true;
+                                break;
+                            }
+                        }   
                     }
                 }
                 else if (tile.MeshRenderer.GetComponent<TintMeshObject>() is TintMeshObject tint)
