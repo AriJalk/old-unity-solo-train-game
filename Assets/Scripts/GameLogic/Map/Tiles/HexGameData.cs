@@ -84,7 +84,7 @@ namespace SoloTrainGame.GameLogic
 
         public override string ToString()
         {
-            string str = "Hex: " + Hex.Position + "\n";
+            string str = "Hex: " + Hex + "\n";
             str += "Type: " + TileType.TerrainType;
             return str;
         }

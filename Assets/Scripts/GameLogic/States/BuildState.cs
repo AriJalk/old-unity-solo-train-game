@@ -37,7 +37,7 @@ namespace SoloTrainGame.GameLogic
             {
                 TestAddRail(tile);
             }
-            Debug.Log(tile.HexGameData.Hex.Position);
+            Debug.Log(tile.HexGameData.Hex);
             UpdateState();
         }
 

@@ -7,53 +7,53 @@ namespace HexSystem
     /// </summary>
     public partial class Hex
     {
-        private Vector3Int _position;
-        public Vector3Int Position
-        {
-            get
-            {
-                return _position;
-            }
-            private set
-            {
-                _position = value;
-            }
-        }
-
+        public int Q { get; private set; }
+        public int R { get; private set; }
+        public int S { get; private set; }
         // CONSTRUCTORS
         private Hex(int q, int r, int s)
         {
-            Position = new Vector3Int(q, r, s);
+            Q = q;
+            R = r;
+            S = s;
         }
 
-        private Hex(Vector3Int position)
-        {
-            if (IsPositionLegal(position))
-                Position = position;
-        }
 
         private Hex(Hex other)
         {
-            Position = other.Position;
+            Q = other.Q;
+            R = other.R;
+            S = other.S;
         }
 
 
         // OVERRIDES
         public override int GetHashCode()
         {
-            return Position.GetHashCode();
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 31 + Q.GetHashCode();
+                hash = hash * 31 + R.GetHashCode();
+                hash = hash * 31 + S.GetHashCode();
+                return hash;
+            }
         }
+
 
         public override bool Equals(object obj)
         {
-            Hex hex_obj = obj as Hex;
-            if (obj == null || hex_obj == null)
+            if (obj is Hex hex_obj)
             {
-                return false;
+                return Q == hex_obj.Q && R == hex_obj.R && S == hex_obj.S;
             }
-            return Position.Equals(hex_obj.Position);
+            return false;
         }
 
+        public override string ToString()
+        {
+            return "[" + Q + "," + R + "," + S + "]";
+        }
     }
 
 }

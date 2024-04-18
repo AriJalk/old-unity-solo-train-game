@@ -38,9 +38,9 @@ namespace Engine
         {
             Material material = _tile_materials[color];
             if(material != null)
-                return material;
-            Debug.LogError(color + " Material not found");
+                return material;            Debug.LogError(color + " Material not found");
             return null;
+
         }
 
         public Material GetWoodColorMaterial(Enums.GameColor color)

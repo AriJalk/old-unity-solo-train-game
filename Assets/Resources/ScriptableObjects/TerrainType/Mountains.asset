@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mountains
   m_EditorClassIdentifier: 
   TerrainType: 2
-  TerrainColor: 2
+  TerrainColor: 5
   ProducedGoods: {fileID: 11400000, guid: d54617ec776ca0a4ab22d5f252831cbb, type: 2}
   CanBuildUpTo: 2
   TerrainCost: 3

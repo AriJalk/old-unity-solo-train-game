@@ -5,6 +5,7 @@ using SoloTrainGame.GameLogic;
 using SoloTrainGame.UI;
 using System;
 using UnityEngine.Events;
+using HexSystem;
 
 namespace SoloTrainGame.Core
 {
@@ -67,6 +68,9 @@ namespace SoloTrainGame.Core
             if (_gridController != null)
             {
                 _gridController.Initialize();
+
+                _gridController.CreateTile(Hex.ZERO, Enums.TerrainType.Empty);
+                _gridController.StartingTile = _gridController.CreateTile(Hex.ZERO, Enums.TerrainType.Empty);
                 min = new Vector2(_gridController.MinX, _gridController.MinZ);
                 max = new Vector2(_gridController.MaxX, _gridController.MaxZ);
 

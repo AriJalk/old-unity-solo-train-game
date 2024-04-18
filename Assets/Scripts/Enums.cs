@@ -7,6 +7,9 @@
         Red,
         Blue,
         Transperant,
+        Turquoise,
+        Coral,
+        SlateGray,
     }
 
     public enum TerrainType

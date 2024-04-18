@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Urban
   m_EditorClassIdentifier: 
   TerrainType: 0
-  TerrainColor: 1
+  TerrainColor: 7
   ProducedGoods: {fileID: 11400000, guid: 5a337c237b97f2c4187ac1152a7672eb, type: 2}
   CanBuildUpTo: 3
   TerrainCost: 4

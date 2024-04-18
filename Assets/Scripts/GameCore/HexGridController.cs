@@ -28,7 +28,7 @@ namespace SoloTrainGame.Core
         // Last recorded tile gap
         private float lastTileGap;
 
-        public HexTileObject StartingTile { get; private set; }
+        public HexTileObject StartingTile { get; set; }
 
         Vector3 avaragePosition = Vector3.zero;
 
@@ -56,21 +56,36 @@ namespace SoloTrainGame.Core
             }
         }
 
-        public void Initialize()
+        /// <summary>
+        /// Provide a list of hexList, the first one is the starting tile
+        /// </summary>
+        /// <param name="hexList"></param>
+        public void Initialize(List<HexGameData> hexList = null)
         {
             _prefabManager = ServiceLocator.PrefabManager;
             _prefabManager.LoadAndRegisterPrefab<HexTileObject>(PrefabFolder.PREFAB_3D, "HexTile", 30);
             HexTileDictionary = new Dictionary<Hex, HexTileObject>();
             lastTileGap = _tileGap;
-            BuildTestMapNew();
-            StartingTile = HexTileDictionary[Hex.ZERO];
-
+            //BuildTestMapNew();
+            //StartingTile = HexTileDictionary[Hex.ZERO];
+            if (hexList != null)
+            {
+                BuildMap(hexList);
+            }
         }
 
         // TODO: move to tile
         private void UpdateTilePosition(HexTileObject tile)
         {
             tile.CachedTransform.position = Hex.HexToWorld(tile.HexGameData.Hex, TILE_SIZE, _tileGap, HexOrientation.FlatLayout);
+        }
+
+        private void BuildMap(List<HexGameData> hexList)
+        {
+            foreach (HexGameData hex in hexList)
+            {
+                
+            }
         }
 
         /*
@@ -91,7 +106,7 @@ namespace SoloTrainGame.Core
         }*/
 
         // TODO: no params, just data
-        private void CreateTile(Hex hex, Enums.TerrainType type, Tracks tracks = null, Town town = null, City city = null)
+        public HexTileObject CreateTile(Hex hex, Enums.TerrainType type, Tracks tracks = null, Town town = null, City city = null)
         {
             if (!HexTileDictionary.ContainsKey(hex))
             {
@@ -105,7 +120,9 @@ namespace SoloTrainGame.Core
                 ConnectNeighbors(tile);
                 UpdateTilePosition(tile);   
                 UpdateBoundsFromHex(tile);
+                return tile;
             }
+            return null;
         }
 
 

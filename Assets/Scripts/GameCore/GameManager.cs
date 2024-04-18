@@ -73,6 +73,7 @@ namespace SoloTrainGame.Core
             if (_gridController != null)
             {
                 _gridController.Initialize();
+                _gridController.BuildTestMapNew();
                 min = new Vector2(_gridController.MinX, _gridController.MinZ);
                 max = new Vector2(_gridController.MaxX, _gridController.MaxZ);
 

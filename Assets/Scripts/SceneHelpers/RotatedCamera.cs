@@ -210,7 +210,7 @@ public class RotatedCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
             newSpeed *= _speedMultiplier;
 
-        // Calculate the movement direction relative to the camera's forward direction
+        // Calculate the movement direction relative to the camera'S forward direction
         Vector3 forward = Vector3.Scale(_cameraTransform.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 right = Vector3.Scale(_cameraTransform.right, new Vector3(1, 0, 1)).normalized;
 

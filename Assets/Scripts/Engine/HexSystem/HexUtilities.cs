@@ -51,10 +51,15 @@ namespace HexSystem
             return coordinates.x + coordinates.y + coordinates.z == 0;
         }
 
+
+        private static bool IsPositionLegal(int q, int r, int s)
+        {
+            return q + r + s == 0;
+        }
+
         public static Hex BuildHex(int q, int r, int s)
         {
-            Vector3Int coordinates = new Vector3Int(q, r, s);
-            if (IsPositionLegal(coordinates))
+            if (IsPositionLegal(q, r, s))
             {
                 return new Hex(q, r, s);
             }
@@ -65,19 +70,19 @@ namespace HexSystem
         {
             if (hex != null)
             {
-                return new Hex(hex.Position + DirectionVectorDictionary[direction]);
+                return hex + DirectionVectorDictionary[direction];
             }
             return null;
         }
 
         public static List<Hex> GetAllNeighbors(Hex hex)
         {
-            Debug.Log(hex.Position + " HEX NEIGHBORS: ");
+            Debug.Log(hex + " HEX NEIGHBORS: ");
             List<Hex> list = new List<Hex>();
             foreach (HexDirection direction in Enum.GetValues(typeof(HexDirection)))
             {
                 list.Add(GetHexNeighbor(hex, direction));
-                Debug.Log(GetHexNeighbor(hex, direction).Position);
+                Debug.Log(GetHexNeighbor(hex, direction));
             }
             return list;
         }
@@ -91,7 +96,7 @@ namespace HexSystem
         {
             float gap = CalculateGap(hexSize, gapProportion);
 
-            float x = (orientation.F0 * hex.Position.x + orientation.F1 * hex.Position.y) * hexSize;
+            float x = (orientation.F0 * hex.Q + orientation.F1 * hex.R) * hexSize;
 
             if (x > 0)
                 x += gap * Mathf.Abs(x);
@@ -100,7 +105,7 @@ namespace HexSystem
                 x -= gap * Mathf.Abs(x);
 
             float y = 0;  // Assuming hexagons are placed flat on the ground
-            float z = (orientation.F2 * hex.Position.x + orientation.F3 * hex.Position.y) * hexSize;
+            float z = (orientation.F2 * hex.Q + orientation.F3 * hex.R) * hexSize;
 
             if (z > 0)
                 z += gap * Mathf.Abs(z);
@@ -112,6 +117,35 @@ namespace HexSystem
             return new Vector3(x, y, z);
         }
 
+        public static Hex operator +(Hex hex1, Hex hex2)
+        {
+            return new Hex(hex1.Q + hex2.Q, hex1.R + hex2.R, hex1.S + hex2.S);
+        }
 
+        public static Hex operator +(Hex hex1, Vector3Int direction)
+        {
+            return new Hex(hex1.Q + direction.x, hex1.R + direction.y, hex1.S + direction.z);
+        }
+
+
+        public static Hex operator -(Hex hex1, Hex hex2)
+        {
+            return new Hex(hex1.Q - hex2.Q, hex1.R - hex2.R, hex1.S - hex2.S);
+        }
+
+        public static Hex operator -(Hex hex1, Vector3Int direction)
+        {
+            return new Hex(hex1.Q - direction.x, hex1.R - direction.y, hex1.S - direction.z);
+        }
+
+        public static Hex operator *(Hex hex, int scalar)
+        {
+            return new Hex(hex.Q * scalar, hex.R * scalar, hex.S * scalar);
+        }
+
+        public static Hex operator *(int scalar, Hex hex)
+        {
+            return new Hex(hex.Q * scalar, hex.R * scalar, hex.S * scalar);
+        }
     }
 }

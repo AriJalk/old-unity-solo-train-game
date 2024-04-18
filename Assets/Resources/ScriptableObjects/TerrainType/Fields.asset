@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fields
   m_EditorClassIdentifier: 
   TerrainType: 0
-  TerrainColor: 0
+  TerrainColor: 6
   ProducedGoods: {fileID: 11400000, guid: 4104877ed2cf79b4c92e257cfdd5736e, type: 2}
   CanBuildUpTo: 2
   TerrainCost: 2
