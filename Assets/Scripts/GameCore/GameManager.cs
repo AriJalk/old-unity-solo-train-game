@@ -87,7 +87,7 @@ namespace SoloTrainGame.Core
             GameState = new LogicState(_gridController);
             ServiceLocator.SetLogicState(GameState);
             ServiceLocator.SetUserInterface(_userInterface);
-            _rotatedCamera.Initialize(min, max);
+            _rotatedCamera.SetBounds(min, max);
         }
 
         private void RaycastColliderHitDown(RaycastHit hit)

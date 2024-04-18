@@ -140,7 +140,7 @@ public class RotatedCamera : MonoBehaviour
         RemoveInputListeners();
     }
 
-    public void Initialize(Vector2 minBounds, Vector2 maxBounds)
+    public void SetBounds(Vector2 minBounds, Vector2 maxBounds)
     {
         _minBounds = minBounds;
         _maxBounds = maxBounds;

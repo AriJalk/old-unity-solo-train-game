@@ -68,8 +68,6 @@ namespace SoloTrainGame.Core
             if (_gridController != null)
             {
                 _gridController.Initialize();
-
-                _gridController.CreateTile(Hex.ZERO, Enums.TerrainType.Empty);
                 _gridController.StartingTile = _gridController.CreateTile(Hex.ZERO, Enums.TerrainType.Empty);
                 min = new Vector2(_gridController.MinX, _gridController.MinZ);
                 max = new Vector2(_gridController.MaxX, _gridController.MaxZ);
@@ -80,7 +78,7 @@ namespace SoloTrainGame.Core
                 min = new Vector2(_centerObject.position.x, _centerObject.position.z);
                 max = min;
             }
-            _rotatedCamera.Initialize(min, max);
+            _rotatedCamera.SetBounds(min, max);
             ServiceLocator.SetUserInterface(_userInterface);
         }
 
@@ -98,7 +96,23 @@ namespace SoloTrainGame.Core
                 if (tile == _selectedTile)
                 {
                     ServiceLocator.GameEvents.TileSelectedEvent?.Invoke(tile);
+                    Debug.Log(tile.HexGameData.Hex);
+                    BuildTile(tile);
+                    _selectedTile = null;
                 }
+            }
+        }
+
+        private void BuildTile(HexTileObject tile)
+        {
+            tile.Initialize(new HexGameData(tile.HexGameData.Hex, ServiceLocator.ScriptableObjectManager.TerrainTypes[Enums.TerrainType.Fields]));
+            // Build surounding neighbors
+            foreach (Hex neighbor in Hex.GetAllNeighbors(tile.HexGameData.Hex))
+            {
+                _gridController.CreateTile(neighbor, Enums.TerrainType.Empty);
+                Vector2 min = new Vector2(_gridController.MinX, _gridController.MinZ);
+                Vector2 max = new Vector2(_gridController.MaxX, _gridController.MaxZ);
+                _rotatedCamera.SetBounds(min, max);
             }
         }
     }

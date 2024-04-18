@@ -27,4 +27,5 @@ public class GoodsCubeGameObject : MonoBehaviour
         _cube = cube;
         Material material = ServiceLocator.MaterialManager.GetWoodColorMaterial(cube.GoodsType.GoodsColor);
     }
+
 }
