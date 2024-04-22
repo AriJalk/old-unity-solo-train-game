@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Enums;
 
 namespace SoloTrainGame.GameLogic
 {
@@ -70,18 +71,30 @@ namespace SoloTrainGame.GameLogic
         {
             _guiServices.GameGUIEvents.CardClickedEvent.RemoveListener(CardClicked);
             ServiceLocator.GameEvents.TileSelectedEvent?.RemoveListener(TileSelected);
+            foreach (HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
+            {
+                tile.CostText.transform.parent.parent.gameObject.SetActive(false);
+                TintMeshObject tint = tile.GetComponent<TintMeshObject>();
+                if (tint != null)
+                {
+                    GameObject.Destroy(tint);
+                }
+            }
         }
 
         // TODO: logic is messed up, split 
         private void UpdateState()
         {
             List<HexTileObject> visitedTiles = new List<HexTileObject>();
-            foreach(HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
+            foreach (HexTileObject tile in ServiceLocator.HexGridController.HexTileDictionary.Values)
             {
                 bool isConnectedToNetwork = false;
+                tile.CostText.text = tile.HexGameData.TileType.TerrainCost.ToString() + '$';
+                // TODO : Not like this, just for test purposes
+                tile.CostText.transform.parent.parent.gameObject.SetActive(true);
                 if (tile.HexGameData.Tracks == null || !tile.HexGameData.Tracks.IsUpgraded)
                 {
-                    foreach(HexTileObject neighbor in tile.Neighbors)
+                    foreach (HexTileObject neighbor in tile.Neighbors)
                     {
                         // TODO: not edge case like this with ZERO and more performant (use the list)
                         // also store in bool list 
@@ -93,7 +106,7 @@ namespace SoloTrainGame.GameLogic
                     }
                     if (isConnectedToNetwork)
                     {
-                        foreach(BuildingTypeSO buildingType in ServiceLocator.ScriptableObjectManager.BuildingTypes.Values)
+                        foreach (BuildingTypeSO buildingType in ServiceLocator.ScriptableObjectManager.BuildingTypes.Values)
                         {
                             if (CostHelper.CalculateBuildCost(buildingType, tile.HexGameData) <= AvailableMoney)
                             {
@@ -101,7 +114,7 @@ namespace SoloTrainGame.GameLogic
                                 tile.CanBeClicked = true;
                                 break;
                             }
-                        }   
+                        }
                     }
                 }
                 else if (tile.MeshRenderer.GetComponent<TintMeshObject>() is TintMeshObject tint)

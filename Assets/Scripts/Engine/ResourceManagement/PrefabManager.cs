@@ -57,13 +57,7 @@ namespace Engine.ResourceManagement
         }
 
 
-        public void RegisterPrefab<T>(GameObject prefab) where T : Component
-        {
-
-            RegisterPrefab<T>(prefab, INITIAL_POOL_SIZE);
-        }
-
-        public void RegisterPrefab<T>(GameObject prefab, int poolSize) where T : Component
+        public void RegisterPrefab<T>(GameObject prefab, int poolSize = INITIAL_POOL_SIZE) where T : Component
         {
 
             if (!prefabDict.ContainsKey(typeof(T)))
@@ -124,7 +118,7 @@ namespace Engine.ResourceManagement
             }
         }
 
-        public void LoadAndRegisterPrefab<T>(PrefabFolder folder, string prefabName, int poolSize) where T : Component
+        public void LoadAndRegisterPrefab<T>(PrefabFolder folder, string prefabName, int poolSize = INITIAL_POOL_SIZE) where T : Component
         {
             string prefabPath = "Prefabs/";
             switch (folder)
