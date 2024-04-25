@@ -35,3 +35,14 @@ In this demonstration, we'll use a test environment map and the regular starting
 
 
 [![Network Expansion](https://img.youtube.com/vi/4NCJbKw9o4U/0.jpg)](https://www.youtube.com/watch?v=4NCJbKw9o4U)
+
+## Earlier development images from the project
+
+Original Godot proof-of-concept before moving to Unity
+![Godot Version](ReadmeImages/SoloTrainGame_Godot.png)
+
+In-Game Card-Viewer which can be used in any menu to show a list of cards in any context, used to see the discards etc.
+![Card Viewer](ReadmeImages/SoloTrainGame_CardViewer.png)
+
+All tiles with everything built on them (A single square cube slot is a Town and the rectangle double slot is a City)
+![Towns and Cities](ReadmeImages/SoloTrainGame_TownsCities.png)
