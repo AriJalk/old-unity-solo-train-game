@@ -1,7 +1,7 @@
-# Solo Train Game
+# Solo Train Game Unity
 
-My current game project, still early in prototype but most critical parts of the framework are working. It is aimed for Desktop-PC and hopefully Android once everything is mechanically sound.</br></br>
-A solitaire train game made in Unity, inspired by Cube-Rails board games like Chicago-Express and Steam, designed with physical implementation in mind. It is played through a light Deck-Building and card play similar to the game Concordia, aiming to provide a short, puzzly card-based experience.</br></br>
+Developed in Unity with C#, this is my current game project, still early in prototype but most critical parts of the framework are working. It is aimed for Desktop-PC and hopefully Android once everything is mechanically sound.</br></br>
+A solitaire train game, inspired by Cube-Rails board games like Chicago-Express and Steam, designed with physical implementation in mind. It is played through light Deck-Building and card play similar to the game Concordia, aiming to provide a short, puzzly card-based experience.</br></br>
 
 It uses a Hex-System I ported from my implementation of [Godot Hex Tile System](https://github.com/AriJalk/GodotHexTileSystem), which in turn is based on [Red Blob Games Hexagonal Grids](https://www.redblobgames.com/grids/hexagons).
 
@@ -9,7 +9,7 @@ Starting with a small scope, it grew quickly, so I try to limit the amount of co
 
 ## Game Idea
 
-With a starting hand of three distinct cards — one that builds tracks, towns, and cities; one that transports goods along those tracks; and one that ends the round and reclaims all played cards to hand — and one origin station on a map with various terrain types, the player needs to expand her network within a set number of rounds to connect all required stations on the map to one unified network (a round ends when the player chooses to play the end-of-round card).</br>
+With a starting hand of three distinct cards — one that builds tracks, towns, and cities; one that transports goods along those tracks; and one that ends the round and reclaims all played cards to hand — and one origin station on a map with various terrain types, the player needs to expand their network within a set number of rounds to connect all required stations on the map to one unified network (a round ends when the player chooses to play the end-of-round card).</br>
 In order to achieve this objective, the player, in addition to expanding the network, needs to obtain newer, more powerful cards from a dynamic market of cards that is sorted and appearing by era, through transportation of goods from towns that produce them to cities that receive those goods and provide those cards.
 
 ## What's Implemented
@@ -31,6 +31,7 @@ In order to achieve this objective, the player, in addition to expanding the net
 
 ## Demonstration of the Network Expansion Mechanic
 
-In this demonstration, we'll use a test environment map and the regular starting hand to initiate a build action through a card. We'll build rails to test if track building limitations are working properly, and also increment money through the discard of another card to observe its implication on possible build locations. Note that the card used for money incrementation is not discarded in the demo, as it's testing its contribution. The money doesn't decrement in this demo since it's testing a scenario of expanding over several turns. Also showcases the Spherical rotation camera.
+In this demonstration, we'll use a test environment map and the regular starting hand to initiate a build action through a card. We'll build rails to test if track building limitations are working properly, and also increment money through the discard of another card to observe its implication on possible build locations. Note that the card used for money incrementation is not discarded in the demo, as it's testing its contribution. The money doesn't decrement in this demo since it's testing a scenario of expanding over several turns. This demonstration also showcases the Spherical rotation camera.
+
 
 [![Network Expansion](https://img.youtube.com/vi/4NCJbKw9o4U/0.jpg)](https://www.youtube.com/watch?v=4NCJbKw9o4U)
