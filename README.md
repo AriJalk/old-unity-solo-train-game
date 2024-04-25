@@ -29,7 +29,7 @@ In order to achieve this objective, the player, in addition to expanding the net
 * The Build-Action needs a choice interface to select the building to be built.
 * The card-market and End-Round mechanics are not yet implemented; all cards are already defined in the spreadsheet but are yet to be implemented beyond the starting ones. However, most cards derive their behavior from the two basic actions, Build/Transport. So, once the core actions are fully implemented and refined, I will implement the rest.
 
-## Demonstration of the Network Expansion Mechanic
+## Video Demonstration of the Network Expansion Mechanic
 
 In this demonstration, we'll use a test environment map and the regular starting hand to initiate a build action through a card. We'll build rails to test if track building limitations are working properly, and also increment money through the discard of another card to observe its implication on possible build locations. Note that the card used for money incrementation is not discarded in the demo, as it's testing its contribution. The money doesn't decrement in this demo since it's testing a scenario of expanding over several turns. This demonstration also showcases the Spherical rotation camera.
 
@@ -37,12 +37,16 @@ In this demonstration, we'll use a test environment map and the regular starting
 [![Network Expansion](https://img.youtube.com/vi/4NCJbKw9o4U/0.jpg)](https://www.youtube.com/watch?v=4NCJbKw9o4U)
 
 ## Earlier development images from the project
+*Note: The original version was color-blind friendly but not colorful enough.*
 
-Original Godot proof-of-concept before moving to Unity
-![Godot Version](ReadmeImages/SoloTrainGame_Godot.png)
+**Original Godot proof-of-concept before moving to Unity**
+![Godot Version](ReadmeImages/SoloTrainGame_Godot.PNG)
 
-In-Game Card-Viewer which can be used in any menu to show a list of cards in any context, used to see the discards etc.
+**In-Game Card-Viewer**
+This feature can be used in any menu to show a list of cards in any context, including discards.
 ![Card Viewer](ReadmeImages/SoloTrainGame_CardViewer.png)
 
-All tiles with everything built on them (A single square cube slot is a Town and the rectangle double slot is a City)
+**Towns and Cities**
+Towns and Cities All tiles with double rails, towns, and cities built on them (A single square cube slot is a Town and the rectangle double slot is a City). This version used an older color palette, which was changed to the current one in the video demonstration for better color visibility while still being color-blind friendly. Also, Towns are meant to be upgraded to cities, so a tile won't hold both in an actual game.
+
 ![Towns and Cities](ReadmeImages/SoloTrainGame_TownsCities.png)
