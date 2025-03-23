@@ -1,4 +1,8 @@
-# Solo Train Game Unity
+# ⚠️ Project Abandoned – Moved to New Repo
+This project is no longer maintained.
+Development has moved to a New Repository implementing the game in Godot.
+
+# Solo Train Game in Unity Engine
 
 Developed in Unity with C#, this is my current game project, still early in prototype but most critical parts of the framework are working. It is aimed for Desktop-PC and hopefully Android once everything is mechanically sound.</br></br>
 A solitaire train game, inspired by Cube-Rails board games like Chicago-Express and Steam, designed with physical implementation in mind. It is played through light Deck-Building and card play similar to the game Concordia, aiming to provide a short, puzzly card-based experience.</br></br>
