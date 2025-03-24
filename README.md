@@ -1,6 +1,6 @@
 # ⚠️ Project Abandoned – Moved to New Repo
 This project is no longer maintained.
-Development has moved to a New Repository implementing the game in Godot.
+Development has moved to a New Repository implementing the game in Godot [Here](https://github.com/AriJalk/godot-solo-train-game).
 
 # Solo Train Game in Unity Engine
 
