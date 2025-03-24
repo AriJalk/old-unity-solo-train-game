@@ -7,7 +7,7 @@ Development has moved to a New Repository implementing the game in Godot.
 Developed in Unity with C#, this is my current game project, still early in prototype but most critical parts of the framework are working. It is aimed for Desktop-PC and hopefully Android once everything is mechanically sound.</br></br>
 A solitaire train game, inspired by Cube-Rails board games like Chicago-Express and Steam, designed with physical implementation in mind. It is played through light Deck-Building and card play similar to the game Concordia, aiming to provide a short, puzzly card-based experience.</br></br>
 
-It uses a Hex-System I ported from my implementation of [Godot Hex Tile System](https://github.com/AriJalk/GodotHexTileSystem), which in turn is based on [Red Blob Games Hexagonal Grids](https://www.redblobgames.com/grids/hexagons).
+It uses a Hex-System I ported from my implementation of [godot-hex-grid-module](https://github.com/AriJalk/godot-hex-grid-module), which in turn is based on [Red Blob Games Hexagonal Grids](https://www.redblobgames.com/grids/hexagons).
 
 Starting with a small scope, it grew quickly, so I try to limit the amount of content both for shorter development time and to keep each Game-Run relatively fast without overwhelming choices.
 
