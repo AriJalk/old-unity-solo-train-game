@@ -13,7 +13,7 @@ namespace CommonEngine.IO
 		#endregion
 
 		#region UIEvents
-		public readonly UnityEvent<Vector2> WorldDragged = new UnityEvent<Vector2>();
+		public readonly UnityEvent<Vector2> WorldDraggedEvent = new UnityEvent<Vector2>();
 
 		#endregion
 

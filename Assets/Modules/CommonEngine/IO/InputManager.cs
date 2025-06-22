@@ -34,10 +34,10 @@ namespace CommonEngine.IO
 				InputEvents.MouseButtonClickedDownEvent?.Invoke(1, position);
 
 			if (Mouse.current.leftButton.wasReleasedThisFrame)
-				InputEvents.MouseButtonClickedUpEvent?.Invoke(0, movement);
+				InputEvents.MouseButtonClickedUpEvent?.Invoke(0, position);
 
 			else if (Mouse.current.rightButton.wasReleasedThisFrame)
-				InputEvents.MouseButtonClickedUpEvent?.Invoke(1, movement);
+				InputEvents.MouseButtonClickedUpEvent?.Invoke(1, position);
 		}
 
 		private void ProcessAxis()

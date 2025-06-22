@@ -15,19 +15,21 @@ public class HexGridController : MonoBehaviour
 
 		HexCoord coord = HexCoord.GetCoord(0, 0);
 
-		GameObject obj = Instantiate(prefab);
-		obj.transform.SetParent(transform);
+		HexTile tile = Instantiate(prefab).GetComponent<HexTile>();
+		tile.HexCoord = coord;
+		tile.transform.SetParent(transform);
 
-		obj.transform.position = HexCoord.CoordToWorld(coord, layout);
+		tile.transform.position = HexCoord.CoordToWorld(coord, layout);
 
 		ICollection<HexCoord> neighbors = coord.GetNeighbors();
 
 		foreach (HexCoord neighbor in neighbors)
 		{
-			obj = Instantiate(prefab);
-			obj.transform.SetParent(transform);
+			tile = Instantiate(prefab).GetComponent<HexTile>();
+			tile.HexCoord = neighbor;
+			tile.transform.SetParent(transform);
 
-			obj.transform.position = HexCoord.CoordToWorld(neighbor, layout);
+			tile.transform.position = HexCoord.CoordToWorld(neighbor, layout);
 		}
 	}
 

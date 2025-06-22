@@ -37,14 +37,14 @@ public class RotatedObject : MonoBehaviour
 	void Start()
 	{
 		_orbitRotation = _initialRotation;
-		_inputEvents.WorldDragged?.AddListener(RotateObject);
+		_inputEvents.WorldDraggedEvent?.AddListener(RotateObject);
 		SetPositionOnCircle();
 	}
 
 
 	private void OnDestroy()
 	{
-		_inputEvents?.WorldDragged?.RemoveListener(RotateObject);
+		_inputEvents?.WorldDraggedEvent?.RemoveListener(RotateObject);
 	}
 
 	private void LateUpdate()

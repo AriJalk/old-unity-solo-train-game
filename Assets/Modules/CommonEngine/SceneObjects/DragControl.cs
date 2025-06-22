@@ -41,7 +41,7 @@ public class DragControl : MonoBehaviour, IDragHandler
 	{
 		if (_isDragging)
 		{
-			_inputEvents.WorldDragged?.Invoke(eventData.delta);
+			_inputEvents.WorldDraggedEvent?.Invoke(eventData.delta);
 		}
 	}
 }

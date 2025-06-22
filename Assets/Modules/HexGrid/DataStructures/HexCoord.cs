@@ -43,5 +43,10 @@ namespace HexGridSystem
 
 			return neighbors;
 		}
+
+		public override string ToString()
+		{
+			return $"Q: {Q}| R: {R}| S: {S}";
+		}
 	}
 }
