@@ -1,3 +1,4 @@
+using CommonEngine.Core;
 using CommonEngine.IO;
 using System;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class MovableObject : MonoBehaviour
 {
 	[SerializeField]
-	private InputEvents _inputEvents;
+	private CommonServiceLocator _serviceLocator;
 	[SerializeField]
 	private Transform _forwardTransform;
 	[SerializeField]
@@ -14,8 +15,11 @@ public class MovableObject : MonoBehaviour
 	[Range(0f, 20f)]
 	private float _speed = 5;
 
+	private InputEvents _inputEvents;
+
 	void Start()
 	{
+		_inputEvents = _serviceLocator.InputEvents;
 		_inputEvents.AxisMovedEvent?.AddListener(OnAxisMoved);
 	}
 

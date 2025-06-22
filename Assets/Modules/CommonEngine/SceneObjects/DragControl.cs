@@ -1,3 +1,4 @@
+using CommonEngine.Core;
 using CommonEngine.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,12 +6,16 @@ using UnityEngine.EventSystems;
 public class DragControl : MonoBehaviour, IDragHandler
 {
 	[SerializeField]
+	private CommonServiceLocator _serviceLocator;
+
+
 	private InputEvents _inputEvents;
 
 	private bool _isDragging = false;
 
 	private void Start()
 	{
+		_inputEvents = _serviceLocator.InputEvents;
 		_inputEvents.MouseButtonClickedDownEvent?.AddListener(OnButtonClickedDown);
 		_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnButtonClickedUp);
 	}

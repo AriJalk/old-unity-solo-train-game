@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4609523936359856599}
   - component: {fileID: 3431160031286440870}
   m_Layer: 6
-  m_Name: HexTile
+  m_Name: HexTilePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1143830126905480902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36f6994975a2ae64ea428fb63a8a11b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6815a9b72e837f842abaf8d4b93b3f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &3431160031286440870

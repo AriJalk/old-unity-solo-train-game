@@ -1,3 +1,4 @@
+using CommonEngine.Core;
 using CommonEngine.IO;
 using GameEngine.Core;
 using UnityEngine;
@@ -7,13 +8,16 @@ public class ClickRaycaster : MonoBehaviour
     [SerializeField]
     private Camera _camera;
 	[SerializeField]
+	private CommonServiceLocator _serviceLocator;
+
 	private InputEvents _inputEvents;
-	[SerializeField]
 	private SceneEvents _sceneEvents;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
     {
-        _inputEvents.MouseButtonClickedUpEvent?.AddListener(OnClick);
+		_inputEvents = _serviceLocator.InputEvents;
+		_sceneEvents = _serviceLocator.SceneEvents;
+		_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnClick);
     }
 
 	private void OnDestroy()

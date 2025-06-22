@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace CommonEngine.IO
 {
-	public class InputEvents : MonoBehaviour
+	public class InputEvents
 	{
 		#region PhysicalInput
 		public readonly UnityEvent<int, Vector2> MouseButtonClickedDownEvent = new UnityEvent<int, Vector2>();

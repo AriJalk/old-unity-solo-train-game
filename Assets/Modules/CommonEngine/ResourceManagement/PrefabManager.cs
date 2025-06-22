@@ -4,25 +4,21 @@ using UnityEngine;
 
 namespace CommonEngine.ResourceManagement
 {
-	public class PrefabManager
+	public class PrefabManager : MonoBehaviour
 	{
+		[SerializeField]
+		private Transform _unactiveObjects;
+
 		private const int INITIAL_POOL_SIZE = 300;
 
-		private bool isInitialized = false;
 		private Dictionary<Type, object> pools;
 		private Dictionary<Type, GameObject> prefabDict;
-		private Transform unactiveObjects;
 
 
-		public PrefabManager(Transform unactiveObjects)
+		void Start()
 		{
-			if (!isInitialized)
-			{
-				isInitialized = true;
-				this.unactiveObjects = unactiveObjects;
-				pools = new Dictionary<Type, object>();
-				prefabDict = new Dictionary<Type, GameObject>();
-			}
+			pools = new Dictionary<Type, object>();
+			prefabDict = new Dictionary<Type, GameObject>();
 		}
 
 		private bool SetQueue<T>() where T : Component
@@ -65,7 +61,7 @@ namespace CommonEngine.ResourceManagement
 					{
 						T obj = CreatePrefabInstance<T>();
 						obj.gameObject.SetActive(false);
-						obj.gameObject.transform.SetParent(unactiveObjects);
+						obj.gameObject.transform.SetParent(_unactiveObjects);
 						//obj.gameObject.isStatic = true;
 						prefabPool.AddQueueObject(obj);
 					}
@@ -102,7 +98,7 @@ namespace CommonEngine.ResourceManagement
 			{
 				PrefabPool<T> prefabPool = (PrefabPool<T>)pools[typeof(T)];
 				prefabPool.AddQueueObject(obj);
-				obj.gameObject.transform.SetParent(unactiveObjects);
+				obj.gameObject.transform.SetParent(_unactiveObjects);
 				obj.gameObject.SetActive(false);
 			}
 			else

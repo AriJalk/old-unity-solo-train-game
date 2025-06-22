@@ -1,3 +1,4 @@
+using CommonEngine.Core;
 using CommonEngine.IO;
 using System.Drawing;
 using UnityEngine;
@@ -5,7 +6,9 @@ using UnityEngine;
 public class ZoomedOrthographicCamera : MonoBehaviour
 {
 	[SerializeField]
-	private InputEvents _inputEvents;
+	private CommonServiceLocator _serviceLocator;
+
+
 	[SerializeField]
 	private Camera _camera;
 	[SerializeField]
@@ -15,11 +18,14 @@ public class ZoomedOrthographicCamera : MonoBehaviour
 	[Range(0f, 20f)]
 	private float _scrollDampener = 2f;
 
+	private InputEvents _inputEvents;
+
 	private float _scroll = 0;
 
 
 	private void Start()
 	{
+		_inputEvents = _serviceLocator.InputEvents;
 		_inputEvents.MouseScrolledEvent?.AddListener(OnScroll);
 	}
 

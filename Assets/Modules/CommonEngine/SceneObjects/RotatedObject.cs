@@ -1,3 +1,4 @@
+using CommonEngine.Core;
 using CommonEngine.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -5,7 +6,7 @@ using UnityEngine.UIElements;
 public class RotatedObject : MonoBehaviour
 {
 	[SerializeField]
-	private InputEvents _inputEvents;
+	private CommonServiceLocator _serviceLocator;
 
 	[SerializeField]
 	private Transform _rotateAround;
@@ -18,6 +19,8 @@ public class RotatedObject : MonoBehaviour
 	[SerializeField]
 	[Range(-360f, 360f)]
 	private float _initialRotation = -90;
+
+	private InputEvents _inputEvents;
 
 	private Vector2 _dragVector = Vector2.zero;
 	private float _orbitRotation = 0;
@@ -36,6 +39,7 @@ public class RotatedObject : MonoBehaviour
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
+		_inputEvents = _serviceLocator.InputEvents;
 		_orbitRotation = _initialRotation;
 		_inputEvents.WorldDraggedEvent?.AddListener(RotateObject);
 		SetPositionOnCircle();
