@@ -4,6 +4,7 @@ using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
 using HexSystem;
+using System;
 
 
 namespace CardGame.GameBuilder
@@ -26,7 +27,11 @@ namespace CardGame.GameBuilder
 
 			foreach (HexCoord neighborCoord in coord.GetNeighbors())
 			{
-				gameServices.HexGridController.AddTileToGrid(manipulator.BuildSceneTile(new HexTileData(neighborCoord)));
+				tileData = new HexTileData(neighborCoord);
+				tileData.Factory = new Factory(GoodsColor.GREEN);
+				tileData.Factory.GoodsCubeSlot = new GoodsCubeSlot(Guid.NewGuid(), neighborCoord);
+				tileData.Factory.GoodsCubeSlot.GoodsCube = new GoodsCube(Guid.NewGuid(), tileData.Factory.ProductionColor);
+				gameServices.HexGridController.AddTileToGrid(manipulator.BuildSceneTile(tileData));
 			}
 		}
 	}

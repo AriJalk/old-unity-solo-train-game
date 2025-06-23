@@ -8,6 +8,6 @@ namespace CardGame.Scene
 	{
 		public Guid guid {  get; set; }
 
-		public GoodsCubeObject CubeObject { get; set; }
+		public Transform GoodsCubeObjectTransform { get; set; }
 	}
 }

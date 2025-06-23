@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 5759947811433969727}
   - component: {fileID: 659134793493286011}
   - component: {fileID: 4980423134581191019}
-  m_Layer: 6
-  m_Name: CubePrefab
+  - component: {fileID: 7341094805589204191}
+  m_Layer: 7
+  m_Name: GoodsCubePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,3 +109,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7341094805589204191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8229910272375065992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f55e28a4a433e49b8770548ef47957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 659134793493286011}

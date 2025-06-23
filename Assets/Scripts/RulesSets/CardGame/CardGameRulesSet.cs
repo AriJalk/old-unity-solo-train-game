@@ -1,4 +1,5 @@
 using CardGame.GameBuilder;
+using CardGame.Logic;
 using CardGame.Scene;
 using CommonEngine.Core;
 using GameEngine.Core;
@@ -14,6 +15,8 @@ namespace CardGame
 		private CommonServices _commonServices;
 		private GameServices _gameServices;
 
+		private LogicGameState _logicState;
+
 		public CardGameRulesSet(CommonServices serviceLocator, GameServices gameServices)
 		{
 			_commonServices = serviceLocator;
@@ -23,7 +26,7 @@ namespace CardGame
 		public void Setup()
 		{
 			Builder.Build(_commonServices, _gameServices);
-			_commonServices.CommonConfig.RaycastLayer = _commonServices.CommonConfig.RaycastLayers[typeof(HexTileObject)];
+			_commonServices.CommonConfig.RaycastLayer = _commonServices.CommonConfig.RaycastLayers[typeof(GoodsCubeObject)];
 		}
 
 
@@ -46,9 +49,9 @@ namespace CardGame
 			{
 				Debug.Log(tile.HexCoord);
 			}
-			if (hit.collider.transform.parent.GetComponent<GoodsCubeSlotObject>() is GoodsCubeSlotObject slot)
+			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)
 			{
-				Debug.Log("SLOT");
+				Debug.Log(cube.guid);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using CardGame.Scene;
 
 public class FactoryObject : MeshComponent
 {
-	public Transform CubeSlot;
+	public GoodsCubeSlotObject GoodsCubeSlotObject;
 }

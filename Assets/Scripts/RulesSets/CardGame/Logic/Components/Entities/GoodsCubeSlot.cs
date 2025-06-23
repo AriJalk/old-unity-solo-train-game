@@ -8,8 +8,14 @@ namespace CardGame.Logic
 	{
 		public Guid guid { get; set; }
 
-		public Guid CubeId { get; set; }
+		public GoodsCube GoodsCube { get; set; }
 
 		public HexCoord HexCoord { get; set; }
+
+		public GoodsCubeSlot(Guid guid, HexCoord hexCoord)
+		{
+			this.guid = guid;
+			HexCoord = hexCoord;
+		}
 	}
 }
