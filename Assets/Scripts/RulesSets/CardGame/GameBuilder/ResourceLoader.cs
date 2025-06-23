@@ -1,5 +1,5 @@
+using CardGame.Scene;
 using CommonEngine.Core;
-using GameEngine.Map;
 
 namespace CardGame.GameBuilder
 {
@@ -7,7 +7,7 @@ namespace CardGame.GameBuilder
 	{
 		public static void LoadResources(CommonServices _serviceLocator)
 		{
-			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<HexTileBaseObject>("CardGame/HexTilePrefab");
+			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<HexTileObject>("CardGame/HexTilePrefab");
 		}
 	}
 }

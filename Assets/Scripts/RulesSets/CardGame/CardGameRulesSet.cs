@@ -1,7 +1,9 @@
 using CardGame.GameBuilder;
+using CardGame.Scene;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -21,6 +23,7 @@ namespace CardGame
 		public void Setup()
 		{
 			Builder.Build(_commonServices, _gameServices);
+			_commonServices.CommonConfig.RaycastLayer = _commonServices.CommonConfig.RaycastLayers[typeof(HexTileObject)];
 		}
 
 
@@ -39,9 +42,13 @@ namespace CardGame
 
 		private void ColliderHit(RaycastHit hit)
 		{
-			if (hit.collider.GetComponent<HexTileBaseObject>() is HexTileBaseObject tile)
+			if (hit.collider.GetComponent<HexTileObjectBase>() is HexTileObjectBase tile)
 			{
 				Debug.Log(tile.HexCoord);
+			}
+			if (hit.collider.transform.parent.GetComponent<GoodsCubeSlotObject>() is GoodsCubeSlotObject slot)
+			{
+				Debug.Log("SLOT");
 			}
 		}
 	}

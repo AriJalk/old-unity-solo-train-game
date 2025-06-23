@@ -18,15 +18,15 @@ namespace CardGame.GameBuilder
 
 			TileManipulator manipulator = new TileManipulator(commonServices);
 
-			TerrainTileData tileData = new TerrainTileData(coord);
+			HexTileData tileData = new HexTileData(coord);
 
-			HexTileBaseObject tileObject = manipulator.BuildSceneTile(tileData);
+			GameEngine.Map.HexTileObjectBase tileObject = manipulator.BuildSceneTile(tileData);
 
 			gameServices.HexGridController.AddTileToGrid(tileObject);
 
 			foreach (HexCoord neighborCoord in coord.GetNeighbors())
 			{
-				gameServices.HexGridController.AddTileToGrid(manipulator.BuildSceneTile(new TerrainTileData(neighborCoord)));
+				gameServices.HexGridController.AddTileToGrid(manipulator.BuildSceneTile(new HexTileData(neighborCoord)));
 			}
 		}
 	}

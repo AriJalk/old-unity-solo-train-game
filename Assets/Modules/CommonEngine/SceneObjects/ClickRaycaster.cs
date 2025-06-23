@@ -37,7 +37,7 @@ namespace CommonEngine.SceneObjects
 		{
 			if (button == 0)
 			{
-				RaycastHit hit = Raycast(_camera.ScreenPointToRay(position), 1 << 6);
+				RaycastHit hit = Raycast(_camera.ScreenPointToRay(position), _commonServices.CommonConfig.RaycastLayer);
 				if (hit.collider != null)
 				{
 					_sceneEvents.RaiseColliderSelectedEvent(hit);

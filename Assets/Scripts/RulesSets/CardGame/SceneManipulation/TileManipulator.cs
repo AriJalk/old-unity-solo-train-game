@@ -1,7 +1,6 @@
 using CardGame.Logic;
 using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
-using GameEngine.Map;
 
 namespace CardGame.Scene
 {
@@ -13,9 +12,9 @@ namespace CardGame.Scene
 			_prefabManager = commonServices.PrefabManager;
 		}
 
-		public HexTileBaseObject BuildSceneTile(TerrainTileData data)
+		public HexTileObject BuildSceneTile(HexTileData data)
 		{
-			HexTileBaseObject tile = _prefabManager.RetrievePoolObject<HexTileBaseObject>();
+			HexTileObject tile = _prefabManager.RetrievePoolObject<HexTileObject>();
 			if (tile == null)
 			{
 				return null;

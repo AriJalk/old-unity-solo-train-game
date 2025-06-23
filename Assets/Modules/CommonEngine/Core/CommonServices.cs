@@ -10,5 +10,6 @@ namespace CommonEngine.Core
 
 		public readonly InputEvents InputEvents = new InputEvents();
 		public readonly SceneEvents SceneEvents = new SceneEvents();
+		public readonly CommonConfig CommonConfig = new CommonConfig();
 	}
 }
