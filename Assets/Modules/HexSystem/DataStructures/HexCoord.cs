@@ -4,9 +4,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 
-namespace HexGridSystem
+namespace HexSystem
 {
-	public readonly partial struct HexCoord
+	public partial class HexCoord
 	{
 		private static Dictionary<Vector2Int, HexCoord> _cache = new Dictionary<Vector2Int, HexCoord>();
 

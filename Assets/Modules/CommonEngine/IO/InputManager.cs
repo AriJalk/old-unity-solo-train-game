@@ -7,14 +7,14 @@ namespace CommonEngine.IO
 	public class InputManager : MonoBehaviour
 	{
 		[SerializeField]
-		private CommonServiceLocator _serviceLocator;
+		private CommonServices _commonServices;
 
 		private InputEvents _inputEvents;
 
 		// Start is called once before the first execution of Update after the MonoBehaviour is created
 		void Start()
 		{
-			_inputEvents = _serviceLocator.InputEvents;
+			_inputEvents = _commonServices.InputEvents;
 		}
 
 		// Update is called once per frame

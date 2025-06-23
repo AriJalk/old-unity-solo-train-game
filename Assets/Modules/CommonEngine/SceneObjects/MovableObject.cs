@@ -3,46 +3,50 @@ using CommonEngine.IO;
 using System;
 using UnityEngine;
 
-public class MovableObject : MonoBehaviour
+
+namespace CommonEngine.SceneObjects
 {
-	[SerializeField]
-	private CommonServiceLocator _serviceLocator;
-	[SerializeField]
-	private Transform _forwardTransform;
-	[SerializeField]
-	private Vector3 _movementVector = Vector3.zero;
-	[SerializeField]
-	[Range(0f, 20f)]
-	private float _speed = 5;
-
-	private InputEvents _inputEvents;
-
-	void Start()
+	public class MovableObject : MonoBehaviour
 	{
-		_inputEvents = _serviceLocator.InputEvents;
-		_inputEvents.AxisMovedEvent?.AddListener(OnAxisMoved);
-	}
+		[SerializeField]
+		private CommonServices _commonServices;
+		[SerializeField]
+		private Transform _forwardTransform;
+		[SerializeField]
+		private Vector3 _movementVector = Vector3.zero;
+		[SerializeField]
+		[Range(0f, 20f)]
+		private float _speed = 5;
 
-	private void OnDestroy()
-	{
-		_inputEvents.AxisMovedEvent?.RemoveListener(OnAxisMoved);
-	}
+		private InputEvents _inputEvents;
 
-	private void LateUpdate()
-	{
-		if (_movementVector != Vector3.zero)
+		void Start()
 		{
-			transform.position += _movementVector * _speed * Time.deltaTime;
-			_movementVector = Vector3.zero;
+			_inputEvents = _commonServices.InputEvents;
+			_inputEvents.AxisMovedEvent?.AddListener(OnAxisMoved);
 		}
-	}
 
-	private void OnAxisMoved(Vector2 movement)
-	{
-		Vector3 axis = Vector3.right + Vector3.forward;
-		Vector3 forward = Vector3.Scale(_forwardTransform.forward, axis).normalized;
-		Vector3 right = Vector3.Scale(_forwardTransform.right, axis).normalized;
+		private void OnDestroy()
+		{
+			_inputEvents.AxisMovedEvent?.RemoveListener(OnAxisMoved);
+		}
 
-		_movementVector = right * movement.x + forward * movement.y;
+		private void LateUpdate()
+		{
+			if (_movementVector != Vector3.zero)
+			{
+				transform.position += _movementVector * _speed * Time.deltaTime;
+				_movementVector = Vector3.zero;
+			}
+		}
+
+		private void OnAxisMoved(Vector2 movement)
+		{
+			Vector3 axis = Vector3.right + Vector3.forward;
+			Vector3 forward = Vector3.Scale(_forwardTransform.forward, axis).normalized;
+			Vector3 right = Vector3.Scale(_forwardTransform.right, axis).normalized;
+
+			_movementVector = right * movement.x + forward * movement.y;
+		}
 	}
 }

@@ -3,50 +3,53 @@ using CommonEngine.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragControl : MonoBehaviour, IDragHandler
+namespace CommonEngine.SceneObjects
 {
-	[SerializeField]
-	private CommonServiceLocator _serviceLocator;
-
-
-	private InputEvents _inputEvents;
-
-	private bool _isDragging = false;
-
-	private void Start()
+	public class DragControl : MonoBehaviour, IDragHandler
 	{
-		_inputEvents = _serviceLocator.InputEvents;
-		_inputEvents.MouseButtonClickedDownEvent?.AddListener(OnButtonClickedDown);
-		_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnButtonClickedUp);
-	}
+		[SerializeField]
+		private CommonServices _commonServices;
 
-	private void OnDestroy()
-	{
-		_inputEvents.MouseButtonClickedDownEvent?.RemoveListener(OnButtonClickedDown);
-		_inputEvents.MouseButtonClickedUpEvent?.RemoveListener(OnButtonClickedUp);
-	}
 
-	private void OnButtonClickedDown(int button, Vector2 position)
-	{
-		if (button == 1)
+		private InputEvents _inputEvents;
+
+		private bool _isDragging = false;
+
+		private void Start()
 		{
-			_isDragging = true;
+			_inputEvents = _commonServices.InputEvents;
+			_inputEvents.MouseButtonClickedDownEvent?.AddListener(OnButtonClickedDown);
+			_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnButtonClickedUp);
 		}
-	}
 
-	private void OnButtonClickedUp(int button, Vector2 position)
-	{
-		if (button == 1)
+		private void OnDestroy()
 		{
-			_isDragging = false;
+			_inputEvents.MouseButtonClickedDownEvent?.RemoveListener(OnButtonClickedDown);
+			_inputEvents.MouseButtonClickedUpEvent?.RemoveListener(OnButtonClickedUp);
 		}
-	}
 
-	public void OnDrag(PointerEventData eventData)
-	{
-		if (_isDragging)
+		private void OnButtonClickedDown(int button, Vector2 position)
 		{
-			_inputEvents.WorldDraggedEvent?.Invoke(eventData.delta);
+			if (button == 1)
+			{
+				_isDragging = true;
+			}
+		}
+
+		private void OnButtonClickedUp(int button, Vector2 position)
+		{
+			if (button == 1)
+			{
+				_isDragging = false;
+			}
+		}
+
+		public void OnDrag(PointerEventData eventData)
+		{
+			if (_isDragging)
+			{
+				_inputEvents.WorldDraggedEvent?.Invoke(eventData.delta);
+			}
 		}
 	}
 }

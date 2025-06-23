@@ -2,12 +2,12 @@
 using UnityEngine;
 
 
-namespace HexGridSystem
+namespace HexSystem
 {
 	/// <summary>
 	/// Utilities for hex coordinates
 	/// </summary>
-	public partial struct HexCoord
+	public partial class HexCoord
 	{
 		public enum Direction
 		{

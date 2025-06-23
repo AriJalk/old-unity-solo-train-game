@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HexGridSystem
+namespace HexSystem
 {
 	public class HexLayout
 	{

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CardGame.Scene
 {
-	public class SceneManipulator
+	internal class SceneManipulator
 	{
 
 	}

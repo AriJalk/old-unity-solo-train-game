@@ -1,10 +1,14 @@
-using HexGridSystem;
-using UnityEngine;
+using HexSystem;
 
 namespace CardGame.Logic
 {
-	public class HexTileData
+	internal class HexTileData
 	{
 		public HexCoord HexCoord;
+
+		public HexTileData(HexCoord hexCoord)
+		{ 
+			HexCoord = hexCoord;
+		}
 	}
 }

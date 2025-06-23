@@ -1,86 +1,89 @@
 using CommonEngine.Core;
 using CommonEngine.IO;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class RotatedObject : MonoBehaviour
+namespace CommonEngine.SceneObjects
 {
-	[SerializeField]
-	private CommonServiceLocator _serviceLocator;
 
-	[SerializeField]
-	private Transform _rotateAround;
-	[SerializeField]
-	private float _radius = 4;
-	[SerializeField]
-	private Vector3 _offset = Vector3.zero;
-	[SerializeField]
-	private float _acceleration = 1;
-	[SerializeField]
-	[Range(-360f, 360f)]
-	private float _initialRotation = -90;
-
-	private InputEvents _inputEvents;
-
-	private Vector2 _dragVector = Vector2.zero;
-	private float _orbitRotation = 0;
-
-	private static float ClampTo360Degrees(float angle)
+	public class RotatedObject : MonoBehaviour
 	{
-		if (angle < -360)
-			return angle + 360;
+		[SerializeField]
+		private CommonServices _commonServices;
 
-		else if (angle > 360)
-			return angle - 360;
-		return angle;
-	}
+		[SerializeField]
+		private Transform _rotateAround;
+		[SerializeField]
+		private float _radius = 4;
+		[SerializeField]
+		private Vector3 _offset = Vector3.zero;
+		[SerializeField]
+		private float _acceleration = 1;
+		[SerializeField]
+		[Range(-360f, 360f)]
+		private float _initialRotation = -90;
 
+		private InputEvents _inputEvents;
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
-	{
-		_inputEvents = _serviceLocator.InputEvents;
-		_orbitRotation = _initialRotation;
-		_inputEvents.WorldDraggedEvent?.AddListener(RotateObject);
-		SetPositionOnCircle();
-	}
+		private Vector2 _dragVector = Vector2.zero;
+		private float _orbitRotation = 0;
 
-
-	private void OnDestroy()
-	{
-		_inputEvents?.WorldDraggedEvent?.RemoveListener(RotateObject);
-	}
-
-	private void LateUpdate()
-	{
-		if (_dragVector != Vector2.zero)
+		private static float ClampTo360Degrees(float angle)
 		{
-			_orbitRotation -= _dragVector.x * Time.deltaTime * _acceleration;
-			SetPositionOnCircle();
-			_dragVector = Vector2.zero;
+			if (angle < -360)
+				return angle + 360;
+
+			else if (angle > 360)
+				return angle - 360;
+			return angle;
 		}
-	}
 
 
-	private void SetPositionOnCircle()
-	{
-		_orbitRotation = ClampTo360Degrees(_orbitRotation);
+		// Start is called once before the first execution of Update after the MonoBehaviour is created
+		void Start()
+		{
+			_inputEvents = _commonServices.InputEvents;
+			_orbitRotation = _initialRotation;
+			_inputEvents.WorldDraggedEvent?.AddListener(RotateObject);
+			SetPositionOnCircle();
+		}
 
-		float radiansY = Mathf.Deg2Rad * _orbitRotation;
 
-		float axis1 = Mathf.Cos(radiansY) * _radius;
-		float axis2 = Mathf.Sin(radiansY) * _radius;
+		private void OnDestroy()
+		{
+			_inputEvents?.WorldDraggedEvent?.RemoveListener(RotateObject);
+		}
 
-		Vector3 changeVector = Vector3.right * axis1 + Vector3.forward * axis2;
-		Vector3 newPosition = _rotateAround.position + changeVector + _offset;
+		private void LateUpdate()
+		{
+			if (_dragVector != Vector2.zero)
+			{
+				_orbitRotation -= _dragVector.x * Time.deltaTime * _acceleration;
+				SetPositionOnCircle();
+				_dragVector = Vector2.zero;
+			}
+		}
 
-		transform.position = newPosition;
 
-		transform.LookAt(_rotateAround.position, Vector3.up);
-	}
+		private void SetPositionOnCircle()
+		{
+			_orbitRotation = ClampTo360Degrees(_orbitRotation);
 
-	private void RotateObject(Vector2 movement)
-	{
-		_dragVector = movement;
+			float radiansY = Mathf.Deg2Rad * _orbitRotation;
+
+			float axis1 = Mathf.Cos(radiansY) * _radius;
+			float axis2 = Mathf.Sin(radiansY) * _radius;
+
+			Vector3 changeVector = Vector3.right * axis1 + Vector3.forward * axis2;
+			Vector3 newPosition = _rotateAround.position + changeVector + _offset;
+
+			transform.position = newPosition;
+
+			transform.LookAt(_rotateAround.position, Vector3.up);
+		}
+
+		private void RotateObject(Vector2 movement)
+		{
+			_dragVector = movement;
+		}
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameEngine.Core
+namespace CommonEngine.SceneServices
 {
 	public class SceneEvents
 	{

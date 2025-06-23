@@ -11,14 +11,14 @@ namespace CommonEngine.ResourceManagement
 
 		private const int INITIAL_POOL_SIZE = 300;
 
-		private Dictionary<Type, object> pools;
-		private Dictionary<Type, GameObject> prefabDict;
+		private Dictionary<Type, object> pools = new Dictionary<Type, object>();
+		private Dictionary<Type, GameObject> prefabDict = new Dictionary<Type, GameObject>();
 
 
-		void Start()
+		void Awake()
 		{
-			pools = new Dictionary<Type, object>();
-			prefabDict = new Dictionary<Type, GameObject>();
+			//pools = new Dictionary<Type, object>();
+			//prefabDict = new Dictionary<Type, GameObject>();
 		}
 
 		private bool SetQueue<T>() where T : Component
@@ -105,6 +105,17 @@ namespace CommonEngine.ResourceManagement
 			{
 				Debug.Log("Pool not found for type: " + typeof(T));
 			}
+		}
+
+		public void LoadAndRegisterPrefab<T>(string prefabPath) where T : Component
+		{
+			GameObject prefab = Resources.Load<GameObject>($"Prefabs/{prefabPath}");
+			if (prefab == null)
+			{
+				Debug.LogError("Prefab not found");
+				return;
+			}
+			RegisterPrefab<T>(prefab);
 		}
 	}
 }

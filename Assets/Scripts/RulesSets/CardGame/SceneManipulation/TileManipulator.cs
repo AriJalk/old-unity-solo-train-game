@@ -1,16 +1,16 @@
 using CardGame.Logic;
 using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
-using UnityEngine;
+using GameEngine.Map;
 
 namespace CardGame.Scene
 {
-	public class TileManipulator
+	internal class TileManipulator
 	{
 		private PrefabManager _prefabManager;
-		public TileManipulator(CommonServiceLocator serviceLocator)
+		public TileManipulator(CommonServices commonServices)
 		{
-			_prefabManager = serviceLocator.PrefabManager;
+			_prefabManager = commonServices.PrefabManager;
 		}
 
 		public HexTileObject BuildSceneTile(HexTileData data)

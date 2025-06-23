@@ -1,11 +1,11 @@
 ﻿using CommonEngine.IO;
 using CommonEngine.ResourceManagement;
-using GameEngine.Core;
+using CommonEngine.SceneServices;
 using UnityEngine;
 
 namespace CommonEngine.Core
 {
-	public class CommonServiceLocator : MonoBehaviour
+	public class CommonServices : MonoBehaviour
 	{
 		public PrefabManager PrefabManager;
 
