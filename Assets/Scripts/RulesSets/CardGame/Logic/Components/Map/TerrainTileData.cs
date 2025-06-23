@@ -2,11 +2,11 @@ using HexSystem;
 
 namespace CardGame.Logic
 {
-	internal class HexTileData
+	internal class TerrainTileData
 	{
 		public HexCoord HexCoord;
 
-		public HexTileData(HexCoord hexCoord)
+		public TerrainTileData(HexCoord hexCoord)
 		{ 
 			HexCoord = hexCoord;
 		}

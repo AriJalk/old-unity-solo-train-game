@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6815a9b72e837f842abaf8d4b93b3f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 373932136242035148}
 --- !u!135 &3431160031286440870
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -147,6 +148,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bd81cdd5cc6306d4787bf3cf5d8539ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ec3a2a7c2dc04b4f98022784c15057d, type: 2}
     - target: {fileID: 919132149155446097, guid: bd81cdd5cc6306d4787bf3cf5d8539ba, type: 3}
       propertyPath: m_Name
       value: hex
@@ -160,6 +165,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd81cdd5cc6306d4787bf3cf5d8539ba, type: 3}
+--- !u!23 &373932136242035148 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: bd81cdd5cc6306d4787bf3cf5d8539ba, type: 3}
+  m_PrefabInstance: {fileID: 1365132652447638856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1547925005483950755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd81cdd5cc6306d4787bf3cf5d8539ba, type: 3}

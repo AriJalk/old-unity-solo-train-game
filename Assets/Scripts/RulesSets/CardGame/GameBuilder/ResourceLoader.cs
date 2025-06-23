@@ -7,7 +7,7 @@ namespace CardGame.GameBuilder
 	{
 		public static void LoadResources(CommonServices _serviceLocator)
 		{
-			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<HexTileObject>("HexTilePrefab");
+			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<HexTileBaseObject>("CardGame/HexTilePrefab");
 		}
 	}
 }

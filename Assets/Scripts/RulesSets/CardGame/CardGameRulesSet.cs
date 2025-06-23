@@ -39,7 +39,7 @@ namespace CardGame
 
 		private void ColliderHit(RaycastHit hit)
 		{
-			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
+			if (hit.collider.GetComponent<HexTileBaseObject>() is HexTileBaseObject tile)
 			{
 				Debug.Log(tile.HexCoord);
 			}

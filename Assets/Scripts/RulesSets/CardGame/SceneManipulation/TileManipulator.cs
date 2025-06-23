@@ -13,9 +13,9 @@ namespace CardGame.Scene
 			_prefabManager = commonServices.PrefabManager;
 		}
 
-		public HexTileObject BuildSceneTile(HexTileData data)
+		public HexTileBaseObject BuildSceneTile(TerrainTileData data)
 		{
-			HexTileObject tile = _prefabManager.RetrievePoolObject<HexTileObject>();
+			HexTileBaseObject tile = _prefabManager.RetrievePoolObject<HexTileBaseObject>();
 			if (tile == null)
 			{
 				return null;
