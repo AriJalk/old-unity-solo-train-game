@@ -1,5 +1,5 @@
 using CommonEngine.Core;
-using CommonEngine.IO;
+using CommonEngine.Events;
 using UnityEngine;
 
 namespace CommonEngine.SceneObjects
@@ -27,12 +27,12 @@ namespace CommonEngine.SceneObjects
 		private void Start()
 		{
 			_inputEvents = _commonServices.InputEvents;
-			_inputEvents.MouseScrolledEvent?.AddListener(OnScroll);
+			_inputEvents.MouseScrolledEvent += OnScroll;
 		}
 
 		private void OnDestroy()
 		{
-			_inputEvents.MouseScrolledEvent?.RemoveListener(OnScroll);
+			_inputEvents.MouseScrolledEvent -= OnScroll;
 		}
 
 		private void LateUpdate()

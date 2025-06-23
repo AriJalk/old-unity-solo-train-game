@@ -1,5 +1,5 @@
 using CommonEngine.Core;
-using CommonEngine.IO;
+using CommonEngine.Events;
 using UnityEngine;
 
 namespace CommonEngine.SceneObjects
@@ -43,14 +43,14 @@ namespace CommonEngine.SceneObjects
 		{
 			_inputEvents = _commonServices.InputEvents;
 			_orbitRotation = _initialRotation;
-			_inputEvents.WorldDraggedEvent?.AddListener(RotateObject);
+			_inputEvents.WorldDraggedEvent += RotateObject;
 			SetPositionOnCircle();
 		}
 
 
 		private void OnDestroy()
 		{
-			_inputEvents?.WorldDraggedEvent?.RemoveListener(RotateObject);
+			_inputEvents.WorldDraggedEvent -= RotateObject;
 		}
 
 		private void LateUpdate()

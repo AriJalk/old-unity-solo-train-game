@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace CommonEngine.SceneServices
+namespace CommonEngine.Events
 {
 	public class SceneEvents
 	{
-		public readonly UnityEvent<RaycastHit> ColliderSelectedEvent = new UnityEvent<RaycastHit>();
+		public event Action<RaycastHit> ColliderSelectedEvent;
+
+		public void RaiseColliderSelectedEvent(RaycastHit hit)
+		{
+			ColliderSelectedEvent?.Invoke(hit);
+		}
 	}
 }

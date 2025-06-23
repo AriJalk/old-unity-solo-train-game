@@ -1,6 +1,5 @@
 using CommonEngine.Core;
-using CommonEngine.IO;
-using CommonEngine.SceneServices;
+using CommonEngine.Events;
 using UnityEngine;
 
 
@@ -20,12 +19,12 @@ namespace CommonEngine.SceneObjects
 		{
 			_inputEvents = _commonServices.InputEvents;
 			_sceneEvents = _commonServices.SceneEvents;
-			_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnClick);
+			_inputEvents.MouseButtonClickedUpEvent += OnClick;
 		}
 
 		private void OnDestroy()
 		{
-			_inputEvents.MouseButtonClickedUpEvent?.RemoveListener(OnClick);
+			_inputEvents.MouseButtonClickedUpEvent -= OnClick;
 		}
 
 		// Update is called once per frame
@@ -41,7 +40,7 @@ namespace CommonEngine.SceneObjects
 				RaycastHit hit = Raycast(_camera.ScreenPointToRay(position), 1 << 6);
 				if (hit.collider != null)
 				{
-					_sceneEvents.ColliderSelectedEvent?.Invoke(hit);
+					_sceneEvents.RaiseColliderSelectedEvent(hit);
 				}
 			}
 		}

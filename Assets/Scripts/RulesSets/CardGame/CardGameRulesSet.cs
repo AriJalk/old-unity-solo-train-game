@@ -26,14 +26,14 @@ namespace CardGame
 
 		public void StartFlow()
 		{
-			_commonServices.SceneEvents.ColliderSelectedEvent?.AddListener(ColliderHit);
+			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
 			return;
 		}
 
 
 		public void StopFlow()
 		{
-			_commonServices.SceneEvents.ColliderSelectedEvent?.RemoveListener(ColliderHit);
+			_commonServices.SceneEvents.ColliderSelectedEvent -= ColliderHit;
 		}
 
 

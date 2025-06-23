@@ -1,4 +1,5 @@
 using CommonEngine.Core;
+using CommonEngine.Events;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,16 +32,16 @@ namespace CommonEngine.IO
 			Vector2 movement = Mouse.current.delta.ReadValue();
 
 			if (Mouse.current.leftButton.wasPressedThisFrame)
-				_inputEvents.MouseButtonClickedDownEvent?.Invoke(0, position);
+				_inputEvents.RaiseMouseButtonClickedDown(0, position);
 
 			else if (Mouse.current.rightButton.wasPressedThisFrame)
-				_inputEvents.MouseButtonClickedDownEvent?.Invoke(1, position);
+				_inputEvents.RaiseMouseButtonClickedDown(1, position);
 
 			if (Mouse.current.leftButton.wasReleasedThisFrame)
-				_inputEvents.MouseButtonClickedUpEvent?.Invoke(0, position);
+				_inputEvents.RaiseMouseButtonClickedUp(0, position);
 
 			else if (Mouse.current.rightButton.wasReleasedThisFrame)
-				_inputEvents.MouseButtonClickedUpEvent?.Invoke(1, position);
+				_inputEvents.RaiseMouseButtonClickedUp(1, position);
 		}
 
 		private void ProcessAxis()
@@ -53,7 +54,7 @@ namespace CommonEngine.IO
 			if (Keyboard.current.dKey.isPressed) input.x += 1;
 
 			if (input != Vector2.zero)
-				_inputEvents.AxisMovedEvent?.Invoke(input.normalized);
+				_inputEvents.RaiseAxisMovedEvent(input.normalized);
 		}
 
 		private void ProcessScroll()
@@ -61,7 +62,7 @@ namespace CommonEngine.IO
 			float scroll = Mouse.current.scroll.ReadValue().y;
 
 			if (scroll != 0)
-				_inputEvents.MouseScrolledEvent.Invoke(scroll);
+				_inputEvents.RaiseMouseScrolledEvent(scroll);
 		}
 	}
 }

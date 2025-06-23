@@ -1,5 +1,5 @@
 using CommonEngine.Core;
-using CommonEngine.IO;
+using CommonEngine.Events;
 using System;
 using UnityEngine;
 
@@ -23,12 +23,12 @@ namespace CommonEngine.SceneObjects
 		void Start()
 		{
 			_inputEvents = _commonServices.InputEvents;
-			_inputEvents.AxisMovedEvent?.AddListener(OnAxisMoved);
+			_inputEvents.AxisMovedEvent += OnAxisMoved;
 		}
 
 		private void OnDestroy()
 		{
-			_inputEvents.AxisMovedEvent?.RemoveListener(OnAxisMoved);
+			_inputEvents.AxisMovedEvent -= OnAxisMoved;
 		}
 
 		private void LateUpdate()

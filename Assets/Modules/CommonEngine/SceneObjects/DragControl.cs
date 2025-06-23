@@ -1,5 +1,5 @@
 using CommonEngine.Core;
-using CommonEngine.IO;
+using CommonEngine.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,14 +18,14 @@ namespace CommonEngine.SceneObjects
 		private void Start()
 		{
 			_inputEvents = _commonServices.InputEvents;
-			_inputEvents.MouseButtonClickedDownEvent?.AddListener(OnButtonClickedDown);
-			_inputEvents.MouseButtonClickedUpEvent?.AddListener(OnButtonClickedUp);
+			_inputEvents.MouseButtonClickedDownEvent += OnButtonClickedDown;
+			_inputEvents.MouseButtonClickedUpEvent += OnButtonClickedUp;
 		}
 
 		private void OnDestroy()
 		{
-			_inputEvents.MouseButtonClickedDownEvent?.RemoveListener(OnButtonClickedDown);
-			_inputEvents.MouseButtonClickedUpEvent?.RemoveListener(OnButtonClickedUp);
+			_inputEvents.MouseButtonClickedDownEvent -= OnButtonClickedDown;
+			_inputEvents.MouseButtonClickedUpEvent -= OnButtonClickedUp;
 		}
 
 		private void OnButtonClickedDown(int button, Vector2 position)
@@ -48,7 +48,7 @@ namespace CommonEngine.SceneObjects
 		{
 			if (_isDragging)
 			{
-				_inputEvents.WorldDraggedEvent?.Invoke(eventData.delta);
+				_inputEvents.RaiseWorldDraggedEvent(eventData.delta);
 			}
 		}
 	}
