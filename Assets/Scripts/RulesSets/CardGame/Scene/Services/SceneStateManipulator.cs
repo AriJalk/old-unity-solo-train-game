@@ -10,10 +10,12 @@ namespace CardGame.Scene.Services
 	internal class SceneStateManipulator
 	{
 		private PrefabManager _prefabManager;
+		private SceneGameState _sceneGameState;
 
-		public SceneStateManipulator(CommonServices commonServices)
+		public SceneStateManipulator(CommonServices commonServices, SceneGameState sceneGameState)
 		{
 			_prefabManager = commonServices.PrefabManager;
+			_sceneGameState = sceneGameState;
 		}
 
 
@@ -30,6 +32,7 @@ namespace CardGame.Scene.Services
 				BuildStationOnTile(hexTileObject, hexTileData.Station);
 			}
 
+			_sceneGameState.Tiles.Add(hexTileData.HexCoord, hexTileObject);
 			return hexTileObject;
 		}
 
@@ -38,7 +41,12 @@ namespace CardGame.Scene.Services
 			StationObject stationObject = _prefabManager.RetrievePoolObject<StationObject>();
 			stationObject.GoodsCubeSlotObject1.guid = station.GoodsCubeSlot1.guid;
 			stationObject.GoodsCubeSlotObject2.guid = station.GoodsCubeSlot2.guid;
+
+			_sceneGameState.CubeSlots.Add(stationObject.GoodsCubeSlotObject1.guid, stationObject.GoodsCubeSlotObject1);
+			_sceneGameState.CubeSlots.Add(stationObject.GoodsCubeSlotObject2.guid, stationObject.GoodsCubeSlotObject2);
+
 			SceneHelpers.SetParentAndResetPosition(stationObject.transform, hexTileObject.StationTransform);
+
 			if (station.GoodsCubeSlot1.GoodsCube != null)
 			{
 				BuildGoodsCubeOnSlot(stationObject.GoodsCubeSlotObject1, station.GoodsCubeSlot1.GoodsCube);
@@ -55,6 +63,8 @@ namespace CardGame.Scene.Services
 		{
 			FactoryObject factoryObject = _prefabManager.RetrievePoolObject<FactoryObject>();
 			factoryObject.GoodsCubeSlotObject.guid = factory.GoodsCubeSlot.guid;
+			_sceneGameState.CubeSlots.Add(factory.GoodsCubeSlot.guid, factoryObject.GoodsCubeSlotObject);
+
 			SceneHelpers.SetParentAndResetPosition(factoryObject.transform, hexTileObject.FactoryTransform);
 			if (factory.GoodsCubeSlot.GoodsCube != null)
 			{
@@ -69,10 +79,13 @@ namespace CardGame.Scene.Services
 			GoodsCubeObject goodsCubeObject = _prefabManager.RetrievePoolObject<GoodsCubeObject>();
 			goodsCubeObject.guid = cube.guid;
 			SceneHelpers.SetParentAndResetPosition(goodsCubeObject.transform, slot.transform);
+			slot.GoodsCubeObjectTransform = goodsCubeObject.transform;
+
+			_sceneGameState.Cubes.Add(goodsCubeObject.guid, goodsCubeObject);
 			return goodsCubeObject;
 		}
 
-		public static void TransportGoodsCube(GoodsCubeSlotObject origin, GoodsCubeSlotObject destination)
+		public void TransportGoodsCube(GoodsCubeSlotObject origin, GoodsCubeSlotObject destination)
 		{
 			SceneHelpers.SetParentAndResetPosition(origin.GoodsCubeObjectTransform, destination.transform);
 			destination.GoodsCubeObjectTransform = origin.GoodsCubeObjectTransform;

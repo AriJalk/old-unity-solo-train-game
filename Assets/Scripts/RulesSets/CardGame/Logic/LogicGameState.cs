@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace CardGame.Logic
 {
+	/// <summary>
+	/// Modify only from LogicStateManager, can be read by other classes
+	/// </summary>
 	internal class LogicGameState
 	{
 		public readonly Dictionary<HexCoord, HexTileData> Tiles;

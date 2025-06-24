@@ -8,15 +8,15 @@ namespace CardGame.Scene
 {
 	internal class SceneGameState
 	{
-		private Dictionary<HexCoord, HexTileObject> _tiles;
-		private Dictionary<Guid, GoodsCubeSlotObject> _cubeSlots;
-		//private Dictionary<HexCoord, List<Guid>> _slotsOnTile;
+		public readonly Dictionary<HexCoord, HexTileObject> Tiles;
+		public readonly Dictionary<Guid, GoodsCubeSlotObject> CubeSlots;
+		public readonly Dictionary<Guid, GoodsCubeObject> Cubes;
 
 		public SceneGameState()
 		{
-			_tiles = new Dictionary<HexCoord, HexTileObject>();
-			_cubeSlots = new Dictionary<Guid, GoodsCubeSlotObject>();
-			//_slotsOnTile = new Dictionary<HexCoord, List<Guid>>();
+			Tiles = new Dictionary<HexCoord, HexTileObject>();
+			CubeSlots = new Dictionary<Guid, GoodsCubeSlotObject>();
+			Cubes = new Dictionary<Guid, GoodsCubeObject>();
 		}
 	}
 }

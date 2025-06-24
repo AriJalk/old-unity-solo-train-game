@@ -11,29 +11,29 @@ namespace CardGame.Logic.Services
 	/// </summary>
 	internal class LogicStateManager
 	{
-		private LogicGameState _logicGameState;
+		public LogicGameState LogicGameState;
 
 		public LogicStateManager(LogicGameState logicGameState)
 		{
-			_logicGameState = logicGameState;
+			LogicGameState = logicGameState;
 		}
 
 		public HexTileData BuildTile(HexCoord coordinates, TerrainType terrainType)
 		{
-			if (_logicGameState.Tiles.ContainsKey(coordinates))
+			if (LogicGameState.Tiles.ContainsKey(coordinates))
 			{
 				return null;
 			}
 			HexTileData hexTileData = new HexTileData(coordinates, terrainType);
-			_logicGameState.Tiles.Add(coordinates, hexTileData);
-			_logicGameState.TileToSlots.Add(hexTileData, new List<GoodsCubeSlot>());
+			LogicGameState.Tiles.Add(coordinates, hexTileData);
+			LogicGameState.TileToSlots.Add(hexTileData, new List<GoodsCubeSlot>());
 			return hexTileData;
 		}
 
 		public Factory BuildFactoryOnTile(HexTileData hexTileData, GoodsColor productionColor)
 		{
 			Factory factory = new Factory(Guid.NewGuid(), productionColor);
-			_logicGameState.Factories.Add(factory.guid, factory);
+			LogicGameState.Factories.Add(factory.guid, factory);
 			GoodsCubeSlot slot = new GoodsCubeSlot(Guid.NewGuid());
 			factory.GoodsCubeSlot = slot;
 			SlotInfo slotInfo = new SlotInfo() { 
@@ -42,7 +42,7 @@ namespace CardGame.Logic.Services
 				ParentEntity = factory,
 				Slot = slot, 
 				Type = typeof(Factory) };
-			_logicGameState.CubeSlotInfo.Add(slot.guid, slotInfo);
+			LogicGameState.CubeSlotInfo.Add(slot.guid, slotInfo);
 
 			hexTileData.Factory = factory;
 			return factory;
@@ -51,14 +51,14 @@ namespace CardGame.Logic.Services
 		public Station BuildStationOnTile(HexTileData hexTileData, bool isUpgraded = false)
 		{
 			Station station = new Station(Guid.NewGuid(), isUpgraded);
-			_logicGameState.Stations.Add(station.guid, station);
+			LogicGameState.Stations.Add(station.guid, station);
 			GoodsCubeSlot slot1 = new GoodsCubeSlot(Guid.NewGuid());
 			GoodsCubeSlot slot2 = new GoodsCubeSlot(Guid.NewGuid());
 
 			SlotInfo slotInfo1 = SlotInfo.CreateSlotInfo(slot1, hexTileData, typeof(Station), true, station);
 			SlotInfo slotInfo2 = SlotInfo.CreateSlotInfo(slot2, hexTileData, typeof(Station), isUpgraded, station);
-			_logicGameState.CubeSlotInfo.Add(slot1.guid, slotInfo1);
-			_logicGameState.CubeSlotInfo.Add(slot2.guid, slotInfo2);
+			LogicGameState.CubeSlotInfo.Add(slot1.guid, slotInfo1);
+			LogicGameState.CubeSlotInfo.Add(slot2.guid, slotInfo2);
 
 			station.GoodsCubeSlot1 = slot1;
 			station.GoodsCubeSlot2 = slot2;
@@ -70,7 +70,7 @@ namespace CardGame.Logic.Services
 		{
 			GoodsCube cube = new GoodsCube(Guid.NewGuid(), factory.ProductionColor);
 			factory.GoodsCubeSlot.GoodsCube = cube;
-			_logicGameState.CubeToSlot[cube.guid] = factory.GoodsCubeSlot;
+			LogicGameState.CubeToSlot[cube.guid] = factory.GoodsCubeSlot;
 
 			return cube;
 		}
@@ -82,7 +82,7 @@ namespace CardGame.Logic.Services
 
 			destination.GoodsCube = cube;
 
-			_logicGameState.CubeToSlot[cube.guid] = destination;
+			LogicGameState.CubeToSlot[cube.guid] = destination;
 		}
 	}
 }

@@ -18,21 +18,30 @@ namespace CardGame.Scene.Services
 		{
 			_sceneGameState = new SceneGameState();
 			_gameStateEvents = gameStateServices.GameStateEvents;
-			_sceneStateManipulator = new SceneStateManipulator(commonServices);
+			_sceneStateManipulator = new SceneStateManipulator(commonServices, _sceneGameState);
 			_hexGridController = gameEngineServices.HexGridController;
 
 			_gameStateEvents.TileBuiltEvent += OnTileBuilt;
+			_gameStateEvents.TransportCubeEvent += OnTransportCube;
 		}
 
 		public void Dispose()
 		{
 			_gameStateEvents.TileBuiltEvent -= OnTileBuilt;
+			_gameStateEvents.TransportCubeEvent -= OnTransportCube;
 		}
 
 		private void OnTileBuilt(HexTileData tileData)
 		{
 			HexTileObject tile =_sceneStateManipulator.BuildTile(tileData);
 			_hexGridController.AddTileToGrid(tile);
+		}
+
+		private void OnTransportCube(Guid originSlot, Guid destinationSlot)
+		{
+			GoodsCubeSlotObject origin = _sceneGameState.CubeSlots[originSlot];	
+			GoodsCubeSlotObject destination = _sceneGameState.CubeSlots[destinationSlot];
+			_sceneStateManipulator.TransportGoodsCube(origin, destination);
 		}
 	}
 }

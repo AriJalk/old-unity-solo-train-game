@@ -1,5 +1,6 @@
 using CardGame.GameBuilder;
 using CardGame.Logic;
+using CardGame.Logic.MetaData;
 using CardGame.Logic.Services;
 using CardGame.Scene;
 using CardGame.Scene.Services;
@@ -7,6 +8,7 @@ using CardGame.Services;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
+using HexSystem;
 using UnityEngine;
 
 
@@ -33,7 +35,7 @@ namespace CardGame
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build( _gameStateServices, _logicManager);
+			Builder.Build(_gameStateServices, _logicManager);
 			_commonServices.CommonConfig.SetRaycastLayer<GoodsCubeObject>();
 		}
 
@@ -41,6 +43,19 @@ namespace CardGame
 		public void StartFlow()
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
+
+			HexTileData zero = _logicManager.LogicGameState.Tiles[HexCoord.GetCoord(0, 0)];
+
+			foreach (SlotInfo slotInfo in _logicManager.LogicGameState.CubeSlotInfo.Values)
+			{
+				GoodsCubeSlot slot = slotInfo.Slot;
+				if (slot.GoodsCube != null)
+				{
+					_logicManager.TransportGoodsCube(slot, zero.Station.GoodsCubeSlot1);
+					_gameStateServices.GameStateEvents.RaiseTransportCubeEvent(slot.guid, zero.Station.GoodsCubeSlot1.guid);
+					break;
+				}
+			}
 			return;
 		}
 

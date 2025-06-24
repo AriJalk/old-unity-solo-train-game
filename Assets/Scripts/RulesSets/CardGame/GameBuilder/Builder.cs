@@ -1,8 +1,6 @@
 ﻿using CardGame.Logic;
 using CardGame.Logic.Services;
 using CardGame.Services;
-using CommonEngine.Core;
-using GameEngine.Core;
 using HexSystem;
 
 namespace CardGame.GameBuilder
@@ -20,7 +18,8 @@ namespace CardGame.GameBuilder
 			foreach (HexCoord neighbor in coord.GetNeighbors())
 			{
 				tile = logicManager.BuildTile(neighbor, TerrainType.MOUNTAIN);
-				logicManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+				Factory factory = logicManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+				logicManager.ProduceCubeInFactory(factory);
 
 				gameStateServices.GameStateEvents.RaiseTileBuiltEvent(tile);
 			}
