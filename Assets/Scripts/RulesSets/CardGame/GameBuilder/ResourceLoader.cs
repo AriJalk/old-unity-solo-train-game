@@ -5,11 +5,12 @@ namespace CardGame.GameBuilder
 {
 	internal class ResourceLoader
 	{
-		public static void LoadResources(CommonServices _serviceLocator)
+		public static void LoadResources(CommonServices _commonServices)
 		{
-			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<HexTileObject>("CardGame/HexTilePrefab");
-			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<FactoryObject>("CardGame/FactoryPrefab");
-			_serviceLocator.PrefabManager.LoadAndRegisterPrefab<GoodsCubeObject>("CardGame/GoodsCubePrefab");
+			_commonServices.PrefabManager.LoadAndRegisterPrefab<HexTileObject>("CardGame/HexTilePrefab");
+			_commonServices.PrefabManager.LoadAndRegisterPrefab<FactoryObject>("CardGame/FactoryPrefab");
+			_commonServices.PrefabManager.LoadAndRegisterPrefab<GoodsCubeObject>("CardGame/GoodsCubePrefab");
+			_commonServices.PrefabManager.LoadAndRegisterPrefab<StationObject>("CardGame/StationPrefab");
 		}
 	}
 }

@@ -9,18 +9,19 @@ namespace CardGame.GameBuilder
 {
 	internal class Builder
 	{
-		public static void Build(CommonServices commonServices, GameEngineServices gameServices, GameStateServices gameStateServices)
+		public static void Build(GameStateServices gameStateServices, LogicStateManager logicManager)
 		{
-			ResourceLoader.LoadResources(commonServices);
-
 			HexCoord coord = HexCoord.GetCoord(0, 0);
-			HexTileData tile = LogicStateManipulator.BuildTile(coord, TerrainType.FIELD);
-			LogicStateManipulator.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+			HexTileData tile = logicManager.BuildTile(coord, TerrainType.FIELD);
+			logicManager.BuildStationOnTile(tile);
+
 			gameStateServices.GameStateEvents.RaiseTileBuiltEvent(tile);
 
 			foreach (HexCoord neighbor in coord.GetNeighbors())
 			{
-				tile = LogicStateManipulator.BuildTile(neighbor, TerrainType.MOUNTAIN);
+				tile = logicManager.BuildTile(neighbor, TerrainType.MOUNTAIN);
+				logicManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+
 				gameStateServices.GameStateEvents.RaiseTileBuiltEvent(tile);
 			}
 		}
