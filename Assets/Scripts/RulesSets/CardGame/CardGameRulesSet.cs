@@ -1,10 +1,11 @@
 using CardGame.GameBuilder;
 using CardGame.Logic;
-using CardGame.Scene;
+using CardGame.Logic.Services;
+using CardGame.Scene.Services;
+using CardGame.Services;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -13,19 +14,24 @@ namespace CardGame
 	public class CardGameRulesSet : IRulesSet
 	{
 		private CommonServices _commonServices;
-		private GameServices _gameServices;
+		private GameEngineServices _gameEngineServices;
 
-		private LogicGameState _logicState;
+		private GameStateServices _gameStateServices;
+		private LogicManager _logicManager;
+		private SceneManager _sceneManager;
 
-		public CardGameRulesSet(CommonServices serviceLocator, GameServices gameServices)
+		public CardGameRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices)
 		{
-			_commonServices = serviceLocator;
-			_gameServices = gameServices;
+			_commonServices = commonServices;
+			_gameEngineServices = gameEngineServices;
+			_gameStateServices = new GameStateServices();
+			_logicManager = new LogicManager(new LogicGameState());
+			_sceneManager = new SceneManager(_commonServices, gameEngineServices, _gameStateServices);
 		}
 
 		public void Setup()
 		{
-			Builder.Build(_commonServices, _gameServices);
+			Builder.Build(_commonServices, _gameEngineServices, _gameStateServices);
 			_commonServices.CommonConfig.RaycastLayer = _commonServices.CommonConfig.RaycastLayers[typeof(GoodsCubeObject)];
 		}
 
@@ -40,6 +46,8 @@ namespace CardGame
 		public void StopFlow()
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent -= ColliderHit;
+
+			_sceneManager.Dispose();
 		}
 
 

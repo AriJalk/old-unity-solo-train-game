@@ -15,7 +15,7 @@ namespace GameEngine
 		[SerializeField]
 		private CommonServices _commonServices;
 		[SerializeField]
-		private GameServices _gameServices;
+		private GameEngineServices _gameServices;
 
 		private SceneEvents _sceneEvents;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameEngine.Core
 {
-	public class GameServices : MonoBehaviour
+	public class GameEngineServices : MonoBehaviour
 	{
 		public HexGridController HexGridController;
 	}

@@ -6,7 +6,7 @@ public class Factory
 {
 	public readonly GoodsColor ProductionColor;
 
-	public GoodsCubeSlot GoodsCubeSlot {  get; set; }
+	public GoodsCubeSlot GoodsCubeSlot { get; set; }
 
 	public Factory(GoodsColor productionColor)
 	{

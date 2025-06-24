@@ -10,12 +10,9 @@ namespace CardGame.Logic
 
 		public GoodsCube GoodsCube { get; set; }
 
-		public HexCoord HexCoord { get; set; }
-
-		public GoodsCubeSlot(Guid guid, HexCoord hexCoord)
+		public GoodsCubeSlot(Guid guid)
 		{
 			this.guid = guid;
-			HexCoord = hexCoord;
 		}
 	}
 }
