@@ -9,6 +9,8 @@ using GameEngine.Core;
 using GameEngine.Map;
 using HexSystem;
 using UnityEngine;
+using PrototypeGame.Scene;
+using PrototypeGame.Commands;
 
 
 namespace PrototypeGame
@@ -18,45 +20,38 @@ namespace PrototypeGame
 		private CommonServices _commonServices;
 		private GameEngineServices _gameEngineServices;
 
-		private GameStateServices _gameStateServices;
-		private LogicStateManager _logicManager;
+		private LogicStateManager _logicStateManager;
+		private CommandEventHandler _commandEventHandler;
+
+		private GameStateEvents _gameStateServices;
 		private SceneManager _sceneManager;
+
+
+
+		private CommandManager _commandManager;
 
 		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
-			_gameStateServices = new GameStateServices();
-			_logicManager = new LogicStateManager(new LogicGameState());
+			_gameStateServices = new GameStateEvents();
+			_logicStateManager = new LogicStateManager(new LogicGameState());
 			_sceneManager = new SceneManager(_commonServices, gameEngineServices, _gameStateServices);
+			_commandManager = new CommandManager(_gameStateServices.LogicStateEvents);
+			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
 		}
 
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build(_gameStateServices, _logicManager);
-			_commonServices.RaycastConfig.SetRaycastLayer<GoodsCubeObject>();
+			Builder.Build(_gameStateServices, _logicStateManager);
+			_commonServices.RaycastConfig.SetRaycastLayer<HexTileObject>();
 		}
 
 
 		public void StartFlow()
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
-
-			//Test transportation
-			HexTileData zero = _logicManager.LogicGameState.Tiles[HexCoord.GetCoord(0, 0)];
-
-			foreach (SlotInfo slotInfo in _logicManager.LogicGameState.CubeSlotInfo.Values)
-			{
-				GoodsCubeSlot slot = slotInfo.Slot;
-				if (slot.GoodsCube != null)
-				{
-					_logicManager.TransportGoodsCube(slot, zero.Station.GoodsCubeSlot1);
-					_gameStateServices.GameStateEvents.RaiseTransportCubeEvent(slot.guid, zero.Station.GoodsCubeSlot1.guid);
-					break;
-				}
-			}
-			return;
 		}
 
 
@@ -65,14 +60,22 @@ namespace PrototypeGame
 			_commonServices.SceneEvents.ColliderSelectedEvent -= ColliderHit;
 
 			_sceneManager.Dispose();
+			_commandEventHandler.Dispose();
 		}
 
 
 		private void ColliderHit(RaycastHit hit)
 		{
-			if (hit.collider.GetComponent<HexTileObjectBase>() is HexTileObjectBase tile)
+			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
 				Debug.Log(tile.HexCoord);
+
+				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
+				{
+					_commandManager.StartCommandGroup();
+					_commandManager.CreateAndExecuteFactoryBuildCommand(tile.HexCoord, GoodsColor.GREEN);
+					_commandManager.EndCommandGroup();
+				}
 			}
 			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)
 			{

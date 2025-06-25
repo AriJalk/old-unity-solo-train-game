@@ -5,7 +5,7 @@ using GameEngine.Map;
 using UnityEngine;
 
 
-namespace PrototypeGame.Scene
+namespace PrototypeGame
 {
 	public class GameManager : MonoBehaviour
 	{
@@ -15,8 +15,6 @@ namespace PrototypeGame.Scene
 		private CommonServices _commonServices;
 		[SerializeField]
 		private GameEngineServices _gameServices;
-
-		private SceneEvents _sceneEvents;
 
 		private IRulesSet _rules;
 

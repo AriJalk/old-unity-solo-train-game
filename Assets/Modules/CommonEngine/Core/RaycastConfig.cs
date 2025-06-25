@@ -22,5 +22,16 @@ namespace CommonEngine.Core
 				RaycastLayer = _raycastLayers[typeof(T)];
 			}
 		}
+
+		public void SetRaycastLayer(params Type[] types) 
+		{
+			int mask = 0;
+			foreach (Type type in types)
+			{
+				mask = mask | _raycastLayers[type];
+			}
+
+			RaycastLayer = mask;
+		}
 	}
 }

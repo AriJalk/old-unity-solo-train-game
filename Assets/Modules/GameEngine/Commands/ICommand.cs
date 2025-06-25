@@ -6,5 +6,4 @@ namespace GameEngine.Commands
 		void Execute();
 		void Undo();
 	}
-
 }

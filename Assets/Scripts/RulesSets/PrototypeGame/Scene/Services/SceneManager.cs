@@ -7,28 +7,36 @@ using System;
 
 namespace PrototypeGame.Scene.Services
 {
+	/// <summary>
+	/// Main scene object management class
+	/// </summary>
 	internal class SceneManager : IDisposable
 	{
 		private SceneGameState _sceneGameState;
-		private GameStateEvents _gameStateEvents;
+
+		private SceneStateEvents _gameStateEvents;
+
 		private SceneStateManipulator _sceneStateManipulator;
+
 		private HexGridController _hexGridController;
 
-		public SceneManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateServices gameStateServices)
+		public SceneManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEvents gameStateServices)
 		{
 			_sceneGameState = new SceneGameState();
-			_gameStateEvents = gameStateServices.GameStateEvents;
+			_gameStateEvents = gameStateServices.SceneStateEvents;
 			_sceneStateManipulator = new SceneStateManipulator(commonServices, _sceneGameState);
 			_hexGridController = gameEngineServices.HexGridController;
 
 			_gameStateEvents.TileBuiltEvent += OnTileBuilt;
 			_gameStateEvents.TransportCubeEvent += OnTransportCube;
+			_gameStateEvents.FactoryBuiltEvent += OnFactoryBuilt;
 		}
 
 		public void Dispose()
 		{
 			_gameStateEvents.TileBuiltEvent -= OnTileBuilt;
 			_gameStateEvents.TransportCubeEvent -= OnTransportCube;
+			_gameStateEvents.FactoryBuiltEvent -= OnFactoryBuilt;
 		}
 
 		private void OnTileBuilt(HexTileData tileData)
@@ -42,6 +50,12 @@ namespace PrototypeGame.Scene.Services
 			GoodsCubeSlotObject origin = _sceneGameState.CubeSlots[originSlot];	
 			GoodsCubeSlotObject destination = _sceneGameState.CubeSlots[destinationSlot];
 			_sceneStateManipulator.TransportGoodsCube(origin, destination);
+		}
+
+		private void OnFactoryBuilt(HexTileData hexTileData)
+		{
+			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
+			_sceneStateManipulator.BuildFactoryOnTile(hexTileObject, hexTileData.Factory);
 		}
 	}
 }

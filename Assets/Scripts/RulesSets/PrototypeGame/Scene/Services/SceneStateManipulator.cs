@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 namespace PrototypeGame.Scene.Services
 {
 	/// <summary>
-	/// Handles creation and manipulation of every game related scene objects
+	/// Handles creation and manipulation of every game related scene objects, to be accessed only by SceneManager
 	/// </summary>
 	internal class SceneStateManipulator
 	{
