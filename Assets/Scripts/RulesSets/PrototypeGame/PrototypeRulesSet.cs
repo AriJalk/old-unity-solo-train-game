@@ -53,7 +53,7 @@ namespace PrototypeGame
 		public void StartFlow()
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
-			_commandManager.StartCommandGroup();
+			_commandManager.NextCommandGroup();
 		}
 
 
@@ -72,8 +72,7 @@ namespace PrototypeGame
 
 		public void Confirm()
 		{
-			_commandManager.EndCommandGroup();
-			_commandManager.StartCommandGroup();
+			_commandManager.NextCommandGroup();
 		}
 
 

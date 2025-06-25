@@ -8,7 +8,7 @@ namespace PrototypeGame.Commands
 	internal class CommandManager
 	{
 		private LogicStateEvents _logicStateEvents;
-		private CommandGroup _currentCommandGroup;
+		private CommandGroup _commandGroupHead;
 		private Stack<CommandGroup> _commandGroupStack = new Stack<CommandGroup>();
 
 
@@ -17,28 +17,31 @@ namespace PrototypeGame.Commands
 			_logicStateEvents = logicStateEvents;
 		}
 
-		public void StartCommandGroup()
+		public void NextCommandGroup()
 		{
-			_currentCommandGroup = new CommandGroup();
-		}
-
-		public void EndCommandGroup()
-		{
-			if (_currentCommandGroup.Count > 0)
+			// Keep head if empty
+			if (_commandGroupHead == null)
 			{
-				_commandGroupStack.Push(_currentCommandGroup);
+				_commandGroupHead = new CommandGroup();
+				return;
+			}
+			if (_commandGroupHead.HasCommands)
+			{
+				_commandGroupStack.Push(_commandGroupHead);
+				_commandGroupHead = new CommandGroup();
 			}
 		}
 
 		public void UndoCommandGroup()
 		{
 			// Reset current head and keep front
-			if (_currentCommandGroup != null && _currentCommandGroup.Count > 0)
+			if (_commandGroupHead?.HasCommands == true)
 			{
-				_currentCommandGroup.UndoAll();
+				_commandGroupHead.UndoAll();
+				return;
 			}
 
-			else if (_commandGroupStack.Count > 0)
+			if (_commandGroupStack.Count > 0)
 			{
 				_commandGroupStack.Pop().UndoAll();
 			}
@@ -48,14 +51,14 @@ namespace PrototypeGame.Commands
 		{
 			TransportCubeCommand command = new TransportCubeCommand(_logicStateEvents, originSlot, destinationSlot);
 			command.Execute();
-			_currentCommandGroup.AddCommand(command);
+			_commandGroupHead.AddCommand(command);
 		}
 
 		public void CreateAndExecuteFactoryBuildCommand(HexCoord hexCoord, GoodsColor productionColor)
 		{
 			BuildFactoryCommand command = new BuildFactoryCommand(_logicStateEvents, hexCoord, productionColor);
 			command.Execute();
-			_currentCommandGroup.AddCommand(command);
+			_commandGroupHead.AddCommand(command);
 		}
 	}
 }

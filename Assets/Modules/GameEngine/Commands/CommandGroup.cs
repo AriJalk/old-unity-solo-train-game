@@ -9,11 +9,11 @@ namespace GameEngine.Commands
 	{
 		private Stack<ICommand> _commandStack = new Stack<ICommand>();
 
-		public int Count
+		public bool HasCommands
 		{
 			get
 			{
-				return _commandStack.Count;
+				return _commandStack.Count > 0;
 			}
 		}
 
