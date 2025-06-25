@@ -1,10 +1,9 @@
-﻿
-using HexSystem;
-using PrototypeGame.Services;
+﻿using HexSystem;
+using PrototypeGame.Logic;
+using PrototypeGame.Logic.State;
 using System;
-using UnityEngine;
 
-namespace PrototypeGame.Logic.Services
+namespace PrototypeGame.Events
 {
 	internal class CommandEventHandler : IDisposable
 	{

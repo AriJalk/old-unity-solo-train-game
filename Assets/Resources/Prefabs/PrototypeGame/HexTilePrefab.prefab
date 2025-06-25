@@ -49,8 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshRenderer: {fileID: 373932136242035148}
-  FactoryTransform: {fileID: 5320262058394957713}
-  StationTransform: {fileID: 4877799116228258277}
+  FactoryContainer: {fileID: 5320262058394957713}
+  StationContainer: {fileID: 4877799116228258277}
+  FactoryObject: {fileID: 0}
+  StationObject: {fileID: 0}
 --- !u!135 &5769222623322937916
 SphereCollider:
   m_ObjectHideFlags: 0

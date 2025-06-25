@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PrototypeGame.Scene
+namespace PrototypeGame.Scene.State
 {
 	internal class SceneGameState
 	{

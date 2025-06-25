@@ -3,7 +3,7 @@ using HexSystem;
 using System;
 using System.Collections.Generic;
 
-namespace PrototypeGame.Logic
+namespace PrototypeGame.Logic.State
 {
 	/// <summary>
 	/// Modify only from LogicStateManager, can be read by other classes

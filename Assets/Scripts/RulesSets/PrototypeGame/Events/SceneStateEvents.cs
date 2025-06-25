@@ -1,6 +1,5 @@
 
 using PrototypeGame.Logic;
-using PrototypeGame.Scene;
 using System;
 
 namespace PrototypeGame

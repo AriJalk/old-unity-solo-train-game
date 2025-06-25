@@ -1,6 +1,6 @@
 ﻿using PrototypeGame.Logic;
-using PrototypeGame.Logic.Services;
-using PrototypeGame.Services;
+using PrototypeGame.Logic.State;
+using PrototypeGame.Events;
 using HexSystem;
 
 namespace PrototypeGame.GameBuilder

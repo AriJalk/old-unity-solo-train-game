@@ -1,16 +1,16 @@
 using PrototypeGame.Logic;
-using PrototypeGame.Services;
+using PrototypeGame.Events;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
 using System;
 
-namespace PrototypeGame.Scene.Services
+namespace PrototypeGame.Scene.State
 {
 	/// <summary>
-	/// Main scene object management class
+	/// Main scene object management class, listens to events from SceneStateEvents and dispatches relevant methods in SceneStateManipulator
 	/// </summary>
-	internal class SceneManager : IDisposable
+	internal class SceneStateManager : IDisposable
 	{
 		private SceneGameState _sceneGameState;
 
@@ -20,7 +20,7 @@ namespace PrototypeGame.Scene.Services
 
 		private HexGridController _hexGridController;
 
-		public SceneManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEvents gameStateServices)
+		public SceneStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEvents gameStateServices)
 		{
 			_sceneGameState = new SceneGameState();
 			_gameStateEvents = gameStateServices.SceneStateEvents;

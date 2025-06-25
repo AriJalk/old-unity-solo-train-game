@@ -1,9 +1,9 @@
 using PrototypeGame.GameBuilder;
 using PrototypeGame.Logic;
 using PrototypeGame.Logic.MetaData;
-using PrototypeGame.Logic.Services;
-using PrototypeGame.Scene.Services;
-using PrototypeGame.Services;
+using PrototypeGame.Logic.State;
+using PrototypeGame.Scene.State;
+using PrototypeGame.Events;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
@@ -24,7 +24,7 @@ namespace PrototypeGame
 		private CommandEventHandler _commandEventHandler;
 
 		private GameStateEvents _gameStateServices;
-		private SceneManager _sceneManager;
+		private SceneStateManager _sceneManager;
 
 
 
@@ -36,7 +36,7 @@ namespace PrototypeGame
 			_gameEngineServices = gameEngineServices;
 			_gameStateServices = new GameStateEvents();
 			_logicStateManager = new LogicStateManager(new LogicGameState());
-			_sceneManager = new SceneManager(_commonServices, gameEngineServices, _gameStateServices);
+			_sceneManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateServices);
 			_commandManager = new CommandManager(_gameStateServices.LogicStateEvents);
 			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
 		}
@@ -80,7 +80,7 @@ namespace PrototypeGame
 		{
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
-				Debug.Log(tile.HexCoord);
+				//Debug.Log(tile.HexCoord);
 
 				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
 				{

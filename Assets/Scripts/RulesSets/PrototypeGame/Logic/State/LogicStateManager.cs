@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PrototypeGame.Logic.Services
+namespace PrototypeGame.Logic.State
 {
 	/// <summary>
 	/// Main API for interacting with the logic state
