@@ -10,8 +10,11 @@ namespace PrototypeGame
 		public event Action<HexTileData> TileBuiltEvent;
 
 		public event Action<HexTileData> FactoryBuiltEvent;
+		public event Action<HexTileData> FactoryRemovedEvent;
 
 		public event Action<Guid, Guid> TransportCubeEvent;
+
+
 
 		public void RaiseTileBuiltEvent(HexTileData data)
 		{
@@ -26,6 +29,11 @@ namespace PrototypeGame
 		public void RaiseFactoryBuiltEvent(HexTileData hexTileData)
 		{
 			FactoryBuiltEvent?.Invoke(hexTileData);
+		}
+
+		public void RaiseFactoryRemoveEvent(HexTileData hexTileData)
+		{
+			FactoryRemovedEvent?.Invoke(hexTileData);
 		}
 	}
 

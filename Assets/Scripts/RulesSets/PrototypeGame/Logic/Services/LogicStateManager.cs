@@ -84,5 +84,12 @@ namespace PrototypeGame.Logic.Services
 
 			LogicGameState.CubeToSlot[cube.guid] = destination;
 		}
+
+		public void RemoveFactory(HexTileData hexTileData)
+		{
+			Factory factory = hexTileData.Factory;
+			LogicGameState.Factories.Remove(factory.guid);
+			hexTileData.Factory = null;
+		}
 	}
 }

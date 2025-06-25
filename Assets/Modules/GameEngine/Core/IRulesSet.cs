@@ -19,5 +19,7 @@ namespace GameEngine.Core
 		/// Call at end of session
 		/// </summary>
 		void StopFlow();
+
+		void Undo();
 	}
 }

@@ -50,6 +50,13 @@ namespace PrototypeGame.Logic.Services
 
 		private void RemoveFactoryRequest(HexCoord hexCoord)
 		{
+			HexTileData hexTileData = _logicStateManager.LogicGameState.Tiles[hexCoord];
+
+			if (hexTileData.Factory != null)
+			{
+				_logicStateManager.RemoveFactory(hexTileData);
+				_sceneStateEvents.RaiseFactoryRemoveEvent(hexTileData);
+			}
 		}
 
 

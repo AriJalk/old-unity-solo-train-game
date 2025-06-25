@@ -29,7 +29,16 @@ namespace PrototypeGame.Commands
 
 		public void UndoCommandGroup()
 		{
-			_currentCommandGroup.UndoAll();
+			if (_currentCommandGroup != null)
+			{
+				_currentCommandGroup.UndoAll();
+
+			}
+
+			if (_commandGroupStack.Count > 0)
+			{
+				_currentCommandGroup = _commandGroupStack.Pop();
+			}
 		}
 
 		public void CreateAndExecuteTrasnportCommand(Guid originSlot, Guid destinationSlot)

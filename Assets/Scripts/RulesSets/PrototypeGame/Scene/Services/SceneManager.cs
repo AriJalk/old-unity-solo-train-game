@@ -30,6 +30,7 @@ namespace PrototypeGame.Scene.Services
 			_gameStateEvents.TileBuiltEvent += OnTileBuilt;
 			_gameStateEvents.TransportCubeEvent += OnTransportCube;
 			_gameStateEvents.FactoryBuiltEvent += OnFactoryBuilt;
+			_gameStateEvents.FactoryRemovedEvent += OnFactoryRemoved;
 		}
 
 		public void Dispose()
@@ -37,6 +38,7 @@ namespace PrototypeGame.Scene.Services
 			_gameStateEvents.TileBuiltEvent -= OnTileBuilt;
 			_gameStateEvents.TransportCubeEvent -= OnTransportCube;
 			_gameStateEvents.FactoryBuiltEvent -= OnFactoryBuilt;
+			_gameStateEvents.FactoryRemovedEvent -= OnFactoryRemoved;
 		}
 
 		private void OnTileBuilt(HexTileData tileData)
@@ -56,6 +58,12 @@ namespace PrototypeGame.Scene.Services
 		{
 			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
 			_sceneStateManipulator.BuildFactoryOnTile(hexTileObject, hexTileData.Factory);
+		}
+
+		private void OnFactoryRemoved(HexTileData hexTileData)
+		{
+			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
+			_sceneStateManipulator.RemoveFactoryFromTile(hexTileObject);
 		}
 	}
 }

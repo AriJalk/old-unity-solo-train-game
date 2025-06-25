@@ -3,6 +3,7 @@ using CommonEngine.Events;
 using GameEngine.Core;
 using GameEngine.Map;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace PrototypeGame
@@ -16,16 +17,21 @@ namespace PrototypeGame
 		[SerializeField]
 		private GameEngineServices _gameServices;
 
+		[SerializeField]
+		private Button _undoButton;
+
 		private IRulesSet _rules;
 
 		void Start()
 		{
 			Setup(new PrototypeRulesSet(_commonServices, _gameServices));
+			_undoButton.onClick.AddListener(Undo);
 		}
 
 		private void OnDestroy()
 		{
 			_rules.StopFlow();
+			_undoButton.onClick.RemoveListener(Undo);
 		}
 
 		void Setup(IRulesSet rulesSet)
@@ -33,6 +39,11 @@ namespace PrototypeGame
 			_rules = rulesSet;
 			_rules.Setup();
 			_rules.StartFlow();
+		}
+
+		private void Undo()
+		{
+			_rules.Undo();
 		}
 
 	}

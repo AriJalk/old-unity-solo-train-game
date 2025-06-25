@@ -63,6 +63,10 @@ namespace PrototypeGame
 			_commandEventHandler.Dispose();
 		}
 
+		public void Undo()
+		{
+			_commandManager.UndoCommandGroup();
+		}
 
 		private void ColliderHit(RaycastHit hit)
 		{

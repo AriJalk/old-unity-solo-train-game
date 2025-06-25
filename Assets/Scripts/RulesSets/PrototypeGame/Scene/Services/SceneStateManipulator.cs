@@ -83,6 +83,12 @@ namespace PrototypeGame.Scene.Services
 			return factoryObject;
 		}
 
+		public void RemoveFactoryFromTile(HexTileObject hexTileObject)
+		{
+			FactoryObject factoryObject = hexTileObject.FactoryTransform.GetChild(0).GetComponent<FactoryObject>();
+			_prefabManager.ReturnPoolObject(factoryObject);
+		}
+
 		public GoodsCubeObject BuildGoodsCubeOnSlot(GoodsCubeSlotObject slot, GoodsCube cube)
 		{
 			GoodsCubeObject goodsCubeObject = _prefabManager.RetrievePoolObject<GoodsCubeObject>();
