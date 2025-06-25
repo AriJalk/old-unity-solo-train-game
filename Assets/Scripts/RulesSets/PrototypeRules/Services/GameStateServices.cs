@@ -1,4 +1,4 @@
-﻿namespace CardGame.Services
+﻿namespace PrototypeGame.Services
 {
 	internal class GameStateServices
 	{

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CardGame.Scene
+namespace PrototypeGame.Scene
 {
 	internal class SceneGameState
 	{

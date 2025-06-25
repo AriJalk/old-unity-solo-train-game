@@ -1,7 +1,7 @@
 using GameEngine.Map;
 using UnityEngine;
 
-namespace CardGame.Scene
+namespace PrototypeGame.Scene
 {
 	public class HexTileObject : HexTileObjectBase
 	{

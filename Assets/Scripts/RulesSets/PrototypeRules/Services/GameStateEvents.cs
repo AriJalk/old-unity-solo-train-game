@@ -1,5 +1,5 @@
 
-using CardGame.Logic;
+using PrototypeGame.Logic;
 using System;
 
 internal class GameStateEvents

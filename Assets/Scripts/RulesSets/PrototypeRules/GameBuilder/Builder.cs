@@ -1,9 +1,9 @@
-﻿using CardGame.Logic;
-using CardGame.Logic.Services;
-using CardGame.Services;
+﻿using PrototypeGame.Logic;
+using PrototypeGame.Logic.Services;
+using PrototypeGame.Services;
 using HexSystem;
 
-namespace CardGame.GameBuilder
+namespace PrototypeGame.GameBuilder
 {
 	internal class Builder
 	{

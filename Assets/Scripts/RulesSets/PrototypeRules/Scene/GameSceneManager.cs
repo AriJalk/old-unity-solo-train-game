@@ -5,7 +5,7 @@ using GameEngine.Map;
 using UnityEngine;
 
 
-namespace CardGame.Scene
+namespace PrototypeGame.Scene
 {
 	public class GameManager : MonoBehaviour
 	{
@@ -22,7 +22,7 @@ namespace CardGame.Scene
 
 		void Start()
 		{
-			Setup(new CardGameRulesSet(_commonServices, _gameServices));
+			Setup(new PrototypeRulesSet(_commonServices, _gameServices));
 		}
 
 		private void OnDestroy()

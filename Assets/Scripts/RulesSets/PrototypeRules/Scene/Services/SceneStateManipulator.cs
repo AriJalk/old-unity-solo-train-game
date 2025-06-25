@@ -1,10 +1,10 @@
-using CardGame.Logic;
+using PrototypeGame.Logic;
 using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
 using UnityEngine.Tilemaps;
 
-namespace CardGame.Scene.Services
+namespace PrototypeGame.Scene.Services
 {
 	/// <summary>
 	/// Handles creation and manipulation of every game related scene objects

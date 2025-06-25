@@ -1,9 +1,9 @@
-﻿using CardGame.Logic.MetaData;
+﻿using PrototypeGame.Logic.MetaData;
 using HexSystem;
 using System;
 using System.Collections.Generic;
 
-namespace CardGame.Logic
+namespace PrototypeGame.Logic
 {
 	/// <summary>
 	/// Modify only from LogicStateManager, can be read by other classes

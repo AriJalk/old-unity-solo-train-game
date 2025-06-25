@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
 
-namespace CardGame.Logic.MetaData
+namespace PrototypeGame.Logic.MetaData
 {
 	internal struct SlotInfo
 	{

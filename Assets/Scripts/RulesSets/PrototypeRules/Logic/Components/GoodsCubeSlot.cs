@@ -2,7 +2,7 @@
 using System;
 using Unity.VisualScripting;
 
-namespace CardGame.Logic
+namespace PrototypeGame.Logic
 {
 	public class GoodsCubeSlot : IIdentifiable
 	{

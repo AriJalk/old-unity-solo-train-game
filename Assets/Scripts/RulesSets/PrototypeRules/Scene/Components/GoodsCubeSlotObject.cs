@@ -2,7 +2,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace CardGame.Scene
+namespace PrototypeGame.Scene
 {
 	public class GoodsCubeSlotObject : MonoBehaviour, IIdentifiable
 	{

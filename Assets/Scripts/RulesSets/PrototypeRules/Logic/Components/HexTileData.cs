@@ -1,6 +1,6 @@
 using HexSystem;
 
-namespace CardGame.Logic
+namespace PrototypeGame.Logic
 {
 	internal class HexTileData
 	{

@@ -1,10 +1,10 @@
-using CardGame.Logic.MetaData;
+using PrototypeGame.Logic.MetaData;
 using HexSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardGame.Logic.Services
+namespace PrototypeGame.Logic.Services
 {
 	/// <summary>
 	/// Main API for interacting with the logic state

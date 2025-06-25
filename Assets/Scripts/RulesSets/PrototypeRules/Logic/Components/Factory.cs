@@ -1,4 +1,4 @@
-using CardGame.Logic;
+using PrototypeGame.Logic;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;

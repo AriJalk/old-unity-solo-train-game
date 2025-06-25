@@ -1,11 +1,11 @@
 ﻿
 
-using CardGame.Scene;
+using PrototypeGame.Scene;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-namespace CardGame.Logic
+namespace PrototypeGame.Logic
 {
 	internal class Station : IIdentifiable
 	{

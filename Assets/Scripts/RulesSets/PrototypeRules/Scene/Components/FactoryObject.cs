@@ -1,4 +1,4 @@
-﻿using CardGame.Scene;
+﻿using PrototypeGame.Scene;
 
 public class FactoryObject : MeshComponent
 {

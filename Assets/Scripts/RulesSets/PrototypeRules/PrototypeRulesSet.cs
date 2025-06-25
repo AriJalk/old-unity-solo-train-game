@@ -1,9 +1,9 @@
-using CardGame.GameBuilder;
-using CardGame.Logic;
-using CardGame.Logic.MetaData;
-using CardGame.Logic.Services;
-using CardGame.Scene.Services;
-using CardGame.Services;
+using PrototypeGame.GameBuilder;
+using PrototypeGame.Logic;
+using PrototypeGame.Logic.MetaData;
+using PrototypeGame.Logic.Services;
+using PrototypeGame.Scene.Services;
+using PrototypeGame.Services;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
@@ -11,9 +11,9 @@ using HexSystem;
 using UnityEngine;
 
 
-namespace CardGame
+namespace PrototypeGame
 {
-	public class CardGameRulesSet : IRulesSet
+	public class PrototypeRulesSet : IRulesSet
 	{
 		private CommonServices _commonServices;
 		private GameEngineServices _gameEngineServices;
@@ -22,7 +22,7 @@ namespace CardGame
 		private LogicStateManager _logicManager;
 		private SceneManager _sceneManager;
 
-		public CardGameRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices)
+		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;

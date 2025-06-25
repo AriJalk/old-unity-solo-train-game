@@ -1,11 +1,11 @@
-using CardGame.Logic;
-using CardGame.Services;
+using PrototypeGame.Logic;
+using PrototypeGame.Services;
 using CommonEngine.Core;
 using GameEngine.Core;
 using GameEngine.Map;
 using System;
 
-namespace CardGame.Scene.Services
+namespace PrototypeGame.Scene.Services
 {
 	internal class SceneManager : IDisposable
 	{
