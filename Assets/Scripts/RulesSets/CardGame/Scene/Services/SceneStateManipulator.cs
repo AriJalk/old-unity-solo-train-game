@@ -2,19 +2,23 @@ using CardGame.Logic;
 using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
-using GameEngine.Core;
-using GameEngine.Map;
+using UnityEngine.Tilemaps;
 
 namespace CardGame.Scene.Services
 {
+	/// <summary>
+	/// Handles creation and manipulation of every game related scene objects
+	/// </summary>
 	internal class SceneStateManipulator
 	{
 		private PrefabManager _prefabManager;
+		private MaterialManager _materialManager;
 		private SceneGameState _sceneGameState;
 
 		public SceneStateManipulator(CommonServices commonServices, SceneGameState sceneGameState)
 		{
 			_prefabManager = commonServices.PrefabManager;
+			_materialManager = commonServices.MaterialManager;
 			_sceneGameState = sceneGameState;
 		}
 
@@ -33,6 +37,11 @@ namespace CardGame.Scene.Services
 			}
 
 			_sceneGameState.Tiles.Add(hexTileData.HexCoord, hexTileObject);
+
+			if (hexTileData.TerrainType == TerrainType.MOUNTAIN)
+			{
+				hexTileObject.MeshRenderer.material = _materialManager.Materials["RED"];
+			}
 			return hexTileObject;
 		}
 
@@ -82,6 +91,8 @@ namespace CardGame.Scene.Services
 			slot.GoodsCubeObjectTransform = goodsCubeObject.transform;
 
 			_sceneGameState.Cubes.Add(goodsCubeObject.guid, goodsCubeObject);
+
+			goodsCubeObject.MeshRenderer.material = _materialManager.Materials[cube.Color.ToString()];
 			return goodsCubeObject;
 		}
 

@@ -10,6 +10,7 @@ namespace CommonEngine.Core
 
 		public readonly InputEvents InputEvents = new InputEvents();
 		public readonly SceneEvents SceneEvents = new SceneEvents();
-		public readonly RaycastConfig CommonConfig = new RaycastConfig();
+		public readonly RaycastConfig RaycastConfig = new RaycastConfig();
+		public readonly MaterialManager MaterialManager = new MaterialManager();
 	}
 }

@@ -13,10 +13,10 @@ namespace CommonEngine.SceneObjects
 		[SerializeField]
 		private Transform _forwardTransform;
 		[SerializeField]
-		private Vector3 _movementVector = Vector3.zero;
-		[SerializeField]
 		[Range(0f, 20f)]
 		private float _speed = 5;
+
+		private Vector3 _movementVector = Vector3.zero;
 
 		private InputEvents _inputEvents;
 

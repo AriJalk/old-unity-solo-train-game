@@ -1,4 +1,3 @@
-using CardGame;
 using CommonEngine.Core;
 using CommonEngine.Events;
 using GameEngine.Core;
@@ -6,7 +5,7 @@ using GameEngine.Map;
 using UnityEngine;
 
 
-namespace GameEngine
+namespace CardGame.Scene
 {
 	public class GameManager : MonoBehaviour
 	{
@@ -23,8 +22,7 @@ namespace GameEngine
 
 		void Start()
 		{
-			_rules = new CardGameRulesSet(_commonServices, _gameServices);
-			Setup(_rules);
+			Setup(new CardGameRulesSet(_commonServices, _gameServices));
 		}
 
 		private void OnDestroy()

@@ -2,7 +2,6 @@ using CardGame.GameBuilder;
 using CardGame.Logic;
 using CardGame.Logic.MetaData;
 using CardGame.Logic.Services;
-using CardGame.Scene;
 using CardGame.Scene.Services;
 using CardGame.Services;
 using CommonEngine.Core;
@@ -36,7 +35,7 @@ namespace CardGame
 		{
 			ResourceLoader.LoadResources(_commonServices);
 			Builder.Build(_gameStateServices, _logicManager);
-			_commonServices.CommonConfig.SetRaycastLayer<GoodsCubeObject>();
+			_commonServices.RaycastConfig.SetRaycastLayer<GoodsCubeObject>();
 		}
 
 
@@ -44,6 +43,7 @@ namespace CardGame
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
 
+			//Test transportation
 			HexTileData zero = _logicManager.LogicGameState.Tiles[HexCoord.GetCoord(0, 0)];
 
 			foreach (SlotInfo slotInfo in _logicManager.LogicGameState.CubeSlotInfo.Values)

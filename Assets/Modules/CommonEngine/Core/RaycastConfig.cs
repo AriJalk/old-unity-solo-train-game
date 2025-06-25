@@ -12,6 +12,7 @@ namespace CommonEngine.Core
 			{typeof(GoodsCubeObject), 1 << 7 },
 			{typeof(GoodsCubeSlotObject), 1 << 8 },
 		};
+
 		public int RaycastLayer { get; private set; }
 
 		public void SetRaycastLayer<T>()

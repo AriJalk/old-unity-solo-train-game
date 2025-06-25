@@ -1,6 +1,4 @@
-﻿
-using CardGame.Logic;
-using HexSystem;
+﻿using HexSystem;
 using System;
 using System.Collections.Generic;
 
