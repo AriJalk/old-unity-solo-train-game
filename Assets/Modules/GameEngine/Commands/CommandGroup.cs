@@ -9,6 +9,14 @@ namespace GameEngine.Commands
 	{
 		private Stack<ICommand> _commandStack = new Stack<ICommand>();
 
+		public int Count
+		{
+			get
+			{
+				return _commandStack.Count;
+			}
+		}
+
 		public void AddCommand(ICommand command)
 		{
 			_commandStack.Push(command);

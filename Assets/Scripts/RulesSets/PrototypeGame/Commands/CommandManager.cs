@@ -24,20 +24,23 @@ namespace PrototypeGame.Commands
 
 		public void EndCommandGroup()
 		{
-			_commandGroupStack.Push(_currentCommandGroup);
+			if (_currentCommandGroup.Count > 0)
+			{
+				_commandGroupStack.Push(_currentCommandGroup);
+			}
 		}
 
 		public void UndoCommandGroup()
 		{
-			if (_currentCommandGroup != null)
+			// Reset current head and keep front
+			if (_currentCommandGroup != null && _currentCommandGroup.Count > 0)
 			{
 				_currentCommandGroup.UndoAll();
-
 			}
 
-			if (_commandGroupStack.Count > 0)
+			else if (_commandGroupStack.Count > 0)
 			{
-				_currentCommandGroup = _commandGroupStack.Pop();
+				_commandGroupStack.Pop().UndoAll();
 			}
 		}
 

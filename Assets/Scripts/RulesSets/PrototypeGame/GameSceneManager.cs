@@ -19,19 +19,23 @@ namespace PrototypeGame
 
 		[SerializeField]
 		private Button _undoButton;
+		[SerializeField]
+		private Button _confirmButton;
 
 		private IRulesSet _rules;
 
 		void Start()
 		{
 			Setup(new PrototypeRulesSet(_commonServices, _gameServices));
-			_undoButton.onClick.AddListener(Undo);
+			_undoButton?.onClick.AddListener(Undo);
+			_confirmButton?.onClick.AddListener(Confirm);
 		}
 
 		private void OnDestroy()
 		{
 			_rules.StopFlow();
-			_undoButton.onClick.RemoveListener(Undo);
+			_undoButton?.onClick.RemoveListener(Undo);
+			_confirmButton?.onClick.RemoveListener(Confirm);
 		}
 
 		void Setup(IRulesSet rulesSet)
@@ -44,6 +48,11 @@ namespace PrototypeGame
 		private void Undo()
 		{
 			_rules.Undo();
+		}
+
+		private void Confirm()
+		{
+			_rules.Confirm();
 		}
 
 	}

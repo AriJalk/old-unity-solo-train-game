@@ -41,6 +41,7 @@ namespace PrototypeGame
 			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
 		}
 
+
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
@@ -52,6 +53,7 @@ namespace PrototypeGame
 		public void StartFlow()
 		{
 			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
+			_commandManager.StartCommandGroup();
 		}
 
 
@@ -68,6 +70,13 @@ namespace PrototypeGame
 			_commandManager.UndoCommandGroup();
 		}
 
+		public void Confirm()
+		{
+			_commandManager.EndCommandGroup();
+			_commandManager.StartCommandGroup();
+		}
+
+
 		private void ColliderHit(RaycastHit hit)
 		{
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
@@ -76,9 +85,7 @@ namespace PrototypeGame
 
 				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
 				{
-					_commandManager.StartCommandGroup();
 					_commandManager.CreateAndExecuteFactoryBuildCommand(tile.HexCoord, GoodsColor.GREEN);
-					_commandManager.EndCommandGroup();
 				}
 			}
 			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)

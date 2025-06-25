@@ -21,5 +21,7 @@ namespace GameEngine.Core
 		void StopFlow();
 
 		void Undo();
+
+		void Confirm();
 	}
 }
