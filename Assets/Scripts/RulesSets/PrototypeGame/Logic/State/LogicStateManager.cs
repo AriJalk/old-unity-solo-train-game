@@ -85,10 +85,25 @@ namespace PrototypeGame.Logic.State
 			LogicGameState.CubeToSlot[cube.guid] = destination;
 		}
 
+		public void RemoveCube(GoodsCube goodsCube)
+		{
+			LogicGameState.CubeToSlot.Remove(goodsCube.guid);
+		}
+
+		public void RemoveSlot(GoodsCubeSlot goodsCubeSlot)
+		{
+			SlotInfo slotInfo = LogicGameState.CubeSlotInfo[goodsCubeSlot.guid];
+			LogicGameState.CubeSlotInfo.Remove(goodsCubeSlot.guid);
+			LogicGameState.TileToSlots[slotInfo.HexTileData].Remove(goodsCubeSlot);
+			//Debug.Log(LogicGameState.CubeSlotInfo.Count);
+		}
+
 		public void RemoveFactory(HexTileData hexTileData)
 		{
 			Factory factory = hexTileData.Factory;
 			LogicGameState.Factories.Remove(factory.guid);
+			RemoveSlot(factory.GoodsCubeSlot);
+
 			hexTileData.Factory = null;
 		}
 	}

@@ -116,8 +116,6 @@ namespace PrototypeGame.Scene.State
 			RemoveGoodsCubeSlot(hexTileObject.FactoryObject.GoodsCubeSlotObject);
 			_prefabManager.ReturnPoolObject(hexTileObject.FactoryObject);
 			hexTileObject.FactoryObject = null;
-
-			Debug.Log(_sceneGameState.CubeSlots.Count);
 		}
 
 
