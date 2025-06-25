@@ -1,10 +1,14 @@
 ﻿using HexSystem;
 using PrototypeGame.Logic;
+using PrototypeGame.Logic.MetaData;
 using PrototypeGame.Logic.State;
 using System;
 
 namespace PrototypeGame.Events
 {
+	/// <summary>
+	/// Orchestrating logic + scene command execution
+	/// </summary>
 	internal class CommandEventHandler : IDisposable
 	{
 		private LogicStateManager _logicStateManager;
@@ -33,7 +37,10 @@ namespace PrototypeGame.Events
 
 		private void TransportRequest(Guid origin, Guid destination)
 		{
-
+			SlotInfo originSlotInfo = _logicStateManager.LogicGameState.CubeSlotInfo[origin];
+			SlotInfo destinationSlotInfo = _logicStateManager.LogicGameState.CubeSlotInfo[destination];
+			_logicStateManager.TransportGoodsCube(originSlotInfo.Slot, destinationSlotInfo.Slot);
+			_sceneStateEvents.RaiseTransportCubeEvent(origin, destination);
 		}
 
 		private void BuildFactoryRequest(HexCoord hexCoord, GoodsColor productionColor)
@@ -42,7 +49,9 @@ namespace PrototypeGame.Events
 
 			if (hexTileData.Factory == null)
 			{
-				_logicStateManager.BuildFactoryOnTile(hexTileData, productionColor);
+				Factory factory = _logicStateManager.BuildFactoryOnTile(hexTileData, productionColor);
+				_logicStateManager.ProduceCubeInFactory(factory);
+
 				_sceneStateEvents.RaiseFactoryBuiltEvent(hexTileData);
 			}
 		}

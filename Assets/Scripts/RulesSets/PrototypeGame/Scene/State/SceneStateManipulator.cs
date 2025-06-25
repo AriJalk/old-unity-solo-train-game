@@ -1,7 +1,8 @@
-using PrototypeGame.Logic;
 using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
+using PrototypeGame.Logic;
+using PrototypeGame.Logic.State;
 using UnityEngine;
 
 namespace PrototypeGame.Scene.State
@@ -67,6 +68,7 @@ namespace PrototypeGame.Scene.State
 				RemoveGoodsCubeObjectFromSlot(goodsCubeSlotObject);
 			}
 			_sceneGameState.CubeSlots.Remove(goodsCubeSlotObject.guid);
+			//Debug.Log("Slots: " + _sceneGameState.CubeSlots.Count);
 		}
 
 
@@ -91,10 +93,11 @@ namespace PrototypeGame.Scene.State
 
 		public void RemoveGoodsCubeObjectFromSlot(GoodsCubeSlotObject goodsCubeSlotObject)
 		{
-			_sceneGameState.Cubes.Remove(goodsCubeSlotObject.guid);
 			GoodsCubeObject goodsCubeObject = goodsCubeSlotObject.GoodsCubeObject;
+			_sceneGameState.Cubes.Remove(goodsCubeObject.guid);
 			_prefabManager.ReturnPoolObject(goodsCubeObject);
 			goodsCubeSlotObject.GoodsCubeObject = null;
+			//Debug.Log("Scene cubes: " + _sceneGameState.Cubes.Count);
 		}
 
 

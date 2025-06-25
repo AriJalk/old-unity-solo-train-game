@@ -7,7 +7,7 @@ using UnityEngine;
 namespace PrototypeGame.Logic.State
 {
 	/// <summary>
-	/// Main API for interacting with the logic state
+	/// Main API for interacting with the logic state, only authority to modify LogicGameState
 	/// </summary>
 	internal class LogicStateManager
 	{
@@ -88,10 +88,15 @@ namespace PrototypeGame.Logic.State
 		public void RemoveCube(GoodsCube goodsCube)
 		{
 			LogicGameState.CubeToSlot.Remove(goodsCube.guid);
+			//Debug.Log("Logic cubes: " + LogicGameState.CubeToSlot.Count);
 		}
 
 		public void RemoveSlot(GoodsCubeSlot goodsCubeSlot)
 		{
+			if (goodsCubeSlot.GoodsCube != null)
+			{
+				RemoveCube(goodsCubeSlot.GoodsCube);
+			}
 			SlotInfo slotInfo = LogicGameState.CubeSlotInfo[goodsCubeSlot.guid];
 			LogicGameState.CubeSlotInfo.Remove(goodsCubeSlot.guid);
 			LogicGameState.TileToSlots[slotInfo.HexTileData].Remove(goodsCubeSlot);
