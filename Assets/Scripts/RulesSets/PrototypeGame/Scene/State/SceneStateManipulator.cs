@@ -23,7 +23,6 @@ namespace PrototypeGame.Scene.State
 			_sceneGameState = sceneGameState;
 		}
 
-
 		public HexTileObject BuildTile(HexTileData hexTileData)
 		{
 			HexTileObject hexTileObject = _prefabManager.RetrievePoolObject<HexTileObject>();
@@ -71,7 +70,6 @@ namespace PrototypeGame.Scene.State
 			//Debug.Log("Slots: " + _sceneGameState.CubeSlots.Count);
 		}
 
-
 		public GoodsCubeObject BuildGoodsCube(GoodsCube goodsCube)
 		{
 			GoodsCubeObject goodsCubeObject = _prefabManager.RetrievePoolObject<GoodsCubeObject>();
@@ -100,7 +98,6 @@ namespace PrototypeGame.Scene.State
 			//Debug.Log("Scene cubes: " + _sceneGameState.Cubes.Count);
 		}
 
-
 		public FactoryObject BuildFactoryOnTile(HexTileObject hexTileObject, Factory factory)
 		{
 			FactoryObject factoryObject = _prefabManager.RetrievePoolObject<FactoryObject>();
@@ -120,7 +117,6 @@ namespace PrototypeGame.Scene.State
 			_prefabManager.ReturnPoolObject(hexTileObject.FactoryObject);
 			hexTileObject.FactoryObject = null;
 		}
-
 
 		public StationObject BuildStationOnTile(HexTileObject hexTileObject, Station station)
 		{
@@ -151,10 +147,6 @@ namespace PrototypeGame.Scene.State
 			_prefabManager.ReturnPoolObject(hexTileObject.StationObject);
 			hexTileObject.StationObject = null;
 		}
-
-
-
-
 
 		public void TransportGoodsCube(GoodsCubeSlotObject origin, GoodsCubeSlotObject destination)
 		{

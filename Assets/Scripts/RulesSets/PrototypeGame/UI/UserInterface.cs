@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Scripts.UI
+namespace PrototypeGame.UI
 {
 	internal class UserInterface : MonoBehaviour
 	{
@@ -13,13 +13,13 @@ namespace Scripts.UI
 		OptionPanel optionPanel;
 		public void Update()
 		{
-			GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
 			if (Keyboard.current.xKey.wasPressedThisFrame && !optionPanel.isActiveAndEnabled)
 			{
+				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
 				List<OptionObject> list = new List<OptionObject>();
 				BuildingOption option;
 
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 10; i++)
 				{
 					option = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					option.guid = Guid.NewGuid();
@@ -27,7 +27,7 @@ namespace Scripts.UI
 					list.Add(option);
 				}
 
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 10; i++)
 				{
 					option = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					option.guid = Guid.NewGuid();

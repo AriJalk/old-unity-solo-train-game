@@ -19,26 +19,33 @@ public class OptionPanel : MonoBehaviour
         OptionSelectedEvent?.Invoke(guid);
     }
 
-    public void OpenPanel(ICollection<OptionObject> options)
+    public void OpenPanel(IEnumerable<OptionObject> options)
     {
-        _options = new List<OptionObject>();
+        ClosePanel();
+
+        _options = new List<OptionObject>(options);
+
         foreach (OptionObject option in options)
         {
-            _options.Add(option);
             option.SelectedEvent += OnOptionSelected;
             SceneHelpers.SetParentAndResetPosition(option.transform, OptionsContainer);
         }
+
         gameObject.SetActive(true);
     }
 
     public void ClosePanel()
     {
-        foreach (OptionObject option in _options)
+        if (_options != null)
         {
-            option.SelectedEvent -= OnOptionSelected;
-            GameObject.Destroy(option.gameObject);
-        }
-        _options.Clear();
+			foreach (OptionObject option in _options)
+			{
+				option.SelectedEvent -= OnOptionSelected;
+				GameObject.Destroy(option.gameObject);
+			}
+			_options.Clear();
+		}
+
         gameObject.SetActive(false);
     }
 }
