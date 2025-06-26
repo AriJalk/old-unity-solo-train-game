@@ -3,16 +3,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CommonEngine.UI.OptionSelection
+namespace CommonEngine.UI.Options
 {
 	public class OptionObject : MonoBehaviour, IIdentifiable
 	{
+		public event Action<Guid> SelectedEvent;
+
 		[SerializeField]
-		private Button _button;
+		protected Button _button;
 
 		public Guid guid { get; set; }
 
-		public event Action<Guid> SelectedEvent;
 
 		private void Start()
 		{

@@ -21,9 +21,12 @@ namespace CommonEngine.IO
 		// Update is called once per frame
 		void Update()
 		{
-			ProcessMouseButtons();
-			ProcessAxis();
-			ProcessScroll();
+			if (!_commonServices.InputLock.IsInputLocked)
+			{
+				ProcessMouseButtons();
+				ProcessAxis();
+				ProcessScroll();
+			}
 		}
 
 		void ProcessMouseButtons()

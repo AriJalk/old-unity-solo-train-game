@@ -1,4 +1,4 @@
-﻿using CommonEngine.UI.OptionSelection;
+﻿using CommonEngine.UI.Options;
 using PrototypeGame.UI.Options;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ namespace PrototypeGame.UI
 		OptionPanel optionPanel;
 		public void Update()
 		{
+			// Test option creation
 			if (Keyboard.current.xKey.wasPressedThisFrame && !optionPanel.isActiveAndEnabled)
 			{
 				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
@@ -23,7 +24,7 @@ namespace PrototypeGame.UI
 				{
 					option = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					option.guid = Guid.NewGuid();
-					option.Setup("Factory");
+					option.Setup("Factory", isEnabled: true);
 					list.Add(option);
 				}
 

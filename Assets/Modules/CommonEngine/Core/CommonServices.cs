@@ -1,6 +1,8 @@
 ﻿using CommonEngine.ResourceManagement;
 using CommonEngine.Events;
 using UnityEngine;
+using System.Collections.Generic;
+using CommonEngine.IO;
 
 namespace CommonEngine.Core
 {
@@ -12,5 +14,7 @@ namespace CommonEngine.Core
 		public readonly SceneEvents SceneEvents = new SceneEvents();
 		public readonly RaycastConfig RaycastConfig = new RaycastConfig();
 		public readonly MaterialManager MaterialManager = new MaterialManager();
+
+		public readonly InputLock InputLock = new InputLock();
 	}
 }
