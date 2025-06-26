@@ -84,7 +84,7 @@ namespace PrototypeGame
 
 				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
 				{
-					_commandManager.CreateAndExecuteFactoryBuildCommand(tile.HexCoord, GoodsColor.GREEN);
+					_commandManager.CreateAndExecuteFactoryBuildCommand(tile.HexCoord, GoodsColor.RED);
 				}
 			}
 			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)
