@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CommonEngine.IO
@@ -15,11 +16,13 @@ namespace CommonEngine.IO
 			}
 		}
 
-		public void AddLock(GameObject lockObject)
+		public bool WasInputReleasedThisFrame { get; set; }
+
+		public void AddLock(GameObject lockOwner)
 		{
-			if (lockObject != null)
+			if (lockOwner != null)
 			{
-				_lockingObjects.Add(lockObject);
+				_lockingObjects.Add(lockOwner);
 			}
 		}
 
@@ -28,6 +31,10 @@ namespace CommonEngine.IO
 			if (lockObject != null)
 			{
 				_lockingObjects.Remove(lockObject);
+				if (_lockingObjects.Count == 0)
+				{
+					WasInputReleasedThisFrame = true;
+				}
 			}
 		}
 	}

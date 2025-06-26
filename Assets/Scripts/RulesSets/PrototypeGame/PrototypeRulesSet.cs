@@ -1,16 +1,18 @@
 using PrototypeGame.GameBuilder;
-using PrototypeGame.Logic;
-using PrototypeGame.Logic.MetaData;
 using PrototypeGame.Logic.State;
 using PrototypeGame.Scene.State;
 using PrototypeGame.Events;
 using CommonEngine.Core;
 using GameEngine.Core;
-using GameEngine.Map;
-using HexSystem;
 using UnityEngine;
 using PrototypeGame.Scene;
 using PrototypeGame.Commands;
+using CommonEngine.UI.Options;
+using PrototypeGame.UI.Options;
+using System.Collections.Generic;
+using System;
+using System.Linq;
+using HexSystem;
 
 
 namespace PrototypeGame
@@ -26,11 +28,14 @@ namespace PrototypeGame
 		private GameStateEvents _gameStateServices;
 		private SceneStateManager _sceneManager;
 
-
+		private OptionPanel _optionPanel;
 
 		private CommandManager _commandManager;
 
-		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices)
+		private List<BuildingOption> _buildingOptions;
+		private HexCoord _buildCoord;
+
+		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, OptionPanel optionPanel)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
@@ -39,6 +44,7 @@ namespace PrototypeGame
 			_sceneManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateServices);
 			_commandManager = new CommandManager(_gameStateServices.LogicStateEvents);
 			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
+			_optionPanel = optionPanel;
 		}
 
 
@@ -80,17 +86,51 @@ namespace PrototypeGame
 		{
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
-				//Debug.Log(tile.HexCoord);
-
+				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
+				_buildingOptions = new List<BuildingOption>();
 				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
 				{
-					_commandManager.CreateAndExecuteFactoryBuildCommand(tile.HexCoord, GoodsColor.RED);
+					BuildingOption factoryOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
+					factoryOption.Setup(Guid.NewGuid(), "Factory", true);
+					_buildingOptions.Add(factoryOption);
+				}
+				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Station == null)
+				{
+					BuildingOption stationOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
+					stationOption.Setup(Guid.NewGuid(), "Station", true);
+					_buildingOptions.Add(stationOption);
+				}
+				if (_buildingOptions.Count > 0)
+				{
+					_buildCoord = tile.HexCoord;
+					_optionPanel.OpenPanel(_buildingOptions);
+					_optionPanel.OptionSelectedEvent += HandleOptions;
 				}
 			}
 			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)
 			{
 				Debug.Log(cube.guid);
 			}
+		}
+
+		private void HandleOptions(Guid guid)
+		{
+			_optionPanel.OptionSelectedEvent -= HandleOptions;
+			_optionPanel.ClosePanel();
+			BuildingOption option = _buildingOptions.FirstOrDefault(b => b.guid == guid);
+			if (option != null)
+			{
+				switch (option.BuildingName)
+				{
+					case "Factory":
+						_commandManager.CreateAndExecuteBuildFactoryCommand(_buildCoord, GoodsColor.GREEN);
+						break;
+					case "Station":
+						_commandManager.CreateAndExecuteBuildStationCommand(_buildCoord);
+						break;
+				}
+			}
+
 		}
 	}
 }

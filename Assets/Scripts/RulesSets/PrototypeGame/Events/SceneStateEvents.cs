@@ -11,6 +11,9 @@ namespace PrototypeGame
 		public event Action<HexTileData> FactoryBuiltEvent;
 		public event Action<HexTileData> FactoryRemovedEvent;
 
+		public event Action<HexTileData> StationBuiltEvent;
+		public event Action<HexTileData> StationRemovedEvent;
+
 		public event Action<Guid, Guid> TransportCubeEvent;
 
 
@@ -33,6 +36,16 @@ namespace PrototypeGame
 		public void RaiseFactoryRemoveEvent(HexTileData hexTileData)
 		{
 			FactoryRemovedEvent?.Invoke(hexTileData);
+		}
+
+		public void RaiseStationBuiltEvent(HexTileData hexTileData)
+		{
+			StationBuiltEvent?.Invoke(hexTileData);
+		}
+
+		public void RaiseStationRemovedEvent(HexTileData hexTileData)
+		{
+			StationRemovedEvent?.Invoke(hexTileData);
 		}
 	}
 

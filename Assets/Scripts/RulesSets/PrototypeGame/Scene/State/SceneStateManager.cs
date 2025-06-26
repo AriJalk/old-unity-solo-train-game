@@ -14,7 +14,7 @@ namespace PrototypeGame.Scene.State
 	{
 		private SceneGameState _sceneGameState;
 
-		private SceneStateEvents _gameStateEvents;
+		private SceneStateEvents _sceneStateEvents;
 
 		private SceneStateManipulator _sceneStateManipulator;
 
@@ -23,22 +23,33 @@ namespace PrototypeGame.Scene.State
 		public SceneStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEvents gameStateServices)
 		{
 			_sceneGameState = new SceneGameState();
-			_gameStateEvents = gameStateServices.SceneStateEvents;
+			_sceneStateEvents = gameStateServices.SceneStateEvents;
 			_sceneStateManipulator = new SceneStateManipulator(commonServices, _sceneGameState);
 			_hexGridController = gameEngineServices.HexGridController;
 
-			_gameStateEvents.TileBuiltEvent += OnTileBuilt;
-			_gameStateEvents.TransportCubeEvent += OnTransportCube;
-			_gameStateEvents.FactoryBuiltEvent += OnFactoryBuilt;
-			_gameStateEvents.FactoryRemovedEvent += OnFactoryRemoved;
+			_sceneStateEvents.TileBuiltEvent += OnTileBuilt;
+
+			_sceneStateEvents.TransportCubeEvent += OnTransportCube;
+			
+			_sceneStateEvents.FactoryBuiltEvent += OnFactoryBuilt;
+			_sceneStateEvents.FactoryRemovedEvent += OnFactoryRemoved;
+
+			_sceneStateEvents.StationBuiltEvent += OnStationBuilt;
+			_sceneStateEvents.StationRemovedEvent += OnStationRemoved;
+
 		}
 
 		public void Dispose()
 		{
-			_gameStateEvents.TileBuiltEvent -= OnTileBuilt;
-			_gameStateEvents.TransportCubeEvent -= OnTransportCube;
-			_gameStateEvents.FactoryBuiltEvent -= OnFactoryBuilt;
-			_gameStateEvents.FactoryRemovedEvent -= OnFactoryRemoved;
+			_sceneStateEvents.TileBuiltEvent -= OnTileBuilt;
+
+			_sceneStateEvents.TransportCubeEvent -= OnTransportCube;
+
+			_sceneStateEvents.FactoryBuiltEvent -= OnFactoryBuilt;
+			_sceneStateEvents.FactoryRemovedEvent -= OnFactoryRemoved;
+
+			_sceneStateEvents.StationBuiltEvent -= OnStationBuilt;
+			_sceneStateEvents.StationRemovedEvent -= OnStationRemoved;
 		}
 
 		private void OnTileBuilt(HexTileData tileData)
@@ -64,6 +75,18 @@ namespace PrototypeGame.Scene.State
 		{
 			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
 			_sceneStateManipulator.RemoveFactoryFromTile(hexTileObject);
+		}
+
+		public void OnStationBuilt(HexTileData hexTileData)
+		{
+			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
+			_sceneStateManipulator.BuildStationOnTile(hexTileObject, hexTileData.Station);
+		}
+
+		public void OnStationRemoved(HexTileData hexTileData)
+		{
+			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
+			_sceneStateManipulator.RemoveStationFromTile(hexTileObject);
 		}
 	}
 }

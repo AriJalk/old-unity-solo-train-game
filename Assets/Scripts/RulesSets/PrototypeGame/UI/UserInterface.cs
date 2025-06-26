@@ -23,8 +23,7 @@ namespace PrototypeGame.UI
 				for (int i = 0; i < 10; i++)
 				{
 					option = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
-					option.guid = Guid.NewGuid();
-					option.Setup("Factory", isEnabled: true);
+					option.Setup(Guid.NewGuid(), "Factory", isEnabled: true);
 					list.Add(option);
 				}
 
@@ -32,7 +31,7 @@ namespace PrototypeGame.UI
 				{
 					option = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					option.guid = Guid.NewGuid();
-					option.Setup("Station");
+					option.Setup(Guid.NewGuid(), "Station");
 					list.Add(option);
 				}
 				optionPanel.OpenPanel(list);

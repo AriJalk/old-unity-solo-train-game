@@ -1,4 +1,5 @@
 ﻿using CommonEngine.UI.Options;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -10,10 +11,14 @@ namespace PrototypeGame.UI.Options
 		[SerializeField]
 		private TextMeshProUGUI _text;
 
-		public void Setup(string text, bool isEnabled = false)
+		public string BuildingName { get; private set; }
+
+		public void Setup(Guid guid, string text, bool isEnabled = false)
 		{
+			this.guid = guid;
 			_text.text = text;
 			_button.enabled = isEnabled;
+			BuildingName = text;
 		}
 	}
 }

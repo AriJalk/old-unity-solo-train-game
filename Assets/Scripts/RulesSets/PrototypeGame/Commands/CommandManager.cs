@@ -20,9 +20,16 @@ namespace PrototypeGame.Commands
 			_commandGroupHead.AddCommand(command);
 		}
 
-		public void CreateAndExecuteFactoryBuildCommand(HexCoord hexCoord, GoodsColor productionColor)
+		public void CreateAndExecuteBuildFactoryCommand(HexCoord hexCoord, GoodsColor productionColor)
 		{
 			BuildFactoryCommand command = new BuildFactoryCommand(_logicStateEvents, hexCoord, productionColor);
+			command.Execute();
+			_commandGroupHead.AddCommand(command);
+		}
+
+		public void CreateAndExecuteBuildStationCommand(HexCoord hexCoord)
+		{
+			BuildStationCommand command = new BuildStationCommand(_logicStateEvents, hexCoord);
 			command.Execute();
 			_commandGroupHead.AddCommand(command);
 		}

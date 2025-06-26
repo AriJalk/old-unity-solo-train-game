@@ -23,16 +23,24 @@ namespace PrototypeGame.Events
 			_sceneStateEvents = gameStateServices.SceneStateEvents;
 
 			_logicStateEvents.TransportRequestEvent += TransportRequest;
+
 			_logicStateEvents.BuildFactoryRequestEvent += BuildFactoryRequest;
 			_logicStateEvents.RemoveFactoryRequestEvent += RemoveFactoryRequest;
+
+			_logicStateEvents.BuildStationRequestEvent += BuildStationRequest;
+			_logicStateEvents.RemoveStationRequestEvent += RemoveStationRequest;
 
 		}
 
 		public void Dispose()
 		{
 			_logicStateEvents.TransportRequestEvent -= TransportRequest;
+
 			_logicStateEvents.BuildFactoryRequestEvent -= BuildFactoryRequest;
 			_logicStateEvents.RemoveFactoryRequestEvent -= RemoveFactoryRequest;
+
+			_logicStateEvents.BuildStationRequestEvent -= BuildStationRequest;
+			_logicStateEvents.RemoveStationRequestEvent -= RemoveStationRequest;
 		}
 
 		private void TransportRequest(Guid origin, Guid destination)
@@ -64,6 +72,28 @@ namespace PrototypeGame.Events
 			{
 				_logicStateManager.RemoveFactory(hexTileData);
 				_sceneStateEvents.RaiseFactoryRemoveEvent(hexTileData);
+			}
+		}
+
+		private void BuildStationRequest(HexCoord hexCoord)
+		{
+			HexTileData hexTileData = _logicStateManager.LogicGameState.Tiles[hexCoord];
+
+			if (hexTileData.Station == null)
+			{
+				Station station = _logicStateManager.BuildStationOnTile(hexTileData);
+				_sceneStateEvents.RaiseStationBuiltEvent(hexTileData);
+			}
+		}
+
+		private void RemoveStationRequest(HexCoord hexCoord)
+		{
+			HexTileData hexTileData = _logicStateManager.LogicGameState.Tiles[hexCoord];
+
+			if (hexTileData.Station != null)
+			{
+				_logicStateManager.RemoveStation(hexTileData);
+				_sceneStateEvents.RaiseStationRemovedEvent(hexTileData);
 			}
 		}
 

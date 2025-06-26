@@ -1,5 +1,6 @@
 using CommonEngine.Core;
 using CommonEngine.Events;
+using CommonEngine.UI.Options;
 using GameEngine.Core;
 using GameEngine.Map;
 using UnityEngine;
@@ -18,6 +19,9 @@ namespace PrototypeGame
 		private GameEngineServices _gameServices;
 
 		[SerializeField]
+		private OptionPanel _optionPanel;
+
+		[SerializeField]
 		private Button _undoButton;
 		[SerializeField]
 		private Button _confirmButton;
@@ -26,7 +30,7 @@ namespace PrototypeGame
 
 		void Start()
 		{
-			Setup(new PrototypeRulesSet(_commonServices, _gameServices));
+			Setup(new PrototypeRulesSet(_commonServices, _gameServices, _optionPanel));
 			_undoButton?.onClick.AddListener(Undo);
 			_confirmButton?.onClick.AddListener(Confirm);
 		}

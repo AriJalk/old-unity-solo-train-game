@@ -111,5 +111,14 @@ namespace PrototypeGame.Logic.State
 
 			hexTileData.Factory = null;
 		}
+
+		public void RemoveStation(HexTileData hexTileData)
+		{
+			Station station = hexTileData.Station;
+			LogicGameState.Stations.Remove(station.guid);
+			RemoveSlot(station.GoodsCubeSlot1);
+			RemoveSlot(station.GoodsCubeSlot2);
+			hexTileData.Station = null;
+		}
 	}
 }
