@@ -5,24 +5,24 @@ namespace PrototypeGame.Commands
 {
 	internal class BuildFactoryCommand : ICommand
 	{
-		private readonly LogicStateEvents _logicStateEvents;
+		private readonly CommandRequestEvents _commandRequestEvents;
 		private readonly HexCoord _hexCoord;
 		private readonly GoodsColor _goodsColor;
 
-		public BuildFactoryCommand(LogicStateEvents logicStateEvents, HexCoord hexCoord, GoodsColor productionColor)
+		public BuildFactoryCommand(CommandRequestEvents commandRequestEvents, HexCoord hexCoord, GoodsColor productionColor)
 		{
-			_logicStateEvents = logicStateEvents;
+			_commandRequestEvents = commandRequestEvents;
 			_hexCoord = hexCoord;
 			_goodsColor = productionColor;
 		}
 		public void Execute()
 		{
-			_logicStateEvents.RaiseBuildFactoryRequestEvent(_hexCoord, _goodsColor);
+			_commandRequestEvents.RaiseBuildFactoryRequestEvent(_hexCoord, _goodsColor);
 		}
 
 		public void Undo()
 		{
-			_logicStateEvents.RaiseRemoveFactoryRequestEvent(_hexCoord);
+			_commandRequestEvents.RaiseRemoveFactoryRequestEvent(_hexCoord);
 		}
 	}
 }

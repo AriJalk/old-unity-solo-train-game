@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CommonEngine.Events
 {
-	public class SceneEvents
+	public class CommonEngineEvents
 	{
 		public event Action<RaycastHit> ColliderSelectedEvent;
 

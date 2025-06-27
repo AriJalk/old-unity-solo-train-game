@@ -34,6 +34,9 @@ namespace PrototypeGame.Scene.State
 			_sceneStateEvents.FactoryBuiltEvent += OnFactoryBuilt;
 			_sceneStateEvents.FactoryRemovedEvent += OnFactoryRemoved;
 
+			_sceneStateEvents.GoodsCubeProducedInSlotEvent += OnGoodsCubeProducedInSlot;
+			_sceneStateEvents.GoodsCubeRemovedFromSlotEvent += OnGoodsCubeRemovedFromSlot;
+
 			_sceneStateEvents.StationBuiltEvent += OnStationBuilt;
 			_sceneStateEvents.StationRemovedEvent += OnStationRemoved;
 
@@ -50,6 +53,9 @@ namespace PrototypeGame.Scene.State
 
 			_sceneStateEvents.StationBuiltEvent -= OnStationBuilt;
 			_sceneStateEvents.StationRemovedEvent -= OnStationRemoved;
+
+			_sceneStateEvents.GoodsCubeProducedInSlotEvent -= OnGoodsCubeProducedInSlot;
+			_sceneStateEvents.GoodsCubeRemovedFromSlotEvent -= OnGoodsCubeRemovedFromSlot;
 		}
 
 		private void OnTileBuilt(HexTileData tileData)
@@ -87,6 +93,18 @@ namespace PrototypeGame.Scene.State
 		{
 			HexTileObject hexTileObject = _sceneGameState.Tiles[hexTileData.HexCoord];
 			_sceneStateManipulator.RemoveStationFromTile(hexTileObject);
+		}
+
+		public void OnGoodsCubeProducedInSlot(GoodsCubeSlot goodsCubeSlot, GoodsCube goodsCube)
+		{
+			GoodsCubeSlotObject goodsCubeSlotObject = _sceneGameState.CubeSlots[goodsCubeSlot.guid];
+			_sceneStateManipulator.BuildGoodsCubeOnSlot(goodsCubeSlotObject, goodsCube);
+		}
+
+		public void OnGoodsCubeRemovedFromSlot(GoodsCubeSlot goodsCubeSlot)
+		{
+			GoodsCubeSlotObject goodsCubeSlotObject = _sceneGameState.CubeSlots[goodsCubeSlot.guid];
+			_sceneStateManipulator.RemoveGoodsCubeObjectFromSlot(goodsCubeSlotObject);
 		}
 	}
 }

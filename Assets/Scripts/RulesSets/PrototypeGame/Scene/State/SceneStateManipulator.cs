@@ -45,7 +45,7 @@ namespace PrototypeGame.Scene.State
 			return hexTileObject;
 		}
 
-		public GoodsCubeSlotObject InitializeGoodsCubeSlotObject(GoodsCubeSlotObject goodsCubeSlotObject, GoodsCubeSlot goodsCubeSlot)
+		private GoodsCubeSlotObject InitializeGoodsCubeSlotObject(GoodsCubeSlotObject goodsCubeSlotObject, GoodsCubeSlot goodsCubeSlot)
 		{
 			goodsCubeSlotObject.guid = goodsCubeSlot.guid;
 
@@ -59,7 +59,7 @@ namespace PrototypeGame.Scene.State
 			return goodsCubeSlotObject;
 		}
 
-		public void RemoveGoodsCubeSlot(GoodsCubeSlotObject goodsCubeSlotObject)
+		private void RemoveGoodsCubeSlot(GoodsCubeSlotObject goodsCubeSlotObject)
 		{
 			// Remove cube if exists
 			if (goodsCubeSlotObject.GoodsCubeObject != null)
@@ -70,7 +70,7 @@ namespace PrototypeGame.Scene.State
 			//Debug.Log("Slots: " + _sceneGameState.CubeSlots.Count);
 		}
 
-		public GoodsCubeObject BuildGoodsCube(GoodsCube goodsCube)
+		private GoodsCubeObject BuildGoodsCube(GoodsCube goodsCube)
 		{
 			GoodsCubeObject goodsCubeObject = _prefabManager.RetrievePoolObject<GoodsCubeObject>();
 			goodsCubeObject.guid = goodsCube.guid;

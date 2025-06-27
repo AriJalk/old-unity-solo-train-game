@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using HexSystem;
+using PrototypeGame.Logic;
+using PrototypeGame.Logic.MetaData;
 
 
 namespace PrototypeGame
@@ -42,7 +44,7 @@ namespace PrototypeGame
 			_gameStateServices = new GameStateEvents();
 			_logicStateManager = new LogicStateManager(new LogicGameState());
 			_sceneManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateServices);
-			_commandManager = new CommandManager(_gameStateServices.LogicStateEvents);
+			_commandManager = new CommandManager(_gameStateServices.CommandRequestEvents);
 			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
 			_optionPanel = optionPanel;
 		}
@@ -58,14 +60,14 @@ namespace PrototypeGame
 
 		public void StartFlow()
 		{
-			_commonServices.SceneEvents.ColliderSelectedEvent += ColliderHit;
+			_commonServices.CommonEngineEvents.ColliderSelectedEvent += ColliderHit;
 			_commandManager.NextCommandGroup();
 		}
 
 
 		public void StopFlow()
 		{
-			_commonServices.SceneEvents.ColliderSelectedEvent -= ColliderHit;
+			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= ColliderHit;
 
 			_sceneManager.Dispose();
 			_commandEventHandler.Dispose();
@@ -123,7 +125,14 @@ namespace PrototypeGame
 				switch (option.BuildingName)
 				{
 					case "Factory":
+						_commandManager.NextCommandGroup();
 						_commandManager.CreateAndExecuteBuildFactoryCommand(_buildCoord, GoodsColor.GREEN);
+
+						_commandManager.NextCommandGroup();
+						HexTileData tile = _logicStateManager.LogicGameState.Tiles[_buildCoord];
+						_commandManager.CreateAndExecuteProduceGoodsCubeInSlotCommand(tile.Factory.GoodsCubeSlot.guid, tile.Factory.ProductionColor);
+
+						_commandManager.NextCommandGroup();
 						break;
 					case "Station":
 						_commandManager.CreateAndExecuteBuildStationCommand(_buildCoord);

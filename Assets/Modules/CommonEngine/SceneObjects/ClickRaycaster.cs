@@ -13,12 +13,12 @@ namespace CommonEngine.SceneObjects
 		private CommonServices _commonServices;
 
 		private InputEvents _inputEvents;
-		private SceneEvents _sceneEvents;
+		private CommonEngineEvents _sceneEvents;
 		// Start is called once before the first execution of Update after the MonoBehaviour is created
 		void Start()
 		{
 			_inputEvents = _commonServices.InputEvents;
-			_sceneEvents = _commonServices.SceneEvents;
+			_sceneEvents = _commonServices.CommonEngineEvents;
 			_inputEvents.MouseButtonClickedUpEvent += OnClick;
 		}
 

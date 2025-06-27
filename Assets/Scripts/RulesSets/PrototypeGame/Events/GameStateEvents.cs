@@ -6,6 +6,6 @@
 	internal class GameStateEvents
 	{
 		public readonly SceneStateEvents SceneStateEvents = new SceneStateEvents();
-		public readonly LogicStateEvents LogicStateEvents = new LogicStateEvents();
+		public readonly CommandRequestEvents CommandRequestEvents = new CommandRequestEvents();
 	}
 }

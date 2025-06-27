@@ -5,22 +5,22 @@ namespace PrototypeGame.Commands
 {
 	internal class BuildStationCommand : ICommand
 	{
-		private readonly LogicStateEvents _logicStateEvents;
+		private readonly CommandRequestEvents _commandRequestEvents;
 		private readonly HexCoord _hexCoord;
 
-		public BuildStationCommand(LogicStateEvents logicStateEvents, HexCoord hexCoord)
+		public BuildStationCommand(CommandRequestEvents commandRequestEvents, HexCoord hexCoord)
 		{
-			_logicStateEvents = logicStateEvents;
+			_commandRequestEvents = commandRequestEvents;
 			_hexCoord = hexCoord;
 		}
 		public void Execute()
 		{
-			_logicStateEvents.RaiseBuildStationRequestEvent(_hexCoord);
+			_commandRequestEvents.RaiseBuildStationRequestEvent(_hexCoord);
 		}
 
 		public void Undo()
 		{
-			_logicStateEvents.RaiseRemoveStationRequestEvent(_hexCoord);
+			_commandRequestEvents.RaiseRemoveStationRequestEvent(_hexCoord);
 		}
 	}
 }

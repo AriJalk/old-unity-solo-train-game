@@ -14,6 +14,9 @@ namespace PrototypeGame
 		public event Action<HexTileData> StationBuiltEvent;
 		public event Action<HexTileData> StationRemovedEvent;
 
+		public event Action<GoodsCubeSlot, GoodsCube> GoodsCubeProducedInSlotEvent;
+		public event Action<GoodsCubeSlot> GoodsCubeRemovedFromSlotEvent;
+
 		public event Action<Guid, Guid> TransportCubeEvent;
 
 
@@ -46,6 +49,16 @@ namespace PrototypeGame
 		public void RaiseStationRemovedEvent(HexTileData hexTileData)
 		{
 			StationRemovedEvent?.Invoke(hexTileData);
+		}
+
+		public void RaiseGoodsCubeProducedInSlotEvent(GoodsCubeSlot goodsCubeSlot, GoodsCube goodsCube)
+		{
+			GoodsCubeProducedInSlotEvent?.Invoke(goodsCubeSlot, goodsCube);
+		}
+
+		public void voidRaiseGoodsCubeRemovedFromSlotEvent(GoodsCubeSlot goodsCubeSlot)
+		{
+			GoodsCubeRemovedFromSlotEvent?.Invoke(goodsCubeSlot);
 		}
 	}
 

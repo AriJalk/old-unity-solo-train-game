@@ -13,34 +13,39 @@ namespace PrototypeGame.Events
 	{
 		private LogicStateManager _logicStateManager;
 
-		private LogicStateEvents _logicStateEvents;
+		private CommandRequestEvents _commandRequestEvents;
 		private SceneStateEvents _sceneStateEvents;
 
 		public CommandEventHandler(LogicStateManager logicStateManager, GameStateEvents gameStateServices)
 		{
 			_logicStateManager = logicStateManager;
-			_logicStateEvents = gameStateServices.LogicStateEvents;
+			_commandRequestEvents = gameStateServices.CommandRequestEvents;
 			_sceneStateEvents = gameStateServices.SceneStateEvents;
 
-			_logicStateEvents.TransportRequestEvent += TransportRequest;
+			_commandRequestEvents.TransportRequestEvent += TransportRequest;
 
-			_logicStateEvents.BuildFactoryRequestEvent += BuildFactoryRequest;
-			_logicStateEvents.RemoveFactoryRequestEvent += RemoveFactoryRequest;
+			_commandRequestEvents.BuildFactoryRequestEvent += BuildFactoryRequest;
+			_commandRequestEvents.RemoveFactoryRequestEvent += RemoveFactoryRequest;
 
-			_logicStateEvents.BuildStationRequestEvent += BuildStationRequest;
-			_logicStateEvents.RemoveStationRequestEvent += RemoveStationRequest;
+			_commandRequestEvents.BuildStationRequestEvent += BuildStationRequest;
+			_commandRequestEvents.RemoveStationRequestEvent += RemoveStationRequest;
 
+			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvents += ProduceGoodsCubeOnSlotRequest;
+			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvents += RemoveGoodsCubeFromSlotRequest;
 		}
 
 		public void Dispose()
 		{
-			_logicStateEvents.TransportRequestEvent -= TransportRequest;
+			_commandRequestEvents.TransportRequestEvent -= TransportRequest;
 
-			_logicStateEvents.BuildFactoryRequestEvent -= BuildFactoryRequest;
-			_logicStateEvents.RemoveFactoryRequestEvent -= RemoveFactoryRequest;
+			_commandRequestEvents.BuildFactoryRequestEvent -= BuildFactoryRequest;
+			_commandRequestEvents.RemoveFactoryRequestEvent -= RemoveFactoryRequest;
 
-			_logicStateEvents.BuildStationRequestEvent -= BuildStationRequest;
-			_logicStateEvents.RemoveStationRequestEvent -= RemoveStationRequest;
+			_commandRequestEvents.BuildStationRequestEvent -= BuildStationRequest;
+			_commandRequestEvents.RemoveStationRequestEvent -= RemoveStationRequest;
+
+			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvents -= ProduceGoodsCubeOnSlotRequest;
+			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvents -= RemoveGoodsCubeFromSlotRequest;
 		}
 
 		private void TransportRequest(Guid origin, Guid destination)
@@ -58,7 +63,7 @@ namespace PrototypeGame.Events
 			if (hexTileData.Factory == null)
 			{
 				Factory factory = _logicStateManager.BuildFactoryOnTile(hexTileData, productionColor);
-				_logicStateManager.ProduceCubeInFactory(factory);
+				//_logicStateManager.ProduceGoodsCubeInSlot(factory.GoodsCubeSlot, factory.ProductionColor);
 
 				_sceneStateEvents.RaiseFactoryBuiltEvent(hexTileData);
 			}
@@ -81,7 +86,7 @@ namespace PrototypeGame.Events
 
 			if (hexTileData.Station == null)
 			{
-				Station station = _logicStateManager.BuildStationOnTile(hexTileData);
+				_logicStateManager.BuildStationOnTile(hexTileData);
 				_sceneStateEvents.RaiseStationBuiltEvent(hexTileData);
 			}
 		}
@@ -97,6 +102,18 @@ namespace PrototypeGame.Events
 			}
 		}
 
+		private void ProduceGoodsCubeOnSlotRequest(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		{
+			GoodsCubeSlot goodsCubeSlot = _logicStateManager.LogicGameState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
+			GoodsCube cube = _logicStateManager.ProduceGoodsCubeInSlot(goodsCubeSlot, goodsColor);
+			_sceneStateEvents.RaiseGoodsCubeProducedInSlotEvent(goodsCubeSlot, cube);
+		}
 
+		private void RemoveGoodsCubeFromSlotRequest(Guid goodsCubeSlotGuid)
+		{
+			GoodsCubeSlot goodsCubeSlot = _logicStateManager.LogicGameState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
+			_logicStateManager.RemoveCube(goodsCubeSlot.GoodsCube);
+			_sceneStateEvents.voidRaiseGoodsCubeRemovedFromSlotEvent(goodsCubeSlot);
+		}
 	}
 }

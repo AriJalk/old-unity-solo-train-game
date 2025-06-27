@@ -16,7 +16,19 @@ namespace CommonEngine.IO
 			}
 		}
 
-		public bool WasInputReleasedThisFrame { get; set; }
+		private bool _wasInputReleasedThisFrame = false;
+		public bool WasInputReleasedThisFrame
+		{
+			get
+			{
+				if (_wasInputReleasedThisFrame)
+				{
+					_wasInputReleasedThisFrame = false;
+					return true;
+				}
+				return false;
+			}
+		}
 
 		public void AddLock(GameObject lockOwner)
 		{
@@ -33,7 +45,7 @@ namespace CommonEngine.IO
 				_lockingObjects.Remove(lockObject);
 				if (_lockingObjects.Count == 0)
 				{
-					WasInputReleasedThisFrame = true;
+					_wasInputReleasedThisFrame = true;
 				}
 			}
 		}

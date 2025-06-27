@@ -6,30 +6,37 @@ namespace PrototypeGame.Commands
 {
 	internal class CommandManager : CommandManagerBase
 	{
-		private LogicStateEvents _logicStateEvents;
+		private CommandRequestEvents _commandRequestEvents;
 
-		public CommandManager(LogicStateEvents logicStateEvents)
+		public CommandManager(CommandRequestEvents logicStateEvents)
 		{
-			_logicStateEvents = logicStateEvents;
+			_commandRequestEvents = logicStateEvents;
 		}
 
 		public void CreateAndExecuteTrasnportCommand(Guid originSlot, Guid destinationSlot)
 		{
-			TransportCubeCommand command = new TransportCubeCommand(_logicStateEvents, originSlot, destinationSlot);
+			TransportCubeCommand command = new TransportCubeCommand(_commandRequestEvents, originSlot, destinationSlot);
 			command.Execute();
 			_commandGroupHead.AddCommand(command);
 		}
 
 		public void CreateAndExecuteBuildFactoryCommand(HexCoord hexCoord, GoodsColor productionColor)
 		{
-			BuildFactoryCommand command = new BuildFactoryCommand(_logicStateEvents, hexCoord, productionColor);
+			BuildFactoryCommand command = new BuildFactoryCommand(_commandRequestEvents, hexCoord, productionColor);
 			command.Execute();
 			_commandGroupHead.AddCommand(command);
 		}
 
 		public void CreateAndExecuteBuildStationCommand(HexCoord hexCoord)
 		{
-			BuildStationCommand command = new BuildStationCommand(_logicStateEvents, hexCoord);
+			BuildStationCommand command = new BuildStationCommand(_commandRequestEvents, hexCoord);
+			command.Execute();
+			_commandGroupHead.AddCommand(command);
+		}
+
+		public void CreateAndExecuteProduceGoodsCubeInSlotCommand(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		{
+			ProduceGoodsCubeInSlotCommand command = new ProduceGoodsCubeInSlotCommand(_commandRequestEvents, goodsCubeSlotGuid, goodsColor);
 			command.Execute();
 			_commandGroupHead.AddCommand(command);
 		}

@@ -23,7 +23,6 @@ namespace CommonEngine.IO
 		{
 			if (_commonServices.InputLock.WasInputReleasedThisFrame)
 			{
-				_commonServices.InputLock.WasInputReleasedThisFrame = false;
 				return;
 			}
 			if (!_commonServices.InputLock.IsInputLocked)

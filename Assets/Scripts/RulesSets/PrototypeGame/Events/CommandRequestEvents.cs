@@ -1,9 +1,13 @@
 ﻿using HexSystem;
+using PrototypeGame.Logic;
 using System;
 
 namespace PrototypeGame
 {
-	internal class LogicStateEvents
+	/// <summary>
+	/// Main API for Commands to interact with the game state
+	/// </summary>
+	internal class CommandRequestEvents
 	{
 		public event Action<Guid, Guid> TransportRequestEvent;
 
@@ -12,6 +16,9 @@ namespace PrototypeGame
 
 		public event Action<HexCoord> BuildStationRequestEvent;
 		public event Action<HexCoord> RemoveStationRequestEvent;
+
+		public event Action<Guid, GoodsColor> ProduceGoodsCubeInSlotRequestEvents;
+		public event Action<Guid> RemoveGoodsCubeFromSlotRequestEvents;
 
 		public void RaiseTransportRequestEvent(Guid originSlot, Guid destinationSlot)
 		{
@@ -36,6 +43,16 @@ namespace PrototypeGame
 		public void RaiseRemoveStationRequestEvent(HexCoord hexCoord)
 		{
 			RemoveStationRequestEvent?.Invoke(hexCoord);
+		}
+
+		public void RaiseProduceGoodsCubeInSlotRequestEvents(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		{
+			ProduceGoodsCubeInSlotRequestEvents?.Invoke(goodsCubeSlotGuid, goodsColor);
+		}
+
+		public void RaiseRemoveGoodsCubeFromSlotRequestEvents(Guid goodsCubeSlotGuid)
+		{
+			RemoveGoodsCubeFromSlotRequestEvents?.Invoke(goodsCubeSlotGuid);
 		}
 	}
 }

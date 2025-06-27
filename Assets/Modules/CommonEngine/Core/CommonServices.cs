@@ -11,7 +11,7 @@ namespace CommonEngine.Core
 		public PrefabManager PrefabManager;
 
 		public readonly InputEvents InputEvents = new InputEvents();
-		public readonly SceneEvents SceneEvents = new SceneEvents();
+		public readonly CommonEngineEvents CommonEngineEvents = new CommonEngineEvents();
 		public readonly RaycastConfig RaycastConfig = new RaycastConfig();
 		public readonly MaterialManager MaterialManager = new MaterialManager();
 
