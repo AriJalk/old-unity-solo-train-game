@@ -113,7 +113,7 @@ namespace PrototypeGame.Events
 		{
 			GoodsCubeSlot goodsCubeSlot = _logicStateManager.LogicGameState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
 			_logicStateManager.RemoveCube(goodsCubeSlot.GoodsCube);
-			_sceneStateEvents.voidRaiseGoodsCubeRemovedFromSlotEvent(goodsCubeSlot);
+			_sceneStateEvents.RaiseGoodsCubeRemovedFromSlotEvent(goodsCubeSlot);
 		}
 	}
 }

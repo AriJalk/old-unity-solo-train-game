@@ -2,8 +2,6 @@ using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
 using PrototypeGame.Logic;
-using PrototypeGame.Logic.State;
-using UnityEngine;
 
 namespace PrototypeGame.Scene.State
 {
@@ -27,6 +25,7 @@ namespace PrototypeGame.Scene.State
 		{
 			HexTileObject hexTileObject = _prefabManager.RetrievePoolObject<HexTileObject>();
 			hexTileObject.HexCoord = hexTileData.HexCoord;
+			// TODO: move decisions to manager
 			if (hexTileData.Factory != null)
 			{
 				BuildFactoryOnTile(hexTileObject, hexTileData.Factory);
@@ -95,7 +94,6 @@ namespace PrototypeGame.Scene.State
 			_sceneGameState.Cubes.Remove(goodsCubeObject.guid);
 			_prefabManager.ReturnPoolObject(goodsCubeObject);
 			goodsCubeSlotObject.GoodsCubeObject = null;
-			//Debug.Log("Scene cubes: " + _sceneGameState.Cubes.Count);
 		}
 
 		public FactoryObject BuildFactoryOnTile(HexTileObject hexTileObject, Factory factory)
@@ -125,15 +123,6 @@ namespace PrototypeGame.Scene.State
 			InitializeGoodsCubeSlotObject(stationObject.GoodsCubeSlotObject2, station.GoodsCubeSlot2);
 
 			SceneHelpers.SetParentAndResetPosition(stationObject.transform, hexTileObject.StationContainer);
-
-			if (station.GoodsCubeSlot1.GoodsCube != null)
-			{
-				BuildGoodsCubeOnSlot(stationObject.GoodsCubeSlotObject1, station.GoodsCubeSlot1.GoodsCube);
-			}
-			if (station.GoodsCubeSlot2.GoodsCube != null)
-			{
-				BuildGoodsCubeOnSlot(stationObject.GoodsCubeSlotObject2, station.GoodsCubeSlot2.GoodsCube);
-			}
 
 			hexTileObject.StationObject = stationObject;
 

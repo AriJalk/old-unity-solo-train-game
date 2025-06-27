@@ -1,8 +1,7 @@
 ﻿using HexSystem;
-using PrototypeGame.Logic;
 using System;
 
-namespace PrototypeGame
+namespace PrototypeGame.Events
 {
 	/// <summary>
 	/// Main API for Commands to interact with the game state

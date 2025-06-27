@@ -56,7 +56,7 @@ namespace PrototypeGame
 			GoodsCubeProducedInSlotEvent?.Invoke(goodsCubeSlot, goodsCube);
 		}
 
-		public void voidRaiseGoodsCubeRemovedFromSlotEvent(GoodsCubeSlot goodsCubeSlot)
+		public void RaiseGoodsCubeRemovedFromSlotEvent(GoodsCubeSlot goodsCubeSlot)
 		{
 			GoodsCubeRemovedFromSlotEvent?.Invoke(goodsCubeSlot);
 		}
