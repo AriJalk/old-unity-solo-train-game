@@ -2,11 +2,13 @@ using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
 using PrototypeGame.Logic;
+using UnityEngine;
 
 namespace PrototypeGame.Scene.State
 {
 	/// <summary>
-	/// Handles creation and manipulation of every game related scene objects, to be accessed only by SceneStateManager
+	/// Handles creation and manipulation of every game related scene objects, to be accessed only by SceneStateManager.
+	/// *** Only Authority on modifying Scene Objects internals ***
 	/// </summary>
 	internal class SceneStateManipulator
 	{
@@ -25,18 +27,8 @@ namespace PrototypeGame.Scene.State
 		{
 			HexTileObject hexTileObject = _prefabManager.RetrievePoolObject<HexTileObject>();
 			hexTileObject.HexCoord = hexTileData.HexCoord;
+
 			// TODO: move decisions to manager
-			if (hexTileData.Factory != null)
-			{
-				BuildFactoryOnTile(hexTileObject, hexTileData.Factory);
-			}
-			if (hexTileData.Station != null)
-			{
-				BuildStationOnTile(hexTileObject, hexTileData.Station);
-			}
-
-			_sceneGameState.Tiles.Add(hexTileData.HexCoord, hexTileObject);
-
 			if (hexTileData.TerrainType == TerrainType.MOUNTAIN)
 			{
 				hexTileObject.MeshRenderer.material = _materialManager.Materials["RED"];
@@ -44,104 +36,70 @@ namespace PrototypeGame.Scene.State
 			return hexTileObject;
 		}
 
-		private GoodsCubeSlotObject InitializeGoodsCubeSlotObject(GoodsCubeSlotObject goodsCubeSlotObject, GoodsCubeSlot goodsCubeSlot)
-		{
-			goodsCubeSlotObject.guid = goodsCubeSlot.guid;
 
-			_sceneGameState.CubeSlots.Add(goodsCubeSlot.guid, goodsCubeSlotObject);
-
-			if(goodsCubeSlot.GoodsCube != null)
-			{
-				BuildGoodsCubeOnSlot(goodsCubeSlotObject, goodsCubeSlot.GoodsCube);
-			}
-
-			return goodsCubeSlotObject;
-		}
-
-		private void RemoveGoodsCubeSlot(GoodsCubeSlotObject goodsCubeSlotObject)
-		{
-			// Remove cube if exists
-			if (goodsCubeSlotObject.GoodsCubeObject != null)
-			{
-				RemoveGoodsCubeObjectFromSlot(goodsCubeSlotObject);
-			}
-			_sceneGameState.CubeSlots.Remove(goodsCubeSlotObject.guid);
-			//Debug.Log("Slots: " + _sceneGameState.CubeSlots.Count);
-		}
-
-		private GoodsCubeObject BuildGoodsCube(GoodsCube goodsCube)
+		public GoodsCubeObject BuildGoodsCubeObject(GoodsCube goodsCube)
 		{
 			GoodsCubeObject goodsCubeObject = _prefabManager.RetrievePoolObject<GoodsCubeObject>();
 			goodsCubeObject.guid = goodsCube.guid;
 			goodsCubeObject.MeshRenderer.material = _materialManager.Materials[goodsCube.Color.ToString()];
-
-			_sceneGameState.Cubes.Add(goodsCube.guid, goodsCubeObject);
 			return goodsCubeObject;
 		}
 
-		public GoodsCubeSlotObject BuildGoodsCubeOnSlot(GoodsCubeSlotObject goodsCubeSlotObject, GoodsCube goodsCube)
+		public void AttachGoodsCubeToSlot(GoodsCubeObject goodsCubeObject, GoodsCubeSlotObject goodsCubeSlotObject)
 		{
-			GoodsCubeObject goodsCubeObject = BuildGoodsCube(goodsCube);
-			SceneHelpers.SetParentAndResetPosition(goodsCubeObject.transform, goodsCubeSlotObject.GoodsCubeObjectContainer);
 			goodsCubeSlotObject.GoodsCubeObject = goodsCubeObject;
-
-			return goodsCubeSlotObject;
+			SceneHelpers.SetParentAndResetPosition(goodsCubeObject.transform, goodsCubeSlotObject.GoodsCubeObjectContainer);
 		}
 
-		public void RemoveGoodsCubeObjectFromSlot(GoodsCubeSlotObject goodsCubeSlotObject)
+		public void DetachGoodsCubeFromSlot(GoodsCubeSlotObject goodsCubeSlotObject)
 		{
 			GoodsCubeObject goodsCubeObject = goodsCubeSlotObject.GoodsCubeObject;
-			_sceneGameState.Cubes.Remove(goodsCubeObject.guid);
-			_prefabManager.ReturnPoolObject(goodsCubeObject);
 			goodsCubeSlotObject.GoodsCubeObject = null;
+			_prefabManager.ReturnPoolObject(goodsCubeObject);
 		}
 
-		public FactoryObject BuildFactoryOnTile(HexTileObject hexTileObject, Factory factory)
+		public FactoryObject BuildFactoryObject(Factory factory)
 		{
 			FactoryObject factoryObject = _prefabManager.RetrievePoolObject<FactoryObject>();
-
-			InitializeGoodsCubeSlotObject(factoryObject.GoodsCubeSlotObject, factory.GoodsCubeSlot);
-
-			SceneHelpers.SetParentAndResetPosition(factoryObject.transform, hexTileObject.FactoryContainer);
-
-			hexTileObject.FactoryObject = factoryObject;
-
 			return factoryObject;
 		}
 
-		public void RemoveFactoryFromTile(HexTileObject hexTileObject)
+		public void AttachFactoryToTile(FactoryObject factoryObject, HexTileObject hexTileObject)
 		{
-			RemoveGoodsCubeSlot(hexTileObject.FactoryObject.GoodsCubeSlotObject);
+			hexTileObject.FactoryObject = factoryObject;
+			SceneHelpers.SetParentAndResetPosition
+				(factoryObject.transform, hexTileObject.FactoryContainer);
+		}
+
+		public void DetachFactoryFromTile(HexTileObject hexTileObject)
+		{
 			_prefabManager.ReturnPoolObject(hexTileObject.FactoryObject);
 			hexTileObject.FactoryObject = null;
 		}
 
-		public StationObject BuildStationOnTile(HexTileObject hexTileObject, Station station)
+		public StationObject BuildStationObject(Station station)
 		{
 			StationObject stationObject = _prefabManager.RetrievePoolObject<StationObject>();
-			InitializeGoodsCubeSlotObject(stationObject.GoodsCubeSlotObject1, station.GoodsCubeSlot1);
-			InitializeGoodsCubeSlotObject(stationObject.GoodsCubeSlotObject2, station.GoodsCubeSlot2);
-
-			SceneHelpers.SetParentAndResetPosition(stationObject.transform, hexTileObject.StationContainer);
-
-			hexTileObject.StationObject = stationObject;
-
 			return stationObject;
 		}
 
-		public void RemoveStationFromTile(HexTileObject hexTileObject)
+		public void AttachStationToTile(StationObject stationObject, HexTileObject hexTileObject)
 		{
-			RemoveGoodsCubeSlot(hexTileObject.StationObject.GoodsCubeSlotObject1);
-			RemoveGoodsCubeSlot(hexTileObject.StationObject.GoodsCubeSlotObject2);
+			hexTileObject.StationObject = stationObject;
+			SceneHelpers.SetParentAndResetPosition(stationObject.transform, hexTileObject.StationContainer);
+		}
+
+		public void DetachStationFromTile(HexTileObject hexTileObject)
+		{
 			_prefabManager.ReturnPoolObject(hexTileObject.StationObject);
 			hexTileObject.StationObject = null;
 		}
 
+
 		public void TransportGoodsCube(GoodsCubeSlotObject origin, GoodsCubeSlotObject destination)
 		{
-			SceneHelpers.SetParentAndResetPosition(origin.GoodsCubeObjectContainer, destination.transform);
-			destination.GoodsCubeObjectContainer = origin.GoodsCubeObjectContainer;
-			origin.GoodsCubeObjectContainer = null;
+			AttachGoodsCubeToSlot(origin.GoodsCubeObject, destination);
+			origin.GoodsCubeObject = null;
 		}
 
 	}

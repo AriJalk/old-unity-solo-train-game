@@ -27,8 +27,8 @@ namespace PrototypeGame
 		private LogicStateManager _logicStateManager;
 		private CommandEventHandler _commandEventHandler;
 
-		private GameStateEvents _gameStateServices;
-		private SceneStateManager _sceneManager;
+		private GameStateEvents _gameStateEvents;
+		private SceneStateManager _sceneStateManager;
 
 		private OptionPanel _optionPanel;
 
@@ -41,11 +41,11 @@ namespace PrototypeGame
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
-			_gameStateServices = new GameStateEvents();
+			_gameStateEvents = new GameStateEvents();
 			_logicStateManager = new LogicStateManager(new LogicGameState());
-			_sceneManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateServices);
-			_commandManager = new CommandManager(_gameStateServices.CommandRequestEvents);
-			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateServices);
+			_sceneStateManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateEvents);
+			_commandManager = new CommandManager(_gameStateEvents.CommandRequestEvents);
+			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateEvents);
 			_optionPanel = optionPanel;
 		}
 
@@ -53,7 +53,7 @@ namespace PrototypeGame
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build(_gameStateServices, _logicStateManager);
+			Builder.Build(_gameStateEvents, _logicStateManager);
 			_commonServices.RaycastConfig.SetRaycastLayer<HexTileObject>();
 		}
 
@@ -69,7 +69,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= ColliderHit;
 
-			_sceneManager.Dispose();
+			_sceneStateManager.Dispose();
 			_commandEventHandler.Dispose();
 		}
 
