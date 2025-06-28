@@ -1,20 +1,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardDropArea : MonoBehaviour, IDropHandler
+public class CardDropArea : MonoBehaviour
 {
 	[SerializeField]
 	CardServices _cardServices;
 
-	public void OnDrop(PointerEventData eventData)
+	public void OnDrop(CardInHandObject card)
 	{
-		var draggedObj = eventData.pointerDrag;
-		if (draggedObj == null) return;
-
-		var card = draggedObj.GetComponent<CardInHandObject>();
-		if (card == null) return;
-
-		_cardServices.OnDropArea(card);
+		if (card != null)
+		{
+			_cardServices.OnDropArea(card);
+		}
 	}
 
 }

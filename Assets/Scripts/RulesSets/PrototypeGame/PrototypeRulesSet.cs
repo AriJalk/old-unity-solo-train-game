@@ -24,11 +24,11 @@ namespace PrototypeGame
 		private CommonServices _commonServices;
 		private GameEngineServices _gameEngineServices;
 
-		private LogicStateManager _logicStateManager;
+		private LogicMapStateManager _logicStateManager;
 		private CommandEventHandler _commandEventHandler;
 
 		private GameStateEvents _gameStateEvents;
-		private SceneStateManager _sceneStateManager;
+		private SceneMapStateManager _sceneStateManager;
 
 		private OptionPanel _optionPanel;
 
@@ -42,8 +42,8 @@ namespace PrototypeGame
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
 			_gameStateEvents = new GameStateEvents();
-			_logicStateManager = new LogicStateManager(new LogicGameState());
-			_sceneStateManager = new SceneStateManager(_commonServices, gameEngineServices, _gameStateEvents);
+			_logicStateManager = new LogicMapStateManager(new LogicMapState());
+			_sceneStateManager = new SceneMapStateManager(_commonServices, gameEngineServices, _gameStateEvents);
 			_commandManager = new CommandManager(_gameStateEvents.CommandRequestEvents);
 			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateEvents);
 			_optionPanel = optionPanel;
@@ -91,13 +91,13 @@ namespace PrototypeGame
 			{
 				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
 				_buildingOptions = new List<BuildingOption>();
-				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Factory == null)
+				if (_logicStateManager.LogicMapState.Tiles[tile.HexCoord].Factory == null)
 				{
 					BuildingOption factoryOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					factoryOption.Setup(Guid.NewGuid(), "Factory", true);
 					_buildingOptions.Add(factoryOption);
 				}
-				if (_logicStateManager.LogicGameState.Tiles[tile.HexCoord].Station == null)
+				if (_logicStateManager.LogicMapState.Tiles[tile.HexCoord].Station == null)
 				{
 					BuildingOption stationOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					stationOption.Setup(Guid.NewGuid(), "Station", true);
@@ -130,7 +130,7 @@ namespace PrototypeGame
 						_commandManager.NextCommandGroup();
 						_commandManager.CreateAndExecuteBuildFactoryCommand(_buildCoord, GoodsColor.GREEN);
 
-						HexTileData tile = _logicStateManager.LogicGameState.Tiles[_buildCoord];
+						HexTileData tile = _logicStateManager.LogicMapState.Tiles[_buildCoord];
 						_commandManager.CreateAndExecuteProduceGoodsCubeInSlotCommand(tile.Factory.GoodsCubeSlot.guid, tile.Factory.ProductionColor);
 
 						_commandManager.NextCommandGroup();

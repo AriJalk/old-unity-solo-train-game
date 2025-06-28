@@ -1,29 +1,50 @@
 using CommonEngine.SceneServices;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardServices : MonoBehaviour
 {
     [SerializeField]
     private Transform _dragLayer;
 
-    private Transform _draggedCardTransform;
+    [SerializeField]
+    GraphicRaycaster _graphicRaycaster;
+
+    private Transform _cardContainer;
 
     public void BeginCardDrag(CardInHandObject card)
     {
-        _draggedCardTransform = card.transform;
-        SceneHelpers.SetParentAndResetPosition(card.PanelRectTransform, _dragLayer);
+        _cardContainer = card.transform.parent;
+        SceneHelpers.SetParentAndResetPosition(card.transform, _dragLayer);
     }
 
-    public void EndCardDrag(CardInHandObject card)
+    public void EndCardDrag(CardInHandObject card, PointerEventData pointerEventData)
     {
-        SceneHelpers.SetParentAndResetPosition(card.PanelRectTransform, _draggedCardTransform);
-        _draggedCardTransform = null;
+		SceneHelpers.SetParentAndResetPosition(card.transform, _cardContainer);
+		_cardContainer = null;
+
+		List<RaycastResult> results = new List<RaycastResult>();
+		_graphicRaycaster.Raycast(pointerEventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.GetComponent<CardDropArea>() is CardDropArea cardDropArea)
+            {
+                cardDropArea.OnDrop(card);
+            }
+        }
 	}
 
     public void OnDropArea(CardInHandObject card)
     {
-        Debug.Log("Dropped: " + card.name);
-        Destroy(card.PanelRectTransform.gameObject);
-        Destroy(card.gameObject);
+        Debug.Log("Dropped: " + card.transform.parent.name);
+        Destroy(card.transform.parent.gameObject);
+    }
+
+    public void ConsumeCard(CardInHandObject card)
+    {
+
     }
 }

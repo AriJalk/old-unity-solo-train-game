@@ -7,33 +7,33 @@ using UnityEngine;
 namespace PrototypeGame.Logic.State
 {
 	/// <summary>
-	/// Main API for interacting with the logic state, only authority to modify LogicGameState
+	/// Main API for interacting with the logic state, only authority to modify LogicMapState
 	/// </summary>
-	internal class LogicStateManager
+	internal class LogicMapStateManager
 	{
-		public LogicGameState LogicGameState;
+		public LogicMapState LogicMapState;
 
-		public LogicStateManager(LogicGameState logicGameState)
+		public LogicMapStateManager(LogicMapState logicGameState)
 		{
-			LogicGameState = logicGameState;
+			LogicMapState = logicGameState;
 		}
 
 		public HexTileData BuildTile(HexCoord coordinates, TerrainType terrainType)
 		{
-			if (LogicGameState.Tiles.ContainsKey(coordinates))
+			if (LogicMapState.Tiles.ContainsKey(coordinates))
 			{
 				return null;
 			}
 			HexTileData hexTileData = new HexTileData(coordinates, terrainType);
-			LogicGameState.Tiles.Add(coordinates, hexTileData);
-			LogicGameState.TileToSlots.Add(hexTileData, new List<GoodsCubeSlot>());
+			LogicMapState.Tiles.Add(coordinates, hexTileData);
+			LogicMapState.TileToSlots.Add(hexTileData, new List<GoodsCubeSlot>());
 			return hexTileData;
 		}
 
 		public Factory BuildFactoryOnTile(HexTileData hexTileData, GoodsColor productionColor)
 		{
 			Factory factory = new Factory(Guid.NewGuid(), productionColor);
-			LogicGameState.Factories.Add(factory.guid, factory);
+			LogicMapState.Factories.Add(factory.guid, factory);
 			GoodsCubeSlot slot = new GoodsCubeSlot(Guid.NewGuid());
 			factory.GoodsCubeSlot = slot;
 			SlotInfo slotInfo = new SlotInfo() { 
@@ -42,8 +42,8 @@ namespace PrototypeGame.Logic.State
 				ParentEntity = factory,
 				Slot = slot, 
 				Type = typeof(Factory) };
-			LogicGameState.CubeSlotInfo.Add(slot.guid, slotInfo);
-			LogicGameState.TileToSlots[hexTileData].Add(slot);
+			LogicMapState.CubeSlotInfo.Add(slot.guid, slotInfo);
+			LogicMapState.TileToSlots[hexTileData].Add(slot);
 
 			hexTileData.Factory = factory;
 			return factory;
@@ -52,14 +52,14 @@ namespace PrototypeGame.Logic.State
 		public Station BuildStationOnTile(HexTileData hexTileData, bool isUpgraded = false)
 		{
 			Station station = new Station(Guid.NewGuid(), isUpgraded);
-			LogicGameState.Stations.Add(station.guid, station);
+			LogicMapState.Stations.Add(station.guid, station);
 			GoodsCubeSlot slot1 = new GoodsCubeSlot(Guid.NewGuid());
 			GoodsCubeSlot slot2 = new GoodsCubeSlot(Guid.NewGuid());
 
 			SlotInfo slotInfo1 = SlotInfo.CreateSlotInfo(slot1, hexTileData, typeof(Station), true, station);
 			SlotInfo slotInfo2 = SlotInfo.CreateSlotInfo(slot2, hexTileData, typeof(Station), isUpgraded, station);
-			LogicGameState.CubeSlotInfo.Add(slot1.guid, slotInfo1);
-			LogicGameState.CubeSlotInfo.Add(slot2.guid, slotInfo2);
+			LogicMapState.CubeSlotInfo.Add(slot1.guid, slotInfo1);
+			LogicMapState.CubeSlotInfo.Add(slot2.guid, slotInfo2);
 
 			station.GoodsCubeSlot1 = slot1;
 			station.GoodsCubeSlot2 = slot2;
@@ -71,7 +71,7 @@ namespace PrototypeGame.Logic.State
 		{
 			GoodsCube cube = new GoodsCube(Guid.NewGuid(), goodsColor);
 			goodsCubeSlot.GoodsCube = cube;
-			LogicGameState.CubeToSlot[cube.guid] = goodsCubeSlot;
+			LogicMapState.CubeToSlot[cube.guid] = goodsCubeSlot;
 
 			return cube;
 		}
@@ -83,16 +83,16 @@ namespace PrototypeGame.Logic.State
 
 			destination.GoodsCube = cube;
 
-			LogicGameState.CubeToSlot[cube.guid] = destination;
+			LogicMapState.CubeToSlot[cube.guid] = destination;
 		}
 
 		public void RemoveCube(GoodsCube goodsCube)
 		{
-			GoodsCubeSlot goodsCubeSlot = LogicGameState.CubeToSlot[goodsCube.guid];
+			GoodsCubeSlot goodsCubeSlot = LogicMapState.CubeToSlot[goodsCube.guid];
 			goodsCubeSlot.GoodsCube = null;
-			LogicGameState.CubeToSlot.Remove(goodsCube.guid);
+			LogicMapState.CubeToSlot.Remove(goodsCube.guid);
 
-			//Debug.Log("Logic cubes: " + LogicGameState.CubeToSlot.Count);
+			//Debug.Log("Logic cubes: " + LogicMapState.CubeToSlot.Count);
 		}
 
 		public void RemoveSlot(GoodsCubeSlot goodsCubeSlot)
@@ -101,17 +101,17 @@ namespace PrototypeGame.Logic.State
 			{
 				RemoveCube(goodsCubeSlot.GoodsCube);
 			}
-			SlotInfo slotInfo = LogicGameState.CubeSlotInfo[goodsCubeSlot.guid];
-			LogicGameState.CubeSlotInfo.Remove(goodsCubeSlot.guid);
-			LogicGameState.TileToSlots[slotInfo.HexTileData].Remove(goodsCubeSlot);
-			//Debug.Log(LogicGameState.CubeSlotInfo.Count);
+			SlotInfo slotInfo = LogicMapState.CubeSlotInfo[goodsCubeSlot.guid];
+			LogicMapState.CubeSlotInfo.Remove(goodsCubeSlot.guid);
+			LogicMapState.TileToSlots[slotInfo.HexTileData].Remove(goodsCubeSlot);
+			//Debug.Log(LogicMapState.CubeSlotInfo.Count);
 		}
 
 		public void RemoveFactory(HexTileData hexTileData)
 		{
 			Factory factory = hexTileData.Factory;
-			LogicGameState.Factories.Remove(factory.guid);
-			LogicGameState.TileToSlots[hexTileData].Remove(factory.GoodsCubeSlot);
+			LogicMapState.Factories.Remove(factory.guid);
+			LogicMapState.TileToSlots[hexTileData].Remove(factory.GoodsCubeSlot);
 			RemoveSlot(factory.GoodsCubeSlot);
 
 			hexTileData.Factory = null;
@@ -120,7 +120,7 @@ namespace PrototypeGame.Logic.State
 		public void RemoveStation(HexTileData hexTileData)
 		{
 			Station station = hexTileData.Station;
-			LogicGameState.Stations.Remove(station.guid);
+			LogicMapState.Stations.Remove(station.guid);
 			RemoveSlot(station.GoodsCubeSlot1);
 			RemoveSlot(station.GoodsCubeSlot2);
 			hexTileData.Station = null;

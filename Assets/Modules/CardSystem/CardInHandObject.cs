@@ -1,50 +1,46 @@
+using CommonEngine.Core;
 using CommonEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class CardInHandObject : LockingUIPanel, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardInHandObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-
-	private static Vector2 AnchorMinIdle = new Vector2(0, -0.15f);
-	private static Vector2 AnchorMaxIdle = new Vector2(1, 0.85f);
-
-	private static Vector2 AnchorMinHover = new Vector2(0, 0);
-	private static Vector2 AnchorMaxHover = new Vector2(1, 1);
-
 	[SerializeField]
 	private CardServices _cardServices;
+	[SerializeField]
+	private CommonServices _commonServices;
 
-	public RectTransform PanelRectTransform;
+	private bool _isDragging;
 
-	public void OnBeginDrag(PointerEventData eventData)
+	private RectTransform _rectTransform;
+
+	private void Awake()
 	{
+		_rectTransform = GetComponent<RectTransform>();
+	}
+
+	private void Update()
+	{
+		if (_isDragging)
+		{
+			_rectTransform.position = Mouse.current.position.ReadValue();
+		}
+	}
+
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		_commonServices.InputLock.AddLock(gameObject);
+		Debug.Log("OnPointerDown");
+		_isDragging = true;
 		_cardServices.BeginCardDrag(this);
 	}
 
-	public void OnDrag(PointerEventData eventData)
+	public void OnPointerUp(PointerEventData eventData)
 	{
-		PanelRectTransform.position = eventData.position;
-	}
-
-	public void OnEndDrag(PointerEventData eventData)
-	{
-		_cardServices.EndCardDrag(this);
-		PanelRectTransform.anchorMin = CardInHandObject.AnchorMinIdle;
-		PanelRectTransform.anchorMax = CardInHandObject.AnchorMaxIdle;
-		PanelRectTransform.anchoredPosition = Vector2.zero;
-	}
-
-	public override void OnPointerEnter(PointerEventData eventData)
-	{
-		base.OnPointerEnter(eventData);
-		PanelRectTransform.anchorMin = AnchorMinHover;
-		PanelRectTransform.anchorMax = AnchorMaxHover;
-		
-	}
-
-	public override void OnPointerExit(PointerEventData eventData) {
-		base.OnPointerExit(eventData);
-		PanelRectTransform.anchorMin = AnchorMinIdle;
-		PanelRectTransform.anchorMax = AnchorMaxIdle;
+		_commonServices.InputLock.RemoveLock(gameObject);
+		Debug.Log("OnPointerUp");
+		_isDragging = false;
+		_cardServices.EndCardDrag(this, eventData);
 	}
 }

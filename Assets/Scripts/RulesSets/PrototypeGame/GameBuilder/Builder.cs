@@ -7,7 +7,7 @@ namespace PrototypeGame.GameBuilder
 {
 	internal class Builder
 	{
-		public static void Build(GameStateEvents gameStateServices, LogicStateManager logicManager)
+		public static void Build(GameStateEvents gameStateServices, LogicMapStateManager logicManager)
 		{
 			HexCoord coord = HexCoord.GetCoord(0, 0);
 			HexTileData tile = logicManager.BuildTile(coord, TerrainType.MOUNTAIN);

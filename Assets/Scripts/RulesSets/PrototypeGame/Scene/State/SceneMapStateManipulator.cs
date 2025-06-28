@@ -2,20 +2,19 @@ using CommonEngine.Core;
 using CommonEngine.ResourceManagement;
 using CommonEngine.SceneServices;
 using PrototypeGame.Logic;
-using UnityEngine;
 
 namespace PrototypeGame.Scene.State
 {
 	/// <summary>
-	/// Handles creation and manipulation of every game related scene objects, to be accessed only by SceneStateManager.
+	/// Handles creation and manipulation of every game related scene objects, to be accessed only by SceneMapStateManager.
 	/// *** Only Authority on modifying Scene Objects internals ***
 	/// </summary>
-	internal class SceneStateManipulator
+	internal class SceneMapStateManipulator
 	{
 		private PrefabManager _prefabManager;
 		private MaterialManager _materialManager;
 
-		public SceneStateManipulator(CommonServices commonServices)
+		public SceneMapStateManipulator(CommonServices commonServices)
 		{
 			_prefabManager = commonServices.PrefabManager;
 			_materialManager = commonServices.MaterialManager;
