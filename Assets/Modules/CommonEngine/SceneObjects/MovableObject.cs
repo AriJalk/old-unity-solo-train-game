@@ -42,11 +42,14 @@ namespace CommonEngine.SceneObjects
 
 		private void OnAxisMoved(Vector2 movement)
 		{
-			Vector3 axis = Vector3.right + Vector3.forward;
-			Vector3 forward = Vector3.Scale(_forwardTransform.forward, axis).normalized;
-			Vector3 right = Vector3.Scale(_forwardTransform.right, axis).normalized;
+			if (!_commonServices.InputLock.IsInputLocked)
+			{
+				Vector3 axis = Vector3.right + Vector3.forward;
+				Vector3 forward = Vector3.Scale(_forwardTransform.forward, axis).normalized;
+				Vector3 right = Vector3.Scale(_forwardTransform.right, axis).normalized;
 
-			_movementVector = right * movement.x + forward * movement.y;
+				_movementVector = right * movement.x + forward * movement.y;
+			}
 		}
 	}
 }

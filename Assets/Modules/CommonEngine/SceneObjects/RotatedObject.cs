@@ -83,7 +83,8 @@ namespace CommonEngine.SceneObjects
 
 		private void RotateObject(Vector2 movement)
 		{
-			_dragVector = movement;
+			if(!_commonServices.InputLock.IsInputLocked)
+				_dragVector = movement;
 		}
 	}
 }

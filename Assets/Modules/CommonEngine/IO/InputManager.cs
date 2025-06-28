@@ -25,12 +25,9 @@ namespace CommonEngine.IO
 			{
 				return;
 			}
-			if (!_commonServices.InputLock.IsInputLocked)
-			{
-				ProcessMouseButtons();
-				ProcessAxis();
-				ProcessScroll();
-			}
+			ProcessMouseButtons();
+			ProcessAxis();
+			ProcessScroll();
 		}
 
 		void ProcessMouseButtons()

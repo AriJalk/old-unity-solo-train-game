@@ -35,7 +35,7 @@ namespace CommonEngine.SceneObjects
 
 		private void OnClick(int button, Vector2 position)
 		{
-			if (button == 0)
+			if (!_commonServices.InputLock.IsInputLocked && button == 0)
 			{
 				RaycastHit hit = Raycast(_camera.ScreenPointToRay(position), _commonServices.RaycastConfig.RaycastLayer);
 				if (hit.collider != null)

@@ -8,9 +8,10 @@ public class CardServices : MonoBehaviour
 {
     [SerializeField]
     private Transform _dragLayer;
-
     [SerializeField]
     GraphicRaycaster _graphicRaycaster;
+    [SerializeField]
+    ScrollRect _scrollRect;
 
     private Transform _cardContainer;
 
@@ -18,6 +19,7 @@ public class CardServices : MonoBehaviour
     {
         _cardContainer = card.transform.parent;
         SceneHelpers.SetParentAndResetPosition(card.transform, _dragLayer);
+        _scrollRect.enabled = false;
     }
 
     public void EndCardDrag(CardInHandObject card, PointerEventData pointerEventData)
@@ -35,6 +37,7 @@ public class CardServices : MonoBehaviour
                 cardDropArea.OnDrop(card);
             }
         }
+		_scrollRect.enabled = true;
 	}
 
     public void OnDropArea(CardInHandObject card)

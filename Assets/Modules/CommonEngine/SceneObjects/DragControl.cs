@@ -30,7 +30,7 @@ namespace CommonEngine.SceneObjects
 
 		private void OnButtonClickedDown(int button, Vector2 position)
 		{
-			if (button == 1)
+			if (!_commonServices.InputLock.IsInputLocked && button == 1)
 			{
 				_isDragging = true;
 			}
@@ -38,7 +38,7 @@ namespace CommonEngine.SceneObjects
 
 		private void OnButtonClickedUp(int button, Vector2 position)
 		{
-			if (button == 1)
+			if (!_commonServices.InputLock.IsInputLocked && button == 1)
 			{
 				_isDragging = false;
 			}

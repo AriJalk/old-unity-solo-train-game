@@ -325,6 +325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!1 &168084152
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,9 +358,9 @@ RectTransform:
   - {fileID: 1533890337}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &276947112
@@ -491,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dragLayer: {fileID: 1457437014}
   _graphicRaycaster: {fileID: 314261959}
+  _scrollRect: {fileID: 1645298402}
 --- !u!114 &314261959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,7 +702,7 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
+    width: 0.8
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -1057,6 +1060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!114 &451199880 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7826389648141247905, guid: eee112118be9d374180bb2adc7889a42, type: 3}
@@ -1243,7 +1248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1735,7 +1740,7 @@ Transform:
   m_GameObject: {fileID: 918674463}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1794,6 +1799,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!1 &1072786859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,6 +2006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!1 &1188087988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,9 +2354,9 @@ RectTransform:
   - {fileID: 1553667540}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 650, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1342394050
@@ -2381,9 +2390,9 @@ RectTransform:
   - {fileID: 101377612}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1424376739
@@ -2417,9 +2426,9 @@ RectTransform:
   - {fileID: 421791342}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 450, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1457437013
@@ -2607,6 +2616,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!1 &1538519565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,9 +2649,9 @@ RectTransform:
   - {fileID: 1602376100}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1553667539
@@ -2694,6 +2705,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!1 &1570122857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,6 +2837,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardServices: {fileID: 314261958}
   _commonServices: {fileID: 1638142083}
+  _dragDelay: 0.25
+  _motionTreshold: 2.5
 --- !u!114 &1605644378 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5530402237052569899, guid: eee112118be9d374180bb2adc7889a42, type: 3}
@@ -3223,8 +3238,8 @@ RectTransform:
   - {fileID: 818628341}
   - {fileID: 1807414813}
   - {fileID: 488586816}
-  - {fileID: 2137902972}
   - {fileID: 314261957}
+  - {fileID: 2137902972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3582,9 +3597,9 @@ RectTransform:
   - {fileID: 951958322}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2131525240
@@ -3618,9 +3633,9 @@ RectTransform:
   - {fileID: 1176637376}
   m_Father: {fileID: 18538621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2137902971

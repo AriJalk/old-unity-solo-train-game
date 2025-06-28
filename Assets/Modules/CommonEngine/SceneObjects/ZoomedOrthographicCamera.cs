@@ -59,7 +59,8 @@ namespace CommonEngine.SceneObjects
 
 		private void OnScroll(float scroll)
 		{
-			_scroll += scroll;
+			if (!_commonServices.InputLock.IsInputLocked)
+				_scroll += scroll;
 		}
 	}
 }
