@@ -4,6 +4,10 @@ using System;
 
 namespace PrototypeGame
 {
+	/// <summary>
+	/// Main API connection point to the Scene, all possible scene interactions goes through here
+	/// Only accessed through CommandEventHandler
+	/// </summary>
 	internal class SceneStateEvents
 	{
 		public event Action<HexTileData> TileBuiltEvent;
@@ -36,7 +40,7 @@ namespace PrototypeGame
 			FactoryBuiltEvent?.Invoke(hexTileData);
 		}
 
-		public void RaiseFactoryRemoveEvent(HexTileData hexTileData)
+		public void RaiseFactoryRemovedEvent(HexTileData hexTileData)
 		{
 			FactoryRemovedEvent?.Invoke(hexTileData);
 		}

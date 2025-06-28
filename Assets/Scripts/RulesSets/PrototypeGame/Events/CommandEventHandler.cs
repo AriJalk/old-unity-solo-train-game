@@ -76,7 +76,7 @@ namespace PrototypeGame.Events
 			if (hexTileData.Factory != null)
 			{
 				_logicStateManager.RemoveFactory(hexTileData);
-				_sceneStateEvents.RaiseFactoryRemoveEvent(hexTileData);
+				_sceneStateEvents.RaiseFactoryRemovedEvent(hexTileData);
 			}
 		}
 

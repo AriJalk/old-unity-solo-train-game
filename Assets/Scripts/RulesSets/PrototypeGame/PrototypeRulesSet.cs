@@ -86,6 +86,7 @@ namespace PrototypeGame
 
 		private void ColliderHit(RaycastHit hit)
 		{
+			// Test interactions
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
 				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
@@ -117,6 +118,7 @@ namespace PrototypeGame
 
 		private void HandleOptions(Guid guid)
 		{
+			// Test options building placement commands
 			_optionPanel.OptionSelectedEvent -= HandleOptions;
 			_optionPanel.ClosePanel();
 			BuildingOption option = _buildingOptions.FirstOrDefault(b => b.guid == guid);
@@ -128,7 +130,6 @@ namespace PrototypeGame
 						_commandManager.NextCommandGroup();
 						_commandManager.CreateAndExecuteBuildFactoryCommand(_buildCoord, GoodsColor.GREEN);
 
-						_commandManager.NextCommandGroup();
 						HexTileData tile = _logicStateManager.LogicGameState.Tiles[_buildCoord];
 						_commandManager.CreateAndExecuteProduceGoodsCubeInSlotCommand(tile.Factory.GoodsCubeSlot.guid, tile.Factory.ProductionColor);
 

@@ -14,13 +14,11 @@ namespace PrototypeGame.Scene.State
 	{
 		private PrefabManager _prefabManager;
 		private MaterialManager _materialManager;
-		private SceneGameState _sceneGameState;
 
-		public SceneStateManipulator(CommonServices commonServices, SceneGameState sceneGameState)
+		public SceneStateManipulator(CommonServices commonServices)
 		{
 			_prefabManager = commonServices.PrefabManager;
 			_materialManager = commonServices.MaterialManager;
-			_sceneGameState = sceneGameState;
 		}
 
 		public HexTileObject BuildTile(HexTileData hexTileData)
@@ -35,7 +33,6 @@ namespace PrototypeGame.Scene.State
 			}
 			return hexTileObject;
 		}
-
 
 		public GoodsCubeObject BuildGoodsCubeObject(GoodsCube goodsCube)
 		{
@@ -94,7 +91,6 @@ namespace PrototypeGame.Scene.State
 			_prefabManager.ReturnPoolObject(hexTileObject.StationObject);
 			hexTileObject.StationObject = null;
 		}
-
 
 		public void TransportGoodsCube(GoodsCubeSlotObject origin, GoodsCubeSlotObject destination)
 		{

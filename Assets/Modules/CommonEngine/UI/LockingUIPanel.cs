@@ -15,12 +15,12 @@ namespace CommonEngine.UI
 		[SerializeField]
 		protected CommonServices _commonServices;
 
-		public void OnPointerEnter(PointerEventData eventData)
+		public virtual void OnPointerEnter(PointerEventData eventData)
 		{
 			_commonServices.InputLock.AddLock(gameObject);
 		}
 
-		public void OnPointerExit(PointerEventData eventData)
+		public virtual void OnPointerExit(PointerEventData eventData)
 		{
 			_commonServices.InputLock.RemoveLock(gameObject);
 		}

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace PrototypeGame.Scene.State
 {
+	/// <summary>
+	/// Contains all references to scene game objects
+	/// </summary>
 	internal class SceneGameState
 	{
 		public readonly Dictionary<HexCoord, HexTileObject> Tiles;

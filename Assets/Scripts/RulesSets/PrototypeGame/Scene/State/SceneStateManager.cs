@@ -25,7 +25,7 @@ namespace PrototypeGame.Scene.State
 		{
 			_sceneGameState = new SceneGameState();
 			_sceneStateEvents = gameStateServices.SceneStateEvents;
-			_sceneStateManipulator = new SceneStateManipulator(commonServices, _sceneGameState);
+			_sceneStateManipulator = new SceneStateManipulator(commonServices);
 			_hexGridController = gameEngineServices.HexGridController;
 
 			_sceneStateEvents.TileBuiltEvent += OnTileBuilt;
