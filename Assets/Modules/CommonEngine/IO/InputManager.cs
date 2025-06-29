@@ -33,7 +33,7 @@ namespace CommonEngine.IO
 		void ProcessMouseButtons()
 		{
 			Vector2 position = Mouse.current.position.ReadValue();
-			Vector2 movement = Mouse.current.delta.ReadValue();
+			//Vector2 movement = Mouse.current.delta.ReadValue();
 
 			if (Mouse.current.leftButton.wasPressedThisFrame)
 				_inputEvents.RaiseMouseButtonClickedDown(0, position);

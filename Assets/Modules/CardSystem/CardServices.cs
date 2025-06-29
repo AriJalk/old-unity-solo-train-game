@@ -1,53 +1,86 @@
+using CommonEngine.Core;
 using CommonEngine.SceneServices;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardServices : MonoBehaviour
+
+namespace CardSystem
 {
-    [SerializeField]
-    private Transform _dragLayer;
-    [SerializeField]
-    GraphicRaycaster _graphicRaycaster;
-    [SerializeField]
-    ScrollRect _scrollRect;
+	public class CardServices : MonoBehaviour
+	{
+		[SerializeField]
+		private CommonServices _commonServices;
+		[SerializeField]
+		private RectTransform _dragLayer;
+		[SerializeField]
+		private GraphicRaycaster _graphicRaycaster;
+		[SerializeField]
+		private ScrollRect _scrollRect;
+		[SerializeField]
+		private Transform _cardHandTransform;
 
-    private Transform _cardContainer;
+		public float DragDelay = 0.25f;
+		public float MotionTreshold = 2.5f;
 
-    public void BeginCardDrag(CardInHandObject card)
-    {
-        _cardContainer = card.transform.parent;
-        SceneHelpers.SetParentAndResetPosition(card.transform, _dragLayer);
-        _scrollRect.enabled = false;
-    }
+		private RectTransform _cardContainer;
 
-    public void EndCardDrag(CardInHandObject card, PointerEventData pointerEventData)
-    {
-		SceneHelpers.SetParentAndResetPosition(card.transform, _cardContainer);
-		_cardContainer = null;
+		private void Start()
+		{
+			GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Card");
 
-		List<RaycastResult> results = new List<RaycastResult>();
-		_graphicRaycaster.Raycast(pointerEventData, results);
+			for (int i = 0; i < 7; i++)
+			{
+				CardInHandObject card = GameObject.Instantiate(cardPrefab).GetComponent<CardInHandObject>();
+				card.CardServices = this;
+				card.CommonServices = _commonServices;
+				AddCard(card);
+			}
+		}
 
-        foreach (RaycastResult result in results)
-        {
-            if (result.gameObject.GetComponent<CardDropArea>() is CardDropArea cardDropArea)
-            {
-                cardDropArea.OnDrop(card);
-            }
-        }
-		_scrollRect.enabled = true;
+		public void BeginCardDrag(CardInHandObject card)
+		{
+			_cardContainer = card.transform.parent.GetComponent<RectTransform>();
+			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _dragLayer);
+			_scrollRect.enabled = false;
+		}
+
+		public void EndCardDrag(CardInHandObject card, PointerEventData pointerEventData)
+		{
+			// Return card to hand container
+			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _cardContainer);
+			_cardContainer = null;
+
+			// Raycast for drop area
+
+			List<RaycastResult> results = new List<RaycastResult>();
+			_graphicRaycaster.Raycast(pointerEventData, results);
+
+			foreach (RaycastResult result in results)
+			{
+				if (result.gameObject.GetComponent<ConsumeCardDropArea>() is ConsumeCardDropArea cardDropArea)
+				{
+					cardDropArea.OnDrop(card);
+					break;
+				}
+			}
+			_scrollRect.enabled = true;
+		}
+
+		public void AddCard(CardInHandObject card)
+		{
+			RectTransform container = new GameObject("CardContainer").AddComponent<RectTransform>();
+			container.sizeDelta = new Vector2(100, 150);
+			container.SetParent(_cardHandTransform, false);
+			SceneHelpers.InitializeRectObject(card.RectTransform, container);
+		}
+
+
+		public void RemoveCard(CardInHandObject card)
+		{
+			Debug.Log(card.transform.parent.name);
+			Destroy(card.transform.parent.gameObject);
+		}
 	}
-
-    public void OnDropArea(CardInHandObject card)
-    {
-        Debug.Log("Dropped: " + card.transform.parent.name);
-        Destroy(card.transform.parent.gameObject);
-    }
-
-    public void ConsumeCard(CardInHandObject card)
-    {
-
-    }
 }
