@@ -8,6 +8,7 @@ namespace PrototypeGame.Logic.State
 {
 	/// <summary>
 	/// Main API for interacting with the logic state, only authority to modify LogicMapState
+	/// *** Expose only from StateManagers ***
 	/// </summary>
 	internal class LogicMapStateManager
 	{

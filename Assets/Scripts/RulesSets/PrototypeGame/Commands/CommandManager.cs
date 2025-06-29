@@ -9,9 +9,9 @@ namespace PrototypeGame.Commands
 	{
 		private CommandRequestEvents _commandRequestEvents;
 
-		public CommandManager(CommandRequestEvents logicStateEvents)
+		public CommandManager(CommandRequestEvents commandRequestEvents)
 		{
-			_commandRequestEvents = logicStateEvents;
+			_commandRequestEvents = commandRequestEvents;
 		}
 
 		public void CreateAndExecuteTrasnportCommand(Guid originSlot, Guid destinationSlot)

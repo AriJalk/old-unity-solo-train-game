@@ -11,6 +11,7 @@ namespace PrototypeGame.StateMachine
 {
 	internal class StateMachineManager
 	{
+		//TODO: maybe get rid of this? hold only 1?
 		private Stack<IStateMachine> _states;
 
 		private CommandManager _commandManager;
@@ -39,6 +40,7 @@ namespace PrototypeGame.StateMachine
 				_states.Peek().ExitState();
 			}
 		}
+
 
 		public AwaitingCardPlayState CreateAndEnterAwatingCardPlayState()
 		{

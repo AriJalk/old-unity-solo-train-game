@@ -16,11 +16,11 @@ namespace PrototypeGame.Events
 		private CommandRequestEvents _commandRequestEvents;
 		private SceneMapEvents _sceneStateEvents;
 
-		public CommandEventHandler(LogicMapStateManager logicStateManager, GameStateEvents gameStateServices)
+		public CommandEventHandler(LogicMapStateManager logicMapStateManager, GameStateEvents gameStateEvents)
 		{
-			_logicStateManager = logicStateManager;
-			_commandRequestEvents = gameStateServices.CommandRequestEvents;
-			_sceneStateEvents = gameStateServices.SceneMapEvents;
+			_logicStateManager = logicMapStateManager;
+			_commandRequestEvents = gameStateEvents.CommandRequestEvents;
+			_sceneStateEvents = gameStateEvents.SceneMapEvents;
 
 			_commandRequestEvents.TransportRequestEvent += TransportRequest;
 

@@ -19,6 +19,7 @@ using PrototypeGame.Scene.State.Cards;
 using PrototypeGame.Logic.State.Cards;
 using PrototypeGame.StateMachine;
 using PrototypeGame.UI;
+using PrototypeGame.ServiceGroups;
 
 
 namespace PrototypeGame
@@ -29,14 +30,8 @@ namespace PrototypeGame
 		private GameEngineServices _gameEngineServices;
 		private UserInterface _userInterface;
 
-		private LogicMapStateManager _logicMapStateManager;
-		private LogicCardStateManager _logicCardStateManager;
 
-		private CommandEventHandler _commandEventHandler;
-
-		private GameStateEvents _gameStateEvents;
-		private SceneMapStateManager _sceneMapStateManager;
-		private SceneCardStateManager _sceneCardStateManager;
+		private StateManagers _stateManagers;
 
 		private CardServices _cardServices;
 
@@ -58,27 +53,20 @@ namespace PrototypeGame
 			_cardServices = cardServices;
 			_userInterface = userInterface;
 
-			_gameStateEvents = new GameStateEvents();
+			_stateManagers = new StateManagers(commonServices, gameEngineServices, new LogicMapState(), new GameStateEvents(), new LogicCardState(), _cardServices);
 
-			_logicMapStateManager = new LogicMapStateManager(new LogicMapState());
-			_logicCardStateManager = new LogicCardStateManager(new LogicCardState());
-
-			_sceneMapStateManager = new SceneMapStateManager(_commonServices, gameEngineServices, _gameStateEvents);
-			_sceneCardStateManager = new SceneCardStateManager(_commonServices, _cardServices, _gameStateEvents);
+			_commandManager = new CommandManager(_stateManagers.GameStateEvents.CommandRequestEvents);
 			
-			_commandManager = new CommandManager(_gameStateEvents.CommandRequestEvents);
-			_commandEventHandler = new CommandEventHandler(_logicMapStateManager, _gameStateEvents);
-			_optionPanel = optionPanel;
-
 			_stateMachineManager = new StateMachineManager(_commandManager, _userInterface, _cardServices);
-			
+
+			_optionPanel = optionPanel;
 		}
 
 
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build(_gameStateEvents, _logicMapStateManager, _logicCardStateManager);
+			Builder.Build(_stateManagers.GameStateEvents, _stateManagers.LogicMapStateManager, _stateManagers.LogicCardStateManager);
 			_commonServices.RaycastConfig.SetRaycastLayer<HexTileObject>();
 		}
 
@@ -95,8 +83,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= ColliderHit;
 
-			_sceneMapStateManager.Dispose();
-			_commandEventHandler.Dispose();
+			_stateManagers.Dispose();
 			_stateMachineManager.ExitHeadState();
 		}
 
