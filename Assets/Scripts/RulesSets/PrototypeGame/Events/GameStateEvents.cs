@@ -5,7 +5,8 @@
 	/// </summary>
 	internal class GameStateEvents
 	{
-		public readonly SceneStateEvents SceneStateEvents = new SceneStateEvents();
 		public readonly CommandRequestEvents CommandRequestEvents = new CommandRequestEvents();
+		public readonly SceneMapEvents SceneMapEvents = new SceneMapEvents();
+		public readonly SceneCardEvents SceneCardEvents = new SceneCardEvents();
 	}
 }

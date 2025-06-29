@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8241280488752128385}
-  - component: {fileID: 7788977889854912979}
+  - component: {fileID: 4433055598900872857}
   m_Layer: 8
   m_Name: GoodsCubeSlot
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Transform:
   - {fileID: 6162466127195675518}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7788977889854912979
+--- !u!114 &4433055598900872857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3338865163406757813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c13b9cb747afcf945b66fc2366e6040d, type: 3}
+  m_Script: {fileID: 11500000, guid: ae421a7f0a78fa849b636149c41c3603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GoodsCubeObjectContainer: {fileID: 6162466127195675518}

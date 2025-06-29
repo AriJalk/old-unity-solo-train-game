@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace CardSystem
 {
-	public class ConsumeCardDropArea : MonoBehaviour
+	public class ConsumeCardDropArea : MonoBehaviour, ICardDropArea
 	{
 		[SerializeField]
 		CardServices _cardServices;
 
-		public void OnDrop(CardInHandObject card)
+		public void OnDrop(CardObjectBase card)
 		{
 			if (card != null)
 			{

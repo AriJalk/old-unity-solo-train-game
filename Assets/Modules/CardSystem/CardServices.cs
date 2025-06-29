@@ -28,25 +28,17 @@ namespace CardSystem
 
 		private void Start()
 		{
-			GameObject cardPrefab = Resources.Load<GameObject>("Prefabs/Card");
 
-			for (int i = 0; i < 7; i++)
-			{
-				CardInHandObject card = GameObject.Instantiate(cardPrefab).GetComponent<CardInHandObject>();
-				card.CardServices = this;
-				card.CommonServices = _commonServices;
-				AddCard(card);
-			}
 		}
 
-		public void BeginCardDrag(CardInHandObject card)
+		public void BeginCardDrag(CardObjectBase card)
 		{
 			_cardContainer = card.transform.parent.GetComponent<RectTransform>();
 			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _dragLayer);
 			_scrollRect.enabled = false;
 		}
 
-		public void EndCardDrag(CardInHandObject card, PointerEventData pointerEventData)
+		public void EndCardDrag(CardObjectBase card, PointerEventData pointerEventData)
 		{
 			// Return card to hand container
 			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _cardContainer);
@@ -59,7 +51,7 @@ namespace CardSystem
 
 			foreach (RaycastResult result in results)
 			{
-				if (result.gameObject.GetComponent<ConsumeCardDropArea>() is ConsumeCardDropArea cardDropArea)
+				if (result.gameObject.GetComponent<ICardDropArea>() is ICardDropArea cardDropArea)
 				{
 					cardDropArea.OnDrop(card);
 					break;
@@ -68,7 +60,7 @@ namespace CardSystem
 			_scrollRect.enabled = true;
 		}
 
-		public void AddCard(CardInHandObject card)
+		public void AddCard(CardObjectBase card)
 		{
 			RectTransform container = new GameObject("CardContainer").AddComponent<RectTransform>();
 			container.sizeDelta = new Vector2(100, 150);
@@ -77,9 +69,9 @@ namespace CardSystem
 		}
 
 
-		public void RemoveCard(CardInHandObject card)
+		public void RemoveCard(CardObjectBase card)
 		{
-			Debug.Log(card.transform.parent.name);
+			Debug.Log("Removed: " + card.transform.parent.name);
 			Destroy(card.transform.parent.gameObject);
 		}
 	}

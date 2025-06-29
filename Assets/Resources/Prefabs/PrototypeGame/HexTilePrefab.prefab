@@ -45,14 +45,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1143830126905480902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2d39789734d34a4ab2b9527d0026c8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 034efef910d752f489b7759c42cb25d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MeshRenderer: {fileID: 373932136242035148}
   FactoryContainer: {fileID: 5320262058394957713}
   StationContainer: {fileID: 4877799116228258277}
-  FactoryObject: {fileID: 0}
-  StationObject: {fileID: 0}
 --- !u!135 &5769222623322937916
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -116,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5320262058394957713}
   m_Layer: 6
-  m_Name: FactoryTransform
+  m_Name: FactoryContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4877799116228258277}
   m_Layer: 6
-  m_Name: StationTransform
+  m_Name: StationContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

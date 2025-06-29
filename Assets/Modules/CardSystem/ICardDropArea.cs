@@ -2,6 +2,6 @@
 {
 	public interface ICardDropArea
 	{
-		void OnDrop(CardInHandObject card);
+		void OnDrop(CardObjectBase card);
 	}
 }

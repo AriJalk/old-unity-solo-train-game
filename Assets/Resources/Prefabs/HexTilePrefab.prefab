@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6255801654892493422}
-  - component: {fileID: 4609523936359856599}
   - component: {fileID: 3431160031286440870}
+  - component: {fileID: 3666409866341284870}
   m_Layer: 6
   m_Name: HexTilePrefab
   m_TagString: Untagged
@@ -34,19 +34,6 @@ Transform:
   - {fileID: 6536460845713019955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4609523936359856599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143830126905480902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6815a9b72e837f842abaf8d4b93b3f4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeshRenderer: {fileID: 373932136242035148}
 --- !u!135 &3431160031286440870
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -68,6 +55,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.45
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3666409866341284870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143830126905480902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6231d2df8747264f9d5d4e7ff5a84cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 373932136242035148}
 --- !u!1 &1413163846711563483
 GameObject:
   m_ObjectHideFlags: 0

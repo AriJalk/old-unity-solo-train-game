@@ -15,6 +15,9 @@ using System.Linq;
 using HexSystem;
 using PrototypeGame.Logic;
 using PrototypeGame.Logic.MetaData;
+using CardSystem;
+using PrototypeGame.Scene.State.Cards;
+using PrototypeGame.Logic.State.Cards;
 
 
 namespace PrototypeGame
@@ -24,11 +27,16 @@ namespace PrototypeGame
 		private CommonServices _commonServices;
 		private GameEngineServices _gameEngineServices;
 
-		private LogicMapStateManager _logicStateManager;
+		private LogicMapStateManager _logicMapStateManager;
+		private LogicCardStateManager _logicCardStateManager;
+
 		private CommandEventHandler _commandEventHandler;
 
 		private GameStateEvents _gameStateEvents;
-		private SceneMapStateManager _sceneStateManager;
+		private SceneMapStateManager _sceneMapStateManager;
+		private SceneCardStateManager _sceneCardStateManager;
+
+		private CardServices _cardServices;
 
 		private OptionPanel _optionPanel;
 
@@ -37,23 +45,31 @@ namespace PrototypeGame
 		private List<BuildingOption> _buildingOptions;
 		private HexCoord _buildCoord;
 
-		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, OptionPanel optionPanel)
+		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, OptionPanel optionPanel, CardServices cardServices)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
+			_cardServices = cardServices;
+
 			_gameStateEvents = new GameStateEvents();
-			_logicStateManager = new LogicMapStateManager(new LogicMapState());
-			_sceneStateManager = new SceneMapStateManager(_commonServices, gameEngineServices, _gameStateEvents);
+
+			_logicMapStateManager = new LogicMapStateManager(new LogicMapState());
+			_logicCardStateManager = new LogicCardStateManager(new LogicCardState());
+
+			_sceneMapStateManager = new SceneMapStateManager(_commonServices, gameEngineServices, _gameStateEvents);
+			_sceneCardStateManager = new SceneCardStateManager(_commonServices, _cardServices, _gameStateEvents);
+			
 			_commandManager = new CommandManager(_gameStateEvents.CommandRequestEvents);
-			_commandEventHandler = new CommandEventHandler(_logicStateManager, _gameStateEvents);
+			_commandEventHandler = new CommandEventHandler(_logicMapStateManager, _gameStateEvents);
 			_optionPanel = optionPanel;
+			
 		}
 
 
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build(_gameStateEvents, _logicStateManager);
+			Builder.Build(_gameStateEvents, _logicMapStateManager, _logicCardStateManager);
 			_commonServices.RaycastConfig.SetRaycastLayer<HexTileObject>();
 		}
 
@@ -69,7 +85,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= ColliderHit;
 
-			_sceneStateManager.Dispose();
+			_sceneMapStateManager.Dispose();
 			_commandEventHandler.Dispose();
 		}
 
@@ -91,13 +107,13 @@ namespace PrototypeGame
 			{
 				GameObject prefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
 				_buildingOptions = new List<BuildingOption>();
-				if (_logicStateManager.LogicMapState.Tiles[tile.HexCoord].Factory == null)
+				if (_logicMapStateManager.LogicMapState.Tiles[tile.HexCoord].Factory == null)
 				{
 					BuildingOption factoryOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					factoryOption.Setup(Guid.NewGuid(), "Factory", true);
 					_buildingOptions.Add(factoryOption);
 				}
-				if (_logicStateManager.LogicMapState.Tiles[tile.HexCoord].Station == null)
+				if (_logicMapStateManager.LogicMapState.Tiles[tile.HexCoord].Station == null)
 				{
 					BuildingOption stationOption = GameObject.Instantiate(prefab).GetComponent<BuildingOption>();
 					stationOption.Setup(Guid.NewGuid(), "Station", true);
@@ -130,7 +146,7 @@ namespace PrototypeGame
 						_commandManager.NextCommandGroup();
 						_commandManager.CreateAndExecuteBuildFactoryCommand(_buildCoord, GoodsColor.GREEN);
 
-						HexTileData tile = _logicStateManager.LogicMapState.Tiles[_buildCoord];
+						HexTileData tile = _logicMapStateManager.LogicMapState.Tiles[_buildCoord];
 						_commandManager.CreateAndExecuteProduceGoodsCubeInSlotCommand(tile.Factory.GoodsCubeSlot.guid, tile.Factory.ProductionColor);
 
 						_commandManager.NextCommandGroup();

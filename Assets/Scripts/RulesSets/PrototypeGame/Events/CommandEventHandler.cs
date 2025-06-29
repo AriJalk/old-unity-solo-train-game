@@ -14,13 +14,13 @@ namespace PrototypeGame.Events
 		private LogicMapStateManager _logicStateManager;
 
 		private CommandRequestEvents _commandRequestEvents;
-		private SceneStateEvents _sceneStateEvents;
+		private SceneMapEvents _sceneStateEvents;
 
 		public CommandEventHandler(LogicMapStateManager logicStateManager, GameStateEvents gameStateServices)
 		{
 			_logicStateManager = logicStateManager;
 			_commandRequestEvents = gameStateServices.CommandRequestEvents;
-			_sceneStateEvents = gameStateServices.SceneStateEvents;
+			_sceneStateEvents = gameStateServices.SceneMapEvents;
 
 			_commandRequestEvents.TransportRequestEvent += TransportRequest;
 
@@ -63,7 +63,7 @@ namespace PrototypeGame.Events
 			if (hexTileData.Factory == null)
 			{
 				Factory factory = _logicStateManager.BuildFactoryOnTile(hexTileData, productionColor);
-				//_logicStateManager.ProduceGoodsCubeInSlot(factory.GoodsCubeSlot, factory.ProductionColor);
+				//_logicMapStateManager.ProduceGoodsCubeInSlot(factory.GoodsCubeSlot, factory.ProductionColor);
 
 				_sceneStateEvents.RaiseFactoryBuiltEvent(hexTileData);
 			}
