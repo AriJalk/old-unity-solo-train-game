@@ -1,6 +1,7 @@
 ﻿using CardSystem;
 using CommonEngine.Core;
 using GameEngine.Core;
+using GameEngine.StateMachine;
 using PrototypeGame.Events;
 using PrototypeGame.Logic.State;
 using PrototypeGame.Logic.State.Cards;
@@ -27,18 +28,19 @@ namespace PrototypeGame.ServiceGroups
 		public CommandEventHandler CommandEventHandler { get; private set; }
 
 		public GameStateEvents GameStateEvents { get; private set; }
-		
-		public CommandRequestEvents CommandRequestEvents { get; private set; }
 
-		public StateManagers(CommonServices commonServices, GameEngineServices gameEngineServices, LogicMapState logicMapState, GameStateEvents gameStateEvents, LogicCardState logicCardState, CardServices cardServices)
+		public StateMachineManager StateMachineManager { get; private set; }
+
+		public StateManagers(CommonServices commonServices, GameEngineServices gameEngineServices, LogicMapState logicMapState, GameStateEvents gameStateEvents, LogicCardState logicCardState, CardServices cardServices, StateMachineManager stateMachineManager)
 		{
 			GameStateEvents = gameStateEvents;
 			LogicMapStateManager = new LogicMapStateManager(logicMapState);
 			SceneMapStateManager = new SceneMapStateManager(commonServices, gameEngineServices, gameStateEvents);
 			LogicCardStateManager = new LogicCardStateManager(logicCardState);
 			SceneCardStateManager = new SceneCardStateManager(commonServices, cardServices, gameStateEvents);
-			CommandEventHandler = new CommandEventHandler(LogicMapStateManager, gameStateEvents);
-			CommandRequestEvents = new CommandRequestEvents();
+
+			StateMachineManager = stateMachineManager;
+			CommandEventHandler = new CommandEventHandler(LogicMapStateManager, gameStateEvents, StateMachineManager, LogicCardStateManager);
 		}
 
 		public void Dispose()

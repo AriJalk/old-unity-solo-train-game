@@ -1,33 +1,52 @@
 ﻿using CardSystem;
+using CommonEngine.Core;
 using GameEngine.Commands;
 using PrototypeGame.Commands;
+using PrototypeGame.Events;
 using PrototypeGame.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PrototypeGame.StateMachine
 {
 	internal class StateMachineFactory
 	{
 		private CommandManager _commandManager;
+		private CommandRequestEvents _requestEvents;
+		private CommandFactory _commandFactory;
+
+
+		private CommonServices _commonServices;
 		private UserInterface _userInterface;
 		private CardServices _cardServices;
 
-		public StateMachineFactory(CommandManager commandManager, UserInterface userInterface)
+		public StateMachineFactory()
+		{
+
+		}
+
+		public void Initialize(CommandManager commandManager, CommandRequestEvents commandRequestEvents, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices)
 		{
 			_commandManager = commandManager;
+			_requestEvents = commandRequestEvents;
 			_userInterface = userInterface;
-			_cardServices = new CardServices();
+			_cardServices = cardServices;
+			_commandFactory = commandFactory;
+			_commonServices = commonServices;
 		}
 
 		public AwaitingCardPlayState CreateAwatingCardPlayState()
 		{
-			AwaitingCardPlayState awaitingCardPlayState = new AwaitingCardPlayState(_cardServices, _userInterface);
+			AwaitingCardPlayState state = new AwaitingCardPlayState(_cardServices, _userInterface, _commandManager, _commandFactory);
 
-			return awaitingCardPlayState;
+			return state;
 		}
+
+		public BuildActionState CreateBuildActionState(int availableMoney)
+		{
+			BuildActionState state = new BuildActionState(availableMoney, _commonServices, _userInterface);
+
+			return state;
+		}
+
 	}
 }

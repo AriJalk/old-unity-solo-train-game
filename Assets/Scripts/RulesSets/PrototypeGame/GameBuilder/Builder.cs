@@ -10,7 +10,7 @@ namespace PrototypeGame.GameBuilder
 {
 	internal class Builder
 	{
-		public static void Build(GameStateEvents gameStateEvents, LogicMapStateManager logicMapStateManager, LogicCardStateManager logicCardStateManager)
+		public static void Build(GameStateEvents gameStateEvents, LogicMapStateManager logicMapStateManager, LogicCardStateManager logicCardStateManager, CardFactory cardFactory)
 		{
 			// Build test map
 			HexCoord coord = HexCoord.GetCoord(0, 0);
@@ -29,7 +29,7 @@ namespace PrototypeGame.GameBuilder
 			// Build test hand of cards
 			for (int i = 0; i < 7; i++)
 			{
-				ProtoCardData card = new ProtoCardData(Guid.NewGuid(), "Test card", 2, 2, "Build test card");
+				BuildActionCard card = cardFactory.CreateBasicBuildActionCard();
 				logicCardStateManager.AddCardToHand(card);
 				gameStateEvents.SceneCardEvents.RaiseCardCreatedAndAddedToHandEvent(card);
 			}

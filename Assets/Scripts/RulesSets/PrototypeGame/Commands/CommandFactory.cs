@@ -1,5 +1,7 @@
-﻿using HexSystem;
+﻿using Commands.StateCommands;
+using HexSystem;
 using PrototypeGame.Events;
+using PrototypeGame.StateMachine;
 using System;
 
 namespace PrototypeGame.Commands
@@ -7,10 +9,17 @@ namespace PrototypeGame.Commands
 	internal class CommandFactory
 	{
 		private CommandRequestEvents _commandRequestEvents;
+		private StateMachineFactory _stateMachineFactory;
 
-		public CommandFactory(CommandRequestEvents commandRequestEvents)
+		public CommandFactory()
+		{
+
+		}
+
+		public void Initialize(CommandRequestEvents commandRequestEvents, StateMachineFactory stateMachineFactory)
 		{
 			_commandRequestEvents = commandRequestEvents;
+			_stateMachineFactory = stateMachineFactory;
 		}
 
 		public void CreateTrasnportCommand(Guid originSlot, Guid destinationSlot)
@@ -31,6 +40,20 @@ namespace PrototypeGame.Commands
 		public void CreateProduceGoodsCubeInSlotCommand(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
 		{
 			ProduceGoodsCubeInSlotCommand command = new ProduceGoodsCubeInSlotCommand(_commandRequestEvents, goodsCubeSlotGuid, goodsColor);
+		}
+
+		public TransitionToBuildStateCommand CreateTransitionToBuildStateCommand(int availableMoney)
+		{
+			TransitionToBuildStateCommand command = new TransitionToBuildStateCommand(availableMoney, _commandRequestEvents, _stateMachineFactory); 
+
+			return command;
+		}
+		
+		public PlayCardActionCommand CreatePlayCardActionCommand(Guid cardId)
+		{
+			PlayCardActionCommand command = new PlayCardActionCommand(cardId, _commandRequestEvents);
+
+			return command;
 		}
 	}
 }

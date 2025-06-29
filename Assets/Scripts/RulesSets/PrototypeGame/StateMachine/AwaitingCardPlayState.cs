@@ -1,5 +1,7 @@
 ﻿using CardSystem;
+using GameEngine.Commands;
 using GameEngine.StateMachine;
+using PrototypeGame.Commands;
 using PrototypeGame.UI;
 using System;
 using UnityEngine;
@@ -11,10 +13,15 @@ namespace PrototypeGame.StateMachine
 		private CardServices _cardServices;
 		private UserInterface _userInterface;
 
-		public AwaitingCardPlayState(CardServices cardServices, UserInterface userInterface) 
+		private CommandManager _commandManager;
+		private CommandFactory _commandFactory;
+
+		public AwaitingCardPlayState(CardServices cardServices, UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory) 
 		{ 
 			_cardServices = cardServices;
 			_userInterface = userInterface;
+			_commandManager = commandManager;
+			_commandFactory = commandFactory;
 		}
 		public void EnterState()
 		{
@@ -43,9 +50,10 @@ namespace PrototypeGame.StateMachine
 			_userInterface.PlayCardDropArea.gameObject.SetActive(false);
 		}
 
-		private void OnCardDropped(Guid guid)
+		private void OnCardDropped(Guid cardId)
 		{
-			Debug.Log(guid);
+			Debug.Log(cardId);
+			_commandManager.PushAndExecuteCommand(_commandFactory.CreatePlayCardActionCommand(cardId));
 		}
 	}
 }

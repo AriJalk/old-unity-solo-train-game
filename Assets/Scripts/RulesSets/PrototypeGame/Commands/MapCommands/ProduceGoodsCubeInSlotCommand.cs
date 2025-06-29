@@ -18,12 +18,12 @@ namespace PrototypeGame.Commands
 		}
 		public void Execute()
 		{
-			_commandRequestEvents.RaiseProduceGoodsCubeInSlotRequestEvents(_goodsCubeSlotGuid, _goodsColor);
+			_commandRequestEvents.RaiseProduceGoodsCubeInSlotRequestEvent(_goodsCubeSlotGuid, _goodsColor);
 		}
 
 		public void Undo()
 		{
-			_commandRequestEvents.RaiseRemoveGoodsCubeFromSlotRequestEvents(_goodsCubeSlotGuid);
+			_commandRequestEvents.RaiseRemoveGoodsCubeFromSlotRequestEvent(_goodsCubeSlotGuid);
 		}
 	}
 }

@@ -1,10 +1,12 @@
-﻿using HexSystem;
+﻿using GameEngine.StateMachine;
+using HexSystem;
 using System;
 
 namespace PrototypeGame.Events
 {
 	/// <summary>
 	/// Main API for Commands to interact with the game state
+	/// *** Listened only by CommandEventHandler ***
 	/// </summary>
 	internal class CommandRequestEvents
 	{
@@ -16,8 +18,13 @@ namespace PrototypeGame.Events
 		public event Action<HexCoord> BuildStationRequestEvent;
 		public event Action<HexCoord> RemoveStationRequestEvent;
 
-		public event Action<Guid, GoodsColor> ProduceGoodsCubeInSlotRequestEvents;
-		public event Action<Guid> RemoveGoodsCubeFromSlotRequestEvents;
+		public event Action<Guid, GoodsColor> ProduceGoodsCubeInSlotRequestEvent;
+		public event Action<Guid> RemoveGoodsCubeFromSlotRequestEvent;
+
+		public event Action<IStateMachine> TransitionToStateMachineRequestEvent;
+		public event Action TransitionToPreviousStateMachineRequestEvent;
+
+		public event Action<Guid> PlayCardActionRequestEvent;
 
 		public void RaiseTransportRequestEvent(Guid originSlot, Guid destinationSlot)
 		{
@@ -44,14 +51,29 @@ namespace PrototypeGame.Events
 			RemoveStationRequestEvent?.Invoke(hexCoord);
 		}
 
-		public void RaiseProduceGoodsCubeInSlotRequestEvents(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		public void RaiseProduceGoodsCubeInSlotRequestEvent(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
 		{
-			ProduceGoodsCubeInSlotRequestEvents?.Invoke(goodsCubeSlotGuid, goodsColor);
+			ProduceGoodsCubeInSlotRequestEvent?.Invoke(goodsCubeSlotGuid, goodsColor);
 		}
 
-		public void RaiseRemoveGoodsCubeFromSlotRequestEvents(Guid goodsCubeSlotGuid)
+		public void RaiseRemoveGoodsCubeFromSlotRequestEvent(Guid goodsCubeSlotGuid)
 		{
-			RemoveGoodsCubeFromSlotRequestEvents?.Invoke(goodsCubeSlotGuid);
+			RemoveGoodsCubeFromSlotRequestEvent?.Invoke(goodsCubeSlotGuid);
+		}
+
+		public void RaiseTransitionToStateMachineEvent(IStateMachine stateMachine)
+		{
+			TransitionToStateMachineRequestEvent?.Invoke(stateMachine);
+		}
+
+		public void RaiseTransitionToPreviousMachineEvent()
+		{
+			TransitionToPreviousStateMachineRequestEvent?.Invoke();
+		}
+
+		public void RaisePlayCardActionRequestEvent(Guid cardId)
+		{
+			PlayCardActionRequestEvent?.Invoke(cardId);
 		}
 	}
 }

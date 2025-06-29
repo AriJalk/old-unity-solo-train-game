@@ -1,8 +1,11 @@
-﻿using HexSystem;
+﻿using GameEngine.StateMachine;
+using HexSystem;
 using PrototypeGame.Logic;
 using PrototypeGame.Logic.MetaData;
 using PrototypeGame.Logic.State;
+using PrototypeGame.Logic.State.Cards;
 using System;
+using System.Diagnostics;
 
 namespace PrototypeGame.Events
 {
@@ -11,14 +14,18 @@ namespace PrototypeGame.Events
 	/// </summary>
 	internal class CommandEventHandler : IDisposable
 	{
-		private LogicMapStateManager _logicStateManager;
+		private LogicMapStateManager _logicMapStateManager;
+		private LogicCardStateManager _logicCardStateManager;
 
 		private CommandRequestEvents _commandRequestEvents;
 		private SceneMapEvents _sceneStateEvents;
 
-		public CommandEventHandler(LogicMapStateManager logicMapStateManager, GameStateEvents gameStateEvents)
+		private StateMachineManager _stateMachineManager;
+
+		public CommandEventHandler(LogicMapStateManager logicMapStateManager, GameStateEvents gameStateEvents, StateMachineManager stateMachineManager, LogicCardStateManager logicCardStateManager)
 		{
-			_logicStateManager = logicMapStateManager;
+			_logicMapStateManager = logicMapStateManager;
+			_logicCardStateManager = logicCardStateManager;
 			_commandRequestEvents = gameStateEvents.CommandRequestEvents;
 			_sceneStateEvents = gameStateEvents.SceneMapEvents;
 
@@ -30,9 +37,19 @@ namespace PrototypeGame.Events
 			_commandRequestEvents.BuildStationRequestEvent += BuildStationRequest;
 			_commandRequestEvents.RemoveStationRequestEvent += RemoveStationRequest;
 
-			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvents += ProduceGoodsCubeOnSlotRequest;
-			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvents += RemoveGoodsCubeFromSlotRequest;
+			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvent += ProduceGoodsCubeOnSlotRequest;
+			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvent += RemoveGoodsCubeFromSlotRequest;
+
+			_commandRequestEvents.TransitionToStateMachineRequestEvent += TransitionToStateMachineRequest;
+
+			_commandRequestEvents.PlayCardActionRequestEvent += PlayCardRequest;
+
+			_commandRequestEvents.TransitionToPreviousStateMachineRequestEvent += PreviousStateRequest;
+
+			_stateMachineManager = stateMachineManager;
 		}
+
+
 
 		public void Dispose()
 		{
@@ -44,25 +61,30 @@ namespace PrototypeGame.Events
 			_commandRequestEvents.BuildStationRequestEvent -= BuildStationRequest;
 			_commandRequestEvents.RemoveStationRequestEvent -= RemoveStationRequest;
 
-			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvents -= ProduceGoodsCubeOnSlotRequest;
-			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvents -= RemoveGoodsCubeFromSlotRequest;
+			_commandRequestEvents.ProduceGoodsCubeInSlotRequestEvent -= ProduceGoodsCubeOnSlotRequest;
+			_commandRequestEvents.RemoveGoodsCubeFromSlotRequestEvent -= RemoveGoodsCubeFromSlotRequest;
+
+			_commandRequestEvents.TransitionToStateMachineRequestEvent -= TransitionToStateMachineRequest;
+
+			_commandRequestEvents.PlayCardActionRequestEvent -= PlayCardRequest;
+			_commandRequestEvents.TransitionToPreviousStateMachineRequestEvent -= PreviousStateRequest;
 		}
 
 		private void TransportRequest(Guid origin, Guid destination)
 		{
-			SlotInfo originSlotInfo = _logicStateManager.LogicMapState.CubeSlotInfo[origin];
-			SlotInfo destinationSlotInfo = _logicStateManager.LogicMapState.CubeSlotInfo[destination];
-			_logicStateManager.TransportGoodsCube(originSlotInfo.Slot, destinationSlotInfo.Slot);
+			SlotInfo originSlotInfo = _logicMapStateManager.LogicMapState.CubeSlotInfo[origin];
+			SlotInfo destinationSlotInfo = _logicMapStateManager.LogicMapState.CubeSlotInfo[destination];
+			_logicMapStateManager.TransportGoodsCube(originSlotInfo.Slot, destinationSlotInfo.Slot);
 			_sceneStateEvents.RaiseTransportCubeEvent(origin, destination);
 		}
 
 		private void BuildFactoryRequest(HexCoord hexCoord, GoodsColor productionColor)
 		{
-			HexTileData hexTileData = _logicStateManager.LogicMapState.Tiles[hexCoord];
+			HexTileData hexTileData = _logicMapStateManager.LogicMapState.Tiles[hexCoord];
 
 			if (hexTileData.Factory == null)
 			{
-				Factory factory = _logicStateManager.BuildFactoryOnTile(hexTileData, productionColor);
+				Factory factory = _logicMapStateManager.BuildFactoryOnTile(hexTileData, productionColor);
 				//_logicMapStateManager.ProduceGoodsCubeInSlot(factory.GoodsCubeSlot, factory.ProductionColor);
 
 				_sceneStateEvents.RaiseFactoryBuiltEvent(hexTileData);
@@ -71,49 +93,64 @@ namespace PrototypeGame.Events
 
 		private void RemoveFactoryRequest(HexCoord hexCoord)
 		{
-			HexTileData hexTileData = _logicStateManager.LogicMapState.Tiles[hexCoord];
+			HexTileData hexTileData = _logicMapStateManager.LogicMapState.Tiles[hexCoord];
 
 			if (hexTileData.Factory != null)
 			{
-				_logicStateManager.RemoveFactory(hexTileData);
+				_logicMapStateManager.RemoveFactory(hexTileData);
 				_sceneStateEvents.RaiseFactoryRemovedEvent(hexTileData);
 			}
 		}
 
 		private void BuildStationRequest(HexCoord hexCoord)
 		{
-			HexTileData hexTileData = _logicStateManager.LogicMapState.Tiles[hexCoord];
+			HexTileData hexTileData = _logicMapStateManager.LogicMapState.Tiles[hexCoord];
 
 			if (hexTileData.Station == null)
 			{
-				_logicStateManager.BuildStationOnTile(hexTileData);
+				_logicMapStateManager.BuildStationOnTile(hexTileData);
 				_sceneStateEvents.RaiseStationBuiltEvent(hexTileData);
 			}
 		}
 
 		private void RemoveStationRequest(HexCoord hexCoord)
 		{
-			HexTileData hexTileData = _logicStateManager.LogicMapState.Tiles[hexCoord];
+			HexTileData hexTileData = _logicMapStateManager.LogicMapState.Tiles[hexCoord];
 
 			if (hexTileData.Station != null)
 			{
-				_logicStateManager.RemoveStation(hexTileData);
+				_logicMapStateManager.RemoveStation(hexTileData);
 				_sceneStateEvents.RaiseStationRemovedEvent(hexTileData);
 			}
 		}
 
 		private void ProduceGoodsCubeOnSlotRequest(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
 		{
-			GoodsCubeSlot goodsCubeSlot = _logicStateManager.LogicMapState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
-			GoodsCube cube = _logicStateManager.ProduceGoodsCubeInSlot(goodsCubeSlot, goodsColor);
+			GoodsCubeSlot goodsCubeSlot = _logicMapStateManager.LogicMapState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
+			GoodsCube cube = _logicMapStateManager.ProduceGoodsCubeInSlot(goodsCubeSlot, goodsColor);
 			_sceneStateEvents.RaiseGoodsCubeProducedInSlotEvent(goodsCubeSlot, cube);
 		}
 
 		private void RemoveGoodsCubeFromSlotRequest(Guid goodsCubeSlotGuid)
 		{
-			GoodsCubeSlot goodsCubeSlot = _logicStateManager.LogicMapState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
-			_logicStateManager.RemoveCube(goodsCubeSlot.GoodsCube);
+			GoodsCubeSlot goodsCubeSlot = _logicMapStateManager.LogicMapState.CubeSlotInfo[goodsCubeSlotGuid].Slot;
+			_logicMapStateManager.RemoveCube(goodsCubeSlot.GoodsCube);
 			_sceneStateEvents.RaiseGoodsCubeRemovedFromSlotEvent(goodsCubeSlot);
+		}
+
+		private void TransitionToStateMachineRequest(IStateMachine stateMachine)
+		{
+			_stateMachineManager.NextState(stateMachine);
+		}
+
+		private void PlayCardRequest(Guid cardId)
+		{
+			_logicCardStateManager.PlayActionFromCard(cardId);
+		}
+
+		private void PreviousStateRequest()
+		{
+			_stateMachineManager.PreviousState();
 		}
 	}
 }

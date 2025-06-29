@@ -26,6 +26,16 @@ namespace GameEngine.StateMachine
 			_states.Push(nextState);
 		}
 
+		public void PreviousState()
+		{
+			ExitHeadState();
+			_states.Pop();
+			if (_states.Count > 0)
+			{
+				_states.Peek().EnterState();
+			}
+		}
+
 		public void ExitHeadState()
 		{
 			if (_states.Count > 0)
@@ -33,5 +43,7 @@ namespace GameEngine.StateMachine
 				_states.Peek().ExitState();
 			}
 		}
+
+		
 	}
 }

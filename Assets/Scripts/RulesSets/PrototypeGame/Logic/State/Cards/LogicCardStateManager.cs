@@ -1,4 +1,5 @@
 ﻿using PrototypeGame.Logic.Components.Cards;
+using System;
 
 namespace PrototypeGame.Logic.State.Cards
 {
@@ -51,6 +52,12 @@ namespace PrototypeGame.Logic.State.Cards
 			}
 
 			LogicCardState.CardsInDiscard.Clear();
+		}
+
+		public void PlayActionFromCard(Guid cardId)
+		{
+			ProtoCardData card = LogicCardState.CardsInHand[cardId];
+			card.PlayAction();
 		}
 	}
 }
