@@ -1,5 +1,6 @@
 using CommonEngine.Core;
 using CommonEngine.SceneServices;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,9 @@ namespace CardSystem
 {
 	public class CardServices : MonoBehaviour
 	{
+		public event Action DragStartedEvent;
+		public event Action DragEndedEvent;
+
 		[SerializeField]
 		private CommonServices _commonServices;
 		[SerializeField]
@@ -26,16 +30,13 @@ namespace CardSystem
 
 		private RectTransform _cardContainer;
 
-		private void Start()
-		{
-
-		}
-
 		public void BeginCardDrag(CardObjectBase card)
 		{
 			_cardContainer = card.transform.parent.GetComponent<RectTransform>();
-			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _dragLayer);
+			card.RectTransform.SetParent(_dragLayer);
+			//SceneHelpers.SetParentAndResetPosition(card.RectTransform, _dragLayer);
 			_scrollRect.enabled = false;
+			DragStartedEvent?.Invoke();
 		}
 
 		public void EndCardDrag(CardObjectBase card, PointerEventData pointerEventData)
@@ -58,6 +59,7 @@ namespace CardSystem
 				}
 			}
 			_scrollRect.enabled = true;
+			DragEndedEvent?.Invoke();
 		}
 
 		public void AddCard(CardObjectBase card)

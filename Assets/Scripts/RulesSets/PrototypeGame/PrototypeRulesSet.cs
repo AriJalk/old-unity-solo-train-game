@@ -14,10 +14,11 @@ using System;
 using System.Linq;
 using HexSystem;
 using PrototypeGame.Logic;
-using PrototypeGame.Logic.MetaData;
 using CardSystem;
 using PrototypeGame.Scene.State.Cards;
 using PrototypeGame.Logic.State.Cards;
+using PrototypeGame.StateMachine;
+using PrototypeGame.UI;
 
 
 namespace PrototypeGame
@@ -26,6 +27,7 @@ namespace PrototypeGame
 	{
 		private CommonServices _commonServices;
 		private GameEngineServices _gameEngineServices;
+		private UserInterface _userInterface;
 
 		private LogicMapStateManager _logicMapStateManager;
 		private LogicCardStateManager _logicCardStateManager;
@@ -41,15 +43,20 @@ namespace PrototypeGame
 		private OptionPanel _optionPanel;
 
 		private CommandManager _commandManager;
+		private StateMachineManager _stateMachineManager;
 
+		// Test variabled
 		private List<BuildingOption> _buildingOptions;
 		private HexCoord _buildCoord;
 
-		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, OptionPanel optionPanel, CardServices cardServices)
+
+
+		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, OptionPanel optionPanel, CardServices cardServices, UserInterface userInterface)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
 			_cardServices = cardServices;
+			_userInterface = userInterface;
 
 			_gameStateEvents = new GameStateEvents();
 
@@ -62,6 +69,8 @@ namespace PrototypeGame
 			_commandManager = new CommandManager(_gameStateEvents.CommandRequestEvents);
 			_commandEventHandler = new CommandEventHandler(_logicMapStateManager, _gameStateEvents);
 			_optionPanel = optionPanel;
+
+			_stateMachineManager = new StateMachineManager(_commandManager, _userInterface, _cardServices);
 			
 		}
 
@@ -78,6 +87,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += ColliderHit;
 			_commandManager.NextCommandGroup();
+			_stateMachineManager.CreateAndEnterAwatingCardPlayState();
 		}
 
 
@@ -87,6 +97,7 @@ namespace PrototypeGame
 
 			_sceneMapStateManager.Dispose();
 			_commandEventHandler.Dispose();
+			_stateMachineManager.ExitHeadState();
 		}
 
 		public void Undo()
@@ -102,6 +113,7 @@ namespace PrototypeGame
 
 		private void ColliderHit(RaycastHit hit)
 		{
+			/*
 			// Test interactions
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
@@ -129,9 +141,10 @@ namespace PrototypeGame
 			if (hit.collider.GetComponent<GoodsCubeObject>() is GoodsCubeObject cube)
 			{
 				Debug.Log(cube.guid);
-			}
+			}*/
 		}
 
+		/*
 		private void HandleOptions(Guid guid)
 		{
 			// Test options building placement commands
@@ -156,7 +169,7 @@ namespace PrototypeGame
 						break;
 				}
 			}
-
 		}
+		*/
 	}
 }

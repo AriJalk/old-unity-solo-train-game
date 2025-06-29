@@ -12,6 +12,7 @@ namespace PrototypeGame.GameBuilder
 	{
 		public static void Build(GameStateEvents gameStateEvents, LogicMapStateManager logicMapStateManager, LogicCardStateManager logicCardStateManager)
 		{
+			// Build test map
 			HexCoord coord = HexCoord.GetCoord(0, 0);
 			HexTileData tile = logicMapStateManager.BuildTile(coord, TerrainType.MOUNTAIN);
 
@@ -24,9 +25,14 @@ namespace PrototypeGame.GameBuilder
 				gameStateEvents.SceneMapEvents.RaiseTileBuiltEvent(tile);
 			}
 
-			ProtoCardData card1 = new ProtoCardData(Guid.NewGuid(), "Test card", 2, 2, "Build test card");
-			logicCardStateManager.AddCardToHand(card1);
-			gameStateEvents.SceneCardEvents.RaiseCardCreatedAndAddedToHandEvent(card1);
+			
+			// Build test hand of cards
+			for (int i = 0; i < 7; i++)
+			{
+				ProtoCardData card = new ProtoCardData(Guid.NewGuid(), "Test card", 2, 2, "Build test card");
+				logicCardStateManager.AddCardToHand(card);
+				gameStateEvents.SceneCardEvents.RaiseCardCreatedAndAddedToHandEvent(card);
+			}
 		}
 	}
 }
