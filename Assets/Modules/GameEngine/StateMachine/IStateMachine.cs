@@ -1,4 +1,4 @@
-﻿namespace PrototypeGame.StateMachine
+﻿namespace GameEngine.StateMachine
 {
 	internal interface IStateMachine
 	{

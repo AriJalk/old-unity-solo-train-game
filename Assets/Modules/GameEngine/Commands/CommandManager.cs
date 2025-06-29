@@ -2,10 +2,10 @@
 
 namespace GameEngine.Commands
 {
-	public class CommandManagerBase
+	public class CommandManager
 	{
-		protected CommandGroup _commandGroupHead;
-		protected Stack<CommandGroup> _commandGroupStack = new Stack<CommandGroup>();
+		private CommandGroup _commandGroupHead;
+		private Stack<CommandGroup> _commandGroupStack = new Stack<CommandGroup>();
 
 		public void NextCommandGroup()
 		{
@@ -35,6 +35,12 @@ namespace GameEngine.Commands
 			{
 				_commandGroupStack.Pop().UndoAll();
 			}
+		}
+
+		public void PushAndExecuteCommand(ICommand command)
+		{
+			_commandGroupHead.AddCommand(command);
+			command.Execute();
 		}
 	}
 }

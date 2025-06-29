@@ -24,8 +24,12 @@ namespace PrototypeGame.ServiceGroups
 		public LogicCardStateManager LogicCardStateManager { get; private set; }
 		public SceneCardStateManager SceneCardStateManager { get; private set; }
 
-		public GameStateEvents GameStateEvents { get; private set; }
 		public CommandEventHandler CommandEventHandler { get; private set; }
+
+		public GameStateEvents GameStateEvents { get; private set; }
+		
+		public CommandRequestEvents CommandRequestEvents { get; private set; }
+
 		public StateManagers(CommonServices commonServices, GameEngineServices gameEngineServices, LogicMapState logicMapState, GameStateEvents gameStateEvents, LogicCardState logicCardState, CardServices cardServices)
 		{
 			GameStateEvents = gameStateEvents;
@@ -34,6 +38,7 @@ namespace PrototypeGame.ServiceGroups
 			LogicCardStateManager = new LogicCardStateManager(logicCardState);
 			SceneCardStateManager = new SceneCardStateManager(commonServices, cardServices, gameStateEvents);
 			CommandEventHandler = new CommandEventHandler(LogicMapStateManager, gameStateEvents);
+			CommandRequestEvents = new CommandRequestEvents();
 		}
 
 		public void Dispose()

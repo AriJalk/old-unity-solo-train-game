@@ -1,25 +1,21 @@
 using PrototypeGame.GameBuilder;
 using PrototypeGame.Logic.State;
-using PrototypeGame.Scene.State;
 using PrototypeGame.Events;
 using CommonEngine.Core;
 using GameEngine.Core;
 using UnityEngine;
 using PrototypeGame.Scene;
-using PrototypeGame.Commands;
 using CommonEngine.UI.Options;
 using PrototypeGame.UI.Options;
 using System.Collections.Generic;
-using System;
-using System.Linq;
 using HexSystem;
-using PrototypeGame.Logic;
 using CardSystem;
-using PrototypeGame.Scene.State.Cards;
 using PrototypeGame.Logic.State.Cards;
-using PrototypeGame.StateMachine;
 using PrototypeGame.UI;
 using PrototypeGame.ServiceGroups;
+using GameEngine.Commands;
+using GameEngine.StateMachine;
+using PrototypeGame.Commands;
 
 
 namespace PrototypeGame
@@ -40,6 +36,9 @@ namespace PrototypeGame
 		private CommandManager _commandManager;
 		private StateMachineManager _stateMachineManager;
 
+		private CommandFactory _commandFactory;
+		private StateMachineFactory _stateMachineFactory;
+
 		// Test variabled
 		private List<BuildingOption> _buildingOptions;
 		private HexCoord _buildCoord;
@@ -55,11 +54,14 @@ namespace PrototypeGame
 
 			_stateManagers = new StateManagers(commonServices, gameEngineServices, new LogicMapState(), new GameStateEvents(), new LogicCardState(), _cardServices);
 
-			_commandManager = new CommandManager(_stateManagers.GameStateEvents.CommandRequestEvents);
-			
-			_stateMachineManager = new StateMachineManager(_commandManager, _userInterface, _cardServices);
+			_commandManager = new CommandManager();
+
+			_stateMachineManager = new StateMachineManager();
 
 			_optionPanel = optionPanel;
+
+			_commandFactory = new CommandFactory(_stateManagers.CommandRequestEvents);
+			_stateMachineFactory = new StateMachineFactory(_commandManager, _userInterface, _cardServices);
 		}
 
 
@@ -75,7 +77,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += ColliderHit;
 			_commandManager.NextCommandGroup();
-			_stateMachineManager.CreateAndEnterAwatingCardPlayState();
+			_stateMachineManager.NextState(_stateMachineFactory.CreateAwatingCardPlayState());
 		}
 
 

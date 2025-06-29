@@ -1,9 +1,5 @@
-﻿using PrototypeGame.StateMachine;
+﻿using GameEngine.StateMachine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commands.StateCommands
 {
