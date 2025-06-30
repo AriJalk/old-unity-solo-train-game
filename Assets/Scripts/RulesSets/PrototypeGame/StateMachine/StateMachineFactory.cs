@@ -66,6 +66,13 @@ namespace PrototypeGame.StateMachine
 			return state;
 		}
 
+		public TransportActionState CreateTransportActionState(int transportPoints)
+		{
+			TransportActionState state = new TransportActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, transportPoints);
+
+			return state;
+		}
+
 
 	}
 }

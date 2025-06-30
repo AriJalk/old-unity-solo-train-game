@@ -31,5 +31,12 @@ namespace PrototypeGame.Logic.Components.Cards
 
 			return card;
 		}
+
+		public TransportActionCard CreateTransportActionCard()
+		{
+			TransportActionCard card = new TransportActionCard(Guid.NewGuid(), "Transport", 2, 2, "Basic Transport Action", _commandManager, _commandFactory);
+
+			return card;
+		}
 	}
 }

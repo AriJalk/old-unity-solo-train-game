@@ -5,6 +5,7 @@ using PrototypeGame.Commands.CardCommands;
 using PrototypeGame.Events;
 using PrototypeGame.StateMachine;
 using System;
+using PrototypeGame.Commands.StateCommands;
 
 namespace PrototypeGame.Commands
 {
@@ -30,7 +31,7 @@ namespace PrototypeGame.Commands
 			_stateMachineManager = stateMachineManager;
 		}
 
-		public TransportCubeCommand CreateTrasnportCommand(Guid originSlot, Guid destinationSlot)
+		public TransportCubeCommand CreateTransportCubeCommand(Guid originSlot, Guid destinationSlot)
 		{
 			TransportCubeCommand command = new TransportCubeCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, originSlot, destinationSlot);
 			return command;
@@ -64,6 +65,13 @@ namespace PrototypeGame.Commands
 		public TransitionToAwatingPlayCardForActionCommand CreateTransitionToAwatingPlayCardForActionCommand()
 		{
 			TransitionToAwatingPlayCardForActionCommand command = new TransitionToAwatingPlayCardForActionCommand(_commandRequestEventsWrapper.StateCommandRequestEvents, _stateMachineFactory, _stateMachineManager.CurrentState);
+
+			return command;
+		}
+
+		public TransitionToTransportStateCommand CreateTransitionToTransportStateCommand(int transportPoints)
+		{
+			TransitionToTransportStateCommand command = new TransitionToTransportStateCommand(_commandRequestEventsWrapper.StateCommandRequestEvents, _stateMachineFactory, transportPoints, _stateMachineManager.CurrentState);
 
 			return command;
 		}

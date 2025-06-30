@@ -5,6 +5,7 @@ using HexSystem;
 using PrototypeGame.Logic.State.Cards;
 using PrototypeGame.Logic.Components.Cards;
 using System;
+using PrototypeGame.Scene.Components.Cards;
 
 namespace PrototypeGame.GameBuilder
 {
@@ -18,18 +19,32 @@ namespace PrototypeGame.GameBuilder
 
 			sceneEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
 
+			logicMapStateManager.BuildStationOnTile(tile);
+			sceneEventsWrapper.SceneMapEvents.RaiseStationBuiltEvent(tile);
+
+
 			foreach (HexCoord neighbor in coord.GetNeighbors())
 			{
 				tile = logicMapStateManager.BuildTile(neighbor, TerrainType.FIELD);
 
 				sceneEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
+
+				logicMapStateManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+				sceneEventsWrapper.SceneMapEvents.RaiseFactoryBuiltEvent(tile);
+
+				logicMapStateManager.ProduceGoodsCubeInSlot(tile.Factory.GoodsCubeSlot, tile.Factory.ProductionColor);
+				sceneEventsWrapper.SceneMapEvents.RaiseGoodsCubeProducedInSlotEvent(tile.Factory.GoodsCubeSlot, tile.Factory.GoodsCubeSlot.GoodsCube);
 			}
 
 			
 			// Build test hand of cards
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 2; i++)
 			{
-				BuildActionCard card = cardFactory.CreateBasicBuildActionCard();
+				ProtoCardData card = cardFactory.CreateBasicBuildActionCard();
+				logicCardStateManager.AddCardToHand(card);
+				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
+
+				card = cardFactory.CreateTransportActionCard();
 				logicCardStateManager.AddCardToHand(card);
 				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
 			}
