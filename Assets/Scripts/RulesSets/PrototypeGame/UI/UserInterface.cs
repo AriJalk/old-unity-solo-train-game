@@ -12,6 +12,6 @@ namespace PrototypeGame.UI
 
 		public TextMeshProUGUI CurrentMessage;
 
-		public PlayCardDropArea PlayCardDropArea;
+		public PlayCardDropTarget PlayCardDropTarget;
 	}
 }

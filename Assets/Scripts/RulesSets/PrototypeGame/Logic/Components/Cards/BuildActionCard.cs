@@ -1,7 +1,6 @@
 ﻿using GameEngine.Commands;
 using PrototypeGame.Commands;
 using System;
-using UnityEngine;
 
 namespace PrototypeGame.Logic.Components.Cards
 {

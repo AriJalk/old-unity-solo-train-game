@@ -1758,7 +1758,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1721844433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5b38c00ad6ceb43b3250c75b28fa3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a53bd87c821a7d479591129058c71d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1721844436
@@ -1920,7 +1920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   optionPanel: {fileID: 596077877}
   CurrentMessage: {fileID: 1807414814}
-  PlayCardDropArea: {fileID: 1721844435}
+  PlayCardDropTarget: {fileID: 1721844435}
 --- !u!1 &1807414812
 GameObject:
   m_ObjectHideFlags: 0

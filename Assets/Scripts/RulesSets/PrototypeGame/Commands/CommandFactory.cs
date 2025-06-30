@@ -7,6 +7,10 @@ using System;
 
 namespace PrototypeGame.Commands
 {
+	/// <summary>
+	/// Factory class for all commands
+	/// *** All commands must interact with the game state through request event calls, or transition states through direct access to StateMachineManager ***
+	/// </summary>
 	internal class CommandFactory
 	{
 		private CommandRequestEventsWrapper _commandRequestEventsWrapper;
@@ -25,24 +29,28 @@ namespace PrototypeGame.Commands
 			_stateMachineManager = stateMachineManager;
 		}
 
-		public void CreateTrasnportCommand(Guid originSlot, Guid destinationSlot)
+		public TransportCubeCommand CreateTrasnportCommand(Guid originSlot, Guid destinationSlot)
 		{
 			TransportCubeCommand command = new TransportCubeCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, originSlot, destinationSlot);
+			return command;
 		}
 
-		public void CreateBuildFactoryCommand(HexCoord hexCoord, GoodsColor productionColor)
+		public BuildFactoryCommand CreateBuildFactoryCommand(HexCoord hexCoord, GoodsColor productionColor)
 		{
 			BuildFactoryCommand command = new BuildFactoryCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, hexCoord, productionColor);
+			return command;
 		}
 
-		public void CreateBuildStationCommand(HexCoord hexCoord)
+		public BuildStationCommand CreateBuildStationCommand(HexCoord hexCoord)
 		{
 			BuildStationCommand command = new BuildStationCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, hexCoord);
+			return command;
 		}
 
-		public void CreateProduceGoodsCubeInSlotCommand(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		public ProduceGoodsCubeInSlotCommand CreateProduceGoodsCubeInSlotCommand(Guid goodsCubeSlotGuid, GoodsColor goodsColor)
 		{
 			ProduceGoodsCubeInSlotCommand command = new ProduceGoodsCubeInSlotCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, goodsCubeSlotGuid, goodsColor);
+			return command;
 		}
 
 		public TransitionToBuildStateCommand CreateTransitionToBuildStateCommand(int availableMoney)

@@ -18,6 +18,7 @@ using GameEngine.StateMachine;
 using PrototypeGame.Commands;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.StateMachine;
+using PrototypeGame.Logic.Services;
 
 
 namespace PrototypeGame
@@ -78,7 +79,8 @@ namespace PrototypeGame
 			_commandFactory = new CommandFactory();
 			_cardFactory = new CardFactory();
 
-			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices);
+
+			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, new CardLookupService(_gameStateManagers.LogicCardStateManager.LogicCardState));
 			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager);
 			_cardFactory.Initialize(_commandManager, _commandFactory);
 		}
@@ -96,7 +98,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += ColliderHit;
 			_commandManager.NextCommandGroup();
-			_gameStateManagers.StateMachineManager.NextState(_stateMachineFactory.CreateAwatingCardPlayState());
+			_gameStateManagers.StateMachineManager.NextState(_stateMachineFactory.CreateAwatingPlayCardForAction());
 		}
 
 

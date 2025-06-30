@@ -52,7 +52,7 @@ namespace CardSystem
 
 			foreach (RaycastResult result in results)
 			{
-				if (result.gameObject.GetComponent<ICardDropArea>() is ICardDropArea cardDropArea)
+				if (result.gameObject.GetComponent<ICardDropTarget>() is ICardDropTarget cardDropArea)
 				{
 					cardDropArea.OnDrop(card);
 					break;

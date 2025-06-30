@@ -1,15 +1,11 @@
 ﻿using CardSystem;
 using PrototypeGame.Scene.Components.Cards;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace PrototypeGame.UI.CardSystem
 {
-	public class PlayCardDropArea : MonoBehaviour, ICardDropArea
+	public class PlayCardDropTarget : MonoBehaviour, ICardDropTarget
 	{
 		public event Action<Guid> OnCardDropEvent;
 
@@ -17,6 +13,11 @@ namespace PrototypeGame.UI.CardSystem
 		{
 			ProtoCardObject protoCard = card.GetComponent<ProtoCardObject>();
 			OnCardDropEvent?.Invoke(protoCard.guid);
+		}
+
+		public void SetActive(bool active)
+		{
+			gameObject.SetActive(active);
 		}
 	}
 }
