@@ -77,7 +77,7 @@ namespace PrototypeGame
 			_cardFactory = new CardFactory();
 
 
-			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, new CardLookupService(_gameStateManagers.LogicCardStateManager.LogicCardState));
+			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, new CardLookupService(_gameStateManagers.LogicCardStateManager.LogicCardState), _commandRequestEventsWrapper);
 			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager);
 			_cardFactory.Initialize(_commandManager, _commandFactory);
 		}

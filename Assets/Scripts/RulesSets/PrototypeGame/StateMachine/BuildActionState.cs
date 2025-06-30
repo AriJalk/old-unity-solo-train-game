@@ -2,6 +2,7 @@
 using GameEngine.Commands;
 using GameEngine.StateMachine;
 using PrototypeGame.Commands;
+using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.Logic.Services;
 using PrototypeGame.Scene;
@@ -26,7 +27,9 @@ namespace PrototypeGame.StateMachine
 
 		private ICardLookupService _cardLookupService;
 
-		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, int availableMoney)
+		private CardCommandRequestEvents _cardCommandRequestEvents;
+
+		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, int availableMoney)
 		{
 			_commonServices = commonServices;
 			_commandManager = commandManager;
@@ -34,6 +37,7 @@ namespace PrototypeGame.StateMachine
 			_userInterface = userInterface;
 			_cardDragAndDropState = cardDragAndDropState;
 			_cardLookupService = cardLookupService;
+			_cardCommandRequestEvents = cardCommandRequestEvents;
 			_availableMoney = availableMoney;
 		}
 
@@ -44,6 +48,7 @@ namespace PrototypeGame.StateMachine
 			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
 			_commonServices.RaycastConfig.SetRaycastLayer(typeof(HexTileObject));
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += OnColliderSelected;
+			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent += OnMoveCardFromDiscardToHandRequestEvent;
 		}
 
 		public void ExitState()
@@ -51,6 +56,7 @@ namespace PrototypeGame.StateMachine
 			_cardDragAndDropState.ExitState();
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= OnColliderSelected;
 			_userInterface.CurrentMessage.text = "";
+			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent -= OnMoveCardFromDiscardToHandRequestEvent;
 		}
 
 		private void OnColliderSelected(RaycastHit hit)
@@ -74,6 +80,16 @@ namespace PrototypeGame.StateMachine
 
 				//Discard
 				_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
+			}
+		}
+
+		private void OnMoveCardFromDiscardToHandRequestEvent(Guid cardId)
+		{
+			ProtoCardData cardData = _cardLookupService.GetCardData(cardId);
+			if (cardData != null)
+			{
+				_availableMoney -= cardData.MoneyValue;
+				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
 			}
 		}
 	}

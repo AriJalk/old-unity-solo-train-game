@@ -2,6 +2,7 @@
 using CommonEngine.Core;
 using GameEngine.Commands;
 using PrototypeGame.Commands;
+using PrototypeGame.Events;
 using PrototypeGame.Logic.Services;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
@@ -23,12 +24,17 @@ namespace PrototypeGame.StateMachine
 		private CardServices _cardServices;
 		private ICardLookupService _cardLookupService;
 
+		/// <summary>
+		/// *** Only for listening ***
+		/// </summary>
+		private CommandRequestEventsWrapper _commandRequestEventsWrapper;
+
 		public StateMachineFactory()
 		{
 
 		}
 
-		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService)
+		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService, CommandRequestEventsWrapper commandRequestEventsWrapper)
 		{
 			_commandManager = commandManager;
 			_userInterface = userInterface;
@@ -36,6 +42,7 @@ namespace PrototypeGame.StateMachine
 			_commandFactory = commandFactory;
 			_commonServices = commonServices;
 			_cardLookupService = cardLookupService;
+			_commandRequestEventsWrapper = commandRequestEventsWrapper;
 		}
 
 		private CardDragAndDropState CreateCardDragAndDropState()
@@ -54,7 +61,7 @@ namespace PrototypeGame.StateMachine
 
 		public BuildActionState CreateBuildActionState(int availableMoney)
 		{
-			BuildActionState state = new BuildActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, availableMoney);
+			BuildActionState state = new BuildActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, availableMoney);
 
 			return state;
 		}

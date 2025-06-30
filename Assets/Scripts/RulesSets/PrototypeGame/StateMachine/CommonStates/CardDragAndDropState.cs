@@ -37,13 +37,19 @@ namespace PrototypeGame.StateMachine.CommonStates
 
 		private void OnDragStarted()
 		{
-			_cardDropTarget.SetActive(true);
+			if (_cardDropTarget != null)
+			{
+				_cardDropTarget.SetActive(true);
+			}
 
 		}
 
 		private void OnDragEnded()
 		{
-			_cardDropTarget.SetActive(false);
+			if (_cardDropTarget != null)
+			{
+				_cardDropTarget.SetActive(false);
+			}
 		}
 
 		private void OnCardDropped(Guid cardId)
