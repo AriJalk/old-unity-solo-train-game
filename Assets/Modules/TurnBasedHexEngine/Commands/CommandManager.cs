@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace GameEngine.Commands
+namespace TurnBasedHexEngine.Commands
 {
+	/// <summary>
+	/// Manages command flow
+	/// </summary>
 	public class CommandManager
 	{
 		private CommandGroup _commandGroupHead;

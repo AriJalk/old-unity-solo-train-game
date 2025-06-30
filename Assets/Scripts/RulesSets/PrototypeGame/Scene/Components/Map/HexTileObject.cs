@@ -1,4 +1,4 @@
-using GameEngine.Map;
+using TurnBasedHexEngine.Map;
 using UnityEngine;
 
 namespace PrototypeGame.Scene

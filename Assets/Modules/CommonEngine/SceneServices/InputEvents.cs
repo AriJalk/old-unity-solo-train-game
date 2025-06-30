@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace CommonEngine.Events
 {
+	/// <summary>
+	/// The exposed API for the core input system
+	/// </summary>
 	public class InputEvents
 	{
 		#region PhysicalInput

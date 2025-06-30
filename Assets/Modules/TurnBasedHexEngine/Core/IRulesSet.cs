@@ -1,4 +1,4 @@
-namespace GameEngine.Core
+namespace TurnBasedHexEngine.Core
 {
 	/// <summary>
 	/// A unified (logic + tree) rules set to be injected into the scene manager

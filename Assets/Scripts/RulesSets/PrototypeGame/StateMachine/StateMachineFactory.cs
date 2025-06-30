@@ -1,6 +1,6 @@
 ﻿using CardSystem;
 using CommonEngine.Core;
-using GameEngine.Commands;
+using TurnBasedHexEngine.Commands;
 using PrototypeGame.Commands;
 using PrototypeGame.Events;
 using PrototypeGame.Logic.Services;
@@ -21,7 +21,7 @@ namespace PrototypeGame.StateMachine
 
 		private CommonServices _commonServices;
 		private UserInterface _userInterface;
-		private CardServices _cardServices;
+		private CardObjectServices _cardServices;
 		private ICardLookupService _cardLookupService;
 
 		/// <summary>
@@ -34,7 +34,7 @@ namespace PrototypeGame.StateMachine
 
 		}
 
-		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService, CommandRequestEventsWrapper commandRequestEventsWrapper)
+		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardObjectServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService, CommandRequestEventsWrapper commandRequestEventsWrapper)
 		{
 			_commandManager = commandManager;
 			_userInterface = userInterface;
@@ -52,9 +52,9 @@ namespace PrototypeGame.StateMachine
 			return state;
 		}
 
-		public AwatingPlayCardForAction CreateAwatingPlayCardForAction()
+		public AwatingPlayCardForActionState CreateAwatingPlayCardForActionState()
 		{
-			AwatingPlayCardForAction state = new AwatingPlayCardForAction(_userInterface, _commandManager, _commandFactory, CreateCardDragAndDropState());
+			AwatingPlayCardForActionState state = new AwatingPlayCardForActionState(_userInterface, _commandManager, _commandFactory, CreateCardDragAndDropState());
 
 			return state;
 		}

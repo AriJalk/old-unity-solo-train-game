@@ -10,19 +10,19 @@ namespace PrototypeGame.GameBuilder
 {
 	internal class Builder
 	{
-		public static void Build(GameStateEventsWrapper gameStateEventsWrapper, LogicMapStateManager logicMapStateManager, LogicCardStateManager logicCardStateManager, CardFactory cardFactory)
+		public static void Build(SceneEventsWrapper sceneEventsWrapper, LogicMapStateManager logicMapStateManager, LogicCardStateManager logicCardStateManager, CardFactory cardFactory)
 		{
 			// Build test map
 			HexCoord coord = HexCoord.GetCoord(0, 0);
 			HexTileData tile = logicMapStateManager.BuildTile(coord, TerrainType.MOUNTAIN);
 
-			gameStateEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
+			sceneEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
 
 			foreach (HexCoord neighbor in coord.GetNeighbors())
 			{
 				tile = logicMapStateManager.BuildTile(neighbor, TerrainType.FIELD);
 
-				gameStateEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
+				sceneEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
 			}
 
 			
@@ -31,7 +31,7 @@ namespace PrototypeGame.GameBuilder
 			{
 				BuildActionCard card = cardFactory.CreateBasicBuildActionCard();
 				logicCardStateManager.AddCardToHand(card);
-				gameStateEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
+				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
 			}
 		}
 	}

@@ -1,9 +1,9 @@
 ﻿namespace PrototypeGame.Events
 {
 	/// <summary>
-	/// Wrapper for State Events
+	/// Wrapper for Scene Events
 	/// </summary>
-	internal class GameStateEventsWrapper
+	internal class SceneEventsWrapper
 	{
 		public readonly SceneMapEvents SceneMapEvents = new SceneMapEvents();
 		public readonly SceneCardEvents SceneCardEvents = new SceneCardEvents();

@@ -1,13 +1,6 @@
-﻿using GameEngine.StateMachine;
-using HexSystem;
-using PrototypeGame.Events.CommandEventHandlers;
-using PrototypeGame.Logic;
-using PrototypeGame.Logic.MetaData;
-using PrototypeGame.Logic.State;
-using PrototypeGame.Logic.State.Cards;
+﻿using PrototypeGame.Events.CommandEventHandlers;
 using PrototypeGame.ServiceGroups;
 using System;
-using System.Diagnostics;
 
 namespace PrototypeGame.Events
 {
@@ -20,11 +13,11 @@ namespace PrototypeGame.Events
 		private CardCommandEventsHandler _cardCommandEventsHandler;
 		private StateCommandEventsHandler _stateCommandEventsHandler;
 
-		public CommandEventHandlersWrapper(GameStateManagers gameStateManagers, CommandRequestEventsWrapper commandRequestEventsWrapper, GameStateEventsWrapper gameStateEventsWrapper)
+		public CommandEventHandlersWrapper(GameStateManagers gameStateManagers, CommandRequestEventsWrapper commandRequestEventsWrapper, SceneEventsWrapper sceneEventsWrapper)
 		{
-			_mapCommandEventsHandler = new MapCommandEventsHandler(gameStateManagers.LogicMapStateManager, gameStateEventsWrapper.SceneMapEvents, commandRequestEventsWrapper.MapCommandRequestEvents);
+			_mapCommandEventsHandler = new MapCommandEventsHandler(gameStateManagers.LogicMapStateManager, sceneEventsWrapper.SceneMapEvents, commandRequestEventsWrapper.MapCommandRequestEvents);
 
-			_cardCommandEventsHandler = new CardCommandEventsHandler(gameStateManagers.LogicCardStateManager, commandRequestEventsWrapper.CardCommandRequestEvents, gameStateEventsWrapper.SceneCardEvents);
+			_cardCommandEventsHandler = new CardCommandEventsHandler(gameStateManagers.LogicCardStateManager, commandRequestEventsWrapper.CardCommandRequestEvents, sceneEventsWrapper.SceneCardEvents);
 
 			_stateCommandEventsHandler = new StateCommandEventsHandler(gameStateManagers.StateMachineManager, commandRequestEventsWrapper.StateCommandRequestEvents);
 		}

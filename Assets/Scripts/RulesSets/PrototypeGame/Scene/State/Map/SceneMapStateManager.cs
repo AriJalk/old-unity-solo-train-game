@@ -1,8 +1,8 @@
 using PrototypeGame.Logic;
 using PrototypeGame.Events;
 using CommonEngine.Core;
-using GameEngine.Core;
-using GameEngine.Map;
+using TurnBasedHexEngine.Core;
+using TurnBasedHexEngine.Map;
 using System;
 
 namespace PrototypeGame.Scene.State
@@ -21,10 +21,10 @@ namespace PrototypeGame.Scene.State
 
 		private HexGridController _hexGridController;
 
-		public SceneMapStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEventsWrapper gameStateEvents)
+		public SceneMapStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, SceneEventsWrapper sceneEventsWrapper)
 		{
 			_sceneMapState = new SceneMapState();
-			_sceneMapEvents = gameStateEvents.SceneMapEvents;
+			_sceneMapEvents = sceneEventsWrapper.SceneMapEvents;
 			_sceneMapStateManipulator = new SceneMapStateManipulator(commonServices);
 			_hexGridController = gameEngineServices.HexGridController;
 

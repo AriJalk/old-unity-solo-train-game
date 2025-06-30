@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace CommonEngine.ResourceManagement
 {
+	/// <summary>
+	/// Internal pool for PrefabManager
+	/// </summary>
+	/// <typeparam name="T">Type of prefab</typeparam>
 	internal class PrefabPool<T> where T : Component
 	{
 		private Queue<T> queue;

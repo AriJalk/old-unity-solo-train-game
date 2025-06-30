@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GameEngine.Commands
+namespace TurnBasedHexEngine.Commands
 {
 	/// <summary>
 	/// Atomic group of commands

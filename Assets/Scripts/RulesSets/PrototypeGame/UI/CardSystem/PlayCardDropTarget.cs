@@ -17,7 +17,10 @@ namespace PrototypeGame.UI.CardSystem
 
 		public void SetActive(bool active)
 		{
-			gameObject.SetActive(active);
+			if (this != null)
+			{
+				gameObject.SetActive(active);
+			}
 		}
 	}
 }

@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace CommonEngine.IO
 {
+	/// <summary>
+	/// Listens to input, and dispatches events accordingly
+	/// </summary>
 	public class InputManager : MonoBehaviour
 	{
 		[SerializeField]

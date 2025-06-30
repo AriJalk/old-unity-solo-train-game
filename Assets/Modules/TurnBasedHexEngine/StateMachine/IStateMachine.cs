@@ -1,4 +1,4 @@
-﻿namespace GameEngine.StateMachine
+﻿namespace TurnBasedHexEngine.StateMachine
 {
 	internal interface IStateMachine
 	{

@@ -1,5 +1,5 @@
-﻿using GameEngine.Commands;
-using GameEngine.StateMachine;
+﻿using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Events;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;

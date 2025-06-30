@@ -1,7 +1,7 @@
-﻿using GameEngine.Map;
+﻿using TurnBasedHexEngine.Map;
 using UnityEngine;
 
-namespace GameEngine.Core
+namespace TurnBasedHexEngine.Core
 {
 	public class GameEngineServices : MonoBehaviour
 	{

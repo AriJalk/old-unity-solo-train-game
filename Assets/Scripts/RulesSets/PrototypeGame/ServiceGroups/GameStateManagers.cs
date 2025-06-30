@@ -1,8 +1,8 @@
 ﻿using CardSystem;
 using CommonEngine.Core;
-using GameEngine.Commands;
-using GameEngine.Core;
-using GameEngine.StateMachine;
+using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.Core;
+using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Events;
 using PrototypeGame.Logic.State;
 using PrototypeGame.Logic.State.Cards;
@@ -23,12 +23,12 @@ namespace PrototypeGame.ServiceGroups
 		public CommandManager CommandManager { get; private set; }
 		public StateMachineManager StateMachineManager { get; private set; }
 
-		public GameStateManagers(CommonServices commonServices, GameEngineServices gameEngineServices, LogicMapState logicMapState, GameStateEventsWrapper gameStateEvents, LogicCardState logicCardState, CardServices cardServices, StateMachineManager stateMachineManager)
+		public GameStateManagers(CommonServices commonServices, GameEngineServices gameEngineServices, LogicMapState logicMapState, SceneEventsWrapper sceneEventsWrapper, LogicCardState logicCardState, CardObjectServices cardServices, StateMachineManager stateMachineManager)
 		{
 			LogicMapStateManager = new LogicMapStateManager(logicMapState);
-			SceneMapStateManager = new SceneMapStateManager(commonServices, gameEngineServices, gameStateEvents);
+			SceneMapStateManager = new SceneMapStateManager(commonServices, gameEngineServices, sceneEventsWrapper);
 			LogicCardStateManager = new LogicCardStateManager(logicCardState);
-			SceneCardStateManager = new SceneCardStateManager(commonServices, cardServices, gameStateEvents);
+			SceneCardStateManager = new SceneCardStateManager(commonServices, cardServices, sceneEventsWrapper);
 
 			StateMachineManager = stateMachineManager;
 		}

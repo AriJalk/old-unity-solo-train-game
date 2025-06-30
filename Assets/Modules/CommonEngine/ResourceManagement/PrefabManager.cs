@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace CommonEngine.ResourceManagement
 {
+
+	/// <summary>
+	/// Provides bulk instancing of prefabs
+	/// </summary>
 	public class PrefabManager : MonoBehaviour
 	{
 		[SerializeField]

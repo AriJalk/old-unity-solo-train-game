@@ -2,6 +2,9 @@
 
 namespace CommonEngine.SceneServices
 {
+	/// <summary>
+	/// General tools to help reduce repeated code regarding scene manipulation
+	/// </summary>
 	public static class SceneHelpers
 	{
 		public static void SetParentAndResetPosition(Transform child, Transform parent)

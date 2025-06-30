@@ -1,16 +1,12 @@
-﻿using GameEngine.Commands;
-using GameEngine.StateMachine;
-using PrototypeGame.Events;
+﻿using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;
-using System;
 
 namespace Commands.StateCommands
 {
 	internal class TransitionToAwatingPlayCardForActionCommand : ICommand
 	{
-		private int _availableMoney;
-
 		private StateCommandRequestEvents _stateCommandRequestEvents;
 		private StateMachineFactory _stateMachineFactory;
 		private IStateMachine _previousState;
@@ -25,7 +21,7 @@ namespace Commands.StateCommands
 
 			public void Execute()
 			{
-				IStateMachine state = _stateMachineFactory.CreateAwatingPlayCardForAction();
+				IStateMachine state = _stateMachineFactory.CreateAwatingPlayCardForActionState();
 				_stateCommandRequestEvents.RaiseTransitionToStateMachineEvent(state);
 			}
 

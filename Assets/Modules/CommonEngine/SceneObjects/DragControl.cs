@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 namespace CommonEngine.SceneObjects
 {
+	/// <summary>
+	/// An invisible full screen drag element, used mainly as control method for camera rotation
+	/// </summary>
 	public class DragControl : MonoBehaviour, IDragHandler
 	{
 		[SerializeField]

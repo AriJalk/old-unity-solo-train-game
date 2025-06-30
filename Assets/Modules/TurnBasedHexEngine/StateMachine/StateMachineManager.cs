@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine.StateMachine
+namespace TurnBasedHexEngine.StateMachine
 {
 	internal class StateMachineManager
 	{

@@ -6,12 +6,21 @@ using UnityEngine;
 
 namespace CommonEngine.SceneObjects
 {
+	/// <summary>
+	/// An object the responds to input events and moves the bound object accordingly
+	/// </summary>
 	public class MovableObject : MonoBehaviour
 	{
 		[SerializeField]
 		private CommonServices _commonServices;
+		/// <summary>
+		/// A transform that defines movement forward orientation
+		/// </summary>
 		[SerializeField]
 		private Transform _forwardTransform;
+		/// <summary>
+		/// Movement speed
+		/// </summary>
 		[SerializeField]
 		[Range(0f, 20f)]
 		private float _speed = 5;

@@ -4,20 +4,34 @@ using UnityEngine;
 
 namespace CommonEngine.SceneObjects
 {
-
+	/// <summary>
+	/// Gives rotation functionality to a gameObject in response to input events
+	/// </summary>
 	public class RotatedObject : MonoBehaviour
 	{
 		[SerializeField]
 		private CommonServices _commonServices;
 
+		/// <summary>
+		/// The pivot transform to rotate around
+		/// </summary>
 		[SerializeField]
 		private Transform _rotateAround;
+		/// <summary>
+		/// Rotation radius
+		/// </summary>
 		[SerializeField]
 		private float _radius = 4;
+		/// <summary>
+		/// Constant offset to the position of the object after rotation
+		/// </summary>
 		[SerializeField]
 		private Vector3 _offset = Vector3.zero;
 		[SerializeField]
 		private float _acceleration = 1;
+		/// <summary>
+		/// Initial rotation degrees
+		/// </summary>
 		[SerializeField]
 		[Range(-360f, 360f)]
 		private float _initialRotation = -90;

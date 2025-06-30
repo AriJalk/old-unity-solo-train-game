@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace CommonEngine.UI.Options
 {
+    /// <summary>
+    /// General purpose option selection panel
+    /// </summary>
     public class OptionPanel : MonoBehaviour
     {
         public event Action<Guid> OptionSelectedEvent;

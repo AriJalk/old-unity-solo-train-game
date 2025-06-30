@@ -1,7 +1,6 @@
 ﻿using CommonEngine.ResourceManagement;
 using CommonEngine.Events;
 using UnityEngine;
-using System.Collections.Generic;
 using CommonEngine.IO;
 
 namespace CommonEngine.Core

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace CommonEngine.SceneObjects
 {
+	/// <summary>
+	/// Provides listenable raycasting functinoality
+	/// </summary>
 	public class ClickRaycaster : MonoBehaviour
 	{
 		[SerializeField]

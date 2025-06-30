@@ -1,6 +1,12 @@
 using UnityEngine;
 
-public class MeshComponent : MonoBehaviour
+namespace CommonEngine.Core
 {
-    public MeshRenderer MeshRenderer;
+	/// <summary>
+	/// Component to allow manipulation of the mesh
+	/// </summary>
+	public class MeshComponent : MonoBehaviour
+	{
+		public MeshRenderer MeshRenderer;
+	}
 }

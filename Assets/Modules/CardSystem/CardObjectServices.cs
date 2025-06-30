@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace CardSystem
 {
-	public class CardServices : MonoBehaviour
+	public class CardObjectServices : MonoBehaviour
 	{
 		public event Action DragStartedEvent;
 		public event Action DragEndedEvent;
@@ -73,7 +73,7 @@ namespace CardSystem
 
 		public void RemoveCard(CardObjectBase card)
 		{
-			Debug.Log("Removed: " + card.transform.parent.name);
+			//Debug.Log("Removed: " + card.transform.parent.name);
 			Destroy(card.transform.parent.gameObject);
 		}
 	}

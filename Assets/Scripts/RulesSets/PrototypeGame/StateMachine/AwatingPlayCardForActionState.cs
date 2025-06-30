@@ -1,6 +1,6 @@
 ﻿using CardSystem;
-using GameEngine.Commands;
-using GameEngine.StateMachine;
+using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Commands;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace PrototypeGame.StateMachine
 {
-	internal class AwatingPlayCardForAction : IStateMachine
+	internal class AwatingPlayCardForActionState : IStateMachine
 	{
 		private UserInterface _userInterface;
 
@@ -18,7 +18,7 @@ namespace PrototypeGame.StateMachine
 
 		private CardDragAndDropState _cardDragAndDropState;
 
-		public AwatingPlayCardForAction(UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory, CardDragAndDropState cardDragAndDropState) 
+		public AwatingPlayCardForActionState(UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory, CardDragAndDropState cardDragAndDropState) 
 		{ 
 			_userInterface = userInterface;
 			_commandManager = commandManager;

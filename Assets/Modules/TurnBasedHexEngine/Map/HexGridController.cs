@@ -2,7 +2,7 @@ using HexSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameEngine.Map
+namespace TurnBasedHexEngine.Map
 {
 	public class HexGridController : MonoBehaviour
 	{

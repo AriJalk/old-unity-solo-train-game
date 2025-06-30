@@ -190,22 +190,60 @@ Transform:
   - {fileID: 918674465}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &157964117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157964118}
+  - component: {fileID: 157964119}
+  m_Layer: 0
+  m_Name: RulesLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &157964118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157964117}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157964119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157964117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16b61754db797041b15a37b75d2bd7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameSceneManager: {fileID: 1072786861}
+  _gameEngineServices: {fileID: 1072786862}
+  _commonServices: {fileID: 1638142083}
+  _cardObjectServices: {fileID: 557317820}
+  _userInterface: {fileID: 1733339336}
 --- !u!224 &314261957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1265178467896900034, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
   m_PrefabInstance: {fileID: 3632651585925924456}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &314261958 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7967560332456834384, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
-  m_PrefabInstance: {fileID: 3632651585925924456}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0896df9806b85584bb828ad6ac54ff47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &315834025
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +745,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _commonServices: {fileID: 1638142083}
+--- !u!114 &557317820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8545787419915666772, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
+  m_PrefabInstance: {fileID: 3632651585925924456}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8596860bee6570c4bbe0660a6331ada4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &594734191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1325,7 @@ GameObject:
   - component: {fileID: 1072786861}
   - component: {fileID: 1072786862}
   m_Layer: 0
-  m_Name: GameEngine
+  m_Name: TurnBasedHexEngine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1309,12 +1358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144cb967b1793c040acb245a64ed938b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridController: {fileID: 1838514298}
-  _commonServices: {fileID: 1638142083}
-  _gameServices: {fileID: 1072786862}
-  _optionPanel: {fileID: 596077877}
-  _cardServices: {fileID: 314261958}
-  _userInterface: {fileID: 1733339336}
   _undoButton: {fileID: 1605644378}
   _confirmButton: {fileID: 451199880}
 --- !u!114 &1072786862
@@ -2536,15 +2579,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardSystem
       objectReference: {fileID: 0}
-    - target: {fileID: 7967560332456834384, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
-      propertyPath: DragDelay
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7967560332456834384, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
+    - target: {fileID: 8545787419915666772, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
       propertyPath: _commonServices
       value: 
       objectReference: {fileID: 1638142083}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1265178467896900034, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
@@ -2561,3 +2601,4 @@ SceneRoots:
   - {fileID: 1638142082}
   - {fileID: 1072786860}
   - {fileID: 51743785}
+  - {fileID: 157964118}

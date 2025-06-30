@@ -9,11 +9,11 @@ namespace PrototypeGame.Scene.State.Cards
 	internal class SceneCardStateManipulator
 	{
 		private CommonServices _commonServices;
-		private CardServices _cardServices;
+		private CardObjectServices _cardServices;
 
 		private GameObject _cardPrefab;
 
-		public SceneCardStateManipulator(CommonServices commonServices, CardServices cardServices)
+		public SceneCardStateManipulator(CommonServices commonServices, CardObjectServices cardServices)
 		{
 			_commonServices = commonServices;
 			_cardServices = cardServices;

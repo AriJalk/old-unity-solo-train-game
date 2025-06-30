@@ -1,6 +1,6 @@
 ﻿using CommonEngine.Core;
-using GameEngine.Commands;
-using GameEngine.StateMachine;
+using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Commands;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.Logic.Components.Cards;

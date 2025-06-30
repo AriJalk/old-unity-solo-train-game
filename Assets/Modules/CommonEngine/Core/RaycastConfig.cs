@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace CommonEngine.Core
 {
+	/// <summary>
+	/// Config settings for the camera raycaster
+	/// </summary>
 	public class RaycastConfig
 	{
 		private Dictionary<Type, int> _raycastLayers = new Dictionary<Type, int>()

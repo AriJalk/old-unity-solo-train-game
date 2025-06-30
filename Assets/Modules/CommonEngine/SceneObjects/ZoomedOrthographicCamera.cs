@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace CommonEngine.SceneObjects
 {
+	/// <summary>
+	/// Changed orthographic camera size according to input events
+	/// </summary>
 	public class ZoomedOrthographicCamera : MonoBehaviour
 	{
 		[SerializeField]

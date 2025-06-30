@@ -10,18 +10,18 @@ namespace PrototypeGame.Scene.State.Cards
 	internal class SceneCardStateManager : IDisposable
 	{
 		private CommonServices _commonServices;
-		private CardServices _cardServices;
+		private CardObjectServices _cardServices;
 		private SceneCardEvents _sceneCardEvents;
 
 		private SceneCardState _sceneCardState;
 
 		private SceneCardStateManipulator _sceneCardStateManipulator;
 
-		public SceneCardStateManager(CommonServices commonServices, CardServices cardServices, GameStateEventsWrapper gameStateEvents)
+		public SceneCardStateManager(CommonServices commonServices, CardObjectServices cardServices, SceneEventsWrapper sceneEventsWrapper)
 		{
 			_commonServices = commonServices;
 			_cardServices = cardServices;
-			_sceneCardEvents = gameStateEvents.SceneCardEvents;
+			_sceneCardEvents = sceneEventsWrapper.SceneCardEvents;
 
 			_sceneCardState = new SceneCardState();
 

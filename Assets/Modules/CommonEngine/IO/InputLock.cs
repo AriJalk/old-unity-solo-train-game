@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace CommonEngine.IO
 {
+	/// <summary>
+	/// A shared lock service for input events, each listener for input events can either enforce or ignore the lock giving freedom based on the use case
+	/// </summary>
 	public class InputLock
 	{
 		private readonly HashSet<GameObject> _lockingObjects = new HashSet<GameObject>();

@@ -1,6 +1,7 @@
+using CommonEngine.Core;
 using HexSystem;
 
-namespace GameEngine.Map
+namespace TurnBasedHexEngine.Map
 {
 	/// <summary>
 	/// Base class for HexTiles in the scene tree

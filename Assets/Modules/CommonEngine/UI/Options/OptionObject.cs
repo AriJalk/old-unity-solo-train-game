@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace CommonEngine.UI.Options
 {
+	/// <summary>
+	/// General purpose option for OptionsPanel
+	/// </summary>
 	public class OptionObject : MonoBehaviour, IIdentifiable
 	{
 		public event Action<Guid> SelectedEvent;
