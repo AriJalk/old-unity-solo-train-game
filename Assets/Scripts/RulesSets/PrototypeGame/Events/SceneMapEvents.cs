@@ -6,7 +6,7 @@ namespace PrototypeGame
 {
 	/// <summary>
 	/// Main API connection point to the Scene, all possible scene interactions goes through here
-	/// Only accessed through CommandEventHandler
+	/// Only accessed through CommandEventHandlers
 	/// </summary>
 	internal class SceneMapEvents
 	{

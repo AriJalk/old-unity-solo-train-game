@@ -29,7 +29,7 @@ namespace PrototypeGame
 		private UserInterface _userInterface;
 
 
-		private StateManagers _stateManagers;
+		
 
 		private CardServices _cardServices;
 
@@ -37,13 +37,20 @@ namespace PrototypeGame
 
 		private CommandManager _commandManager;
 
+		private GameStateManagers _gameStateManagers;
+		private GameStateEventsWrapper _gameStateEventsWrapper;
+		private CommandRequestEventsWrapper _commandRequestEventsWrapper;
+		private CommandEventHandlersWrapper _commandEventHandlersWrapper;
+
 		private CommandFactory _commandFactory;
 		private StateMachineFactory _stateMachineFactory;
 		private CardFactory _cardFactory;
 
-		// Test variabled
-		private List<BuildingOption> _buildingOptions;
-		private HexCoord _buildCoord;
+		
+
+		// Test variables
+		//private List<BuildingOption> _buildingOptions;
+		//private HexCoord _buildCoord;
 
 
 
@@ -55,20 +62,24 @@ namespace PrototypeGame
 			_userInterface = userInterface;
 			
 
-			_stateManagers = new StateManagers(commonServices, gameEngineServices, new LogicMapState(), new GameStateEvents(), new LogicCardState(), _cardServices, new StateMachineManager());
+			_gameStateEventsWrapper = new GameStateEventsWrapper();
+
+			_gameStateManagers = new GameStateManagers(commonServices, gameEngineServices, new LogicMapState(), _gameStateEventsWrapper, new LogicCardState(), _cardServices, new StateMachineManager());
 
 			_commandManager = new CommandManager();
 
-			
-
 			_optionPanel = optionPanel;
+
+			_commandRequestEventsWrapper = new CommandRequestEventsWrapper();
+
+			_commandEventHandlersWrapper = new CommandEventHandlersWrapper(_gameStateManagers, _commandRequestEventsWrapper, _gameStateEventsWrapper);
 
 			_stateMachineFactory = new StateMachineFactory();
 			_commandFactory = new CommandFactory();
 			_cardFactory = new CardFactory();
 
-			_stateMachineFactory.Initialize(_commandManager, _stateManagers.GameStateEvents.CommandRequestEvents, _userInterface, _cardServices, _commandFactory, _commonServices);
-			_commandFactory.Initialize(_stateManagers.GameStateEvents.CommandRequestEvents, _stateMachineFactory);
+			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices);
+			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager);
 			_cardFactory.Initialize(_commandManager, _commandFactory);
 		}
 
@@ -76,7 +87,7 @@ namespace PrototypeGame
 		public void Setup()
 		{
 			ResourceLoader.LoadResources(_commonServices);
-			Builder.Build(_stateManagers.GameStateEvents, _stateManagers.LogicMapStateManager, _stateManagers.LogicCardStateManager, _cardFactory);
+			Builder.Build(_gameStateEventsWrapper, _gameStateManagers.LogicMapStateManager, _gameStateManagers.LogicCardStateManager, _cardFactory);
 			_commonServices.RaycastConfig.SetRaycastLayer<HexTileObject>();
 		}
 
@@ -85,7 +96,7 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += ColliderHit;
 			_commandManager.NextCommandGroup();
-			_stateManagers.StateMachineManager.NextState(_stateMachineFactory.CreateAwatingCardPlayState());
+			_gameStateManagers.StateMachineManager.NextState(_stateMachineFactory.CreateAwatingCardPlayState());
 		}
 
 
@@ -93,8 +104,8 @@ namespace PrototypeGame
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= ColliderHit;
 
-			_stateManagers.Dispose();
-			_stateManagers.StateMachineManager.ExitHeadState();
+			_gameStateManagers.Dispose();
+			_gameStateManagers.StateMachineManager.CurrentState?.ExitState();
 		}
 
 		public void Undo()

@@ -1,29 +1,30 @@
 ﻿using GameEngine.Commands;
 using HexSystem;
 using PrototypeGame.Events;
+using PrototypeGame.Events.CommandRequestEvents;
 
 namespace PrototypeGame.Commands
 {
 	internal class BuildFactoryCommand : ICommand
 	{
-		private readonly CommandRequestEvents _commandRequestEvents;
+		private readonly MapCommandRequestEvents _mapCommandRequestEvents;
 		private readonly HexCoord _hexCoord;
 		private readonly GoodsColor _goodsColor;
 
-		public BuildFactoryCommand(CommandRequestEvents commandRequestEvents, HexCoord hexCoord, GoodsColor productionColor)
+		public BuildFactoryCommand(MapCommandRequestEvents mapCommandRequestEvents, HexCoord hexCoord, GoodsColor productionColor)
 		{
-			_commandRequestEvents = commandRequestEvents;
+			_mapCommandRequestEvents = mapCommandRequestEvents;
 			_hexCoord = hexCoord;
 			_goodsColor = productionColor;
 		}
 		public void Execute()
 		{
-			_commandRequestEvents.RaiseBuildFactoryRequestEvent(_hexCoord, _goodsColor);
+			_mapCommandRequestEvents.RaiseBuildFactoryRequestEvent(_hexCoord, _goodsColor);
 		}
 
 		public void Undo()
 		{
-			_commandRequestEvents.RaiseRemoveFactoryRequestEvent(_hexCoord);
+			_mapCommandRequestEvents.RaiseRemoveFactoryRequestEvent(_hexCoord);
 		}
 	}
 }

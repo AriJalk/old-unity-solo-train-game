@@ -37,6 +37,10 @@ namespace PrototypeGame.StateMachine
 			_cardServices.DragEndedEvent -= OnDragEnded;
 			_userInterface.PlayCardDropArea.OnCardDropEvent -= OnCardDropped;
 			_userInterface.CurrentMessage.text = "";
+			if (_userInterface?.PlayCardDropArea != null)
+			{
+				_userInterface.PlayCardDropArea.gameObject.SetActive(false);
+			}
 		}
 
 		private void OnDragStarted()

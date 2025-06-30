@@ -17,7 +17,7 @@ namespace PrototypeGame.Scene.State.Cards
 
 		private SceneCardStateManipulator _sceneCardStateManipulator;
 
-		public SceneCardStateManager(CommonServices commonServices, CardServices cardServices, GameStateEvents gameStateEvents)
+		public SceneCardStateManager(CommonServices commonServices, CardServices cardServices, GameStateEventsWrapper gameStateEvents)
 		{
 			_commonServices = commonServices;
 			_cardServices = cardServices;

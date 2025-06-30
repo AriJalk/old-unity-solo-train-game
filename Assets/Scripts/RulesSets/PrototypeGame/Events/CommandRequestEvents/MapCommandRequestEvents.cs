@@ -1,14 +1,9 @@
-﻿using GameEngine.StateMachine;
-using HexSystem;
+﻿using HexSystem;
 using System;
 
-namespace PrototypeGame.Events
+namespace PrototypeGame.Events.CommandRequestEvents
 {
-	/// <summary>
-	/// Main API for Commands to interact with the game state
-	/// *** Listened only by CommandEventHandler ***
-	/// </summary>
-	internal class CommandRequestEvents
+	internal class MapCommandRequestEvents
 	{
 		public event Action<Guid, Guid> TransportRequestEvent;
 
@@ -20,11 +15,6 @@ namespace PrototypeGame.Events
 
 		public event Action<Guid, GoodsColor> ProduceGoodsCubeInSlotRequestEvent;
 		public event Action<Guid> RemoveGoodsCubeFromSlotRequestEvent;
-
-		public event Action<IStateMachine> TransitionToStateMachineRequestEvent;
-		public event Action TransitionToPreviousStateMachineRequestEvent;
-
-		public event Action<Guid> PlayCardActionRequestEvent;
 
 		public void RaiseTransportRequestEvent(Guid originSlot, Guid destinationSlot)
 		{
@@ -59,21 +49,6 @@ namespace PrototypeGame.Events
 		public void RaiseRemoveGoodsCubeFromSlotRequestEvent(Guid goodsCubeSlotGuid)
 		{
 			RemoveGoodsCubeFromSlotRequestEvent?.Invoke(goodsCubeSlotGuid);
-		}
-
-		public void RaiseTransitionToStateMachineEvent(IStateMachine stateMachine)
-		{
-			TransitionToStateMachineRequestEvent?.Invoke(stateMachine);
-		}
-
-		public void RaiseTransitionToPreviousMachineEvent()
-		{
-			TransitionToPreviousStateMachineRequestEvent?.Invoke();
-		}
-
-		public void RaisePlayCardActionRequestEvent(Guid cardId)
-		{
-			PlayCardActionRequestEvent?.Invoke(cardId);
 		}
 	}
 }

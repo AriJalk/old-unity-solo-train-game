@@ -1,29 +1,30 @@
 ﻿using GameEngine.Commands;
 using PrototypeGame.Events;
+using PrototypeGame.Events.CommandRequestEvents;
 using System;
 
 namespace PrototypeGame.Commands
 {
 	internal class ProduceGoodsCubeInSlotCommand : ICommand
 	{
-		private readonly CommandRequestEvents _commandRequestEvents;
+		private readonly MapCommandRequestEvents _mapCommandRequestEvents;
 		private readonly Guid _goodsCubeSlotGuid;
 		private readonly GoodsColor _goodsColor;
 
-		public ProduceGoodsCubeInSlotCommand(CommandRequestEvents commandRequestEvents, Guid goodsCubeSlotGuid, GoodsColor goodsColor)
+		public ProduceGoodsCubeInSlotCommand(MapCommandRequestEvents mapCommandRequestEvents, Guid goodsCubeSlotGuid, GoodsColor goodsColor)
 		{
-			_commandRequestEvents = commandRequestEvents;
+			_mapCommandRequestEvents = mapCommandRequestEvents;
 			_goodsCubeSlotGuid = goodsCubeSlotGuid;
 			_goodsColor = goodsColor;
 		}
 		public void Execute()
 		{
-			_commandRequestEvents.RaiseProduceGoodsCubeInSlotRequestEvent(_goodsCubeSlotGuid, _goodsColor);
+			_mapCommandRequestEvents.RaiseProduceGoodsCubeInSlotRequestEvent(_goodsCubeSlotGuid, _goodsColor);
 		}
 
 		public void Undo()
 		{
-			_commandRequestEvents.RaiseRemoveGoodsCubeFromSlotRequestEvent(_goodsCubeSlotGuid);
+			_mapCommandRequestEvents.RaiseRemoveGoodsCubeFromSlotRequestEvent(_goodsCubeSlotGuid);
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace PrototypeGame.Scene.State
 
 		private HexGridController _hexGridController;
 
-		public SceneMapStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEvents gameStateEvents)
+		public SceneMapStateManager(CommonServices commonServices, GameEngineServices gameEngineServices, GameStateEventsWrapper gameStateEvents)
 		{
 			_sceneMapState = new SceneMapState();
 			_sceneMapEvents = gameStateEvents.SceneMapEvents;

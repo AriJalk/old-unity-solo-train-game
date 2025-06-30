@@ -1,6 +1,7 @@
 ﻿using GameEngine.Commands;
 using GameEngine.StateMachine;
 using PrototypeGame.Events;
+using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;
 using System;
 
@@ -10,27 +11,28 @@ namespace Commands.StateCommands
 	{
 		private int _availableMoney;
 
-		private CommandRequestEvents _commandRequestEvents;
+		private StateCommandRequestEvents _stateCommandRequestEvents;
 		private StateMachineFactory _stateMachineFactory;
+		private IStateMachine _previousState;
 
-		public TransitionToBuildStateCommand(int availableMoney, CommandRequestEvents commandRequestEvents, StateMachineFactory stateMachineFactory) 
+		public TransitionToBuildStateCommand(StateCommandRequestEvents stateCommandRequestEvents, StateMachineFactory stateMachineFactory, int availableMoney, IStateMachine previousState) 
 		{ 
-			_availableMoney = availableMoney;
-			_commandRequestEvents = commandRequestEvents;
+			_stateCommandRequestEvents = stateCommandRequestEvents;
 			_stateMachineFactory = stateMachineFactory;
+			_availableMoney = availableMoney;
+			_previousState = previousState;
 		}
 
 
-		public void Execute()
-		{
-			IStateMachine state = _stateMachineFactory.CreateBuildActionState(_availableMoney);
-			_commandRequestEvents.RaiseTransitionToStateMachineEvent(state);
-		}
+			public void Execute()
+			{
+				IStateMachine state = _stateMachineFactory.CreateBuildActionState(_availableMoney);
+				_stateCommandRequestEvents.RaiseTransitionToStateMachineEvent(state);
+			}
 
-
-		public void Undo()
-		{
-			_commandRequestEvents.RaiseTransitionToPreviousMachineEvent();
-		}
+			public void Undo()
+			{
+				_stateCommandRequestEvents.RaiseTransitionToStateMachineEvent(_previousState);
+			}
 	}
 }

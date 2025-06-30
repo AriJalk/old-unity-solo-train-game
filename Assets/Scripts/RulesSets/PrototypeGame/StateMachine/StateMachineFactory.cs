@@ -11,7 +11,7 @@ namespace PrototypeGame.StateMachine
 	internal class StateMachineFactory
 	{
 		private CommandManager _commandManager;
-		private CommandRequestEvents _requestEvents;
+		//private CommandRequestEventsWrapper _commandRequestEventsWrapper;
 		private CommandFactory _commandFactory;
 
 
@@ -24,10 +24,10 @@ namespace PrototypeGame.StateMachine
 
 		}
 
-		public void Initialize(CommandManager commandManager, CommandRequestEvents commandRequestEvents, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices)
+		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardServices cardServices, CommandFactory commandFactory, CommonServices commonServices)
 		{
 			_commandManager = commandManager;
-			_requestEvents = commandRequestEvents;
+			//_commandRequestEventsWrapper = commandRequestEvents;
 			_userInterface = userInterface;
 			_cardServices = cardServices;
 			_commandFactory = commandFactory;

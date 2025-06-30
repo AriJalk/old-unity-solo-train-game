@@ -35,6 +35,7 @@ namespace PrototypeGame.StateMachine
 		public void ExitState()
 		{
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= OnColliderSelected;
+			_userInterface.CurrentMessage.text = "";
 		}
 
 		private void OnColliderSelected(RaycastHit hit)

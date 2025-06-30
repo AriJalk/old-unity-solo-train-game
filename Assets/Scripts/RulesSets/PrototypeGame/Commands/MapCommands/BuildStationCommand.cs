@@ -1,27 +1,28 @@
 ﻿using GameEngine.Commands;
 using HexSystem;
 using PrototypeGame.Events;
+using PrototypeGame.Events.CommandRequestEvents;
 
 namespace PrototypeGame.Commands
 {
 	internal class BuildStationCommand : ICommand
 	{
-		private readonly CommandRequestEvents _commandRequestEvents;
+		private readonly MapCommandRequestEvents _mapCommandRequestEvents;
 		private readonly HexCoord _hexCoord;
 
-		public BuildStationCommand(CommandRequestEvents commandRequestEvents, HexCoord hexCoord)
+		public BuildStationCommand(MapCommandRequestEvents mapCommandRequestEvents, HexCoord hexCoord)
 		{
-			_commandRequestEvents = commandRequestEvents;
+			_mapCommandRequestEvents = mapCommandRequestEvents;
 			_hexCoord = hexCoord;
 		}
 		public void Execute()
 		{
-			_commandRequestEvents.RaiseBuildStationRequestEvent(_hexCoord);
+			_mapCommandRequestEvents.RaiseBuildStationRequestEvent(_hexCoord);
 		}
 
 		public void Undo()
 		{
-			_commandRequestEvents.RaiseRemoveStationRequestEvent(_hexCoord);
+			_mapCommandRequestEvents.RaiseRemoveStationRequestEvent(_hexCoord);
 		}
 	}
 }

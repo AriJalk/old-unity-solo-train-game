@@ -11,39 +11,22 @@ namespace GameEngine.StateMachine
 {
 	internal class StateMachineManager
 	{
-		//TODO: maybe get rid of this? hold only 1?
-		private Stack<IStateMachine> _states;
+		public IStateMachine CurrentState {  get; private set; }
 
 		public StateMachineManager()
 		{
-			_states = new Stack<IStateMachine>();
+			
 		}
 
 		public void NextState(IStateMachine nextState)
 		{
-			ExitHeadState();
+			if (CurrentState != null)
+			{
+				CurrentState.ExitState();
+			}
 			nextState.EnterState();
-			_states.Push(nextState);
+			CurrentState = nextState;
 		}
 
-		public void PreviousState()
-		{
-			ExitHeadState();
-			_states.Pop();
-			if (_states.Count > 0)
-			{
-				_states.Peek().EnterState();
-			}
-		}
-
-		public void ExitHeadState()
-		{
-			if (_states.Count > 0)
-			{
-				_states.Peek().ExitState();
-			}
-		}
-
-		
 	}
 }
