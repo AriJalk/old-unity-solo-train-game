@@ -27,21 +27,32 @@ namespace PrototypeGame.Scene.State.Cards
 
 			_sceneCardStateManipulator = new SceneCardStateManipulator(_commonServices, _cardServices);
 
-			_sceneCardEvents.CardCreatedAndAddedToHandEvent += OnCardCreatedAndAddedToHand;
+			_sceneCardEvents.CardAddedToHandEvent += OnCardAddedToHand;
+			_sceneCardEvents.CardRemovedFromHandEvent += OnCardRemovedFromHand;
 		}
 
 		public void Dispose()
 		{
-			_sceneCardEvents.CardCreatedAndAddedToHandEvent -= OnCardCreatedAndAddedToHand;
+			_sceneCardEvents.CardAddedToHandEvent -= OnCardAddedToHand;
+			_sceneCardEvents.CardRemovedFromHandEvent -= OnCardRemovedFromHand;
 		}
 
-		private void OnCardCreatedAndAddedToHand(ProtoCardData cardData)
+		private void OnCardAddedToHand(ProtoCardData cardData)
 		{
 			ProtoCardObject cardObject = _sceneCardStateManipulator.BuildCard(cardData);
 
 			_sceneCardState.Cards.Add(cardObject.guid, cardObject);
 
 			_sceneCardStateManipulator.AddCardToHand(cardObject);
+		}
+
+		private void OnCardRemovedFromHand(Guid cardId)
+		{
+			ProtoCardObject cardObject = _sceneCardState.Cards[cardId];
+
+			_sceneCardState.Cards.Remove(cardId);
+
+			_sceneCardStateManipulator.RemoveCardFromHand(cardObject);
 		}
 	}
 }

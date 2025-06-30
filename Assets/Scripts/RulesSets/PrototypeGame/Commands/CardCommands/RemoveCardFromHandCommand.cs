@@ -4,23 +4,23 @@ using System;
 
 namespace PrototypeGame.Commands.CardCommands
 {
-	internal class PlayCardActionCommand : ICommand
+	internal class RemoveCardFromHandCommand : ICommand
 	{
 		private Guid _cardId;
 		private CardCommandRequestEvents _cardCommandRequestEvents;
-		public PlayCardActionCommand(CardCommandRequestEvents cardCommandRequestEvents, Guid cardId) 
-		{ 
+		public RemoveCardFromHandCommand(CardCommandRequestEvents cardCommandRequestEvents, Guid cardId)
+		{
 			_cardCommandRequestEvents = cardCommandRequestEvents;
 			_cardId = cardId;
 		}
 		public void Execute()
 		{
-			_cardCommandRequestEvents.RaisePlayCardActionRequestEvent(_cardId);
+			_cardCommandRequestEvents.RaiseMoveCardFromHandToDiscardRequestEvent(_cardId);
 		}
 
 		public void Undo()
 		{
-			return;
+			_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(_cardId);
 		}
 	}
 }

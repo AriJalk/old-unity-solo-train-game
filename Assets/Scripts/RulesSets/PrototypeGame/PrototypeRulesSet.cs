@@ -6,9 +6,6 @@ using GameEngine.Core;
 using UnityEngine;
 using PrototypeGame.Scene;
 using CommonEngine.UI.Options;
-using PrototypeGame.UI.Options;
-using System.Collections.Generic;
-using HexSystem;
 using CardSystem;
 using PrototypeGame.Logic.State.Cards;
 using PrototypeGame.UI;
@@ -118,6 +115,7 @@ namespace PrototypeGame
 		public void Confirm()
 		{
 			_commandManager.NextCommandGroup();
+			_commandManager.PushAndExecuteCommand(_commandFactory.CreateTransitionToAwatingPlayCardForActionCommand());
 		}
 
 

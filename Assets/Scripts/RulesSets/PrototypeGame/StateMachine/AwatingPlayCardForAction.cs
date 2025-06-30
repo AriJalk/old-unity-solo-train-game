@@ -41,7 +41,11 @@ namespace PrototypeGame.StateMachine
 
 		private void OnCardDropped(Guid cardId)
 		{
+			_commandManager.NextCommandGroup();
 			_commandManager.PushAndExecuteCommand(_commandFactory.CreatePlayCardActionCommand(cardId));
+
+			//Discard
+			_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
 		}
 	}
 }

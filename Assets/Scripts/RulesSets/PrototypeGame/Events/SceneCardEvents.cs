@@ -9,11 +9,17 @@ namespace PrototypeGame.Events
 {
 	internal class SceneCardEvents
 	{
-		public event Action<ProtoCardData> CardCreatedAndAddedToHandEvent;
+		public event Action<ProtoCardData> CardAddedToHandEvent;
+		public event Action<Guid> CardRemovedFromHandEvent;
 
-		public void RaiseCardCreatedAndAddedToHandEvent(ProtoCardData card)
+		public void RaiseCardAddedToHandEvent(ProtoCardData card)
 		{
-			CardCreatedAndAddedToHandEvent?.Invoke(card);
+			CardAddedToHandEvent?.Invoke(card);
+		}
+
+		public void RaiseCardRemovedFromHandEvent(Guid cardId)
+		{
+			CardRemovedFromHandEvent?.Invoke(cardId);
 		}
 	}
 }

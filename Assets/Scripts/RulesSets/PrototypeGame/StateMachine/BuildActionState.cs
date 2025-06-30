@@ -44,8 +44,6 @@ namespace PrototypeGame.StateMachine
 			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
 			_commonServices.RaycastConfig.SetRaycastLayer(typeof(HexTileObject));
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += OnColliderSelected;
-			_commandManager.NextCommandGroup();
-
 		}
 
 		public void ExitState()
@@ -59,6 +57,7 @@ namespace PrototypeGame.StateMachine
 		{
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
+				_commandManager.NextCommandGroup();
 				ICommand command = _commandFactory.CreateBuildStationCommand(tile.HexCoord);
 				_commandManager.PushAndExecuteCommand(command);
 			}
@@ -69,8 +68,12 @@ namespace PrototypeGame.StateMachine
 			ProtoCardData cardData = _cardLookupService.GetCardData(cardId);
 			if (cardData != null)
 			{
+				_commandManager.NextCommandGroup();
 				_availableMoney += cardData.MoneyValue;
 				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
+
+				//Discard
+				_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
 			}
 		}
 	}

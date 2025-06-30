@@ -31,7 +31,7 @@ namespace PrototypeGame.GameBuilder
 			{
 				BuildActionCard card = cardFactory.CreateBasicBuildActionCard();
 				logicCardStateManager.AddCardToHand(card);
-				gameStateEventsWrapper.SceneCardEvents.RaiseCardCreatedAndAddedToHandEvent(card);
+				gameStateEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
 			}
 		}
 	}

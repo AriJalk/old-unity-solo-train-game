@@ -24,7 +24,7 @@ namespace PrototypeGame.Events
 		{
 			_mapCommandEventsHandler = new MapCommandEventsHandler(gameStateManagers.LogicMapStateManager, gameStateEventsWrapper.SceneMapEvents, commandRequestEventsWrapper.MapCommandRequestEvents);
 
-			_cardCommandEventsHandler = new CardCommandEventsHandler(gameStateManagers.LogicCardStateManager, commandRequestEventsWrapper.CardCommandRequestEvents);
+			_cardCommandEventsHandler = new CardCommandEventsHandler(gameStateManagers.LogicCardStateManager, commandRequestEventsWrapper.CardCommandRequestEvents, gameStateEventsWrapper.SceneCardEvents);
 
 			_stateCommandEventsHandler = new StateCommandEventsHandler(gameStateManagers.StateMachineManager, commandRequestEventsWrapper.StateCommandRequestEvents);
 		}

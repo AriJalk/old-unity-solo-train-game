@@ -1,6 +1,7 @@
 ﻿using Commands.StateCommands;
 using GameEngine.StateMachine;
 using HexSystem;
+using PrototypeGame.Commands.CardCommands;
 using PrototypeGame.Events;
 using PrototypeGame.StateMachine;
 using System;
@@ -59,10 +60,25 @@ namespace PrototypeGame.Commands
 
 			return command;
 		}
-		
+
+		public TransitionToAwatingPlayCardForActionCommand CreateTransitionToAwatingPlayCardForActionCommand()
+		{
+			TransitionToAwatingPlayCardForActionCommand command = new TransitionToAwatingPlayCardForActionCommand(_commandRequestEventsWrapper.StateCommandRequestEvents, _stateMachineFactory, _stateMachineManager.CurrentState);
+
+			return command;
+		}
+
+
 		public PlayCardActionCommand CreatePlayCardActionCommand(Guid cardId)
 		{
 			PlayCardActionCommand command = new PlayCardActionCommand(_commandRequestEventsWrapper.CardCommandRequestEvents, cardId);
+
+			return command;
+		}
+
+		public RemoveCardFromHandCommand CreateRemoveCardFromHandCommand(Guid cardId)
+		{
+			RemoveCardFromHandCommand command = new RemoveCardFromHandCommand(_commandRequestEventsWrapper.CardCommandRequestEvents, cardId);
 
 			return command;
 		}
