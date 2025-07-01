@@ -36,9 +36,9 @@ namespace PrototypeGame.Logic.Components.Cards
 			return card;
 		}
 
-		public RetreiveCard CreateRetreiveCard()
+		public RetreiveAndProduceCard CreateRetreiveAndProduceCard()
 		{
-			RetreiveCard card = new RetreiveCard(Guid.NewGuid(), "Retreive", 0, 0, "Retreive Cards", _commandManager, _commandFactory);
+			RetreiveAndProduceCard card = new RetreiveAndProduceCard(Guid.NewGuid(), "Retreive", 0, 0, "Retreive Cards and Produce", _commandManager, _commandFactory);
 
 			return card;
 		}

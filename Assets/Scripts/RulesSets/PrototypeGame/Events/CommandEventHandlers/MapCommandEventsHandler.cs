@@ -59,6 +59,20 @@ namespace PrototypeGame.Events.CommandEventHandlers
 				_sceneMapEvents.RaiseFactoryBuiltEvent(hexTileData);
 			}
 		}
+		private void OnBuildFactoryAndProduceRequest(HexCoord hexCoord, GoodsColor productionColor)
+		{
+			HexTileData hexTileData = _logicMapStateManager.LogicMapState.Tiles[hexCoord];
+
+			if (hexTileData.Factory == null)
+			{
+				Factory factory = _logicMapStateManager.BuildFactoryOnTile(hexTileData, productionColor);
+				//_logicMapStateManager.ProduceGoodsCubeInSlot(factory.GoodsCubeSlot, factory.ProductionColor);
+
+				_sceneMapEvents.RaiseFactoryBuiltEvent(hexTileData);
+
+				OnProduceGoodsCubeOnSlotRequest(factory.GoodsCubeSlot.guid, productionColor);
+			}
+		}
 
 		private void OnRemoveFactoryRequest(HexCoord hexCoord)
 		{

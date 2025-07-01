@@ -11,6 +11,10 @@ using System;
 using UnityEngine;
 using PrototypeGame.RulesServices;
 using PrototypeGame.Logic.ServiceContracts;
+using CommonEngine.UI.Options;
+using System.Collections.Generic;
+using HexSystem;
+using PrototypeGame.UI.Options;
 
 namespace PrototypeGame.StateMachine
 {
@@ -20,6 +24,7 @@ namespace PrototypeGame.StateMachine
 		private int _availableMoney;
 		private CommonServices _commonServices;
 		private UserInterface _userInterface;
+
 
 		private CommandManager _commandManager;
 		private CommandFactory _commandFactory;
@@ -32,6 +37,12 @@ namespace PrototypeGame.StateMachine
 
 		private RulesValidator _rulesValidator;
 
+		#region Options
+		private HexCoord _selectedTileCoord;
+		private OptionsPanel _optionsPanel;
+		private Dictionary<Guid, BuildingType> _buildingOptions;
+		#endregion
+
 		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, RulesValidator rulesValidator, int availableMoney)
 		{
 			_commonServices = commonServices;
@@ -43,6 +54,7 @@ namespace PrototypeGame.StateMachine
 			_cardCommandRequestEvents = cardCommandRequestEvents;
 			_rulesValidator = rulesValidator;
 			_availableMoney = availableMoney;
+			_optionsPanel = _userInterface.OptionsPanel;
 		}
 
 		public void EnterState()
@@ -65,11 +77,10 @@ namespace PrototypeGame.StateMachine
 
 		private void OnColliderSelected(RaycastHit hit)
 		{
-			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile && _rulesValidator.IsValidBuildLocation(tile.HexCoord, BuildingType.STATION))
+			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
-				_commandManager.NextCommandGroup();
-				ICommand command = _commandFactory.CreateBuildStationCommand(tile.HexCoord);
-				_commandManager.PushAndExecuteCommand(command);
+				_selectedTileCoord = tile.HexCoord;
+				CreateBuildingOptions();
 			}
 		}
 
@@ -95,6 +106,68 @@ namespace PrototypeGame.StateMachine
 				_availableMoney -= cardData.MoneyValue;
 				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
 			}
+		}
+
+		private void CreateBuildingOptions()
+		{
+			_buildingOptions = new Dictionary<Guid, BuildingType>();
+			GameObject optionPrefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
+			List<BuildingOption> options = new List<BuildingOption>();
+			BuildingOption option;
+			Guid guid;
+
+			if (_rulesValidator.IsValidBuildLocation(_selectedTileCoord, BuildingType.STATION))
+			{
+				guid = Guid.NewGuid();
+				option = GameObject.Instantiate(optionPrefab).GetComponent<BuildingOption>();
+				option.Setup(guid, "Station", true);
+				options.Add(option);
+				_buildingOptions.Add(guid, BuildingType.STATION);
+			}
+			if (_rulesValidator.IsValidBuildLocation(_selectedTileCoord, BuildingType.FACTORY))
+			{
+				guid = Guid.NewGuid();
+				option = GameObject.Instantiate(optionPrefab).GetComponent<BuildingOption>();
+				option.Setup(guid, "Factory", true);
+				options.Add(option);
+				_buildingOptions.Add(guid, BuildingType.FACTORY);
+			}
+
+			if (options.Count > 0)
+			{
+				_optionsPanel.OpenPanel(options);
+				_optionsPanel.OptionSelectedEvent += OnBuildingOptionSelected;
+			}
+
+		}
+
+		private void OnBuildingOptionSelected(Guid guid)
+		{
+			_optionsPanel.OptionSelectedEvent -= OnBuildingOptionSelected;
+			_optionsPanel.ClosePanel();
+			List<ICommand> commands = new List<ICommand>();
+
+			switch (_buildingOptions[guid])
+			{
+				case BuildingType.STATION:
+					commands.Add(_commandFactory.CreateBuildStationCommand(_selectedTileCoord));
+					break;
+
+				case BuildingType.FACTORY:
+					commands.Add(_commandFactory.CreateBuildFactoryCommand(_selectedTileCoord, GoodsColor.BLUE));
+					break;
+			}
+
+			if (commands.Count > 0)
+			{
+				_commandManager.NextCommandGroup();
+				foreach (ICommand command in commands)
+				{
+					_commandManager.PushAndExecuteCommand(command);
+				}
+			}
+			_selectedTileCoord = null;
+			_buildingOptions = null;
 		}
 	}
 }

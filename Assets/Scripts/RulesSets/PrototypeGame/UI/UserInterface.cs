@@ -7,8 +7,7 @@ namespace PrototypeGame.UI
 {
 	public class UserInterface : MonoBehaviour
 	{
-		[SerializeField]
-		private OptionPanel optionPanel;
+		public OptionsPanel OptionsPanel;
 
 		public TextMeshProUGUI CurrentMessage;
 

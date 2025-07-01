@@ -1961,7 +1961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62e864fb481beca4c97e9bfdf0a97bd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionPanel: {fileID: 596077877}
+  OptionsPanel: {fileID: 596077877}
   CurrentMessage: {fileID: 1807414814}
   PlayCardDropTarget: {fileID: 1721844435}
 --- !u!1 &1807414812

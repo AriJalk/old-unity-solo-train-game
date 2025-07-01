@@ -3,6 +3,7 @@ using HexSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using PrototypeGame.Logic.ServiceContracts;
 
 namespace PrototypeGame.Logic.State
 {
@@ -10,7 +11,7 @@ namespace PrototypeGame.Logic.State
 	/// Main API for interacting with the logic state, only authority to modify LogicMapState
 	/// *** Expose only from GameStateManagers ***
 	/// </summary>
-	internal class LogicMapStateManager
+	internal class LogicMapStateManager : IFactoryLookupService
 	{
 		public readonly LogicMapState LogicMapState;
 
@@ -125,6 +126,19 @@ namespace PrototypeGame.Logic.State
 			RemoveSlot(station.GoodsCubeSlot1);
 			RemoveSlot(station.GoodsCubeSlot2);
 			hexTileData.Station = null;
+		}
+
+		public IEnumerable<Factory> GetEmptyFactories()
+		{
+			List<Factory> factories = new List<Factory>();
+			foreach (Factory factory in LogicMapState.Factories.Values)
+			{
+				if (factory.GoodsCubeSlot.GoodsCube == null)
+				{
+					factories.Add(factory);
+				}
+			}
+			return factories;
 		}
 	}
 }

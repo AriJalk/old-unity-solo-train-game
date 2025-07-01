@@ -29,11 +29,11 @@ namespace PrototypeGame.GameBuilder
 
 				sceneEventsWrapper.SceneMapEvents.RaiseTileBuiltEvent(tile);
 
-				logicMapStateManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
-				sceneEventsWrapper.SceneMapEvents.RaiseFactoryBuiltEvent(tile);
+				//logicMapStateManager.BuildFactoryOnTile(tile, GoodsColor.GREEN);
+				//sceneEventsWrapper.SceneMapEvents.RaiseFactoryBuiltEvent(tile);
 
-				logicMapStateManager.ProduceGoodsCubeInSlot(tile.Factory.GoodsCubeSlot, tile.Factory.ProductionColor);
-				sceneEventsWrapper.SceneMapEvents.RaiseGoodsCubeProducedInSlotEvent(tile.Factory.GoodsCubeSlot, tile.Factory.GoodsCubeSlot.GoodsCube);
+				//logicMapStateManager.ProduceGoodsCubeInSlot(tile.Factory.GoodsCubeSlot, tile.Factory.ProductionColor);
+				//sceneEventsWrapper.SceneMapEvents.RaiseGoodsCubeProducedInSlotEvent(tile.Factory.GoodsCubeSlot, tile.Factory.GoodsCubeSlot.GoodsCube);
 			}
 
 			
@@ -49,7 +49,7 @@ namespace PrototypeGame.GameBuilder
 				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
 			}
 
-			ProtoCardData retreiveCard = cardFactory.CreateRetreiveCard();
+			ProtoCardData retreiveCard = cardFactory.CreateRetreiveAndProduceCard();
 			logicCardStateManager.AddCardToHand(retreiveCard);
 			sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(retreiveCard);
 		}

@@ -21,18 +21,20 @@ namespace PrototypeGame.Commands
 		private StateMachineFactory _stateMachineFactory;
 		private StateMachineManager _stateMachineManager;
 		private ICardLookupService _cardLookupService;
+		private IFactoryLookupService _factoryLookupService;
 
 		public CommandFactory()
 		{
 
 		}
 
-		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper, StateMachineFactory stateMachineFactory, StateMachineManager stateMachineManager, ICardLookupService cardLookupService)
+		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper, StateMachineFactory stateMachineFactory, StateMachineManager stateMachineManager, ICardLookupService cardLookupService, IFactoryLookupService factoryLookupService)
 		{
 			_commandRequestEventsWrapper = commandRequestEventsWrapper;
 			_stateMachineFactory = stateMachineFactory;
 			_stateMachineManager = stateMachineManager;
 			_cardLookupService = cardLookupService;
+			_factoryLookupService = factoryLookupService;
 		}
 
 		public TransportCubeCommand CreateTransportCubeCommand(Guid originSlot, Guid destinationSlot)
@@ -98,6 +100,13 @@ namespace PrototypeGame.Commands
 		public RetrieveCardsFromDiscardCommand CreateRetreiveCardsFromDiscardCommand()
 		{
 			RetrieveCardsFromDiscardCommand command = new RetrieveCardsFromDiscardCommand(_commandRequestEventsWrapper.CardCommandRequestEvents, _cardLookupService.GetCardsInDiscardPile());
+
+			return command;
+		}
+
+		public ProduceGoodsInAllFactorySlotsCommand CreateProduceGoodsInAllFactorySlotsCommand()
+		{
+			ProduceGoodsInAllFactorySlotsCommand command = new ProduceGoodsInAllFactorySlotsCommand(_commandRequestEventsWrapper.MapCommandRequestEvents, _factoryLookupService.GetEmptyFactories());
 
 			return command;
 		}

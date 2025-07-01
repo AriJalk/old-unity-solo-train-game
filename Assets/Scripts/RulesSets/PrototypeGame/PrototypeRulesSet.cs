@@ -70,7 +70,9 @@ namespace PrototypeGame
 
 
 			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, _gameStateManagers.LogicCardStateManager, _commandRequestEventsWrapper, new RulesValidator(_gameStateManagers.LogicCardStateManager.LogicCardState, _gameStateManagers.LogicMapStateManager.LogicMapState));
-			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager, _gameStateManagers.LogicCardStateManager);
+
+			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager, _gameStateManagers.LogicCardStateManager, _gameStateManagers.LogicMapStateManager);
+
 			_cardFactory.Initialize(_commandManager, _commandFactory);
 		}
 
