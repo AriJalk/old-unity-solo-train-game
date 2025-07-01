@@ -26,9 +26,14 @@ namespace PrototypeGame.Scene.State
 			hexTileObject.HexCoord = hexTileData.HexCoord;
 
 			// TODO: move decisions to manager
-			if (hexTileData.TerrainType == TerrainType.MOUNTAIN)
+			switch (hexTileData.TerrainType)
 			{
-				hexTileObject.MeshRenderer.material = _materialManager.Materials["RED"];
+				case TerrainType.MOUNTAIN:
+					hexTileObject.MeshRenderer.material = _materialManager.Materials["RED"];
+					break;
+				case TerrainType.FIELD:
+					hexTileObject.MeshRenderer.material = _materialManager.Materials["GREEN"];
+					break;
 			}
 			return hexTileObject;
 		}

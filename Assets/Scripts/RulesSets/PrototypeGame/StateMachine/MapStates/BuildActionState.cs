@@ -137,6 +137,7 @@ namespace PrototypeGame.StateMachine
 			{
 				_optionsPanel.OpenPanel(options);
 				_optionsPanel.OptionSelectedEvent += OnBuildingOptionSelected;
+				_userInterface.DisableButtons();
 			}
 
 		}
@@ -165,6 +166,7 @@ namespace PrototypeGame.StateMachine
 				{
 					_commandManager.PushAndExecuteCommand(command);
 				}
+				_userInterface.EnableButtons();
 			}
 			_selectedTileCoord = null;
 			_buildingOptions = null;

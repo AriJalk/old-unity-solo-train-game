@@ -9,7 +9,7 @@ namespace TurnBasedHexEngine.Map
 		private Dictionary<HexCoord, HexTileObjectBase> _hexDictionary = new Dictionary<HexCoord, HexTileObjectBase>();
 		// Start is called once before the first execution of Update after the MonoBehaviour is created
 
-		private HexLayout _layout = new HexLayout(HexOrientation.FlatLayout, 0.5f, 0.1f);
+		private HexLayout _layout = new HexLayout(HexOrientation.FlatLayout, 0.5f, 0.025f);
 
 		public void AddTileToGrid(HexTileObjectBase tile)
 		{
