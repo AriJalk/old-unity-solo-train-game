@@ -11,6 +11,7 @@ namespace CardSystem
 {
 	public class CardObjectServices : MonoBehaviour
 	{
+		const float CARD_ASPECT_RATIO = 100 / 150f;
 		public event Action DragStartedEvent;
 		public event Action DragEndedEvent;
 
@@ -23,7 +24,7 @@ namespace CardSystem
 		[SerializeField]
 		private ScrollRect _scrollRect;
 		[SerializeField]
-		private Transform _cardHandTransform;
+		private RectTransform _cardHandTransform;
 
 		public float DragDelay = 0.25f;
 		public float MotionTreshold = 2.5f;
@@ -65,9 +66,13 @@ namespace CardSystem
 		public void AddCard(CardObjectBase card)
 		{
 			RectTransform container = new GameObject("CardContainer").AddComponent<RectTransform>();
-			container.sizeDelta = new Vector2(100, 150);
 			container.SetParent(_cardHandTransform, false);
 			SceneHelpers.InitializeRectObject(card.RectTransform, container);
+
+			float cardWidth = _cardHandTransform.rect.height * CARD_ASPECT_RATIO;
+			float cardHeight = _cardHandTransform.rect.height;
+			container.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, cardWidth);
+			container.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, cardHeight);
 		}
 
 
