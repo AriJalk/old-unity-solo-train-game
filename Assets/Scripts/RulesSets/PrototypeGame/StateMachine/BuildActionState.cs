@@ -4,13 +4,13 @@ using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Commands;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.Logic.Components.Cards;
-using PrototypeGame.Logic.Services;
 using PrototypeGame.Scene;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
 using System;
 using UnityEngine;
 using PrototypeGame.RulesServices;
+using PrototypeGame.Logic.ServiceContracts;
 
 namespace PrototypeGame.StateMachine
 {
@@ -76,7 +76,7 @@ namespace PrototypeGame.StateMachine
 		private void OnCardDrop(Guid cardId)
 		{
 			ProtoCardData cardData = _cardLookupService.GetCardData(cardId);
-			if (cardData != null)
+			if (cardData != null && cardData.CanBeDiscarded)
 			{
 				_commandManager.NextCommandGroup();
 				_availableMoney += cardData.MoneyValue;

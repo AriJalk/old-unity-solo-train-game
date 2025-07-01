@@ -6,6 +6,8 @@ using PrototypeGame.Events;
 using PrototypeGame.StateMachine;
 using System;
 using PrototypeGame.Commands.StateCommands;
+using PrototypeGame.Logic.ServiceContracts;
+using Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands;
 
 namespace PrototypeGame.Commands
 {
@@ -18,17 +20,19 @@ namespace PrototypeGame.Commands
 		private CommandRequestEventsWrapper _commandRequestEventsWrapper;
 		private StateMachineFactory _stateMachineFactory;
 		private StateMachineManager _stateMachineManager;
+		private ICardLookupService _cardLookupService;
 
 		public CommandFactory()
 		{
 
 		}
 
-		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper, StateMachineFactory stateMachineFactory, StateMachineManager stateMachineManager)
+		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper, StateMachineFactory stateMachineFactory, StateMachineManager stateMachineManager, ICardLookupService cardLookupService)
 		{
 			_commandRequestEventsWrapper = commandRequestEventsWrapper;
 			_stateMachineFactory = stateMachineFactory;
 			_stateMachineManager = stateMachineManager;
+			_cardLookupService = cardLookupService;
 		}
 
 		public TransportCubeCommand CreateTransportCubeCommand(Guid originSlot, Guid destinationSlot)
@@ -87,6 +91,13 @@ namespace PrototypeGame.Commands
 		public RemoveCardFromHandCommand CreateRemoveCardFromHandCommand(Guid cardId)
 		{
 			RemoveCardFromHandCommand command = new RemoveCardFromHandCommand(_commandRequestEventsWrapper.CardCommandRequestEvents, cardId);
+
+			return command;
+		}
+
+		public RetrieveCardsFromDiscardCommand CreateRetreiveCardsFromDiscardCommand()
+		{
+			RetrieveCardsFromDiscardCommand command = new RetrieveCardsFromDiscardCommand(_commandRequestEventsWrapper.CardCommandRequestEvents, _cardLookupService.GetCardsInDiscardPile());
 
 			return command;
 		}

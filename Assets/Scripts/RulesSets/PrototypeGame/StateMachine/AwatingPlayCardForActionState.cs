@@ -6,6 +6,7 @@ using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
 using System;
 using UnityEngine;
+using PrototypeGame.RulesServices;
 
 namespace PrototypeGame.StateMachine
 {
@@ -18,12 +19,15 @@ namespace PrototypeGame.StateMachine
 
 		private CardDragAndDropState _cardDragAndDropState;
 
-		public AwatingPlayCardForActionState(UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory, CardDragAndDropState cardDragAndDropState) 
+		private RulesValidator _rulesValidator;
+
+		public AwatingPlayCardForActionState(UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory, CardDragAndDropState cardDragAndDropState, RulesValidator rulesValidator) 
 		{ 
 			_userInterface = userInterface;
 			_commandManager = commandManager;
 			_commandFactory = commandFactory;
 			_cardDragAndDropState = cardDragAndDropState;
+			_rulesValidator = rulesValidator;
 		}
 		public void EnterState()
 		{
@@ -45,7 +49,10 @@ namespace PrototypeGame.StateMachine
 			_commandManager.PushAndExecuteCommand(_commandFactory.CreatePlayCardActionCommand(cardId));
 
 			//Discard
-			_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
+			if (_rulesValidator.CanCardBeDiscarded(cardId))
+			{
+				_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
+			}
 		}
 	}
 }

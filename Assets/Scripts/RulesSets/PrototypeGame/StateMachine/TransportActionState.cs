@@ -2,7 +2,7 @@
 using PrototypeGame.Commands;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.Logic.Components.Cards;
-using PrototypeGame.Logic.Services;
+using PrototypeGame.Logic.ServiceContracts;
 using PrototypeGame.RulesServices;
 using PrototypeGame.Scene;
 using PrototypeGame.StateMachine.CommonStates;
@@ -106,7 +106,7 @@ namespace PrototypeGame.StateMachine
 		private void OnCardDrop(Guid cardId)
 		{
 			ProtoCardData cardData = _cardLookupService.GetCardData(cardId);
-			if (cardData != null)
+			if (cardData != null && cardData.CanBeDiscarded)
 			{
 				_commandManager.NextCommandGroup();
 				_transportPoints += cardData.TransportPointsValue;

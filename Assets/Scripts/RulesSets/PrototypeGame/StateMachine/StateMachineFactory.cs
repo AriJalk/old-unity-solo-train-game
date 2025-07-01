@@ -3,10 +3,10 @@ using CommonEngine.Core;
 using TurnBasedHexEngine.Commands;
 using PrototypeGame.Commands;
 using PrototypeGame.Events;
-using PrototypeGame.Logic.Services;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
 using PrototypeGame.RulesServices;
+using PrototypeGame.Logic.ServiceContracts;
 
 
 namespace PrototypeGame.StateMachine
@@ -57,7 +57,7 @@ namespace PrototypeGame.StateMachine
 
 		public AwatingPlayCardForActionState CreateAwatingPlayCardForActionState()
 		{
-			AwatingPlayCardForActionState state = new AwatingPlayCardForActionState(_userInterface, _commandManager, _commandFactory, CreateCardDragAndDropState());
+			AwatingPlayCardForActionState state = new AwatingPlayCardForActionState(_userInterface, _commandManager, _commandFactory, CreateCardDragAndDropState(), _rulesValidator);
 
 			return state;
 		}

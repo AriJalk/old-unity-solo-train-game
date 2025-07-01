@@ -48,6 +48,10 @@ namespace PrototypeGame.GameBuilder
 				logicCardStateManager.AddCardToHand(card);
 				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
 			}
+
+			ProtoCardData retreiveCard = cardFactory.CreateRetreiveCard();
+			logicCardStateManager.AddCardToHand(retreiveCard);
+			sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(retreiveCard);
 		}
 	}
 }

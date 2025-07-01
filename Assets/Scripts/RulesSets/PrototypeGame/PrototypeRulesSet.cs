@@ -14,7 +14,6 @@ using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Commands;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.StateMachine;
-using PrototypeGame.Logic.Services;
 using PrototypeGame.RulesServices;
 
 
@@ -70,8 +69,8 @@ namespace PrototypeGame
 			_cardFactory = new CardFactory();
 
 
-			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, new CardLookupService(_gameStateManagers.LogicCardStateManager.LogicCardState), _commandRequestEventsWrapper, new RulesValidator(_gameStateManagers.LogicCardStateManager.LogicCardState, _gameStateManagers.LogicMapStateManager.LogicMapState));
-			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager);
+			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, _gameStateManagers.LogicCardStateManager, _commandRequestEventsWrapper, new RulesValidator(_gameStateManagers.LogicCardStateManager.LogicCardState, _gameStateManagers.LogicMapStateManager.LogicMapState));
+			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager, _gameStateManagers.LogicCardStateManager);
 			_cardFactory.Initialize(_commandManager, _commandFactory);
 		}
 

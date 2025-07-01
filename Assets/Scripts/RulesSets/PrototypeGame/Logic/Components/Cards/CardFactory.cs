@@ -1,11 +1,8 @@
 ﻿using TurnBasedHexEngine.Commands;
-using PrototypeGame.Commands;
-using PrototypeGame.Events;
+using PrototypeGame.Commands;	
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assets.Scripts.RulesSets.PrototypeGame.Logic.Components.Cards;
+
 
 namespace PrototypeGame.Logic.Components.Cards
 {
@@ -35,6 +32,13 @@ namespace PrototypeGame.Logic.Components.Cards
 		public TransportActionCard CreateTransportActionCard()
 		{
 			TransportActionCard card = new TransportActionCard(Guid.NewGuid(), "Transport", 2, 2, "Basic Transport Action", _commandManager, _commandFactory);
+
+			return card;
+		}
+
+		public RetreiveCard CreateRetreiveCard()
+		{
+			RetreiveCard card = new RetreiveCard(Guid.NewGuid(), "Retreive", 0, 0, "Retreive Cards", _commandManager, _commandFactory);
 
 			return card;
 		}

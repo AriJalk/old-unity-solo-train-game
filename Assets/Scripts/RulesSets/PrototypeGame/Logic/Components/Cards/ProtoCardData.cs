@@ -17,9 +17,10 @@ namespace PrototypeGame.Logic.Components.Cards
 		public int TransportPointsValue { get; private set; }
 		public string CardDescription { get; private set; }
 
+		public bool CanBeDiscarded { get; private set; }
 
 
-		public ProtoCardData(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory)
+		public ProtoCardData(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory, bool canBeDiscarded = true)
 		{
 			this.guid = guid;
 			CardTitle = cardTitle;
@@ -29,6 +30,7 @@ namespace PrototypeGame.Logic.Components.Cards
 
 			_commandManager = commandManager;
 			_commandFactory = commandFactory;
+			CanBeDiscarded = canBeDiscarded;
 		}
 
 		public virtual void PlayAction() { }

@@ -1,9 +1,11 @@
 ﻿using PrototypeGame.Logic.Components.Cards;
+using PrototypeGame.Logic.ServiceContracts;
 using System;
+using System.Collections.Generic;
 
 namespace PrototypeGame.Logic.State.Cards
 {
-	internal class LogicCardStateManager
+	internal class LogicCardStateManager : ICardLookupService
 	{
 		public readonly LogicCardState LogicCardState;
 
@@ -59,5 +61,32 @@ namespace PrototypeGame.Logic.State.Cards
 			ProtoCardData card = LogicCardState.CardsInHand[cardId];
 			card.PlayAction();
 		}
+
+
+		#region ICardLookupService
+		public ProtoCardData GetCardData(Guid cardId)
+		{
+			if (LogicCardState.CardsInHand.ContainsKey(cardId))
+			{
+				return LogicCardState.CardsInHand[cardId];
+			}
+			if (LogicCardState.CardsInDiscard.ContainsKey(cardId))
+			{
+				return LogicCardState.CardsInDiscard[cardId];
+			}
+			return null;
+		}
+
+		public IEnumerable<Guid> GetCardsInHand()
+		{
+			return new List<Guid>(LogicCardState.CardsInHand.Keys);
+		}
+
+		public IEnumerable<Guid> GetCardsInDiscardPile()
+		{
+			return new List<Guid>(LogicCardState.CardsInDiscard.Keys);
+		}
+
+		#endregion
 	}
 }

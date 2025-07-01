@@ -59,5 +59,14 @@ namespace PrototypeGame.RulesServices
 					return false;
 			};
 		}
+
+		public bool CanCardBeDiscarded(Guid cardId)
+		{
+			if (_logicCardState.CardsInHand.ContainsKey(cardId))
+			{
+				return _logicCardState.CardsInHand[cardId].CanBeDiscarded;
+			}
+			return false;
+		}
 	}
 }
