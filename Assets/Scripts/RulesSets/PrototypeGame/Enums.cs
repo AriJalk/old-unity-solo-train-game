@@ -7,3 +7,9 @@ public enum TerrainType
 {
 	FIELD, FOREST, MOUNTAIN, WATER,
 }
+
+public enum BuildingType
+{
+	STATION,
+	FACTORY,
+}

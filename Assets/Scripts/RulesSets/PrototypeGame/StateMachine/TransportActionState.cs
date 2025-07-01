@@ -3,6 +3,7 @@ using PrototypeGame.Commands;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.Logic.Services;
+using PrototypeGame.RulesServices;
 using PrototypeGame.Scene;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
@@ -16,7 +17,7 @@ namespace PrototypeGame.StateMachine
 	// TODO: extract state commons for DRY
 	internal class TransportActionState : IStateMachine
 	{
-		const string STATE_MESSAGE = "Transport Action, {0}TP remaining\nSelect tile to build on, or play another card to add TP";
+		const string STATE_MESSAGE = "Transport Action, {0}TP remaining\nSelect {1}, or play another card to add TP";
 		private int _transportPoints;
 
 		private CommonServices _commonServices;
@@ -30,12 +31,15 @@ namespace PrototypeGame.StateMachine
 		private ICardLookupService _cardLookupService;
 
 		private CardCommandRequestEvents _cardCommandRequestEvents;
-
+		private RulesValidator _rulesValidator;
 
 
 		private GoodsCubeSlotObject _sourceSlot;
 		private GoodsCubeSlotObject _destinationSlot;
-		public TransportActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, int transportPoints) 
+
+		private string _slotChoice;
+
+		public TransportActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, RulesValidator rulesValidator, int transportPoints)
 		{
 			_commonServices = commonServices;
 			_commandManager = commandManager;
@@ -44,14 +48,16 @@ namespace PrototypeGame.StateMachine
 			_cardDragAndDropState = cardDragAndDropState;
 			_cardLookupService = cardLookupService;
 			_cardCommandRequestEvents = cardCommandRequestEvents;
+			_rulesValidator = rulesValidator;
 			_transportPoints = transportPoints;
 		}
 		public void EnterState()
 		{
 			_cardDragAndDropState.OnDropHandler = OnCardDrop;
 			_cardDragAndDropState.EnterState();
-			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints);
-			_commonServices.RaycastConfig.SetRaycastLayer(typeof(GoodsCubeSlotObject));
+			_slotChoice = "source";
+			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
+			_commonServices.RaycastConfig.SetRaycastLayer(typeof(GoodsCubeSlotObject), typeof(GoodsCubeObject));
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent += OnColliderSelected;
 			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent += OnMoveCardFromDiscardToHandRequestEvent;
 		}
@@ -66,16 +72,25 @@ namespace PrototypeGame.StateMachine
 
 		public void OnColliderSelected(RaycastHit hit)
 		{
-			if (hit.collider.GetComponentInParent<GoodsCubeSlotObject>() is GoodsCubeSlotObject slot)
+			GoodsCubeSlotObject slot = hit.collider.GetComponentInParent<GoodsCubeSlotObject>() ?? hit.collider.GetComponent<GoodsCubeObject>()?.transform.parent.GetComponentInParent<GoodsCubeSlotObject>();
+
+			if (slot == null)
 			{
-				if (_sourceSlot == null && slot.GoodsCubeObject != null)
-				{
-					_sourceSlot = slot;
-				}
-				else if (_sourceSlot != null && _sourceSlot != slot && slot.GoodsCubeObject == null)
-				{
-					_destinationSlot = slot;
-				}
+				return;
+			}
+			if (_rulesValidator.IsValidTransportationSource(slot.guid))
+			{
+				_sourceSlot = slot;
+				_slotChoice = "destination";
+				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
+			}
+			else if (_sourceSlot != null && _sourceSlot != slot && _rulesValidator.IsValidTransportationDestination(slot.guid))
+			{
+				_destinationSlot = slot;
+			}
+			else
+			{
+				return;
 			}
 			if (_sourceSlot != null && _destinationSlot != null)
 			{
@@ -84,6 +99,7 @@ namespace PrototypeGame.StateMachine
 				_commandManager.PushAndExecuteCommand(command);
 				_sourceSlot = null;
 				_destinationSlot = null;
+				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, "source");
 			}
 		}
 
@@ -94,7 +110,7 @@ namespace PrototypeGame.StateMachine
 			{
 				_commandManager.NextCommandGroup();
 				_transportPoints += cardData.TransportPointsValue;
-				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints);
+				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
 
 				//Discard
 				_commandManager.PushAndExecuteCommand(_commandFactory.CreateRemoveCardFromHandCommand(cardId));
@@ -107,7 +123,7 @@ namespace PrototypeGame.StateMachine
 			if (cardData != null)
 			{
 				_transportPoints -= cardData.TransportPointsValue;
-				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints);
+				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
 			}
 		}
 

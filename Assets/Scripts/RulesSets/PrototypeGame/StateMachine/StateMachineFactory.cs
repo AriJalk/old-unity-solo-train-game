@@ -6,6 +6,7 @@ using PrototypeGame.Events;
 using PrototypeGame.Logic.Services;
 using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
+using PrototypeGame.RulesServices;
 
 
 namespace PrototypeGame.StateMachine
@@ -23,6 +24,7 @@ namespace PrototypeGame.StateMachine
 		private UserInterface _userInterface;
 		private CardObjectServices _cardServices;
 		private ICardLookupService _cardLookupService;
+		private RulesValidator _rulesValidator;
 
 		/// <summary>
 		/// *** Only for listening ***
@@ -34,7 +36,7 @@ namespace PrototypeGame.StateMachine
 
 		}
 
-		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardObjectServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService, CommandRequestEventsWrapper commandRequestEventsWrapper)
+		public void Initialize(CommandManager commandManager, UserInterface userInterface, CardObjectServices cardServices, CommandFactory commandFactory, CommonServices commonServices, ICardLookupService cardLookupService, CommandRequestEventsWrapper commandRequestEventsWrapper, RulesValidator rulesValidator)
 		{
 			_commandManager = commandManager;
 			_userInterface = userInterface;
@@ -43,6 +45,7 @@ namespace PrototypeGame.StateMachine
 			_commonServices = commonServices;
 			_cardLookupService = cardLookupService;
 			_commandRequestEventsWrapper = commandRequestEventsWrapper;
+			_rulesValidator = rulesValidator;
 		}
 
 		private CardDragAndDropState CreateCardDragAndDropState()
@@ -61,14 +64,14 @@ namespace PrototypeGame.StateMachine
 
 		public BuildActionState CreateBuildActionState(int availableMoney)
 		{
-			BuildActionState state = new BuildActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, availableMoney);
+			BuildActionState state = new BuildActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, _rulesValidator, availableMoney);
 
 			return state;
 		}
 
 		public TransportActionState CreateTransportActionState(int transportPoints)
 		{
-			TransportActionState state = new TransportActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, transportPoints);
+			TransportActionState state = new TransportActionState(_commonServices, _commandManager, _commandFactory, _userInterface, CreateCardDragAndDropState(), _cardLookupService, _commandRequestEventsWrapper.CardCommandRequestEvents, _rulesValidator, transportPoints);
 
 			return state;
 		}

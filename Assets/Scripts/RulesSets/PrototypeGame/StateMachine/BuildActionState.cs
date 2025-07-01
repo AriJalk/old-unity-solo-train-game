@@ -10,6 +10,7 @@ using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
 using System;
 using UnityEngine;
+using PrototypeGame.RulesServices;
 
 namespace PrototypeGame.StateMachine
 {
@@ -29,7 +30,9 @@ namespace PrototypeGame.StateMachine
 
 		private CardCommandRequestEvents _cardCommandRequestEvents;
 
-		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, int availableMoney)
+		private RulesValidator _rulesValidator;
+
+		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, RulesValidator rulesValidator, int availableMoney)
 		{
 			_commonServices = commonServices;
 			_commandManager = commandManager;
@@ -38,6 +41,7 @@ namespace PrototypeGame.StateMachine
 			_cardDragAndDropState = cardDragAndDropState;
 			_cardLookupService = cardLookupService;
 			_cardCommandRequestEvents = cardCommandRequestEvents;
+			_rulesValidator = rulesValidator;
 			_availableMoney = availableMoney;
 		}
 
@@ -61,7 +65,7 @@ namespace PrototypeGame.StateMachine
 
 		private void OnColliderSelected(RaycastHit hit)
 		{
-			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
+			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile && _rulesValidator.IsValidBuildLocation(tile.HexCoord, BuildingType.STATION))
 			{
 				_commandManager.NextCommandGroup();
 				ICommand command = _commandFactory.CreateBuildStationCommand(tile.HexCoord);
