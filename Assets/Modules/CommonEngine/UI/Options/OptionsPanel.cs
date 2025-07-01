@@ -3,6 +3,7 @@ using CommonEngine.SceneServices;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace CommonEngine.UI.Options
@@ -13,9 +14,12 @@ namespace CommonEngine.UI.Options
     public class OptionsPanel : MonoBehaviour
     {
         public event Action<Guid> OptionSelectedEvent;
+        public event Action CancelEvent;
 
         [SerializeField]
         private CommonServices _commonServices;
+        [SerializeField]
+        private Button _cancelButton;
 
         public Transform OptionsContainer;
 
@@ -41,6 +45,7 @@ namespace CommonEngine.UI.Options
             }
             _commonServices.InputLock.AddLock(gameObject);
             gameObject.SetActive(true);
+            _cancelButton.onClick.AddListener(OnCancelClicked);
         }
 
         public void ClosePanel()
@@ -56,6 +61,12 @@ namespace CommonEngine.UI.Options
             }
             _commonServices.InputLock.RemoveLock(gameObject);
 			gameObject.SetActive(false);
+			_cancelButton.onClick.RemoveListener(OnCancelClicked);
+		}
+
+        private void OnCancelClicked()
+        {
+            CancelEvent?.Invoke();
         }
     }
 }

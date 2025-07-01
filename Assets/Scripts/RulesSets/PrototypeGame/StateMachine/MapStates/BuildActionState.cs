@@ -80,7 +80,7 @@ namespace PrototypeGame.StateMachine
 			if (hit.collider.GetComponent<HexTileObject>() is HexTileObject tile)
 			{
 				_selectedTileCoord = tile.HexCoord;
-				CreateBuildingOptions();
+				OpenBuildingOptionsPanel();
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace PrototypeGame.StateMachine
 			}
 		}
 
-		private void CreateBuildingOptions()
+		private void OpenBuildingOptionsPanel()
 		{
 			_buildingOptions = new Dictionary<Guid, BuildingType>();
 			GameObject optionPrefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/UI/BuildingOption");
@@ -135,11 +135,21 @@ namespace PrototypeGame.StateMachine
 
 			if (options.Count > 0)
 			{
+				_userInterface.DisableButtons();
 				_optionsPanel.OpenPanel(options);
 				_optionsPanel.OptionSelectedEvent += OnBuildingOptionSelected;
-				_userInterface.DisableButtons();
+				_optionsPanel.CancelEvent += OnBuildingOptionsCancelled;
 			}
 
+		}
+
+		private void OnBuildingOptionsCancelled()
+		{
+			_optionsPanel.OptionSelectedEvent -= OnBuildingOptionSelected;
+			_optionsPanel.CancelEvent += OnBuildingOptionsCancelled;
+			_optionsPanel.ClosePanel();
+			_userInterface.EnableButtons();
+			_selectedTileCoord = null;
 		}
 
 		private void OnBuildingOptionSelected(Guid guid)
