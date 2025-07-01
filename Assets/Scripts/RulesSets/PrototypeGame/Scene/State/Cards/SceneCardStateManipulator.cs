@@ -39,9 +39,16 @@ namespace PrototypeGame.Scene.State.Cards
 			_cardServices.AddCard(cardObject);
 		}
 
+
 		public void RemoveCardFromHand(ProtoCardObject cardObject)
 		{
 			_cardServices.RemoveCard(cardObject);
 		}
+
+		public void RestoreCardFromDiscardToHand(ProtoCardObject cardObject)
+		{
+			_cardServices.AddCard(cardObject, true);
+		}
+
 	}
 }

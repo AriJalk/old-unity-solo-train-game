@@ -11,6 +11,7 @@ namespace CardSystem
 		public CardObjectServices CardServices { get; set; }
 		public CommonServices CommonServices { get; set; }
 		public RectTransform RectTransform { get; set; }
+		public int IndexAtHand {  get; set; }
 
 		private bool _isDragging;
 

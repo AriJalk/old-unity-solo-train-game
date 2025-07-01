@@ -8,6 +8,7 @@ namespace PrototypeGame.Commands.CardCommands
 	{
 		private Guid _cardId;
 		private CardCommandRequestEvents _cardCommandRequestEvents;
+
 		public RemoveCardFromHandCommand(CardCommandRequestEvents cardCommandRequestEvents, Guid cardId)
 		{
 			_cardCommandRequestEvents = cardCommandRequestEvents;
@@ -20,7 +21,7 @@ namespace PrototypeGame.Commands.CardCommands
 
 		public void Undo()
 		{
-			_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(_cardId);
+			_cardCommandRequestEvents.RaiseRestoreCardFromDiscardToHandRequestEvent(_cardId);
 		}
 	}
 }

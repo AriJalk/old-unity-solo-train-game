@@ -40,7 +40,7 @@ namespace PrototypeGame.Logic.State.Cards
 			AddCardToDiscardPile(card);
 		}
 
-		public void AddCardFromDiscardPileToHand(ProtoCardData card)
+		public void MoveCardFromDiscardPileToHand(ProtoCardData card)
 		{
 			RemoveCardFromDiscardPile(card);
 			AddCardToHand(card);

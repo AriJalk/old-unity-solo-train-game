@@ -11,15 +11,21 @@ namespace PrototypeGame.Events
 	{
 		public event Action<ProtoCardData> CardAddedToHandEvent;
 		public event Action<Guid> CardRemovedFromHandEvent;
+		public event Action<ProtoCardData> CardRestoredFromDiscardToHandEvent;
 
-		public void RaiseCardAddedToHandEvent(ProtoCardData card)
+		public void RaiseCardAddedToHandEvent(ProtoCardData cardData)
 		{
-			CardAddedToHandEvent?.Invoke(card);
+			CardAddedToHandEvent?.Invoke(cardData);
 		}
 
 		public void RaiseCardRemovedFromHandEvent(Guid cardId)
 		{
 			CardRemovedFromHandEvent?.Invoke(cardId);
+		}
+
+		public void RaiseCardRestoredFromDiscardToHandEvent(ProtoCardData cardData)
+		{
+			CardRestoredFromDiscardToHandEvent?.Invoke(cardData);
 		}
 	}
 }

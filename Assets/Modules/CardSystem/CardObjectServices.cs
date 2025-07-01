@@ -63,12 +63,19 @@ namespace CardSystem
 			DragEndedEvent?.Invoke();
 		}
 
-		public void AddCard(CardObjectBase card)
+		public void AddCard(CardObjectBase card, bool fromUndo = false)
 		{
 			RectTransform container = new GameObject("CardContainer").AddComponent<RectTransform>();
 			container.SetParent(_cardHandTransform, false);
+			if (fromUndo)
+			{
+				container.SetSiblingIndex(card.IndexAtHand);
+			}
+			else
+			{
+				card.IndexAtHand = container.GetSiblingIndex();
+			}
 			SceneHelpers.InitializeRectObject(card.RectTransform, container);
-
 			float cardWidth = _cardHandTransform.rect.height * CARD_ASPECT_RATIO;
 			float cardHeight = _cardHandTransform.rect.height;
 			container.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, cardWidth);

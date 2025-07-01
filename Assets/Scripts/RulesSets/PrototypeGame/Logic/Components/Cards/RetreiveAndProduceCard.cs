@@ -19,7 +19,10 @@ namespace Assets.Scripts.RulesSets.PrototypeGame.Logic.Components.Cards
 		{
 			base.PlayAction();
 
-			ICommand command = _commandFactory.CreateRetreiveCardsFromDiscardCommand();
+			ICommand command = _commandFactory.CreateRemoveCardFromHandCommand(guid);
+			_commandManager.PushAndExecuteCommand(command);
+
+			command = _commandFactory.CreateRetreiveCardsFromDiscardCommand();
 			_commandManager.PushAndExecuteCommand(command);
 
 			command = _commandFactory.CreateProduceGoodsInAllFactorySlotsCommand();
