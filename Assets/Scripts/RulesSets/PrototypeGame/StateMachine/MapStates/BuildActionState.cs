@@ -15,6 +15,7 @@ using CommonEngine.UI.Options;
 using System.Collections.Generic;
 using HexSystem;
 using PrototypeGame.UI.Options;
+using PrototypeGame.StateMachine.StateServices;
 
 namespace PrototypeGame.StateMachine
 {
@@ -43,23 +44,23 @@ namespace PrototypeGame.StateMachine
 		private Dictionary<Guid, BuildingType> _buildingOptions;
 		#endregion
 
-		public BuildActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, RulesValidator rulesValidator, int availableMoney)
+		public BuildActionState(CoreStateDependencies coreStateDependencies, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, int availableMoney)
 		{
-			_commonServices = commonServices;
-			_commandManager = commandManager;
-			_commandFactory = commandFactory;
-			_userInterface = userInterface;
+			_commonServices = coreStateDependencies.CommonServices;
+			_commandManager = coreStateDependencies.CommandManager;
+			_commandFactory = coreStateDependencies.CommandFactory;
+			_userInterface = coreStateDependencies.UserInterface;
+			_rulesValidator = coreStateDependencies.RulesValidator;
 			_cardDragAndDropState = cardDragAndDropState;
 			_cardLookupService = cardLookupService;
 			_cardCommandRequestEvents = cardCommandRequestEvents;
-			_rulesValidator = rulesValidator;
 			_availableMoney = availableMoney;
 			_optionsPanel = _userInterface.OptionsPanel;
 		}
 
 		public void EnterState()
 		{
-			_cardDragAndDropState.OnDropHandler = OnCardDrop;
+			_cardDragAndDropState.OnCardDroppedEvent += OnCardDrop;
 			_cardDragAndDropState.EnterState();
 			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _availableMoney);
 			_commonServices.RaycastConfig.SetRaycastLayer(typeof(HexTileObject));
@@ -69,6 +70,7 @@ namespace PrototypeGame.StateMachine
 
 		public void ExitState()
 		{
+			_cardDragAndDropState.OnCardDroppedEvent -= OnCardDrop;
 			_cardDragAndDropState.ExitState();
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= OnColliderSelected;
 			_userInterface.CurrentMessage.text = "";

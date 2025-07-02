@@ -6,6 +6,7 @@ using PrototypeGame.Logic.ServiceContracts;
 using PrototypeGame.RulesServices;
 using PrototypeGame.Scene;
 using PrototypeGame.StateMachine.CommonStates;
+using PrototypeGame.StateMachine.StateServices;
 using PrototypeGame.UI;
 using System;
 using TurnBasedHexEngine.Commands;
@@ -39,21 +40,21 @@ namespace PrototypeGame.StateMachine
 
 		private string _slotChoice;
 
-		public TransportActionState(CommonServices commonServices, CommandManager commandManager, CommandFactory commandFactory, UserInterface userInterface, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, RulesValidator rulesValidator, int transportPoints)
+		public TransportActionState(CoreStateDependencies coreStateDependencies, CardDragAndDropState cardDragAndDropState, ICardLookupService cardLookupService, CardCommandRequestEvents cardCommandRequestEvents, int transportPoints)
 		{
-			_commonServices = commonServices;
-			_commandManager = commandManager;
-			_commandFactory = commandFactory;
-			_userInterface = userInterface;
+			_commonServices = coreStateDependencies.CommonServices;
+			_commandManager = coreStateDependencies.CommandManager;
+			_commandFactory = coreStateDependencies.CommandFactory;
+			_userInterface = coreStateDependencies.UserInterface;
+			_rulesValidator = coreStateDependencies.RulesValidator;
 			_cardDragAndDropState = cardDragAndDropState;
 			_cardLookupService = cardLookupService;
 			_cardCommandRequestEvents = cardCommandRequestEvents;
-			_rulesValidator = rulesValidator;
 			_transportPoints = transportPoints;
 		}
 		public void EnterState()
 		{
-			_cardDragAndDropState.OnDropHandler = OnCardDrop;
+			_cardDragAndDropState.OnCardDroppedEvent += OnCardDrop;
 			_cardDragAndDropState.EnterState();
 			_slotChoice = "source";
 			_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
@@ -64,6 +65,7 @@ namespace PrototypeGame.StateMachine
 
 		public void ExitState()
 		{
+			_cardDragAndDropState.OnCardDroppedEvent -= OnCardDrop;
 			_cardDragAndDropState.ExitState();
 			_commonServices.CommonEngineEvents.ColliderSelectedEvent -= OnColliderSelected;
 			_userInterface.CurrentMessage.text = "";
@@ -84,7 +86,7 @@ namespace PrototypeGame.StateMachine
 				_slotChoice = "destination";
 				_userInterface.CurrentMessage.text = string.Format(STATE_MESSAGE, _transportPoints, _slotChoice);
 			}
-			else if (_sourceSlot != null && _sourceSlot != slot && _rulesValidator.IsValidTransportationDestination(slot.guid))
+			else if (_sourceSlot != null && _rulesValidator.IsValidTransportationDestination(slot.guid))
 			{
 				_destinationSlot = slot;
 			}

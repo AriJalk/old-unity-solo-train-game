@@ -21,59 +21,81 @@ namespace PrototypeGame
 {
 	public class PrototypeRulesSet : IRulesSet
 	{
-		private CommonServices _commonServices;
-		private GameEngineServices _gameEngineServices;
-		private UserInterface _userInterface;
+		private readonly CommonServices _commonServices;
+		private readonly GameEngineServices _gameEngineServices;
+		private readonly UserInterface _userInterface;
 
-		private CardObjectServices _cardServices;
+		private readonly CardObjectServices _cardServices;
 
-		private CommandManager _commandManager;
+		private readonly CommandManager _commandManager;
 
-		private GameStateManagers _gameStateManagers;
-		private SceneEventsWrapper _sceneEventsWrapper;
-		private CommandRequestEventsWrapper _commandRequestEventsWrapper;
-		private CommandEventHandlersWrapper _commandEventHandlersWrapper;
+		private readonly GameStateManagers _gameStateManagers;
+		private readonly SceneEventsWrapper _sceneEventsWrapper;
+		private readonly CommandRequestEventsWrapper _commandRequestEventsWrapper;
+		private readonly CommandEventHandlersWrapper _commandEventHandlersWrapper;
 
-		private CommandFactory _commandFactory;
-		private StateMachineFactory _stateMachineFactory;
-		private CardFactory _cardFactory;
+		private readonly CommandFactory _commandFactory;
+		private readonly StateMachineFactory _stateMachineFactory;
+		private readonly CardFactory _cardFactory;
 
-		
-
-		// Test variables
-		//private List<BuildingOption> _buildingOptions;
-		//private HexCoord _buildCoord;
-
-
-
-		public PrototypeRulesSet(CommonServices commonServices, GameEngineServices gameEngineServices, CardObjectServices cardServices, UserInterface userInterface)
+		public PrototypeRulesSet(
+			CommonServices commonServices,
+			GameEngineServices gameEngineServices,
+			CardObjectServices cardServices,
+			UserInterface userInterface)
 		{
 			_commonServices = commonServices;
 			_gameEngineServices = gameEngineServices;
 			_cardServices = cardServices;
 			_userInterface = userInterface;
-			
 
 			_sceneEventsWrapper = new SceneEventsWrapper();
 
-			_gameStateManagers = new GameStateManagers(commonServices, _gameEngineServices, new LogicMapState(), _sceneEventsWrapper, new LogicCardState(), _cardServices, new StateMachineManager());
+			_gameStateManagers = new GameStateManagers(
+				_commonServices,
+				_gameEngineServices,
+				new LogicMapState(),
+				_sceneEventsWrapper,
+				new LogicCardState(),
+				_cardServices,
+				new StateMachineManager()
+			);
 
 			_commandManager = new CommandManager();
 
 			_commandRequestEventsWrapper = new CommandRequestEventsWrapper();
 
-			_commandEventHandlersWrapper = new CommandEventHandlersWrapper(_gameStateManagers, _commandRequestEventsWrapper, _sceneEventsWrapper);
+			_commandEventHandlersWrapper = new CommandEventHandlersWrapper(
+				_gameStateManagers,
+				_commandRequestEventsWrapper,
+				_sceneEventsWrapper
+			);
 
 			_stateMachineFactory = new StateMachineFactory();
 			_commandFactory = new CommandFactory();
 			_cardFactory = new CardFactory();
 
+			_stateMachineFactory.Initialize(
+				_commonServices,
+				_userInterface,
+				_commandManager,
+				_commandFactory,
+				_cardServices,
+				_gameStateManagers,
+				_commandRequestEventsWrapper
+			);
 
-			_stateMachineFactory.Initialize(_commandManager, _userInterface, _cardServices, _commandFactory, _commonServices, _gameStateManagers.LogicCardStateManager, _commandRequestEventsWrapper, new RulesValidator(_gameStateManagers.LogicCardStateManager.LogicCardState, _gameStateManagers.LogicMapStateManager.LogicMapState));
+			_commandFactory.Initialize(
+				_commandRequestEventsWrapper,
+				_stateMachineFactory,
+				_gameStateManagers,
+				_sceneEventsWrapper
+			);
 
-			_commandFactory.Initialize(_commandRequestEventsWrapper, _stateMachineFactory, _gameStateManagers.StateMachineManager, _gameStateManagers.LogicCardStateManager, _gameStateManagers.LogicMapStateManager);
-
-			_cardFactory.Initialize(_commandManager, _commandFactory);
+			_cardFactory.Initialize(
+				_commandManager,
+				_commandFactory
+			);
 		}
 
 

@@ -7,6 +7,7 @@ using PrototypeGame.UI;
 using System;
 using UnityEngine;
 using PrototypeGame.RulesServices;
+using PrototypeGame.StateMachine.StateServices;
 
 namespace PrototypeGame.StateMachine
 {
@@ -21,24 +22,25 @@ namespace PrototypeGame.StateMachine
 
 		private RulesValidator _rulesValidator;
 
-		public AwatingPlayCardForActionState(UserInterface userInterface, CommandManager commandManager, CommandFactory commandFactory, CardDragAndDropState cardDragAndDropState, RulesValidator rulesValidator) 
+		public AwatingPlayCardForActionState(CoreStateDependencies coreStateDependencies, CardDragAndDropState cardDragAndDropState) 
 		{ 
-			_userInterface = userInterface;
-			_commandManager = commandManager;
-			_commandFactory = commandFactory;
+			_userInterface = coreStateDependencies.UserInterface;
+			_commandManager = coreStateDependencies.CommandManager;
+			_commandFactory = coreStateDependencies.CommandFactory;
+			_rulesValidator = coreStateDependencies.RulesValidator;
 			_cardDragAndDropState = cardDragAndDropState;
-			_rulesValidator = rulesValidator;
 		}
 		public void EnterState()
 		{
-			_cardDragAndDropState.OnDropHandler = OnCardDropped;
 			_cardDragAndDropState.EnterState();
-			_userInterface.CurrentMessage.text = "Play a card from hand";
+			_cardDragAndDropState.OnCardDroppedEvent += OnCardDropped;
+			_userInterface.CurrentMessage.text = "Play a card from hand for its action";
 		}
 
 		public void ExitState()
 		{
 			_userInterface.CurrentMessage.text = "";
+			_cardDragAndDropState.OnCardDroppedEvent -= OnCardDropped;
 			_cardDragAndDropState.ExitState();
 		}
 

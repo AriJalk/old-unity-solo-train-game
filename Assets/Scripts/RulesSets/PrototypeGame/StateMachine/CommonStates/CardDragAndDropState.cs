@@ -6,10 +6,11 @@ namespace PrototypeGame.StateMachine.CommonStates
 {
 	internal class CardDragAndDropState : IStateMachine
 	{
+		public event Action<Guid> OnCardDroppedEvent;
+
 		private CardObjectServices _cardServices;
 		private ICardDropTarget _cardDropTarget;
 
-		public Action<Guid> OnDropHandler { get; set; }
 
 		public CardDragAndDropState(CardObjectServices cardServices, ICardDropTarget cardDropTarget)
 		{
@@ -45,7 +46,7 @@ namespace PrototypeGame.StateMachine.CommonStates
 
 		private void OnCardDropped(Guid cardId)
 		{
-			OnDropHandler?.Invoke(cardId);
+			OnCardDroppedEvent?.Invoke(cardId);
 		}
 	}
 }

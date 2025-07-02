@@ -1,13 +1,14 @@
-﻿using Commands.StateCommands;
-using TurnBasedHexEngine.StateMachine;
+﻿using Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands;
+using Commands.StateCommands;
 using HexSystem;
 using PrototypeGame.Commands.CardCommands;
+using PrototypeGame.Commands.StateCommands;
 using PrototypeGame.Events;
+using PrototypeGame.Logic.ServiceContracts;
+using PrototypeGame.ServiceGroups;
 using PrototypeGame.StateMachine;
 using System;
-using PrototypeGame.Commands.StateCommands;
-using PrototypeGame.Logic.ServiceContracts;
-using Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands;
+using TurnBasedHexEngine.StateMachine;
 
 namespace PrototypeGame.Commands
 {
@@ -28,13 +29,16 @@ namespace PrototypeGame.Commands
 
 		}
 
-		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper, StateMachineFactory stateMachineFactory, StateMachineManager stateMachineManager, ICardLookupService cardLookupService, IFactoryLookupService factoryLookupService)
+		public void Initialize(CommandRequestEventsWrapper commandRequestEventsWrapper,
+				StateMachineFactory stateMachineFactory,
+				GameStateManagers gameStateManagers,
+				SceneEventsWrapper sceneEventsWrapper)
 		{
 			_commandRequestEventsWrapper = commandRequestEventsWrapper;
 			_stateMachineFactory = stateMachineFactory;
-			_stateMachineManager = stateMachineManager;
-			_cardLookupService = cardLookupService;
-			_factoryLookupService = factoryLookupService;
+			_stateMachineManager = gameStateManagers.StateMachineManager;
+			_cardLookupService = gameStateManagers.LogicCardStateManager;
+			_factoryLookupService = gameStateManagers.LogicMapStateManager;
 		}
 
 		public TransportCubeCommand CreateTransportCubeCommand(Guid originSlot, Guid destinationSlot)
