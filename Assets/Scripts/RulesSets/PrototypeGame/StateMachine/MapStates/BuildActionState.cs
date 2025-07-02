@@ -98,7 +98,7 @@ namespace PrototypeGame.StateMachine
 			}
 		}
 
-		private void OnMoveCardFromDiscardToHandRequestEvent(Guid cardId)
+		private void OnMoveCardFromDiscardToHandRequestEvent(Guid cardId, bool fromUndo)
 		{
 			ProtoCardData cardData = _cardLookupService.GetCardData(cardId);
 			if (cardData != null)

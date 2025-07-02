@@ -9,23 +9,17 @@ namespace PrototypeGame.Events
 {
 	internal class SceneCardEvents
 	{
-		public event Action<ProtoCardData> CardAddedToHandEvent;
-		public event Action<Guid> CardRemovedFromHandEvent;
-		public event Action<ProtoCardData> CardRestoredFromDiscardToHandEvent;
+		public event Action<ProtoCardData, bool> CardAddedToHandEvent;
+		public event Action<Guid, bool> CardRemovedFromHandEvent;
 
-		public void RaiseCardAddedToHandEvent(ProtoCardData cardData)
+		public void RaiseCardAddedToHandEvent(ProtoCardData cardData, bool fromUndo)
 		{
-			CardAddedToHandEvent?.Invoke(cardData);
+			CardAddedToHandEvent?.Invoke(cardData, fromUndo);
 		}
 
-		public void RaiseCardRemovedFromHandEvent(Guid cardId)
+		public void RaiseCardRemovedFromHandEvent(Guid cardId, bool fromUndo)
 		{
-			CardRemovedFromHandEvent?.Invoke(cardId);
-		}
-
-		public void RaiseCardRestoredFromDiscardToHandEvent(ProtoCardData cardData)
-		{
-			CardRestoredFromDiscardToHandEvent?.Invoke(cardData);
+			CardRemovedFromHandEvent?.Invoke(cardId, fromUndo);
 		}
 	}
 }

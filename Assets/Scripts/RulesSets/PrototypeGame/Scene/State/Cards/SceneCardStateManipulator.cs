@@ -30,25 +30,23 @@ namespace PrototypeGame.Scene.State.Cards
 			cardObject.CardDescription.text = protoCardData.CardDescription;
 			cardObject.CardServices = _cardServices;
 			cardObject.CommonServices = _commonServices;
+			cardObject.IsAlwaysLastInHand = protoCardData.IsAlwaysLastInHand;
 
 			return cardObject;
 		}
 
-		public void AddCardToHand(ProtoCardObject cardObject)
+		public void AddCardToHand(ProtoCardObject cardObject, bool fromUndo)
 		{
-			_cardServices.AddCard(cardObject);
+			_cardServices.AddCard(cardObject, fromUndo);
 		}
 
 
-		public void RemoveCardFromHand(ProtoCardObject cardObject)
+		public void RemoveCardFromHand(ProtoCardObject cardObject, bool fromUndo)
 		{
-			_cardServices.RemoveCard(cardObject);
+			_cardServices.RemoveCard(cardObject, fromUndo);
 		}
 
-		public void RestoreCardFromDiscardToHand(ProtoCardObject cardObject)
-		{
-			_cardServices.AddCard(cardObject, true);
-		}
+		
 
 	}
 }

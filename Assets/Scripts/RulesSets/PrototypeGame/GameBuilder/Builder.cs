@@ -42,16 +42,16 @@ namespace PrototypeGame.GameBuilder
 			{
 				ProtoCardData card = cardFactory.CreateBasicBuildActionCard();
 				logicCardStateManager.AddCardToHand(card);
-				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
+				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card, false);
 
 				card = cardFactory.CreateTransportActionCard();
 				logicCardStateManager.AddCardToHand(card);
-				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card);
+				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card, false);
 			}
 
 			ProtoCardData retreiveCard = cardFactory.CreateRetreiveAndProduceCard();
 			logicCardStateManager.AddCardToHand(retreiveCard);
-			sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(retreiveCard);
+			sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(retreiveCard, false);
 		}
 	}
 }

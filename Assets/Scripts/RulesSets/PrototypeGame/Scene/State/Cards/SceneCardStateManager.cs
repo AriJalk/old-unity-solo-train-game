@@ -29,7 +29,6 @@ namespace PrototypeGame.Scene.State.Cards
 
 			_sceneCardEvents.CardAddedToHandEvent += OnCardAddedToHand;
 			_sceneCardEvents.CardRemovedFromHandEvent += OnCardRemovedFromHand;
-			_sceneCardEvents.CardRestoredFromDiscardToHandEvent += OnCardRestoredFromDiscardToHand;
 
 		}
 
@@ -39,28 +38,20 @@ namespace PrototypeGame.Scene.State.Cards
 		{
 			_sceneCardEvents.CardAddedToHandEvent -= OnCardAddedToHand;
 			_sceneCardEvents.CardRemovedFromHandEvent -= OnCardRemovedFromHand;
-			_sceneCardEvents.CardRestoredFromDiscardToHandEvent -= OnCardRestoredFromDiscardToHand;
 		}
 
-		private void OnCardAddedToHand(ProtoCardData cardData)
+		private void OnCardAddedToHand(ProtoCardData cardData, bool fromUndo)
 		{
 			ProtoCardObject cardObject = _sceneCardStateManipulator.BuildCard(cardData);
 			_sceneCardState.Cards.Add(cardObject.guid, cardObject);
-			_sceneCardStateManipulator.AddCardToHand(cardObject);
+			_sceneCardStateManipulator.AddCardToHand(cardObject, fromUndo);
 		}
 
-		private void OnCardRemovedFromHand(Guid cardId)
+		private void OnCardRemovedFromHand(Guid cardId, bool fromUndo)
 		{
 			ProtoCardObject cardObject = _sceneCardState.Cards[cardId];
 			_sceneCardState.Cards.Remove(cardId);
-			_sceneCardStateManipulator.RemoveCardFromHand(cardObject);
-		}
-
-		private void OnCardRestoredFromDiscardToHand(ProtoCardData cardData)
-		{
-			ProtoCardObject cardObject = _sceneCardStateManipulator.BuildCard(cardData);
-			_sceneCardState.Cards.Add(cardObject.guid, cardObject);
-			_sceneCardStateManipulator.RestoreCardFromDiscardToHand(cardObject);
+			_sceneCardStateManipulator.RemoveCardFromHand(cardObject, fromUndo);
 		}
 	}
 }

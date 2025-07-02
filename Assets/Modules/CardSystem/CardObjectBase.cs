@@ -1,17 +1,20 @@
 using CommonEngine.Core;
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace CardSystem
 {
-	public class CardObjectBase : MonoBehaviour, IPointerDownHandler
+	public class CardObjectBase : MonoBehaviour, IIdentifiable, IPointerDownHandler
 	{
+		public Guid guid { get; set; }
 		public CardObjectServices CardServices { get; set; }
 		public CommonServices CommonServices { get; set; }
 		public RectTransform RectTransform { get; set; }
-		public int IndexAtHand {  get; set; }
+		public bool IsAlwaysLastInHand { get; set; }
 
 		private bool _isDragging;
 

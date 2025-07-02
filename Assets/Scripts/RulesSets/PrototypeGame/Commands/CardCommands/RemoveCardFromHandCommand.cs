@@ -16,12 +16,12 @@ namespace PrototypeGame.Commands.CardCommands
 		}
 		public void Execute()
 		{
-			_cardCommandRequestEvents.RaiseMoveCardFromHandToDiscardRequestEvent(_cardId);
+			_cardCommandRequestEvents.RaiseMoveCardFromHandToDiscardRequestEvent(_cardId, false);
 		}
 
 		public void Undo()
 		{
-			_cardCommandRequestEvents.RaiseRestoreCardFromDiscardToHandRequestEvent(_cardId);
+			_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(_cardId, true);
 		}
 	}
 }

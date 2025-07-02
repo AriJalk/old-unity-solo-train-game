@@ -18,9 +18,10 @@ namespace PrototypeGame.Logic.Components.Cards
 		public string CardDescription { get; private set; }
 
 		public bool CanBeDiscarded { get; private set; }
+		public bool IsAlwaysLastInHand { get; private set; }
 
 
-		public ProtoCardData(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory, bool canBeDiscarded = true)
+		public ProtoCardData(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory, bool canBeDiscarded = true, bool isAlwaysLastInHand = false)
 		{
 			this.guid = guid;
 			CardTitle = cardTitle;
@@ -31,6 +32,7 @@ namespace PrototypeGame.Logic.Components.Cards
 			_commandManager = commandManager;
 			_commandFactory = commandFactory;
 			CanBeDiscarded = canBeDiscarded;
+			IsAlwaysLastInHand = isAlwaysLastInHand;
 		}
 
 		public virtual void PlayAction() { }

@@ -23,7 +23,6 @@ namespace PrototypeGame.Events.CommandEventHandlers
 
 			_cardCommandRequestEvents.MoveCardFromHandToDiscardRequestEvent += OnMoveCardFromHandToDiscardRequest;
 			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent += OnMoveCardFromDiscardToHandRequest;
-			_cardCommandRequestEvents.RestoreCardFromDiscardToHandRequestEvent += OnRestoreCardFromDiscardToHandRequest;
 		}
 
 
@@ -33,7 +32,6 @@ namespace PrototypeGame.Events.CommandEventHandlers
 
 			_cardCommandRequestEvents.MoveCardFromHandToDiscardRequestEvent -= OnMoveCardFromHandToDiscardRequest;
 			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent -= OnMoveCardFromDiscardToHandRequest;
-			_cardCommandRequestEvents.RestoreCardFromDiscardToHandRequestEvent -= OnRestoreCardFromDiscardToHandRequest;
 		}
 
 		private void OnPlayCardActionRequest(Guid cardId)
@@ -41,26 +39,19 @@ namespace PrototypeGame.Events.CommandEventHandlers
 			_logicCardStateManager.PlayActionFromCard(cardId);
 		}
 
-		private void OnMoveCardFromHandToDiscardRequest(Guid cardId)
+		private void OnMoveCardFromHandToDiscardRequest(Guid cardId, bool fromUndo)
 		{
 			ProtoCardData card = _logicCardStateManager.LogicCardState.CardsInHand[cardId];
 			_logicCardStateManager.RemoveCardFromHand(card);
 			_logicCardStateManager.AddCardToDiscardPile(card);
-			_sceneCardEvents.RaiseCardRemovedFromHandEvent(cardId);
+			_sceneCardEvents.RaiseCardRemovedFromHandEvent(cardId, fromUndo);
 		}
 
-		private void OnMoveCardFromDiscardToHandRequest(Guid cardId)
+		private void OnMoveCardFromDiscardToHandRequest(Guid cardId, bool fromUndo)
 		{
 			ProtoCardData card = _logicCardStateManager.LogicCardState.CardsInDiscard[cardId];
 			_logicCardStateManager.MoveCardFromDiscardPileToHand(card);
-			_sceneCardEvents.RaiseCardAddedToHandEvent(card);
-		}
-
-		private void OnRestoreCardFromDiscardToHandRequest(Guid cardId)
-		{
-			ProtoCardData card = _logicCardStateManager.LogicCardState.CardsInDiscard[cardId];
-			_logicCardStateManager.MoveCardFromDiscardPileToHand(card);
-			_sceneCardEvents.RaiseCardRestoredFromDiscardToHandEvent(card);
+			_sceneCardEvents.RaiseCardAddedToHandEvent(card, fromUndo);
 		}
 	}
 }

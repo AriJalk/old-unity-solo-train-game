@@ -6,28 +6,22 @@ namespace PrototypeGame.Events.CommandRequestEvents
 	{
 		public event Action<Guid> PlayCardActionRequestEvent;
 
-		public event Action<Guid> MoveCardFromHandToDiscardRequestEvent;
-		public event Action<Guid> MoveCardFromDiscardToHandRequestEvent;
-		public event Action<Guid> RestoreCardFromDiscardToHandRequestEvent;
+		public event Action<Guid, bool> MoveCardFromHandToDiscardRequestEvent;
+		public event Action<Guid, bool> MoveCardFromDiscardToHandRequestEvent;
 
 		public void RaisePlayCardActionRequestEvent(Guid cardId)
 		{
 			PlayCardActionRequestEvent?.Invoke(cardId);
 		}
 
-		public void RaiseMoveCardFromHandToDiscardRequestEvent(Guid cardId)
+		public void RaiseMoveCardFromHandToDiscardRequestEvent(Guid cardId, bool fromUndo)
 		{
-			MoveCardFromHandToDiscardRequestEvent?.Invoke(cardId);
+			MoveCardFromHandToDiscardRequestEvent?.Invoke(cardId, fromUndo);
 		}
 
-		public void RaiseMoveCardFromDiscardToHandRequestEvent(Guid cardId)
+		public void RaiseMoveCardFromDiscardToHandRequestEvent(Guid cardId, bool fromUndo)
 		{
-			MoveCardFromDiscardToHandRequestEvent?.Invoke(cardId);
-		}
-		
-		public void RaiseRestoreCardFromDiscardToHandRequestEvent(Guid cardId)
-		{
-			RestoreCardFromDiscardToHandRequestEvent?.Invoke(cardId);
+			MoveCardFromDiscardToHandRequestEvent?.Invoke(cardId, fromUndo);
 		}
 	}
 }

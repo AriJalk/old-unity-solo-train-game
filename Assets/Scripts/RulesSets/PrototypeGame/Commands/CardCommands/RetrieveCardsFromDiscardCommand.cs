@@ -19,7 +19,7 @@ namespace Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands
 		{
 			foreach (Guid cardId in _cardsIdCollection)
 			{
-				_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(cardId);
+				_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(cardId, false);
 			}
 		}
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands
 		{
 			foreach (Guid cardId in _cardsIdCollection)
 			{
-				_cardCommandRequestEvents.RaiseMoveCardFromHandToDiscardRequestEvent(cardId);
+				_cardCommandRequestEvents.RaiseMoveCardFromHandToDiscardRequestEvent(cardId, true);
 			}
 		}
 	}
