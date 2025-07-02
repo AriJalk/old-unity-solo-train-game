@@ -32,10 +32,10 @@ namespace CommonEngine.UI.Components
 				actualColumns--;
 			}
 
-			cellWidth = rectWidth / actualColumns;
+			cellWidth = Mathf.Max(rectWidth / actualColumns, MinWidth);
+			float cellHeight = Mathf.Min(cellWidth, _selfRectTransform.rect.height);
 
-
-			_selfGridLayoutGroup.cellSize = new Vector2(cellWidth, cellWidth);
+			_selfGridLayoutGroup.cellSize = new Vector2(cellWidth, cellHeight);
 			_selfGridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
 			_selfGridLayoutGroup.constraintCount = actualColumns;
 
