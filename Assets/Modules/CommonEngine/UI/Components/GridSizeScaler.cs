@@ -18,28 +18,33 @@ namespace CommonEngine.UI.Components
 		public void UpdateCellSize(int totalItems)
 		{
 			if (MaxColumns <= 0 || totalItems <= 0)
-			{
 				return;
-			}
 
-			_selfGridLayoutGroup.GetComponent<RectTransform>().sizeDelta = Vector2.zero; 
 			int actualColumns = Mathf.Min(totalItems, MaxColumns);
 			float rectWidth = _selfRectTransform.rect.width;
-			float cellWidth = Mathf.Max(rectWidth / actualColumns, MinWidth);
+			_selfRectTransform.sizeDelta = Vector2.zero;
 
-			while (cellWidth * actualColumns > rectWidth)
+			// Reduce number of columns to prevet overflow
+			while (actualColumns > 1)
 			{
+				float testCellWidth = rectWidth / actualColumns;
+				if (testCellWidth >= MinWidth)
+				{
+					break;
+				}
+
 				actualColumns--;
 			}
 
-			cellWidth = Mathf.Max(rectWidth / actualColumns, MinWidth);
+			float cellWidth = Mathf.Max(rectWidth / actualColumns, MinWidth);
 			float cellHeight = Mathf.Min(cellWidth, _selfRectTransform.rect.height);
 
 			_selfGridLayoutGroup.cellSize = new Vector2(cellWidth, cellHeight);
 			_selfGridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
 			_selfGridLayoutGroup.constraintCount = actualColumns;
-
 		}
+
+
 
 
 
