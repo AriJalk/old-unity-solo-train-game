@@ -1,7 +1,9 @@
 using CommonEngine.Core;
-using CommonEngine.SceneServices;
+using CommonEngine.Helpers;
+using CommonEngine.UI.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,15 +22,15 @@ namespace CommonEngine.UI.Options
         private CommonServices _commonServices;
         [SerializeField]
         private Button _cancelButton;
+        [SerializeField]
+        GridSizeScaler _gridSizeScaler;
 
         public Transform OptionsContainer;
 
         private ICollection<OptionObject> _options;
-        private Guid _selectedOption;
 
         private void OnOptionSelected(Guid guid)
         {
-            _selectedOption = guid;
             OptionSelectedEvent?.Invoke(guid);
         }
 
@@ -46,6 +48,7 @@ namespace CommonEngine.UI.Options
             _commonServices.InputLock.AddLock(gameObject);
             gameObject.SetActive(true);
             _cancelButton.onClick.AddListener(OnCancelClicked);
+            _gridSizeScaler.UpdateCellSize(options.Count());
         }
 
         public void ClosePanel()

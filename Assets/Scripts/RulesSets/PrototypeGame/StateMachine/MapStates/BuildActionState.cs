@@ -26,7 +26,6 @@ namespace PrototypeGame.StateMachine
 		private CommonServices _commonServices;
 		private UserInterface _userInterface;
 
-
 		private CommandManager _commandManager;
 		private CommandFactory _commandFactory;
 
@@ -118,6 +117,7 @@ namespace PrototypeGame.StateMachine
 			BuildingOption option;
 			Guid guid;
 
+			//Test multiple options
 			if (_rulesValidator.IsValidBuildLocation(_selectedTileCoord, BuildingType.STATION))
 			{
 				guid = Guid.NewGuid();
@@ -142,6 +142,7 @@ namespace PrototypeGame.StateMachine
 				_optionsPanel.OptionSelectedEvent += OnBuildingOptionSelected;
 				_optionsPanel.CancelEvent += OnBuildingOptionsCancelled;
 			}
+
 
 		}
 

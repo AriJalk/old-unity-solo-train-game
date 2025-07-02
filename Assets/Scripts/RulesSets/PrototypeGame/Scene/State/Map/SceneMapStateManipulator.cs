@@ -1,6 +1,6 @@
 using CommonEngine.Core;
+using CommonEngine.Helpers;
 using CommonEngine.ResourceManagement;
-using CommonEngine.SceneServices;
 using PrototypeGame.Logic;
 
 namespace PrototypeGame.Scene.State

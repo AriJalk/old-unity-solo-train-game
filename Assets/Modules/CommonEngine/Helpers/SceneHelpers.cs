@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CommonEngine.SceneServices
+namespace CommonEngine.Helpers
 {
 	/// <summary>
 	/// General tools to help reduce repeated code regarding scene manipulation

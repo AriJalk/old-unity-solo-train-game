@@ -4,8 +4,6 @@ using PrototypeGame.Events;
 using HexSystem;
 using PrototypeGame.Logic.State.Cards;
 using PrototypeGame.Logic.Components.Cards;
-using System;
-using PrototypeGame.Scene.Components.Cards;
 
 namespace PrototypeGame.GameBuilder
 {

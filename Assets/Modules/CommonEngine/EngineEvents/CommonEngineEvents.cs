@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CommonEngine.Events
+namespace CommonEngine.EngineEvents
 {
 	public class CommonEngineEvents
 	{
