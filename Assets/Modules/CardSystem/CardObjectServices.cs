@@ -43,20 +43,27 @@ namespace CardSystem
 			_lastCardsInHand = new HashSet<CardObjectBase>();
 		}
 
-		private void OrganaizeHand()
+
+		private void CheckForDropTarget(CardObjectBase card, PointerEventData pointerEventData)
 		{
-			foreach (CardObjectBase card in _lastCardsInHand)
+			// Raycast for drop area
+			List<RaycastResult> results = new List<RaycastResult>();
+			_graphicRaycaster.Raycast(pointerEventData, results);
+
+			foreach (RaycastResult result in results)
 			{
-				card.transform.parent.SetAsLastSibling();
+				if (result.gameObject.GetComponent<ICardDropTarget>() is ICardDropTarget cardDropArea)
+				{
+					cardDropArea.OnDrop(card);
+					return;
+				}
 			}
 		}
-
 
 		public void BeginCardDrag(CardObjectBase card)
 		{
 			_currentDraggedCardContainer = card.transform.parent.GetComponent<RectTransform>();
 			card.RectTransform.SetParent(_dragLayer);
-			//SceneHelpers.SetParentAndResetPosition(card.RectTransform, _dragLayer);
 			_scrollRect.enabled = false;
 			DragStartedEvent?.Invoke();
 		}
@@ -66,34 +73,19 @@ namespace CardSystem
 			// Return card to hand container
 			SceneHelpers.SetParentAndResetPosition(card.RectTransform, _currentDraggedCardContainer);
 			_currentDraggedCardContainer = null;
-
-			// Raycast for drop area
-
-			List<RaycastResult> results = new List<RaycastResult>();
-			_graphicRaycaster.Raycast(pointerEventData, results);
-
-			foreach (RaycastResult result in results)
-			{
-				if (result.gameObject.GetComponent<ICardDropTarget>() is ICardDropTarget cardDropArea)
-				{
-					cardDropArea.OnDrop(card);
-					break;
-				}
-			}
+			CheckForDropTarget(card, pointerEventData);
 			_scrollRect.enabled = true;
 			DragEndedEvent?.Invoke();
 		}
+
 
 		public void AddCard(CardObjectBase card, bool fromUndo)
 		{
 			RectTransform container = new GameObject("CardContainer").AddComponent<RectTransform>();
 			container.SetParent(_cardHandTransform, false);
-			if (fromUndo)
+			if (fromUndo && _indexTracker.PopLastIndex(card.guid) is int index)
 			{
-				if (_indexTracker.PopLastIndex(card.guid) is int index)
-				{
-					container.SetSiblingIndex(index);
-				}
+				container.SetSiblingIndex(index);
 			}
 			SceneHelpers.InitializeRectObject(card.RectTransform, container);
 			float cardWidth = _cardHandTransform.rect.height * CARD_ASPECT_RATIO;
@@ -104,7 +96,6 @@ namespace CardSystem
 			{
 				_lastCardsInHand.Add(card);
 			}
-			OrganaizeHand();
 		}
 
 
@@ -121,5 +112,17 @@ namespace CardSystem
 			//Debug.Log("Removed: " + card.transform.parent.name);
 			Destroy(card.transform.parent.gameObject);
 		}
+
+		/// <summary>
+		/// Ensures last cards in hand stay at end
+		/// </summary>
+		public void ReorganaizeHand()
+		{
+			foreach (CardObjectBase card in _lastCardsInHand)
+			{
+				card.transform.parent.SetAsLastSibling();
+			}
+		}
+
 	}
 }

@@ -10,7 +10,7 @@ namespace PrototypeGame.Scene.State.Cards
 	internal class SceneCardStateManager : IDisposable
 	{
 		private CommonServices _commonServices;
-		private CardObjectServices _cardServices;
+		private CardObjectServices _cardObjectServices;
 		private SceneCardEvents _sceneCardEvents;
 
 		private SceneCardState _sceneCardState;
@@ -20,24 +20,26 @@ namespace PrototypeGame.Scene.State.Cards
 		public SceneCardStateManager(CommonServices commonServices, CardObjectServices cardServices, SceneEventsWrapper sceneEventsWrapper)
 		{
 			_commonServices = commonServices;
-			_cardServices = cardServices;
+			_cardObjectServices = cardServices;
 			_sceneCardEvents = sceneEventsWrapper.SceneCardEvents;
 
 			_sceneCardState = new SceneCardState();
 
-			_sceneCardStateManipulator = new SceneCardStateManipulator(_commonServices, _cardServices);
+			_sceneCardStateManipulator = new SceneCardStateManipulator(_commonServices, _cardObjectServices);
 
 			_sceneCardEvents.CardAddedToHandEvent += OnCardAddedToHand;
 			_sceneCardEvents.CardRemovedFromHandEvent += OnCardRemovedFromHand;
 
-		}
+			_sceneCardEvents.CardsInHandReorganizedEvent += OnCardsInHandReorganized;
 
+		}
 
 
 		public void Dispose()
 		{
 			_sceneCardEvents.CardAddedToHandEvent -= OnCardAddedToHand;
 			_sceneCardEvents.CardRemovedFromHandEvent -= OnCardRemovedFromHand;
+			_sceneCardEvents.CardsInHandReorganizedEvent -= OnCardsInHandReorganized;
 		}
 
 		private void OnCardAddedToHand(ProtoCardData cardData, bool fromUndo)
@@ -52,6 +54,12 @@ namespace PrototypeGame.Scene.State.Cards
 			ProtoCardObject cardObject = _sceneCardState.Cards[cardId];
 			_sceneCardState.Cards.Remove(cardId);
 			_sceneCardStateManipulator.RemoveCardFromHand(cardObject, fromUndo);
+		}
+
+
+		private void OnCardsInHandReorganized()
+		{
+			_sceneCardStateManipulator.ReorganizeCardsInHand();
 		}
 	}
 }

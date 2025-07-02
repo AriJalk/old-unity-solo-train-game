@@ -2,6 +2,7 @@
 using CommonEngine.Core;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.Scene.Components.Cards;
+using System;
 using UnityEngine;
 
 namespace PrototypeGame.Scene.State.Cards
@@ -9,14 +10,14 @@ namespace PrototypeGame.Scene.State.Cards
 	internal class SceneCardStateManipulator
 	{
 		private CommonServices _commonServices;
-		private CardObjectServices _cardServices;
+		private CardObjectServices _cardObjectServices;
 
 		private GameObject _cardPrefab;
 
 		public SceneCardStateManipulator(CommonServices commonServices, CardObjectServices cardServices)
 		{
 			_commonServices = commonServices;
-			_cardServices = cardServices;
+			_cardObjectServices = cardServices;
 			_cardPrefab = Resources.Load<GameObject>("Prefabs/PrototypeGame/ProtoCardPrefab");
 		}
 
@@ -28,7 +29,7 @@ namespace PrototypeGame.Scene.State.Cards
 			cardObject.MoneyLabel.text = protoCardData.MoneyValue + "$";
 			cardObject.TransportPointsLabel.text = protoCardData.TransportPointsValue + "TP";
 			cardObject.CardDescription.text = protoCardData.CardDescription;
-			cardObject.CardServices = _cardServices;
+			cardObject.CardServices = _cardObjectServices;
 			cardObject.CommonServices = _commonServices;
 			cardObject.IsAlwaysLastInHand = protoCardData.IsAlwaysLastInHand;
 
@@ -37,16 +38,18 @@ namespace PrototypeGame.Scene.State.Cards
 
 		public void AddCardToHand(ProtoCardObject cardObject, bool fromUndo)
 		{
-			_cardServices.AddCard(cardObject, fromUndo);
+			_cardObjectServices.AddCard(cardObject, fromUndo);
 		}
 
 
 		public void RemoveCardFromHand(ProtoCardObject cardObject, bool fromUndo)
 		{
-			_cardServices.RemoveCard(cardObject, fromUndo);
+			_cardObjectServices.RemoveCard(cardObject, fromUndo);
 		}
 
-		
-
+		public void ReorganizeCardsInHand()
+		{
+			_cardObjectServices.ReorganaizeHand();
+		}
 	}
 }

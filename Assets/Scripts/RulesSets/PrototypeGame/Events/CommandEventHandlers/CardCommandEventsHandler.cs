@@ -23,8 +23,9 @@ namespace PrototypeGame.Events.CommandEventHandlers
 
 			_cardCommandRequestEvents.MoveCardFromHandToDiscardRequestEvent += OnMoveCardFromHandToDiscardRequest;
 			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent += OnMoveCardFromDiscardToHandRequest;
-		}
 
+			_cardCommandRequestEvents.ReorganizeCardsInHandRequestEvent += OnReorganizeCardsInHandRequest;
+		}
 
 		public void Dispose()
 		{
@@ -32,6 +33,8 @@ namespace PrototypeGame.Events.CommandEventHandlers
 
 			_cardCommandRequestEvents.MoveCardFromHandToDiscardRequestEvent -= OnMoveCardFromHandToDiscardRequest;
 			_cardCommandRequestEvents.MoveCardFromDiscardToHandRequestEvent -= OnMoveCardFromDiscardToHandRequest;
+
+			_cardCommandRequestEvents.ReorganizeCardsInHandRequestEvent -= OnReorganizeCardsInHandRequest;
 		}
 
 		private void OnPlayCardActionRequest(Guid cardId)
@@ -53,5 +56,12 @@ namespace PrototypeGame.Events.CommandEventHandlers
 			_logicCardStateManager.MoveCardFromDiscardPileToHand(card);
 			_sceneCardEvents.RaiseCardAddedToHandEvent(card, fromUndo);
 		}
+
+
+		private void OnReorganizeCardsInHandRequest()
+		{
+			_sceneCardEvents.RaiseCardsInHandReorganizedEvent();
+		}
+
 	}
 }

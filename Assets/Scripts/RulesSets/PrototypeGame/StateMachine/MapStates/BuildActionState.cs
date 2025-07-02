@@ -152,6 +152,7 @@ namespace PrototypeGame.StateMachine
 			_optionsPanel.ClosePanel();
 			_userInterface.EnableButtons();
 			_selectedTileCoord = null;
+			_buildingOptions = null;
 		}
 
 		private void OnBuildingOptionSelected(Guid guid)

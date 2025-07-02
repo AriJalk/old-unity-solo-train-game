@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using TurnBasedHexEngine.Commands;
 
-namespace Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands
+namespace PrototypeGame.Commands.CardCommands
 {
 	internal class RetrieveCardsFromDiscardCommand : ICommand
 	{
@@ -21,6 +21,7 @@ namespace Assets.Scripts.RulesSets.PrototypeGame.Commands.CardCommands
 			{
 				_cardCommandRequestEvents.RaiseMoveCardFromDiscardToHandRequestEvent(cardId, false);
 			}
+			_cardCommandRequestEvents.RaiseReorganizeHandRequestEvent();
 		}
 
 		public void Undo()
