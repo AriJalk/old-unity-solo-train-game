@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace CommonEngine.UI.Components
 {
 	[RequireComponent(typeof(GridLayoutGroup))]
-	public class GridSizeScaler : MonoBehaviour
+	internal class GridSizeScaler : MonoBehaviour
 	{
 		public int MaxColumns = 4;
 		public float MinWidth = 100;

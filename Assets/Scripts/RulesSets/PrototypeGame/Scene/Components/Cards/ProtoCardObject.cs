@@ -1,7 +1,6 @@
 ﻿using CardSystem;
-using System;
+
 using TMPro;
-using Unity.VisualScripting;
 
 namespace PrototypeGame.Scene.Components.Cards
 {

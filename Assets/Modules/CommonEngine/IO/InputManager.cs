@@ -2,18 +2,22 @@ using CommonEngine.Core;
 using CommonEngine.EngineEvents;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 namespace CommonEngine.IO
 {
 	/// <summary>
 	/// Listens to input, and dispatches events accordingly
 	/// </summary>
-	public class InputManager : MonoBehaviour
+	internal class InputManager : MonoBehaviour
 	{
 		[SerializeField]
 		private CommonServices _commonServices;
 
 		private InputEvents _inputEvents;
+
+		public Vector2 CurrentMousePosition { get; private set; }
+		public Vector2 CurrentMouseDelta {  get; private set; }
 
 		// Start is called once before the first execution of Update after the MonoBehaviour is created
 		void Start()
@@ -35,20 +39,21 @@ namespace CommonEngine.IO
 
 		void ProcessMouseButtons()
 		{
-			Vector2 position = Mouse.current.position.ReadValue();
+			CurrentMousePosition = Mouse.current.position.ReadValue();
+			CurrentMouseDelta = Mouse.current.delta.ReadValue();
 			//Vector2 movement = Mouse.current.delta.ReadValue();
 
 			if (Mouse.current.leftButton.wasPressedThisFrame)
-				_inputEvents.RaiseMouseButtonClickedDown(0, position);
+				_inputEvents.RaiseMouseButtonClickedDown(0, CurrentMousePosition);
 
 			else if (Mouse.current.rightButton.wasPressedThisFrame)
-				_inputEvents.RaiseMouseButtonClickedDown(1, position);
+				_inputEvents.RaiseMouseButtonClickedDown(1, CurrentMousePosition);
 
 			if (Mouse.current.leftButton.wasReleasedThisFrame)
-				_inputEvents.RaiseMouseButtonClickedUp(0, position);
+				_inputEvents.RaiseMouseButtonClickedUp(0, CurrentMousePosition);
 
 			else if (Mouse.current.rightButton.wasReleasedThisFrame)
-				_inputEvents.RaiseMouseButtonClickedUp(1, position);
+				_inputEvents.RaiseMouseButtonClickedUp(1, CurrentMousePosition);
 		}
 
 		private void ProcessAxis()

@@ -5,7 +5,7 @@ namespace TurnBasedHexEngine.Commands
 	/// <summary>
 	/// Atomic group of commands
 	/// </summary>
-	public class CommandGroup
+	internal class CommandGroup
 	{
 		private Stack<ICommand> _commandStack = new Stack<ICommand>();
 

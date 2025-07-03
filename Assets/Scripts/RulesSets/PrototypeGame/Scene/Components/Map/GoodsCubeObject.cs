@@ -1,6 +1,6 @@
 using CommonEngine.Core;
+using CommonEngine.Interfaces;
 using System;
-using Unity.VisualScripting;
 
 public class GoodsCubeObject : MeshComponent, IIdentifiable
 {

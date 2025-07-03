@@ -1,10 +1,9 @@
 using CommonEngine.Core;
+using CommonEngine.Interfaces;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace CardSystem
 {
@@ -29,7 +28,7 @@ namespace CardSystem
 		{
 			if (_isDragging)
 			{
-				RectTransform.position = Mouse.current.position.ReadValue();
+				RectTransform.position = CommonServices.CurrentMousePosition;
 			}
 		}
 
@@ -87,7 +86,7 @@ namespace CardSystem
 			bool isStopped = false;
 			while (_delayTime > 0)
 			{
-				if (Mouse.current.delta.magnitude > CardServices.MotionTreshold)
+				if (CommonServices.CurrentMouseDelta.magnitude > CardServices.MotionTreshold)
 				{
 					isStopped = true;
 					break;

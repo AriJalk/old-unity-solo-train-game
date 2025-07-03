@@ -1,0 +1,17 @@
+{
+    "name": "Modules.TurnBasedHexEngine",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f4d7c9a925308fd4ea0e79b221a9e9f7",
+        "GUID:311f94a29beb35c41b92d62d5bf43ac7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

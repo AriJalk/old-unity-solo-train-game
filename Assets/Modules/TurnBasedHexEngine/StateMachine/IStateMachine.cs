@@ -1,6 +1,6 @@
 ﻿namespace TurnBasedHexEngine.StateMachine
 {
-	internal interface IStateMachine
+	public interface IStateMachine
 	{
 		void EnterState();
 		void ExitState();

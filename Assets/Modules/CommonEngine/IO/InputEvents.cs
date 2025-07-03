@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CommonEngine.EngineEvents
+namespace CommonEngine.IO
 {
 	/// <summary>
 	/// The exposed API for the core input system

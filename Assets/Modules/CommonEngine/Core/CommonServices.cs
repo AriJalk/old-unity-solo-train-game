@@ -2,11 +2,15 @@
 using CommonEngine.EngineEvents;
 using UnityEngine;
 using CommonEngine.IO;
+using UnityEngine.InputSystem.Controls;
 
 namespace CommonEngine.Core
 {
 	public class CommonServices : MonoBehaviour
 	{
+		[SerializeField]
+		private InputManager _inputManager;
+
 		public PrefabManager PrefabManager;
 
 		public readonly InputEvents InputEvents = new InputEvents();
@@ -15,5 +19,21 @@ namespace CommonEngine.Core
 		public readonly MaterialManager MaterialManager = new MaterialManager();
 
 		public readonly InputLock InputLock = new InputLock();
+
+		public Vector2 CurrentMousePosition
+		{
+			get
+			{
+				return _inputManager.CurrentMousePosition;
+			}
+		}
+
+		public Vector2 CurrentMouseDelta
+		{
+			get
+			{
+				return _inputManager.CurrentMouseDelta;
+			}
+		}
 	}
 }

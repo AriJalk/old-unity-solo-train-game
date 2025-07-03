@@ -1,0 +1,20 @@
+{
+    "name": "PrototypeGame",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f4d7c9a925308fd4ea0e79b221a9e9f7",
+        "GUID:8cd6cd24cd0d6a44c97c8c8cb1f52e6f",
+        "GUID:311f94a29beb35c41b92d62d5bf43ac7",
+        "GUID:eeff8a3c4b9ca7041b5bcbcff8a4120d",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

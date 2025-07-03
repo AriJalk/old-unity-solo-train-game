@@ -1,8 +1,7 @@
 ﻿using TurnBasedHexEngine.Commands;
 using PrototypeGame.Commands;
-using PrototypeGame.Events;
 using System;
-using Unity.VisualScripting;
+using CommonEngine.Interfaces;
 
 namespace PrototypeGame.Logic.Components.Cards
 {

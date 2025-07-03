@@ -1,7 +1,7 @@
 ﻿using TurnBasedHexEngine.Commands;
-using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;
+using TurnBasedHexEngine.StateMachine;
 
 namespace Commands.StateCommands
 {

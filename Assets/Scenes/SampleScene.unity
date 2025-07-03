@@ -1620,6 +1620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b119a2fa4f08c4b8e8e44971a27f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputManager: {fileID: 1638142085}
   PrefabManager: {fileID: 1638142084}
 --- !u!114 &1638142084
 MonoBehaviour:

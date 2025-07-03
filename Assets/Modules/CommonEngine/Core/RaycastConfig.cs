@@ -1,5 +1,4 @@
-﻿using PrototypeGame.Scene;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CommonEngine.Core
@@ -9,14 +8,14 @@ namespace CommonEngine.Core
 	/// </summary>
 	public class RaycastConfig
 	{
-		private Dictionary<Type, int> _raycastLayers = new Dictionary<Type, int>()
-		{
-			{typeof(HexTileObject), 1 << 6 },
-			{typeof(GoodsCubeObject), 1 << 7 },
-			{typeof(GoodsCubeSlotObject), 1 << 8 },
-		};
-
+		private Dictionary<Type, int> _raycastLayers;
+		
 		public int RaycastLayer { get; private set; }
+
+		public void SetTypeMappings(Dictionary<Type, int> mappings)
+		{
+			_raycastLayers = mappings;
+		}
 
 		public void SetRaycastLayer<T>()
 		{

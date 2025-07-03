@@ -1,9 +1,5 @@
-﻿
-
-using PrototypeGame.Scene;
+﻿using CommonEngine.Interfaces;
 using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
 namespace PrototypeGame.Logic
 {

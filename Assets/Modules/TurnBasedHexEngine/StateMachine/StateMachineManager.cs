@@ -1,15 +1,6 @@
-﻿using CardSystem;
-using PrototypeGame.Commands;
-using PrototypeGame.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TurnBasedHexEngine.StateMachine
+﻿namespace TurnBasedHexEngine.StateMachine
 {
-	internal class StateMachineManager
+	public class StateMachineManager
 	{
 		public IStateMachine CurrentState {  get; private set; }
 

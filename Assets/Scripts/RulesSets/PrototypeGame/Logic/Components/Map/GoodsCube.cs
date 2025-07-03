@@ -1,5 +1,5 @@
+using CommonEngine.Interfaces;
 using System;
-using Unity.VisualScripting;
 
 public class GoodsCube : IIdentifiable
 {
