@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 64.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2426,7 +2426,7 @@ MonoBehaviour:
   _rotateAround: {fileID: 918674465}
   _radius: 4
   _offset: {x: 0, y: 4, z: 0}
-  _acceleration: 100
+  _acceleration: 50
   _initialRotation: -90
 --- !u!1 &2058894044
 GameObject:
@@ -2861,6 +2861,10 @@ PrefabInstance:
     - target: {fileID: 7588701606027307712, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
       propertyPath: m_Name
       value: CardSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545787419915666772, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
+      propertyPath: DragDelay
+      value: 0.225
       objectReference: {fileID: 0}
     - target: {fileID: 8545787419915666772, guid: 2d6165db5c30bad4cb6c59cd81f001d3, type: 3}
       propertyPath: _commonServices

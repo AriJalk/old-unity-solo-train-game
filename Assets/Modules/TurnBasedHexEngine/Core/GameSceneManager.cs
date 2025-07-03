@@ -15,6 +15,7 @@ namespace TurnBasedHexEngine.Core
 
 		void Start()
 		{
+			Application.targetFrameRate = 60;
 			_undoButton?.onClick.AddListener(Undo);
 			_confirmButton?.onClick.AddListener(Confirm);
 		}
