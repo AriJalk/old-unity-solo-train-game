@@ -1,13 +1,11 @@
-﻿using CardSystem;
-using TurnBasedHexEngine.Commands;
-using TurnBasedHexEngine.StateMachine;
-using PrototypeGame.Commands;
+﻿using PrototypeGame.Commands;
+using PrototypeGame.RulesServices;
 using PrototypeGame.StateMachine.CommonStates;
+using PrototypeGame.StateMachine.StateServices;
 using PrototypeGame.UI;
 using System;
-using UnityEngine;
-using PrototypeGame.RulesServices;
-using PrototypeGame.StateMachine.StateServices;
+using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.StateMachine;
 
 namespace PrototypeGame.StateMachine
 {

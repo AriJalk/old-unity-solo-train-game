@@ -1,13 +1,11 @@
 ﻿using CardSystem;
 using CommonEngine.Core;
-using CommonEngine.UI.Options;
 using PrototypeGame;
 using PrototypeGame.Scene;
 using PrototypeGame.UI;
 using System;
 using System.Collections.Generic;
 using TurnBasedHexEngine.Core;
-using TurnBasedHexEngine.Map;
 using UnityEngine;
 
 namespace RulesSets.PrototypeGame

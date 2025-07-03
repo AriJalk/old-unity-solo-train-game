@@ -1,6 +1,6 @@
 ﻿using CardSystem;
-using TurnBasedHexEngine.StateMachine;
 using System;
+using TurnBasedHexEngine.StateMachine;
 
 namespace PrototypeGame.StateMachine.CommonStates
 {

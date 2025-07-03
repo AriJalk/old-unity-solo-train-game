@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 namespace CardSystem
 {
 	public class CardObjectServices : MonoBehaviour

@@ -1,14 +1,14 @@
 ﻿using CardSystem;
 using CommonEngine.Core;
-using TurnBasedHexEngine.Commands;
-using TurnBasedHexEngine.Core;
-using TurnBasedHexEngine.StateMachine;
 using PrototypeGame.Events;
 using PrototypeGame.Logic.State;
 using PrototypeGame.Logic.State.Cards;
 using PrototypeGame.Scene.State;
 using PrototypeGame.Scene.State.Cards;
 using System;
+using TurnBasedHexEngine.Commands;
+using TurnBasedHexEngine.Core;
+using TurnBasedHexEngine.StateMachine;
 
 namespace PrototypeGame.ServiceGroups
 {

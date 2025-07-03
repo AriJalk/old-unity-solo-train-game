@@ -1,4 +1,3 @@
-
 using PrototypeGame.Logic;
 using System;
 

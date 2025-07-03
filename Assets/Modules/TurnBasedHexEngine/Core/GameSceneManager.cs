@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace TurnBasedHexEngine.Core
 {
 	public class GameSceneManager : MonoBehaviour

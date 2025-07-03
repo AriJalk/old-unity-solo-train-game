@@ -1,5 +1,5 @@
-﻿using PrototypeGame.Logic.MetaData;
-using HexSystem;
+﻿using HexSystem;
+using PrototypeGame.Logic.MetaData;
 using System;
 using System.Collections.Generic;
 

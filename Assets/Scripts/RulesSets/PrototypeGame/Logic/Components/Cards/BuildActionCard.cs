@@ -1,6 +1,6 @@
-﻿using TurnBasedHexEngine.Commands;
-using PrototypeGame.Commands;
+﻿using PrototypeGame.Commands;
 using System;
+using TurnBasedHexEngine.Commands;
 
 namespace PrototypeGame.Logic.Components.Cards
 {

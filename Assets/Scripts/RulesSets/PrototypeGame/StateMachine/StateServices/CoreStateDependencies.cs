@@ -1,7 +1,6 @@
 ﻿using CommonEngine.Core;
 using PrototypeGame.Commands;
 using PrototypeGame.RulesServices;
-using PrototypeGame.StateMachine.CommonStates;
 using PrototypeGame.UI;
 using TurnBasedHexEngine.Commands;
 

@@ -1,9 +1,8 @@
-using PrototypeGame.Logic.MetaData;
 using HexSystem;
+using PrototypeGame.Logic.MetaData;
+using PrototypeGame.Logic.ServiceContracts;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using PrototypeGame.Logic.ServiceContracts;
 
 namespace PrototypeGame.Logic.State
 {

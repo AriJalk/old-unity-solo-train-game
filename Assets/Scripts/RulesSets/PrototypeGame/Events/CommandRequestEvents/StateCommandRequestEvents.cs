@@ -1,5 +1,5 @@
-﻿using TurnBasedHexEngine.StateMachine;
-using System;
+﻿using System;
+using TurnBasedHexEngine.StateMachine;
 
 
 namespace PrototypeGame.Events.CommandRequestEvents

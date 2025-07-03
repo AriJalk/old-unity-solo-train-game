@@ -1,10 +1,5 @@
 ﻿using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TurnBasedHexEngine.Commands;
 using TurnBasedHexEngine.StateMachine;
 

@@ -1,9 +1,9 @@
-using PrototypeGame.Logic;
-using PrototypeGame.Events;
 using CommonEngine.Core;
+using PrototypeGame.Events;
+using PrototypeGame.Logic;
+using System;
 using TurnBasedHexEngine.Core;
 using TurnBasedHexEngine.Map;
-using System;
 
 namespace PrototypeGame.Scene.State
 {

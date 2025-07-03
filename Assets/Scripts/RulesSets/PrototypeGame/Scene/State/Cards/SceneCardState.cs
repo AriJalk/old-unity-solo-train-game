@@ -1,5 +1,4 @@
-﻿using CardSystem;
-using PrototypeGame.Scene.Components.Cards;
+﻿using PrototypeGame.Scene.Components.Cards;
 using System;
 using System.Collections.Generic;
 

@@ -1,9 +1,9 @@
-﻿using PrototypeGame.Logic;
-using PrototypeGame.Logic.State;
+﻿using HexSystem;
 using PrototypeGame.Events;
-using HexSystem;
-using PrototypeGame.Logic.State.Cards;
+using PrototypeGame.Logic;
 using PrototypeGame.Logic.Components.Cards;
+using PrototypeGame.Logic.State;
+using PrototypeGame.Logic.State.Cards;
 
 namespace PrototypeGame.GameBuilder
 {

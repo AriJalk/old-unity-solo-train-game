@@ -1,9 +1,8 @@
 ﻿using PrototypeGame.Commands;
-using PrototypeGame.Logic.Components.Cards;
 using System;
 using TurnBasedHexEngine.Commands;
 
-namespace Assets.Scripts.RulesSets.PrototypeGame.Logic.Components.Cards
+namespace PrototypeGame.Logic.Components.Cards
 {
 	internal class RetreiveAndProduceCard : ProtoCardData
 	{

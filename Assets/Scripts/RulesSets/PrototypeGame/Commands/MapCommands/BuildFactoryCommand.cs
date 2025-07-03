@@ -1,6 +1,6 @@
-﻿using TurnBasedHexEngine.Commands;
-using HexSystem;
+﻿using HexSystem;
 using PrototypeGame.Events.CommandRequestEvents;
+using TurnBasedHexEngine.Commands;
 
 namespace PrototypeGame.Commands
 {

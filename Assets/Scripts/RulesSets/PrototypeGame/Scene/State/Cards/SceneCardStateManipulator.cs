@@ -2,7 +2,6 @@
 using CommonEngine.Core;
 using PrototypeGame.Logic.Components.Cards;
 using PrototypeGame.Scene.Components.Cards;
-using System;
 using UnityEngine;
 
 namespace PrototypeGame.Scene.State.Cards

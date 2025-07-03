@@ -1,6 +1,5 @@
 ﻿using PrototypeGame.Logic.Components.Cards;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace PrototypeGame.Logic.ServiceContracts

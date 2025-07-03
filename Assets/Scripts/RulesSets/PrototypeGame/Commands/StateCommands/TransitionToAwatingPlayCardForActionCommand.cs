@@ -1,6 +1,6 @@
-﻿using TurnBasedHexEngine.Commands;
-using PrototypeGame.Events.CommandRequestEvents;
+﻿using PrototypeGame.Events.CommandRequestEvents;
 using PrototypeGame.StateMachine;
+using TurnBasedHexEngine.Commands;
 using TurnBasedHexEngine.StateMachine;
 
 namespace Commands.StateCommands

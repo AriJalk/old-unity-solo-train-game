@@ -1,6 +1,6 @@
-﻿using PrototypeGame.Commands.CardCommands;
-using Commands.StateCommands;
+﻿using Commands.StateCommands;
 using HexSystem;
+using PrototypeGame.Commands.CardCommands;
 using PrototypeGame.Commands.StateCommands;
 using PrototypeGame.Events;
 using PrototypeGame.Logic.ServiceContracts;
