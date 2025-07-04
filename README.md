@@ -72,7 +72,7 @@ The **PrototypeGame** demonstrates how to combine the core modules into a functi
 
 > 🎥 A short gameplay video is available showing the mechanics of the **PrototypeGame**, including building, producing resources/retrieving cards, and transporting resources across a hex-based logistics map.
 
-👉 [Watch the Demo on YouTube](https://www.youtube.com/watch?v=FLBy0de4PSg)  
+[![Watch the Demo on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
 
 ---
 
