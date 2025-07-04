@@ -76,4 +76,10 @@ The **PrototypeGame** demonstrates how to combine the core modules into a functi
 
 ---
 
+## Future Use
+
+This framework is also planned to be used as the foundation for a future public-facing strategy game, which is currently being developed in a private repository. It serves both as a learning platform and a production-ready base for larger gameplay systems.
+
+---
+
 This project is great for Unity developers seeking a clean way to build board-style turn-based strategy games with flexible rules, reusable code, and a logical separation of gameplay and visuals.
