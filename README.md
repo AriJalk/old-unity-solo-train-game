@@ -38,7 +38,6 @@ The framework is designed for:
 
   ⚠️ This module does **not** define a built-in event system — instead, it provides reusable components to be **driven by your custom ruleset**.
 
-
 ---
 
 ## PrototypeGame Ruleset
@@ -69,8 +68,12 @@ The **PrototypeGame** demonstrates how to combine the core modules into a functi
 
 ---
 
-This project is great for Unity developers seeking a clean way to build board-style turn-based strategy games with flexible rules, reusable code, and a logical separation of gameplay and visuals.
+## Demonstration
+
+> 🎥 A short gameplay video is available showing the mechanics of the **PrototypeGame**, including building, producing resources/retrieving cards, and transporting resources across a hex-based logistics map.
+
+👉 [Watch the Demo on YouTube](https://www.youtube.com/watch?v=FLBy0de4PSg)  
 
 ---
 
-*Ready to build your own strategy game? Start with PrototypeGame and customize away!*
+This project is great for Unity developers seeking a clean way to build board-style turn-based strategy games with flexible rules, reusable code, and a logical separation of gameplay and visuals.
