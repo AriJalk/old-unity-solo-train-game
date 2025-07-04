@@ -1,6 +1,13 @@
-# ⚠️ Project Abandoned – Moved to New Repo
-This project is no longer maintained.
-Development has moved to a New Repository implementing the game in Godot [Here](https://github.com/AriJalk/godot-solo-train-game).
+# ⚠️ Project Reorganized – Restarted in Main Branch as Framework
+
+This project is no longer maintained in its current form.
+
+Development has **restarted** under the `main` branch, with a new focus on building a **modular Unity framework** for turn-based hex strategy games, rather than implementing a specific game.
+
+📦 The new version is available here: [Turn-Based Hex Strategy Framework (main branch)](https://github.com/AriJalk/prototype-game-framework/tree/main)
+
+If you’re looking for the latest architecture and reusable systems, check out the new `main` branch!
+
 
 # Solo Train Game in Unity Engine
 
