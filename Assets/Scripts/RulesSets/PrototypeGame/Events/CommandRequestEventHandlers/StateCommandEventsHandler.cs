@@ -2,7 +2,7 @@
 using System;
 using TurnBasedHexEngine.StateMachine;
 
-namespace PrototypeGame.Events.CommandEventHandlers
+namespace PrototypeGame.Events.CommandRequestEventHandlers
 {
 	internal class StateCommandEventsHandler : IDisposable
 	{

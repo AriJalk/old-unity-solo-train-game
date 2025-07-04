@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 
 namespace CardSystem
 {
+	/// <summary>
+	/// The baseclass for visual representation of cards in the hand which can be dragged
+	/// </summary>
 	public class CardObjectBase : MonoBehaviour, IIdentifiable, IPointerDownHandler
 	{
 		public Guid guid { get; set; }

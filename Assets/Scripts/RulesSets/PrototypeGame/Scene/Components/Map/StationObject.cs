@@ -1,4 +1,4 @@
-﻿using CommonEngine.Core;
+﻿using CommonEngine.Componenets;
 using PrototypeGame.Scene;
 
 public class StationObject : MeshComponent

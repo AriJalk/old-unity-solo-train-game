@@ -1,5 +1,8 @@
 ﻿namespace TurnBasedHexEngine.StateMachine
 {
+	/// <summary>
+	/// Manages the StateMachine flow
+	/// </summary>
 	public class StateMachineManager
 	{
 		public IStateMachine CurrentState {  get; private set; }

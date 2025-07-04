@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CommonEngine.UI
+namespace CommonEngine.Componenets.UI
 {
 	/// <summary>
 	/// UI element that adds itself to the InputLock upon entering

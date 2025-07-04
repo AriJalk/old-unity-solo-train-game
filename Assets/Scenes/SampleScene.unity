@@ -502,7 +502,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebce42233faf99649b7e7ec8c044e190, type: 3}
+  m_Script: {fileID: 11500000, guid: 323cc68d72de0be45b41d6d95d5ed9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _commonServices: {fileID: 1638142083}
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f181adc8eebfde94b858b9c949b89f63, type: 3}
+  m_Script: {fileID: 11500000, guid: 8877b9efd700977458433760db61b230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 330585545}
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 918674463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d087563ad36d5419326c231a594a29, type: 3}
+  m_Script: {fileID: 11500000, guid: 847f47ebc9bcf0c489054781287faedd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _commonServices: {fileID: 1638142083}
@@ -2207,7 +2207,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.75
+  m_fontSize: 37
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1948937832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb328238e71bea54f8f13142e7b9b417, type: 3}
+  m_Script: {fileID: 11500000, guid: ac75260c3d7c63a4e99ba22d88235e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _commonServices: {fileID: 1638142083}

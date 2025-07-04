@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 
 
-namespace CommonEngine.SceneObjects
+namespace CommonEngine.Componenets
 {
 	/// <summary>
 	/// An object the responds to input events and moves the bound object accordingly

@@ -4,7 +4,7 @@ using PrototypeGame.Logic.State.Cards;
 using System;
 
 
-namespace PrototypeGame.Events.CommandEventHandlers
+namespace PrototypeGame.Events.CommandRequestEventHandlers
 {
 	internal class CardCommandEventsHandler : IDisposable
 	{

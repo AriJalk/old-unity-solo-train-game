@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace CardSystem
 {
+	/// <summary>
+	/// Hub for the system, manages all visual card objects in the player's hand
+	/// </summary>
 	public class CardObjectServices : MonoBehaviour
 	{
 		const float CARD_ASPECT_RATIO = 100 / 150f;

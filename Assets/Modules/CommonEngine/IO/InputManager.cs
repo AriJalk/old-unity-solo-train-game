@@ -30,12 +30,12 @@ namespace CommonEngine.IO
 			{
 				return;
 			}
-			ProcessMouseButtons();
+			ProcessMouseActions();
 			ProcessAxis();
 			ProcessScroll();
 		}
 
-		void ProcessMouseButtons()
+		void ProcessMouseActions()
 		{
 			CurrentMousePosition = Mouse.current.position.ReadValue();
 			CurrentMouseDelta = Mouse.current.delta.ReadValue();

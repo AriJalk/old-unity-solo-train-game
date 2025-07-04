@@ -4,7 +4,7 @@ using CommonEngine.IO;
 using UnityEngine;
 
 
-namespace CommonEngine.SceneObjects
+namespace CommonEngine.Componenets
 {
 	/// <summary>
 	/// Provides listenable raycasting functinoality

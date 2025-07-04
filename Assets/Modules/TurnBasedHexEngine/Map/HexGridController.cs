@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace TurnBasedHexEngine.Map
 {
+	/// <summary>
+	/// Manages hexagonal tiles in the scene
+	/// </summary>
 	public class HexGridController : MonoBehaviour
 	{
 		private Dictionary<HexCoord, HexTileObjectBase> _hexDictionary = new Dictionary<HexCoord, HexTileObjectBase>();

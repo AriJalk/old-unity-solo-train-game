@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace CommonEngine.Core
 {
+	/// <summary>
+	/// Main API for CommonEngine
+	/// </summary>
 	public class CommonServices : MonoBehaviour
 	{
 		[SerializeField]

@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace CommonEngine.UI.Components
 {
+	/// <summary>
+	/// Scales grid cell size to best fit in the grid rect
+	/// </summary>
 	[RequireComponent(typeof(GridLayoutGroup))]
 	internal class GridSizeScaler : MonoBehaviour
 	{

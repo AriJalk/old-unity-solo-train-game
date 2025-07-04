@@ -2,7 +2,7 @@ using CommonEngine.Core;
 using CommonEngine.IO;
 using UnityEngine;
 
-namespace CommonEngine.SceneObjects
+namespace CommonEngine.Componenets
 {
 	/// <summary>
 	/// Gives rotation functionality to a gameObject in response to input events

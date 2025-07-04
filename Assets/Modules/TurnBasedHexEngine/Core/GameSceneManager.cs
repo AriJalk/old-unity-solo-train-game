@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace TurnBasedHexEngine.Core
 {
+	/// <summary>
+	/// Manages the game at scene level, running a ruleset game implementation defined by IRulesSet
+	/// </summary>
 	public class GameSceneManager : MonoBehaviour
 	{
 		[SerializeField]

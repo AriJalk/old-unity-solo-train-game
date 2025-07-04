@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CommonEngine.UI.Options
+namespace CommonEngine.Componenets.UI.Options
 {
 	/// <summary>
 	/// General purpose option for OptionsPanel

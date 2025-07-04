@@ -5,7 +5,7 @@ using PrototypeGame.Logic.MetaData;
 using PrototypeGame.Logic.State;
 using System;
 
-namespace PrototypeGame.Events.CommandEventHandlers
+namespace PrototypeGame.Events.CommandRequestEventHandlers
 {
 	internal class MapCommandEventsHandler : IDisposable
 	{

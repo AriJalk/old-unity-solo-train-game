@@ -2,7 +2,7 @@ using CommonEngine.Core;
 using CommonEngine.IO;
 using UnityEngine;
 
-namespace CommonEngine.SceneObjects
+namespace CommonEngine.Componenets
 {
 	/// <summary>
 	/// Changed orthographic camera size according to input events

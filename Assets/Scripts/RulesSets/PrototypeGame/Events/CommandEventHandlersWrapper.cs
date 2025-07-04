@@ -1,4 +1,4 @@
-﻿using PrototypeGame.Events.CommandEventHandlers;
+﻿using PrototypeGame.Events.CommandRequestEventHandlers;
 using PrototypeGame.ServiceGroups;
 using System;
 

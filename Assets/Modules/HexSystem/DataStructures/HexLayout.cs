@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace HexSystem
 {
+	/// <summary>
+	/// Info regarding how to place the tiles
+	/// </summary>
 	public class HexLayout
 	{
 		public HexOrientation Orientation { get; }

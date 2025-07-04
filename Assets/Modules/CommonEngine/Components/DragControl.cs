@@ -3,7 +3,7 @@ using CommonEngine.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace CommonEngine.SceneObjects
+namespace CommonEngine.Componenets
 {
 	/// <summary>
 	/// An invisible full screen drag element, used mainly as control method for camera rotation

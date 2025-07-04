@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace HexSystem
 {
+	/// <summary>
+	/// The coordinates unit for a hexagonal tile.
+	/// </summary>
 	public partial class HexCoord
 	{
 		private static Dictionary<Vector2Int, HexCoord> _cache = new Dictionary<Vector2Int, HexCoord>();
