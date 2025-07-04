@@ -54,7 +54,7 @@ The **PrototypeGame** demonstrates how to combine the core modules into a functi
 
 ## Design Philosophy
 
-- **2D logic / 3D world:** Game mechanics operate in simple, cacheable logic systems while being visually rendered in 3D.
+- **2D logic / 3D world:** Game mechanics operate in simple logic systems while being visually rendered in 3D.
 - **Ruleset-first development:** Rules are written as a flow of state transitions and commands, allowing gameplay evolution without breaking structure.
 - **Modularity and separation of concerns:** Core systems are organized into assemblies to keep logic, scene, and input isolated and composable.
 
@@ -62,15 +62,15 @@ The **PrototypeGame** demonstrates how to combine the core modules into a functi
 
 ## Getting Started
 
-- Look into the `Modules` folder to explore reusable Unity systems.
-- Navigate to `Scripts/RulesSets/PrototypeGame` for a working example of how to define a complete game.
-- Use `CommandManager`, state machines, and rule-specific events to define your own unique ruleset and flow.
+- Look into the `Assets/Modules` folder to explore reusable Unity systems.
+- Navigate to `Assets/Scripts/RulesSets/PrototypeGame` for a working example of how to define a complete game.
+- Use `CommandManager`, `StateMachineManager`, and rule-specific events to define your own unique ruleset and flow.
 
 ---
 
 ## Demonstration
 
-> 🎥 A short gameplay video is available showing the mechanics of the **PrototypeGame**, including building, producing resources/retrieving cards, and transporting resources across a hex-based logistics map.
+> 🎥 A short gameplay video is available showing the mechanics of the **PrototypeGame**, including building, producing resources/retrieving cards, and transporting resources across a hex-based map.
 
 [![Watch the Demo on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
 
