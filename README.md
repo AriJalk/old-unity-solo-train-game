@@ -1,85 +1,73 @@
 # Turn-Based Hex Strategy Framework for Unity
 
-Welcome to the Turn-Based Hex Strategy Framework — a modular, extensible foundation for building **3D turn-based hex strategy games** in **Unity**, using a clean separation of logic and scene, and a ruleset-driven architecture.
+A modular foundation for building **3D turn-based hex strategy games** in **Unity**.  
+The project focuses on separating logic and visuals, defining game flow via state machines and commands, and structuring systems for reuse across multiple rulesets.
 
 ---
 
 ## Overview
 
-This project offers a set of reusable **Unity modules** and a working **PrototypeGame** ruleset that demonstrate how to structure a turn-based hex game cleanly and flexibly.
+This is a restart and architectural rewrite of the earlier `old-prototype-game` branch. It shifts focus from a specific game to a general-purpose, extensible framework.
 
-> 🧭 This framework is a **restart and architectural evolution** of the older `old-prototype-game` branch, redesigned from the ground up for better modularity, scalability, and clarity.
+- All logic is written in 2D space and mapped into 3D scenes.
+- Built as a set of Unity assemblies for modular compilation and minimal rebuilds.
+- Gameplay is driven by a ruleset-defined state machine and command/event system.
+- Designed to allow fast iteration on different rulesets for future game projects.
 
-The framework is designed for:
-- Easy iteration on gameplay rules.
-- Clear separation between **logic state** and **scene state**.
-- 2D abstract logic running in a **3D Unity scene**.
-- Fully modular design, allowing developers to pick and integrate only the systems they need.
+---
+
+## Structure
+
+The repository includes:
+
+- `Assets/Modules/` – Independent systems such as input, hex coordinates, card interaction, etc.
+- `Assets/Scripts/RulesSets/PrototypeGame/` – A working example ruleset that shows how to integrate all modules into a full game loop.
 
 ---
 
 ## Key Modules
 
-- **CommonEngine**  
-  Provides foundational utilities for input handling, camera controls, raycasting, drag interaction, prefab instantiation, object pooling, and other general-purpose game behaviors.
-
-- **HexSystem**  
-  Offers a coordinate system and layout tools based on Red Blob Games’ hex grid standard. Converts between logical coordinates and 3D world positions, enabling spatially coherent hex tile placement.
-
-- **CardSystem**  
-  Lightweight system for hand-based card interaction. Includes drag/drop behavior, visual management of card objects, and drop targets.
-
-- **TurnBasedHexEngine**  
-  A minimal turn-based orchestration layer. It includes:
-  - A **CommandManager** to coordinate game actions.
-  - A **StateMachineManager** to manage the lifecycle and flow of the ruleset state machine.
-  - Interfaces for rule-specific state machines and logic.
-  - The **HexGridController** for scene-level tile handling.
-
-  ⚠️ This module does **not** define a built-in event system — instead, it provides reusable components to be **driven by your custom ruleset**.
+- **CommonEngine** – Input handling, drag interaction, raycasting layers, prefab management, object pooling, and camera control.
+- **HexSystem** – Hex coordinate handling based on [Red Blob Games' hex grid guide](https://www.redblobgames.com/grids/hexagons/), including layout utilities and coordinate-to-world mapping.
+- **CardSystem** – Manages visual card hand, drag-and-drop interaction, and drop targets.
+- **TurnBasedHexEngine** – A minimal command and state machine layer for managing logic and scene state transitions.
 
 ---
 
 ## PrototypeGame Ruleset
 
-The **PrototypeGame** demonstrates how to combine the core modules into a functional Unity ruleset:
+A minimal sample ruleset inspired by cube rail mechanics:
 
-- Implements a cube-rails-inspired game on a hex map with card-based interactions.
-- Shows how to define a ruleset as a **state machine** and execute logic using **commands**.
-- Separates logic and scene into their own state/manipulator layers, with all interactions driven by **command requests**.
-- Handles all game flow within the ruleset — including the event system, validation, and context transitions.
-- Uses 2D logical coordinates and systems that are **mapped to a 3D Unity scene** to produce modern board game visuals.
-
----
-
-## Design Philosophy
-
-- **2D logic / 3D world:** Game mechanics operate in simple logic systems while being visually rendered in 3D.
-- **Ruleset-first development:** Rules are written as a flow of state transitions and commands, allowing gameplay evolution without breaking structure.
-- **Modularity and separation of concerns:** Core systems are organized into assemblies to keep logic, scene, and input isolated and composable.
+- Defines turn structure using a custom `IStateMachine` implementation.
+- Dispatches commands to mutate logic state and update the scene via request events.
+- Uses separate logic/scene state managers for both map and card domains.
+- Demonstrates a closed gameplay loop: draw card → play card → execute effect → next state.
+- Not a full game — intended as a testbed to simulate rules and interaction patterns.
 
 ---
 
-## Getting Started
+## Implementation Notes
 
-- Look into the `Assets/Modules` folder to explore reusable Unity systems.
-- Navigate to `Assets/Scripts/RulesSets/PrototypeGame` for a working example of how to define a complete game.
-- Use `CommandManager`, `StateMachineManager`, and rule-specific events to define your own unique ruleset and flow.
-
----
-
-## Demonstration
-
-> 🎥 A short gameplay video is available showing the mechanics of the **PrototypeGame**, including building, producing resources/retrieving cards, and transporting resources across a hex-based map.
-
-[![Watch the Demo on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
+- Game logic and visuals are strictly separated.
+- Commands trigger request events, which update logic state and then scene state.
+- All modules are compiled as separate assemblies for faster iteration.
+- Scene state classes are accessed only through events, acting as black-box receivers.
+- Input is funneled through a central input manager exposed by `CommonServices`.
 
 ---
 
-## Future Use
+## Demo
 
-This framework is also planned to be used as the foundation for a future public-facing strategy game, which is currently being developed in a private repository. It serves both as a learning platform and a production-ready base for larger gameplay systems.
+Video demonstration (build → produce → retrieve → transport):  
+[![Watch on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
 
 ---
 
-This project is great for Unity developers seeking a clean way to build board-style turn-based strategy games with flexible rules, reusable code, and a logical separation of gameplay and visuals.
+## Usage
+
+- Clone the repo and open in Unity.
+- Review the modules under `Assets/Modules/` for reusable systems.
+- Use the `PrototypeGame` as a template to build a new ruleset by:
+  - Creating a state machine
+  - Defining command types and validators
+  - Setting up scene/logic state managers and manipulators
