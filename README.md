@@ -41,7 +41,7 @@ A minimal sample ruleset inspired by cube rail mechanics:
 - Defines turn structure using a custom `IStateMachine` implementation.
 - Dispatches commands to mutate logic state and update the scene via request events.
 - Uses separate logic/scene state managers for both map and card domains.
-- Demonstrates a closed gameplay loop: draw card → play card → execute effect → next state.
+- Demonstrates a closed gameplay loop: play card → execute effect → next state.
 - Not a full game — intended as a testbed to simulate rules and interaction patterns.
 
 ---
