@@ -61,7 +61,7 @@ A minimal sample ruleset inspired by cube rail mechanics:
 Gameplay overview screenshot:  
 ![Gameplay Snapshot](ReadmeScreenshots/PrototypeSnapshot.png)
 
-Video demonstration (build → produce → retrieve → transport):  
+Video demonstration (build → produce + retrieve → transport):  
 [![Watch on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
 
 ---
