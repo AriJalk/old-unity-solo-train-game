@@ -14,6 +14,8 @@ This is a restart and architectural rewrite of the earlier `old-prototype-game` 
 - Gameplay is driven by a ruleset-defined state machine and command/event system.
 - Designed to allow fast iteration on different rulesets for future game projects.
 
+ > ✳️ This framework also serves as the groundwork for a personal passion project — a solo digital cube rail deckbuilder I hope to release someday.
+
 ---
 
 ## Structure
