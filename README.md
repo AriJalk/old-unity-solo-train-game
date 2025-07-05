@@ -73,6 +73,10 @@ Video demonstration (build → produce + retrieve → transport):
 - Clone the repo and open in Unity.
 - Review the modules under `Assets/Modules/` for reusable systems.
 - Use the `PrototypeGame` as a template to build a new ruleset by:
-  - Creating a state machine
-  - Defining command types and validators
-  - Setting up scene/logic state managers and manipulators
+  - Creating a custom implementation of `IRulesSet`
+  - Defining your command types, validators, and logic/scene state managers
+  - Optionally adding scene-side utilities like a `RulesLoader` to construct and inject your ruleset into the runtime
+
+> 🔄 **Multiple rulesets can coexist in the same repository.**  
+> At runtime, the active ruleset is selected by injecting an `IRulesSet` implementation into the `GameSceneManager`, which serves as the scene-level orchestrator.  
+> A sample `RulesLoader` is included in the `PrototypeGame` ruleset. It constructs the ruleset's root object and injects it into `GameSceneManager` at startup.
