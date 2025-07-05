@@ -75,8 +75,11 @@ Video demonstration (build → produce + retrieve → transport):
 - Use the `PrototypeGame` as a template to build a new ruleset by:
   - Creating a custom implementation of `IRulesSet`
   - Defining your command types, validators, and logic/scene state managers
-  - Optionally adding scene-side utilities like a `RulesLoader` to construct and inject your ruleset into the runtime
+  - Injecting your `IRulesSet` instance into the scene's `GameSceneManager`, which manages runtime flow
+  - Optionally adding a `RulesLoader` MonoBehaviour to the scene to handle the construction and injection of your ruleset
 
-> 🔄 **Multiple rulesets can coexist in the same repository.**  
-> At runtime, the active ruleset is selected by injecting an `IRulesSet` implementation into the `GameSceneManager`, which serves as the scene-level orchestrator.  
-> A sample `RulesLoader` is included in the `PrototypeGame` ruleset. It constructs the ruleset's root object and injects it into `GameSceneManager` at startup.
+> 🔄 **Multiple rulesets can coexist in the same repository.**
+> The framework determines which ruleset to run at runtime via dependency injection into the `GameSceneManager`.
+> This is the entry point for the game loop.
+> The included `RulesLoader` in the `PrototypeGame` ruleset demonstrates how to build the ruleset root and pass it to the manager.
+
