@@ -4,9 +4,9 @@ using TurnBasedHexEngine.Commands;
 
 namespace PrototypeGame.Logic.Components.Cards
 {
-	internal class RetreiveAndProduceCard : ProtoCardData
+	internal class RetrieveAndProduceCard : ProtoCardData
 	{
-		public RetreiveAndProduceCard(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory) : base(guid, cardTitle, moneyValue, transportPointsValue, cardDescription, commandManager, commandFactory, false, true)
+		public RetrieveAndProduceCard(Guid guid, string cardTitle, int moneyValue, int transportPointsValue, string cardDescription, CommandManager commandManager, CommandFactory commandFactory) : base(guid, cardTitle, moneyValue, transportPointsValue, cardDescription, commandManager, commandFactory, false, true)
 		{
 		}
 

@@ -42,12 +42,12 @@ namespace PrototypeGame.GameBuilder
 				logicCardStateManager.AddCardToHand(card);
 				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card, false);
 
-				card = cardFactory.CreateTransportActionCard();
+				card = cardFactory.CreateBasicTransportActionCard();
 				logicCardStateManager.AddCardToHand(card);
 				sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(card, false);
 			}
 
-			ProtoCardData retreiveCard = cardFactory.CreateRetreiveAndProduceCard();
+			ProtoCardData retreiveCard = cardFactory.CreateRetrieveAndProduceCard();
 			logicCardStateManager.AddCardToHand(retreiveCard);
 			sceneEventsWrapper.SceneCardEvents.RaiseCardAddedToHandEvent(retreiveCard, false);
 		}

@@ -23,21 +23,21 @@ namespace PrototypeGame.Logic.Components.Cards
 		// Todo: from SO
 		public BuildActionCard CreateBasicBuildActionCard()
 		{
-			BuildActionCard card = new BuildActionCard(Guid.NewGuid(), "Basic Build", 2, 2, "Basic Build Action", _commandManager, _commandFactory);
+			BuildActionCard card = new BuildActionCard(Guid.NewGuid(), "Build", 2, 2, "Basic Build Action", _commandManager, _commandFactory);
 
 			return card;
 		}
 
-		public TransportActionCard CreateTransportActionCard()
+		public TransportActionCard CreateBasicTransportActionCard()
 		{
 			TransportActionCard card = new TransportActionCard(Guid.NewGuid(), "Transport", 2, 2, "Basic Transport Action", _commandManager, _commandFactory);
 
 			return card;
 		}
 
-		public RetreiveAndProduceCard CreateRetreiveAndProduceCard()
+		public RetrieveAndProduceCard CreateRetrieveAndProduceCard()
 		{
-			RetreiveAndProduceCard card = new RetreiveAndProduceCard(Guid.NewGuid(), "Retreive", 0, 0, "Retreive Cards and Produce", _commandManager, _commandFactory);
+			RetrieveAndProduceCard card = new RetrieveAndProduceCard(Guid.NewGuid(), "Retrieve", 0, 0, "Retrieve Cards and Produce", _commandManager, _commandFactory);
 
 			return card;
 		}
