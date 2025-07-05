@@ -14,7 +14,10 @@ This is a restart and architectural rewrite of the earlier `old-prototype-game` 
 - Gameplay is driven by a ruleset-defined state machine and command/event system.
 - Designed to allow fast iteration on different rulesets for future game projects.
 
- > ✳️ This framework also serves as the groundwork for a personal passion project — a solo digital cube rail deckbuilder I hope to release someday.
+> ✳️ This framework also serves as the groundwork for a personal passion project — a solo digital cube rail deckbuilder I hope to release someday.
+
+> ⚠️ While designed with modularity, this framework reflects my own specific design philosophy optimized for a solo, turn-based hex/card game. It may not generalize easily to other game genres, but is shared as a complete example of applied system design in Unity.
+
 
 ---
 
