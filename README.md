@@ -67,7 +67,7 @@ Gameplay overview screenshot:
 ![Gameplay Snapshot](ReadmeScreenshots/PrototypeSnapshot.png)
 
 Video demonstration (build → produce + retrieve → transport):  
-[![Watch on YouTube](https://img.youtube.com/vi/FLBy0de4PSg/hqdefault.jpg)](https://www.youtube.com/watch?v=FLBy0de4PSg)
+[![Watch on YouTube](https://img.youtube.com/vi/PlEBeimexf8/hqdefault.jpg)](https://www.youtube.com/watch?v=PlEBeimexf8)
 
 ---
 
