@@ -45,7 +45,7 @@ In order to achieve this objective, the player, in addition to expanding the net
 In this demonstration, we'll use a test environment map and the regular starting hand to initiate a build action through a card. We'll build rails to test if track building limitations are working properly, and also increment money through the discard of another card to observe its implication on possible build locations. Note that the card used for money incrementation is not discarded in the demo, as it's testing its contribution. The money doesn't decrement in this demo since it's testing a scenario of expanding over several turns. This demonstration also showcases the Spherical rotation camera.
 
 
-[![Network Expansion](https://img.youtube.com/vi/4NCJbKw9o4U/0.jpg)](https://www.youtube.com/watch?v=4NCJbKw9o4U)
+[![Network Expansion](https://img.youtube.com/vi/HzWcWizik5Y/0.jpg)](https://www.youtube.com/watch?v=HzWcWizik5Y)
 
 ## Earlier development images from the project
 *Note: The original version was color-blind friendly but not colorful enough.*
